@@ -1,1 +1,1012 @@
-.
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>صندوق المسابقات</title>
+  <meta name="description" content="منصة صندوق المسابقات: ألعاب عربية تفاعلية مرتبة في مكان واحد. تصفح الألعاب، اشترِ من المتجر، وسجّل دخولك لاحقًا للوصول إلى ألعابك بسهولة." />
+  <style>
+    :root{
+      --bg:#f6efd9;
+      --bg-soft:#fff9ec;
+      --card:#fffdf7;
+      --navy:#13233f;
+      --navy-2:#22385e;
+      --gold:#f5c542;
+      --gold-2:#ffd95d;
+      --orange:#ff6a1a;
+      --blue:#3867ff;
+      --purple:#7b3ff6;
+      --shadow:#000;
+      --text:#23324d;
+      --muted:#5e6a82;
+      --line:#111;
+      --max:1160px;
+      --radius-xl:36px;
+      --radius-lg:28px;
+      --radius-md:22px;
+      --shadow-pop: 0 10px 0 #000;
+      --shadow-soft: 0 18px 40px rgba(16,26,48,.10);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(245,197,66,.18), transparent 18%),
+        radial-gradient(circle at 86% 18%, rgba(123,63,246,.14), transparent 20%),
+        radial-gradient(circle at 80% 75%, rgba(56,103,255,.12), transparent 17%),
+        linear-gradient(180deg, #f8f1dc 0%, #f4edd7 100%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+
+    .page{
+      position:relative;
+      min-height:100vh;
+      isolation:isolate;
+    }
+
+    .container{
+      width:min(calc(100% - 28px), var(--max));
+      margin-inline:auto;
+    }
+
+    .noise,
+    .orb,
+    .spark,
+    .ring{
+      position:absolute;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .orb{
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      filter: blur(8px);
+      opacity:.35;
+      animation: floatSlow 10s ease-in-out infinite;
+    }
+    .orb.one{top:60px;right:-90px;background:radial-gradient(circle,var(--gold),transparent 65%)}
+    .orb.two{top:340px;left:-70px;background:radial-gradient(circle,var(--purple),transparent 68%);animation-delay:-3s}
+    .orb.three{bottom:180px;right:8%;background:radial-gradient(circle,var(--blue),transparent 65%);animation-delay:-6s}
+
+    .spark{
+      width:18px;
+      height:18px;
+      background:var(--gold);
+      clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
+      filter: drop-shadow(4px 5px 0 #000);
+      animation: twinkle 3.5s ease-in-out infinite;
+    }
+    .spark.s1{top:180px;right:110px}
+    .spark.s2{top:220px;left:64px;animation-delay:-1.2s}
+    .spark.s3{top:520px;right:42px;animation-delay:-2.3s}
+    .spark.s4{bottom:140px;left:90px;animation-delay:-.7s}
+
+    .ring{
+      width:82px;
+      height:82px;
+      border-radius:24px;
+      background:#fff3b7;
+      border:4px solid #000;
+      box-shadow:8px 8px 0 #000;
+      display:grid;
+      place-items:center;
+      animation: bob 4.4s ease-in-out infinite;
+    }
+    .ring.r1{top:58px;left:26px; transform:rotate(-8deg)}
+    .ring.r2{top:110px;right:18px;transform:rotate(8deg);animation-delay:-1.2s}
+    .ring.r3{top:540px;left:18px;transform:rotate(7deg);animation-delay:-2.1s}
+    .ring.r4{bottom:120px;right:18px;transform:rotate(-7deg);animation-delay:-2.8s}
+    .ring svg{width:34px;height:34px;fill:#111}
+
+    .nav{
+      padding:22px 0 10px;
+    }
+
+    .nav-shell{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 16px;
+      background:rgba(255,253,247,.72);
+      border:4px solid #000;
+      border-radius:999px;
+      box-shadow:var(--shadow-pop);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      background:linear-gradient(145deg,var(--gold-2),#fff2a7);
+      border:4px solid #000;
+      box-shadow:6px 6px 0 #000;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+
+    .brand-badge span{
+      font-weight:900;
+      font-size:15px;
+      color:var(--navy);
+      line-height:1.05;
+      text-align:center;
+    }
+
+    .brand-text{min-width:0}
+    .brand-title{
+      font-size:1.05rem;
+      font-weight:900;
+      color:var(--navy);
+      line-height:1.1;
+      margin:0 0 4px;
+    }
+    .brand-sub{
+      margin:0;
+      font-size:.88rem;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .mini-pill{
+      border:4px solid #000;
+      background:#fff;
+      padding:10px 16px;
+      border-radius:999px;
+      box-shadow:5px 5px 0 #000;
+      font-weight:800;
+      color:var(--navy);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .mini-pill:hover{transform:translateY(-2px); box-shadow:7px 7px 0 #000}
+
+    .hero{
+      position:relative;
+      padding:34px 0 34px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap:26px;
+      align-items:center;
+    }
+
+    .hero-card,
+    .showcase-card,
+    .section-box,
+    .games-card,
+    .info-strip,
+    .cta-box{
+      background:rgba(255,251,242,.76);
+      backdrop-filter: blur(8px);
+      border:4px solid #000;
+      box-shadow:var(--shadow-pop);
+    }
+
+    .hero-card{
+      padding:28px;
+      border-radius:42px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:auto auto -45px -45px;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(245,197,66,.22), transparent 70%);
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background:linear-gradient(135deg,var(--orange),#ff853d);
+      color:#111;
+      border:4px solid #000;
+      border-radius:999px;
+      padding:12px 18px;
+      box-shadow:6px 6px 0 #000;
+      font-weight:900;
+      font-size:1rem;
+      margin-bottom:18px;
+    }
+
+    .eyebrow-dot{
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#fff3b7;
+      border:3px solid #000;
+      box-shadow:2px 2px 0 #000;
+    }
+
+    .hero-title{
+      margin:0;
+      color:var(--navy);
+      line-height:1.04;
+      font-size:clamp(2.4rem, 5vw, 5rem);
+      font-weight:1000;
+      letter-spacing:-1px;
+      text-shadow: 5px 5px 0 #fff, 9px 9px 0 rgba(0,0,0,.12);
+    }
+
+    .title-accent{
+      display:block;
+      color:#fff;
+      margin-top:10px;
+      background:linear-gradient(135deg,var(--purple),#4a6cff);
+      border:4px solid #fff;
+      border-radius:24px;
+      box-shadow:0 12px 26px rgba(91,66,245,.28);
+      padding:14px 18px;
+      font-size:clamp(1.2rem, 2vw, 1.75rem);
+      width:max-content;
+      max-width:100%;
+    }
+
+    .hero-desc{
+      margin:22px 0 0;
+      font-size:clamp(1rem, 1.6vw, 1.35rem);
+      line-height:1.9;
+      color:var(--muted);
+      max-width:720px;
+    }
+
+    .action-stack{
+      display:grid;
+      gap:14px;
+      margin-top:28px;
+      max-width:580px;
+    }
+
+    .main-btn{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      min-height:82px;
+      padding:16px 26px;
+      border-radius:999px;
+      border:4px solid #000;
+      box-shadow:8px 8px 0 #000;
+      font-size:clamp(1.08rem, 2vw, 1.55rem);
+      font-weight:1000;
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+      overflow:hidden;
+    }
+
+    .main-btn:hover{
+      transform:translateY(-4px);
+      box-shadow:12px 12px 0 #000;
+      filter:saturate(1.05);
+    }
+
+    .main-btn.black{
+      background:#050505;
+      color:var(--orange);
+      box-shadow:0 0 0 8px rgba(255,106,26,.10), 8px 8px 0 #000;
+    }
+    .main-btn.white{
+      background:#fff;
+      color:#111;
+    }
+    .main-btn.gradient{
+      background:linear-gradient(135deg,#6935f2 0%, #3a74ff 100%);
+      color:#fff;
+      box-shadow:0 0 0 8px rgba(110,74,255,.10), 8px 8px 0 #fff;
+      border-color:#fff;
+    }
+
+    .btn-icon{
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      background:#ffe36d;
+      border:4px solid #000;
+      box-shadow:4px 4px 0 #000;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
+    .btn-icon svg{width:24px;height:24px;fill:#111}
+
+    .btn-note{
+      margin-top:16px;
+      display:inline-flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      padding:12px 16px;
+      background:#fff7d8;
+      border:3px solid #000;
+      border-radius:20px;
+      box-shadow:5px 5px 0 #000;
+      font-weight:800;
+      color:var(--navy);
+      line-height:1.6;
+    }
+
+    .showcase-card{
+      border-radius:42px;
+      padding:20px;
+      position:relative;
+      overflow:hidden;
+      min-height:100%;
+    }
+
+    .showcase-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:#fff;
+      border:3px solid #000;
+      padding:10px 14px;
+      border-radius:999px;
+      box-shadow:4px 4px 0 #000;
+      font-weight:900;
+      color:var(--navy);
+      font-size:.95rem;
+    }
+
+    .chip.gold{background:#fff0a8}
+    .chip.blue{background:#dbe9ff}
+
+    .game-wall{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .mini-game{
+      position:relative;
+      padding:18px;
+      border-radius:28px;
+      border:4px solid #000;
+      min-height:164px;
+      box-shadow:6px 6px 0 #000;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      overflow:hidden;
+    }
+
+    .mini-game::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
+      pointer-events:none;
+    }
+
+    .mini-game.horof{
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,215,77,.22), transparent 28%),
+        linear-gradient(135deg,#162749 0%, #223769 45%, #2f4ea4 100%);
+      color:#fff;
+    }
+    .mini-game.barra{
+      background:
+        radial-gradient(circle at 82% 16%, rgba(255,229,113,.28), transparent 24%),
+        linear-gradient(135deg,#171717 0%, #2b2b2b 100%);
+      color:#fff;
+    }
+    .mini-game.khamn{
+      background:
+        radial-gradient(circle at 72% 24%, rgba(255,255,255,.18), transparent 24%),
+        linear-gradient(135deg,#8734f2 0%, #5a27d8 100%);
+      color:#fff;
+    }
+    .mini-game.bedoon{
+      background:
+        radial-gradient(circle at 22% 18%, rgba(255,233,129,.26), transparent 22%),
+        linear-gradient(135deg,#ff7b2a 0%, #ff5a14 100%);
+      color:#111;
+    }
+
+    .mini-game h3{
+      margin:0;
+      font-size:1.4rem;
+      font-weight:1000;
+      line-height:1.15;
+    }
+    .mini-game p{
+      margin:10px 0 0;
+      font-size:.95rem;
+      line-height:1.7;
+      opacity:.92;
+    }
+    .mini-tag{
+      width:max-content;
+      max-width:100%;
+      background:rgba(255,255,255,.18);
+      border:2px solid rgba(255,255,255,.85);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:.84rem;
+      font-weight:900;
+      backdrop-filter: blur(6px);
+    }
+    .bedoon .mini-tag{background:rgba(255,255,255,.65); border-color:#111}
+
+    .info-strip{
+      margin:14px auto 0;
+      padding:16px 18px;
+      border-radius:28px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--navy);
+      line-height:1.8;
+      font-weight:900;
+      width:min(calc(100% - 28px), 860px);
+    }
+
+    .section{
+      padding:26px 0;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+
+    .section-title{
+      margin:0;
+      font-size:clamp(1.65rem, 3vw, 2.4rem);
+      color:var(--navy);
+      font-weight:1000;
+      letter-spacing:-.5px;
+    }
+    .section-sub{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:1rem;
+      line-height:1.9;
+      max-width:720px;
+    }
+
+    .features-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .section-box{
+      border-radius:34px;
+      padding:26px 22px;
+      min-height:100%;
+    }
+
+    .feature-icon{
+      width:64px;
+      height:64px;
+      border-radius:22px;
+      border:4px solid #000;
+      box-shadow:5px 5px 0 #000;
+      display:grid;
+      place-items:center;
+      margin-bottom:16px;
+      background:#fff1a7;
+    }
+    .feature-icon svg{width:30px;height:30px;fill:#111}
+
+    .section-box h3{
+      margin:0 0 10px;
+      font-size:1.45rem;
+      font-weight:1000;
+      color:var(--navy);
+    }
+    .section-box p{
+      margin:0;
+      color:var(--muted);
+      font-size:1rem;
+      line-height:1.9;
+    }
+
+    .games-card{
+      border-radius:40px;
+      padding:24px;
+    }
+
+    .games-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .game-tile{
+      padding:18px;
+      border-radius:28px;
+      border:4px solid #000;
+      background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,.95));
+      box-shadow:6px 6px 0 #000;
+      min-height:178px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .game-tile:hover{transform:translateY(-4px); box-shadow:10px 10px 0 #000}
+
+    .game-pill{
+      width:max-content;
+      max-width:100%;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:.82rem;
+      font-weight:900;
+      border:3px solid #000;
+      box-shadow:4px 4px 0 #000;
+      background:#fff2a7;
+      color:#111;
+    }
+    .game-tile h4{
+      margin:16px 0 10px;
+      font-size:1.4rem;
+      font-weight:1000;
+      color:var(--navy);
+    }
+    .game-tile p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:.96rem;
+    }
+
+    .game-link{
+      margin-top:16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding-top:14px;
+      border-top:2px dashed rgba(19,35,63,.18);
+      font-weight:900;
+      color:var(--navy);
+    }
+
+    .cta-box{
+      margin-top:24px;
+      border-radius:42px;
+      padding:28px;
+      background:
+        radial-gradient(circle at 8% 18%, rgba(255,255,255,.14), transparent 18%),
+        linear-gradient(135deg,#152441 0%, #21315b 46%, #3e59bb 100%);
+      color:#fff;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cta-box::after{
+      content:"";
+      position:absolute;
+      inset:auto -60px -70px auto;
+      width:220px;
+      height:220px;
+      background:radial-gradient(circle, rgba(255,220,98,.26), transparent 68%);
+      border-radius:50%;
+      pointer-events:none;
+    }
+
+    .cta-title{
+      margin:0 0 10px;
+      font-size:clamp(1.8rem, 3vw, 2.5rem);
+      font-weight:1000;
+      line-height:1.2;
+    }
+    .cta-text{
+      margin:0;
+      line-height:1.95;
+      color:rgba(255,255,255,.88);
+      max-width:760px;
+      font-size:1.04rem;
+    }
+
+    .cta-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    .small-action{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:14px 18px;
+      border-radius:999px;
+      font-weight:1000;
+      border:4px solid #000;
+      box-shadow:6px 6px 0 #000;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .small-action:hover{transform:translateY(-3px); box-shadow:9px 9px 0 #000}
+    .small-action.light{background:#fff;color:#111}
+    .small-action.gold{background:#ffe36d;color:#111}
+
+    .footer{
+      padding:26px 0 40px;
+    }
+
+    .footer-box{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:18px 22px;
+      background:rgba(255,253,247,.78);
+      border:4px solid #000;
+      border-radius:30px;
+      box-shadow:8px 8px 0 #000;
+    }
+    .footer-text{
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
+      font-weight:700;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    .reveal.show{
+      opacity:1;
+      transform:none;
+    }
+
+    @keyframes floatSlow {
+      0%,100%{transform:translateY(0) translateX(0)}
+      50%{transform:translateY(-18px) translateX(8px)}
+    }
+    @keyframes twinkle {
+      0%,100%{transform:scale(.95) rotate(0deg)}
+      50%{transform:scale(1.15) rotate(12deg)}
+    }
+    @keyframes bob {
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-10px) rotate(4deg)}
+    }
+
+    @media (max-width: 1024px){
+      .hero-grid,
+      .features-grid,
+      .games-grid{grid-template-columns:1fr 1fr}
+      .showcase-card{order:-1}
+    }
+
+    @media (max-width: 780px){
+      .nav-shell{border-radius:30px}
+      .nav-actions{display:none}
+      .hero{padding-top:22px}
+      .hero-grid,
+      .features-grid,
+      .games-grid,
+      .game-wall{grid-template-columns:1fr}
+      .hero-card,
+      .showcase-card,
+      .games-card,
+      .section-box,
+      .cta-box{border-radius:30px}
+      .hero-card{padding:22px 18px}
+      .hero-title{font-size:clamp(2.25rem, 12vw, 4rem)}
+      .title-accent{width:100%; text-align:center}
+      .main-btn{min-height:76px; font-size:1.15rem; padding:14px 18px}
+      .btn-icon{width:48px;height:48px}
+      .info-strip{font-size:.95rem; line-height:1.7}
+      .section-box{padding:22px 18px}
+      .cta-actions{flex-direction:column}
+      .small-action{justify-content:center}
+      .ring{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+    <div class="spark s1"></div>
+    <div class="spark s2"></div>
+    <div class="spark s3"></div>
+    <div class="spark s4"></div>
+
+    <div class="ring r1" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M7 6h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2.8L11 20v-3H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/></svg>
+    </div>
+    <div class="ring r2" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 3a2 2 0 0 1 2 2v1.1a6.9 6.9 0 0 1 2.3 1L17.1 6a2 2 0 1 1 2.8 2.8L18.9 9.6a6.9 6.9 0 0 1 1 2.3H21a2 2 0 1 1 0 4h-1.1a6.9 6.9 0 0 1-1 2.3l.9.9a2 2 0 1 1-2.8 2.8l-.8-.8a6.9 6.9 0 0 1-2.3 1V23a2 2 0 1 1-4 0v-1.1a6.9 6.9 0 0 1-2.3-1l-.8.8A2 2 0 1 1 4 18.9l.9-.9a6.9 6.9 0 0 1-1-2.3H3a2 2 0 1 1 0-4h1.1a6.9 6.9 0 0 1 1-2.3l-.9-.8A2 2 0 0 1 7 6l.8.9a6.9 6.9 0 0 1 2.3-1V5a2 2 0 0 1 2-2Zm0 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/></svg>
+    </div>
+    <div class="ring r3" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M17 4a3 3 0 0 1 3 3v3.2a4.8 4.8 0 0 1-1.4 3.4l-4.2 4.2a4.8 4.8 0 0 1-3.4 1.4H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10Zm-4.5 4A2.5 2.5 0 1 0 15 10.5 2.5 2.5 0 0 0 12.5 8Z"/></svg>
+    </div>
+    <div class="ring r4" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M9 6.5A2.5 2.5 0 1 1 11.5 9 2.5 2.5 0 0 1 9 6.5ZM5 10h13a3 3 0 0 1 3 3v3.5a1.5 1.5 0 0 1-1.5 1.5H18V20a1 1 0 0 1-1.45.9L13 19l-3.55 1.9A1 1 0 0 1 8 20v-2H5.5A1.5 1.5 0 0 1 4 16.5V13a3 3 0 0 1 1-3Z"/></svg>
+    </div>
+
+    <header class="nav container reveal">
+      <div class="nav-shell">
+        <div class="brand">
+          <div class="brand-badge" aria-hidden="true"><span>صندوق<br>المسابقات</span></div>
+          <div class="brand-text">
+            <p class="brand-title">صندوق المسابقات</p>
+            <p class="brand-sub">منصة ألعاب عربية مرتبة في مكان واحد</p>
+          </div>
+        </div>
+
+        <div class="nav-actions">
+          <a class="mini-pill" href="#games">الألعاب</a>
+          <a class="mini-pill" href="login.html">تسجيل الدخول</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <div class="hero-grid">
+          <div class="hero-card reveal">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              المنصة الرسمية لألعاب صندوق المسابقات
+            </div>
+
+            <h1 class="hero-title">
+              العب أحلى الألعاب
+              <span class="title-accent">واكتشف كل ألعابنا من مكان واحد</span>
+            </h1>
+
+            <p class="hero-desc">
+              موقع واحد يجمع ألعابنا كلها بشكل أنيق وواضح: تصفّح، شاهد الشرح، تعرّف على المميزات، تواصل مع خدمة العملاء، ثم اشترِ لعبتك من المتجر بسهولة. ولاحقًا تقدر تسجّل دخولك وتلقى ألعابك الجاهزة في نفس المكان.
+            </p>
+
+            <div class="action-stack">
+              <a class="main-btn black" href="#games">
+                <span class="btn-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M6 7h12a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3h-2l-2.8-2.2H10.8L8 17H6a3 3 0 0 1-3-3v-4a3 3 0 0 1 3-3Zm1.8 3.2a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Zm8.4 0a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Z"/></svg>
+                </span>
+                تصفّح ألعابنا الرهيبة
+              </a>
+
+              <a class="main-btn white" href="login.html">
+                <span class="btn-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M10 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm7 1h2a1 1 0 0 1 1 1v12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-2h2v2h9V7h-1V5Zm-6.7 9.3 1.4 1.4L9.4 18H15v2H6v-9h2v5.6l2.3-2.3Z"/></svg>
+                </span>
+                تسجيل الدخول
+              </a>
+
+              <a class="main-btn gradient" href="signup.html">
+                <span class="btn-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm0 9c4.2 0 7 2.2 7 4.5V20H5v-1.5C5 16.2 7.8 14 12 14Zm7-8h-2V4h-2v2h-2v2h2v2h2V8h2V6Z"/></svg>
+                </span>
+                إنشاء حساب جديد
+              </a>
+            </div>
+
+            <div class="btn-note">
+              الشراء يتم من المتجر • هذا الموقع للعرض والشرح والدخول الموحّد لاحقًا
+            </div>
+          </div>
+
+          <aside class="showcase-card reveal">
+            <div class="showcase-top">
+              <span class="chip gold">واجهة موحدة</span>
+              <span class="chip blue">جاهزة للإعلانات وظهور Google</span>
+            </div>
+
+            <div class="game-wall" aria-label="أمثلة على الألعاب">
+              <article class="mini-game horof">
+                <div>
+                  <span class="mini-tag">الأكثر طلبًا</span>
+                  <h3>سباق الحروف</h3>
+                  <p>تحدٍ جماعي حي مع جرس ومؤقت وأسئلة جاهزة.</p>
+                </div>
+              </article>
+
+              <article class="mini-game barra">
+                <div>
+                  <span class="mini-tag">جلسات وسهرات</span>
+                  <h3>برا السالفة</h3>
+                  <p>لعبة خفيفة وسريعة ترفع الحماس والضحك.</p>
+                </div>
+              </article>
+
+              <article class="mini-game khamn">
+                <div>
+                  <span class="mini-tag">تحدي بصري</span>
+                  <h3>خمن الصورة</h3>
+                  <p>أسلوب ممتع وبسيط يناسب العائلة والفعاليات.</p>
+                </div>
+              </article>
+
+              <article class="mini-game bedoon">
+                <div>
+                  <span class="mini-tag">بدون كلام</span>
+                  <h3>تمثيل وتفاعل</h3>
+                  <p>تجربة مرحة للحفلات والأنشطة الجماعية.</p>
+                </div>
+              </article>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="info-strip reveal">
+        مكان واحد لعرض الألعاب وشرحها ومميزاتها وخدمة العملاء، ومع التطوير القادم يصبح أيضًا بوابة دخول موحدة للعملاء السابقين.
+      </div>
+
+      <section class="section container">
+        <div class="section-head reveal">
+          <div>
+            <h2 class="section-title">وش يميز المنصة؟</h2>
+            <p class="section-sub">
+              صفحة رئيسية تخدمك في التسويق والإعلانات والبحث في Google، وتخدم عميلك الحالي والجديد في نفس الوقت بدون ما تلخبط بين روابط الألعاب والمتجر.
+            </p>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <article class="section-box reveal">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-3 3-3-3H6a2 2 0 0 1-2-2V6Zm4 3h8v2H8V9Zm0 4h5v2H8v-2Z"/></svg>
+            </div>
+            <h3>عرض وشرح مرتب</h3>
+            <p>كل لعبة لها مكان واضح: صورة، فكرة، مميزات، فيديو شرح، وخدمة عملاء. العميل يفهم بسرعة قبل الشراء ويحس بقيمة البراند من أول ثانية.</p>
+          </article>
+
+          <article class="section-box reveal">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3 2 8l10 5 8-4v6h2V8L12 3Zm-7 8.7V15c0 2.2 3.1 4 7 4s7-1.8 7-4v-3.3l-7 3.5-7-3.5Z"/></svg>
+            </div>
+            <h3>مرجع موحد للعملاء</h3>
+            <p>إذا ضاع رابط اللعبة أو المتجر، يكفي يبحث العميل عن صندوق المسابقات ويلقى المنصة. لاحقًا يسجل دخول ويشوف الألعاب اللي سبق اشتراها من مكان واحد.</p>
+          </article>
+
+          <article class="section-box reveal">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M11 3H5a2 2 0 0 0-2 2v14l4-3h4V3Zm2 0v13h4l4 3V5a2 2 0 0 0-2-2h-6Z"/></svg>
+            </div>
+            <h3>جاهزة للإعلانات وGoogle</h3>
+            <p>بدل توزيع الحملات على روابط كثيرة، تقدر توجه الزوار لمنصة واحدة قوية تعرّفهم على ألعابك كلها وتخلّيهم ينتقلون للمتجر وقت الشراء بشكل أنيق.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section container" id="games">
+        <div class="games-card reveal">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">نظرة أولية على ألعابنا</h2>
+              <p class="section-sub">هذه مجرد بداية للعرض داخل الموقع. لاحقًا كل لعبة يكون لها صفحة مستقلة كاملة فيها الشرح، المميزات، الفيديو، وزر شراء اللعبة من المتجر.</p>
+            </div>
+          </div>
+
+          <div class="games-grid">
+            <article class="game-tile reveal">
+              <span class="game-pill">لعبة جماعية أونلاين</span>
+              <div>
+                <h4>سباق الحروف</h4>
+                <p>تحدي عربي تفاعلي مع شاشة مقدم وجرس للاعبين وأسئلة جاهزة ومخصصة.</p>
+              </div>
+              <div class="game-link"><span>صفحتها قريبًا</span><span>←</span></div>
+            </article>
+
+            <article class="game-tile reveal">
+              <span class="game-pill">جلسات وسوالف</span>
+              <div>
+                <h4>برا السالفة</h4>
+                <p>لعبة اجتماعية سريعة وخفيفة تناسب اللمة والضحك والتحدي السريع.</p>
+              </div>
+              <div class="game-link"><span>صفحتها قريبًا</span><span>←</span></div>
+            </article>
+
+            <article class="game-tile reveal">
+              <span class="game-pill">تمثيل بدون كلام</span>
+              <div>
+                <h4>بدون كلام</h4>
+                <p>فكرة مرحة تعتمد على التمثيل والحماس وتناسب الفعاليات والحفلات.</p>
+              </div>
+              <div class="game-link"><span>صفحتها قريبًا</span><span>←</span></div>
+            </article>
+
+            <article class="game-tile reveal">
+              <span class="game-pill">تحديات وصور</span>
+              <div>
+                <h4>خمن الصورة</h4>
+                <p>لعبة بصرية ممتعة، سريعة، وواضحة، تعطي جو تنافسي حلو وسهل.</p>
+              </div>
+              <div class="game-link"><span>صفحتها قريبًا</span><span>←</span></div>
+            </article>
+          </div>
+
+          <div class="cta-box reveal">
+            <h3 class="cta-title">منصة واحدة تفتح لك بابين</h3>
+            <p class="cta-text">
+              الباب الأول للعملاء الجدد: يتصفحون، يقتنعون، ويشترون من المتجر. والباب الثاني للعملاء الحاليين: يسجلون دخولهم لاحقًا وتظهر لهم ألعابهم المشتراة ليدخلوا عليها مباشرة من نفس المنصة.
+            </p>
+            <div class="cta-actions">
+              <a class="small-action gold" href="#">خدمة العملاء</a>
+              <a class="small-action light" href="login.html">الدخول إلى حسابي</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer container reveal">
+      <div class="footer-box">
+        <p class="footer-text">صندوق المسابقات — منصة موحدة لعرض الألعاب، الشرح، وخدمة العملاء، مع قابلية التوسع للدخول الموحد لاحقًا.</p>
+        <a class="mini-pill" href="#top">الرجوع للأعلى</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
