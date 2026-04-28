@@ -372,6 +372,8 @@
       background:var(--blue);
       color:var(--white);
       display:flex;
+      flex-direction:row;
+      direction:ltr;
       align-items:center;
       justify-content:center;
       gap:9px;
@@ -428,6 +430,30 @@
       align-items:center;
       padding:8px 8px calc(8px + env(safe-area-inset-bottom));
       box-shadow:0 -5px 18px rgba(0,0,0,.16);
+      isolation:isolate;
+      --indicator-w:calc((100% - 16px) / 4);
+      --indicator-h:72px;
+      --indicator-x:calc(100% - 8px - var(--indicator-w));
+      --indicator-y:8px;
+    }
+
+    .nav-indicator{
+      position:absolute;
+      top:0;
+      left:0;
+      width:var(--indicator-w);
+      height:var(--indicator-h);
+      border-radius:22px;
+      background:var(--blue);
+      border:2px solid rgba(255,255,255,.2);
+      box-shadow:0 5px 0 rgba(0,0,0,.2);
+      transform:translate3d(var(--indicator-x), var(--indicator-y), 0);
+      transition:
+        transform .28s cubic-bezier(.22, 1, .36, 1),
+        width .28s cubic-bezier(.22, 1, .36, 1),
+        height .28s cubic-bezier(.22, 1, .36, 1);
+      pointer-events:none;
+      z-index:0;
     }
 
     .nav-item{
@@ -444,13 +470,13 @@
       line-height:1.1;
       text-align:center;
       position:relative;
+      z-index:1;
+      transition:color .2s ease, transform .2s ease;
     }
 
     .nav-item.active{
-      background:var(--blue);
       color:#fff;
-      border:2px solid rgba(255,255,255,.2);
-      box-shadow:0 5px 0 rgba(0,0,0,.2);
+      transform:translateY(-1px);
     }
 
     .nav-icon{
@@ -459,6 +485,7 @@
       display:grid;
       place-items:center;
       color:currentColor;
+      transition:color .2s ease, transform .2s ease;
     }
 
     .nav-icon svg{
@@ -474,6 +501,7 @@
 
     .nav-item.active .nav-icon{
       color:var(--yellow-light);
+      transform:scale(1.04);
     }
 
     @media (max-width:430px){
@@ -722,6 +750,7 @@
   </div>
 
   <nav class="bottom-nav" aria-label="التنقل السفلي">
+    <span class="nav-indicator" aria-hidden="true"></span>
     <a class="nav-item active" href="#games">
       <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
       <span>الألعاب</span>
@@ -742,5 +771,43 @@
       <span>خدمة العملاء</span>
     </a>
   </nav>
+
+
+  <script>
+    const bottomNav = document.querySelector('.bottom-nav');
+    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+
+    function moveBottomNavIndicator(item) {
+      if (!bottomNav || !item) return;
+
+      const navRect = bottomNav.getBoundingClientRect();
+      const itemRect = item.getBoundingClientRect();
+
+      bottomNav.style.setProperty('--indicator-x', `${itemRect.left - navRect.left}px`);
+      bottomNav.style.setProperty('--indicator-y', `${itemRect.top - navRect.top}px`);
+      bottomNav.style.setProperty('--indicator-w', `${itemRect.width}px`);
+      bottomNav.style.setProperty('--indicator-h', `${itemRect.height}px`);
+    }
+
+    function setActiveNavItem(item) {
+      navItems.forEach(navItem => navItem.classList.remove('active'));
+      item.classList.add('active');
+      moveBottomNavIndicator(item);
+    }
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        setActiveNavItem(item);
+      });
+    });
+
+    window.addEventListener('load', () => {
+      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+    });
+
+    window.addEventListener('resize', () => {
+      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+    });
+  </script>
 </body>
 </html>
