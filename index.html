@@ -20,9 +20,9 @@
       --muted:#333b4a;
       --green:#2faf72;
       --line:#222222;
-      --layout-max:1280px;
+      --layout-max:1560px;
       --nav-max:860px;
-      --page-pad:clamp(14px, 4vw, 72px);
+      --page-pad:clamp(14px, 4vw, 64px);
       --bottom-nav-height:clamp(88px, 7vw, 96px);
       --card-radius:clamp(13px, 1.2vw, 19px);
     }
@@ -78,12 +78,13 @@
       position:relative;
       background:var(--blue-deep);
       min-height:clamp(330px, 42dvh, 430px);
-      padding:clamp(10px, 1.4vw, 20px) var(--page-pad) clamp(26px, 4vw, 54px);
+      padding:clamp(62px, 6.5vw, 86px) var(--page-pad) clamp(28px, 4vw, 58px);
       border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
       overflow:hidden;
       isolation:isolate;
       display:flex;
       flex-direction:column;
+      justify-content:center;
     }
 
     .hero::before{
@@ -118,10 +119,16 @@
     }
 
     .top-row{
-      width:100%;
-      max-width:var(--layout-max);
-      margin-inline:auto;
+      position:absolute;
+      top:clamp(12px, 1.6vw, 24px);
+      left:clamp(12px, 2.2vw, 34px);
+      right:clamp(12px, 2.2vw, 34px);
+      z-index:3;
+      width:auto;
+      max-width:none;
+      margin:0;
       display:flex;
+      direction:rtl;
       align-items:center;
       justify-content:space-between;
       gap:clamp(10px, 2vw, 24px);
@@ -163,7 +170,7 @@
     .logo-wrap{
       width:clamp(130px, 10vw, 170px);
       min-height:clamp(88px, 8vw, 120px);
-      margin:clamp(20px, 2.8vw, 42px) auto clamp(8px, 1vw, 16px);
+      margin:0 auto clamp(10px, 1.2vw, 18px);
       display:grid;
       place-items:center;
       position:relative;
@@ -575,9 +582,9 @@
       }
     }
 
-    @media (min-width:1440px){
+    @media (min-width:1600px){
       :root{
-        --layout-max:1400px;
+        --layout-max:1560px;
       }
 
       .games-grid{
@@ -593,6 +600,7 @@
 
       .hero{
         min-height:330px;
+        padding-top:58px;
       }
 
       .cover span{
