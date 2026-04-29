@@ -3,28 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>صندوق المسابقات | ألعاب جماعية تفاعلية</title>
-  <meta name="description" content="صندوق المسابقات منصة ألعاب جماعية تفاعلية للعائلة والمدرسة والفعاليات. تصفح الألعاب، شاهد تفاصيل كل لعبة، واشترِ من المتجر الرسمي بسهولة." />
-  <meta name="theme-color" content="#087ca8" />
+  <title>صندوق المسابقات | ألعاب جماعية جاهزة للتجمعات والفعاليات</title>
+  <meta name="description" content="صندوق المسابقات واجهتك الرسمية للألعاب الجماعية الرقمية. اشترِ اللعبة من المتجر، فعّل الكود، وابدأ اللعب خلال دقائق مع ألعاب مناسبة للعائلة والمعلمين والفعاليات." />
+  <meta name="theme-color" content="#075C82" />
 
   <style>
     :root{
-      --blue:#087ca8;
-      --blue-dark:#075c82;
-      --blue-deep:#066FAE;
-      --blue-soft:#55bdf2;
-      --yellow:#f7b638;
-      --yellow-light:#ffd76b;
-      --white:#ffffff;
-      --ink:#111827;
-      --muted:#333b4a;
-      --green:#2faf72;
-      --line:#222222;
-      --layout-max:1560px;
-      --nav-max:860px;
-      --page-pad:clamp(14px, 4vw, 64px);
-      --bottom-nav-height:clamp(88px, 7vw, 96px);
-      --card-radius:clamp(13px, 1.2vw, 19px);
+      --blue-dark:#075C82;
+      --blue:#0EA5D8;
+      --blue-deep:#064F73;
+      --blue-soft:#E9F8FF;
+      --blue-sky:#55BDF2;
+      --yellow:#F7B638;
+      --yellow-soft:#FFE08A;
+      --cream:#FFF8E7;
+      --white:#FFFFFF;
+      --ink:#102033;
+      --muted:#4D6375;
+      --green:#2FAF72;
+      --line:rgba(16,32,51,.18);
+      --shadow-soft:0 20px 45px rgba(6,79,115,.16);
+      --shadow-card:0 12px 0 rgba(16,32,51,.12), 0 22px 40px rgba(6,79,115,.12);
+      --layout-max:1320px;
+      --nav-max:760px;
+      --page-pad:clamp(16px, 4vw, 64px);
+      --bottom-nav-height:clamp(86px, 8vw, 98px);
+      --radius-lg:clamp(22px, 2vw, 32px);
+      --radius-md:18px;
     }
 
     *{
@@ -47,6 +52,11 @@
       font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
       background:var(--blue-soft);
       overflow-x:hidden;
+    }
+
+    body::selection{
+      background:var(--yellow-soft);
+      color:var(--ink);
     }
 
     a{
@@ -74,103 +84,124 @@
       padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
     }
 
+    .container{
+      width:min(100%, var(--layout-max));
+      margin-inline:auto;
+      padding-inline:var(--page-pad);
+    }
+
     .hero{
       position:relative;
-      background:var(--blue-deep);
-      min-height:clamp(330px, 42dvh, 430px);
-      padding:clamp(62px, 6.5vw, 86px) var(--page-pad) clamp(28px, 4vw, 58px);
-      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
+      min-height:clamp(430px, 56dvh, 640px);
+      padding-block:calc(env(safe-area-inset-top) + clamp(18px, 2.4vw, 28px)) clamp(34px, 5vw, 70px);
       overflow:hidden;
       isolation:isolate;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+      background:
+        radial-gradient(circle at 14% 88%, rgba(255,224,138,.24), transparent 28%),
+        radial-gradient(circle at 83% 17%, rgba(255,255,255,.16), transparent 26%),
+        linear-gradient(135deg, var(--blue-deep), #087CAF 48%, var(--blue));
+      border-bottom:1px solid rgba(16,32,51,.22);
     }
 
     .hero::before{
       content:"";
       position:absolute;
-      inset:-14px;
+      inset:-18px;
       z-index:-2;
       opacity:.18;
       background-image:
-        radial-gradient(circle, rgba(255,255,255,.78) 0 2px, transparent 2.4px),
-        radial-gradient(circle, rgba(255,255,255,.5) 0 1.4px, transparent 1.8px);
-      background-size:24px 24px, 38px 38px;
-      background-position:0 0, 10px 12px;
+        radial-gradient(circle, rgba(255,255,255,.82) 0 2px, transparent 2.45px),
+        radial-gradient(circle, rgba(255,255,255,.45) 0 1.35px, transparent 1.8px);
+      background-size:26px 26px, 42px 42px;
+      background-position:0 0, 12px 16px;
       animation:dotsMove 18s linear infinite;
     }
 
     .hero::after{
       content:"";
       position:absolute;
-      width:clamp(250px, 32vw, 520px);
-      height:clamp(250px, 32vw, 520px);
-      left:clamp(-210px, -12vw, -80px);
-      bottom:clamp(-220px, -12vw, -95px);
+      width:clamp(260px, 34vw, 540px);
+      height:clamp(260px, 34vw, 540px);
+      left:clamp(-250px, -13vw, -90px);
+      bottom:clamp(-245px, -13vw, -105px);
       border-radius:50%;
-      background:rgba(255,255,255,.08);
+      background:rgba(255,255,255,.1);
       z-index:-1;
     }
 
     @keyframes dotsMove{
       from{transform:translate3d(0,0,0)}
-      to{transform:translate3d(24px,24px,0)}
+      to{transform:translate3d(26px,26px,0)}
     }
 
     .top-row{
-      position:absolute;
-      top:clamp(12px, 1.6vw, 24px);
-      left:clamp(12px, 2.2vw, 34px);
-      right:clamp(12px, 2.2vw, 34px);
-      z-index:3;
-      width:auto;
-      max-width:none;
-      margin:0;
+      position:relative;
+      z-index:4;
       display:flex;
       direction:rtl;
       align-items:center;
       justify-content:space-between;
-      gap:clamp(10px, 2vw, 24px);
-      min-height:clamp(34px, 4vw, 52px);
+      gap:16px;
     }
 
     .brand-title{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
       color:var(--white);
       font-weight:950;
-      font-size:clamp(18px, 1.55vw, 26px);
+      font-size:clamp(18px, 2vw, 30px);
+      line-height:1.1;
       letter-spacing:.1px;
-      text-shadow:0 2px 0 rgba(0,0,0,.12);
+      text-shadow:0 3px 0 rgba(0,0,0,.12);
       white-space:nowrap;
+    }
+
+    .brand-title::before{
+      content:"";
+      width:clamp(10px, 1vw, 13px);
+      height:clamp(10px, 1vw, 13px);
+      border-radius:50%;
+      background:var(--yellow);
+      box-shadow:0 0 0 5px rgba(247,182,56,.18);
     }
 
     .login-chip{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-height:clamp(30px, 3vw, 42px);
-      padding:clamp(5px, .8vw, 10px) clamp(12px, 1.7vw, 22px);
-      border-radius:clamp(12px, 1.2vw, 16px);
-      background:var(--green);
+      min-height:clamp(38px, 4.2vw, 50px);
+      padding:8px clamp(15px, 2vw, 24px);
+      border-radius:999px;
+      background:linear-gradient(180deg, #37C783, var(--green));
       color:var(--white);
       border:2px solid rgba(255,255,255,.35);
-      box-shadow:0 3px 0 rgba(0,0,0,.2);
+      box-shadow:0 5px 0 rgba(16,32,51,.16), 0 12px 28px rgba(47,175,114,.25);
       font-weight:950;
-      font-size:clamp(14px, 1.15vw, 18px);
+      font-size:clamp(14px, 1.25vw, 18px);
       line-height:1;
       white-space:nowrap;
       transition:transform .18s ease, filter .18s ease;
     }
 
     .login-chip:hover{
-      transform:translateY(-1px);
-      filter:saturate(1.08);
+      transform:translateY(-2px);
+      filter:saturate(1.05);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:2;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding-top:clamp(32px, 5vw, 74px);
     }
 
     .logo-wrap{
-      width:clamp(130px, 10vw, 170px);
-      min-height:clamp(88px, 8vw, 120px);
-      margin:0 auto clamp(10px, 1.2vw, 18px);
+      width:clamp(96px, 10vw, 148px);
+      min-height:clamp(70px, 7vw, 98px);
+      margin-inline:auto;
       display:grid;
       place-items:center;
       position:relative;
@@ -179,134 +210,248 @@
 
     @keyframes floatLogo{
       0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-5px)}
+      50%{transform:translateY(-6px)}
     }
 
     .logo-wrap img{
-      width:clamp(122px, 9.5vw, 160px);
-      max-height:clamp(86px, 8vw, 118px);
+      width:100%;
+      max-height:clamp(72px, 8vw, 108px);
       object-fit:contain;
-      filter:drop-shadow(0 7px 0 rgba(0,0,0,.14));
+      filter:drop-shadow(0 9px 0 rgba(0,0,0,.14));
     }
 
     .logo-fallback{
-      width:clamp(126px, 9.5vw, 160px);
-      height:clamp(80px, 7.4vw, 112px);
+      width:clamp(102px, 10vw, 148px);
+      min-height:clamp(70px, 7vw, 96px);
       display:none;
       place-items:center;
       border:3px solid rgba(255,255,255,.78);
-      border-radius:clamp(18px, 1.8vw, 28px);
+      border-radius:20px;
       background:rgba(255,255,255,.12);
       color:#fff;
       text-align:center;
-      font-size:clamp(18px, 1.35vw, 24px);
       font-weight:950;
       line-height:1.25;
-      text-shadow:0 2px 0 rgba(0,0,0,.12);
+      text-shadow:0 2px 0 rgba(0,0,0,.14);
     }
 
-    .hero-text{
-      width:100%;
-      max-width:min(920px, 100%);
-      margin:clamp(14px, 1.8vw, 24px) auto 0;
-      text-align:center;
+    .hero-copy{
+      width:min(100%, 960px);
+      margin-top:clamp(18px, 2.4vw, 30px);
       color:var(--white);
       display:flex;
       flex-direction:column;
-      gap:clamp(6px, 1vw, 14px);
+      align-items:center;
+      gap:clamp(12px, 1.4vw, 18px);
     }
 
-    .hero-headline{
+    .hero-eyebrow{
       margin:0;
-      font-weight:950;
-      font-size:clamp(25px, 3.4vw, 42px);
-      line-height:1.35;
-      text-shadow:0 3px 0 rgba(0,0,0,.14);
-    }
-
-    .hero-line{
-      margin:0;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:34px;
+      padding:7px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.28);
+      color:#FDFEFF;
       font-weight:850;
+      font-size:clamp(13px, 1.1vw, 16px);
+      line-height:1.25;
+      backdrop-filter:blur(8px);
+    }
+
+    .hero-eyebrow::before{
+      content:"✦";
+      color:var(--yellow-soft);
+    }
+
+    .hero-title{
+      margin:0;
+      max-width:980px;
+      font-weight:950;
+      font-size:clamp(34px, 5vw, 68px);
+      line-height:1.22;
+      letter-spacing:-.7px;
+      text-shadow:0 5px 0 rgba(0,0,0,.13);
+    }
+
+    .hero-lead{
+      margin:0;
+      max-width:760px;
+      color:rgba(255,255,255,.95);
+      font-weight:800;
       font-size:clamp(18px, 2vw, 27px);
-      line-height:1.55;
-      text-shadow:0 2px 0 rgba(0,0,0,.11);
+      line-height:1.75;
+      text-shadow:0 2px 0 rgba(0,0,0,.1);
+    }
+
+    .hero-actions{
+      width:min(100%, 720px);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      margin-top:clamp(4px, 1vw, 12px);
+    }
+
+    .hero-btn{
+      min-height:clamp(48px, 4.4vw, 60px);
+      border-radius:999px;
+      padding:12px clamp(18px, 2.6vw, 32px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      font-weight:950;
+      font-size:clamp(15px, 1.3vw, 19px);
+      line-height:1;
+      border:2px solid transparent;
+      box-shadow:0 7px 0 rgba(16,32,51,.16), 0 18px 32px rgba(6,79,115,.18);
+      transition:transform .18s ease, filter .18s ease, background .18s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .hero-btn:hover{
+      transform:translateY(-2px);
+      filter:saturate(1.05);
+    }
+
+    .hero-btn.primary{
+      background:linear-gradient(180deg, var(--yellow-soft), var(--yellow));
+      color:var(--ink);
+      border-color:rgba(255,255,255,.36);
+    }
+
+    .hero-btn.secondary{
+      background:var(--white);
+      color:var(--blue-dark);
+      border-color:rgba(255,255,255,.48);
+    }
+
+    .hero-btn.ghost{
+      background:rgba(255,255,255,.12);
+      color:var(--white);
+      border-color:rgba(255,255,255,.34);
+      box-shadow:none;
+      backdrop-filter:blur(8px);
+    }
+
+    .hero-badges{
+      width:min(100%, 860px);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      margin-top:clamp(4px, 1vw, 12px);
+    }
+
+    .hero-badge{
+      min-height:34px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      padding:7px 12px;
+      border-radius:999px;
+      color:#F7FCFF;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.2);
+      font-weight:850;
+      font-size:clamp(12px, 1vw, 15px);
+      backdrop-filter:blur(8px);
+    }
+
+    .hero-badge strong{
+      color:var(--yellow-soft);
     }
 
     .section-title{
-      background:var(--yellow);
-      color:#111;
-      min-height:clamp(58px, 5vw, 76px);
-      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
+      min-height:clamp(64px, 7vw, 92px);
+      background:linear-gradient(180deg, var(--yellow-soft), var(--yellow));
+      border-block:1px solid rgba(16,32,51,.24);
       display:grid;
       place-items:center;
-      padding:8px var(--page-pad);
-      font-size:clamp(26px, 2.5vw, 38px);
-      font-weight:950;
-      letter-spacing:.2px;
       text-align:center;
+      box-shadow:0 10px 24px rgba(16,32,51,.1);
+      position:relative;
+      z-index:2;
+    }
+
+    .section-title h2{
+      margin:0;
+      color:var(--ink);
+      font-size:clamp(28px, 4vw, 48px);
+      font-weight:950;
+      letter-spacing:-.3px;
+      line-height:1.2;
     }
 
     .games-area{
-      background:var(--blue-soft);
-      padding:clamp(22px, 3.2vw, 42px) var(--page-pad) clamp(38px, 7vw, 96px);
       position:relative;
       overflow:hidden;
+      background:
+        radial-gradient(circle at 8% 5%, rgba(255,224,138,.28), transparent 20%),
+        linear-gradient(180deg, #7FD1F4 0%, var(--blue-sky) 46%, #42AEE5 100%);
+      padding-block:clamp(24px, 4vw, 54px) clamp(42px, 6vw, 88px);
     }
 
     .games-area::before{
       content:"";
       position:absolute;
       inset:0;
-      opacity:.12;
-      background-image:radial-gradient(circle, rgba(255,255,255,.95) 0 2px, transparent 2.3px);
-      background-size:28px 28px;
+      opacity:.16;
+      background-image:radial-gradient(circle, rgba(255,255,255,.96) 0 2px, transparent 2.35px);
+      background-size:30px 30px;
       pointer-events:none;
     }
 
     .games-grid{
-      width:100%;
-      max-width:var(--layout-max);
-      margin-inline:auto;
       position:relative;
       z-index:1;
       display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:clamp(20px, 3vw, 44px) clamp(16px, 3vw, 38px);
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:clamp(18px, 3vw, 34px);
       align-items:stretch;
     }
 
     .game-card{
-      min-width:0;
-      border:clamp(2px, .25vw, 3px) solid var(--line);
-      border-radius:var(--card-radius);
-      background:var(--white);
-      padding:clamp(7px, 1vw, 14px) clamp(7px, 1vw, 14px) clamp(11px, 1.4vw, 18px);
+      min-height:clamp(292px, 30vw, 390px);
+      border:1px solid rgba(16,32,51,.2);
+      border-radius:var(--radius-md);
+      background:linear-gradient(180deg, var(--white), var(--cream));
+      padding:clamp(8px, 1vw, 13px) clamp(8px, 1vw, 13px) clamp(12px, 1.2vw, 16px);
       display:flex;
       flex-direction:column;
       align-items:stretch;
-      box-shadow:0 clamp(4px, .7vw, 8px) 0 rgba(0,0,0,.18);
+      box-shadow:var(--shadow-card);
       overflow:hidden;
       transition:transform .18s ease, box-shadow .18s ease;
     }
 
     .game-card:hover{
-      transform:translateY(-3px);
-      box-shadow:0 clamp(6px, .9vw, 10px) 0 rgba(0,0,0,.18);
+      transform:translateY(-4px);
+      box-shadow:0 14px 0 rgba(16,32,51,.12), 0 28px 45px rgba(6,79,115,.14);
     }
 
     .cover{
       width:100%;
       aspect-ratio:1 / 1;
       height:auto;
-      border-radius:calc(var(--card-radius) - 4px);
-      border:1.5px solid rgba(0,0,0,.18);
+      border-radius:calc(var(--radius-md) - 5px);
+      border:1px solid rgba(16,32,51,.18);
       overflow:hidden;
       position:relative;
       display:grid;
       place-items:center;
       text-align:center;
       isolation:isolate;
-      background:#e9eef4;
+      background:#EAF1F5;
     }
 
     .cover::before{
@@ -314,11 +459,11 @@
       position:absolute;
       inset:0;
       z-index:-2;
-      opacity:.88;
+      opacity:.92;
       background:
         linear-gradient(135deg, rgba(255,255,255,.38), transparent 42%),
-        radial-gradient(circle at 18% 18%, rgba(255,215,107,.85), transparent 20%),
-        radial-gradient(circle at 85% 75%, rgba(8,124,168,.55), transparent 25%);
+        radial-gradient(circle at 18% 18%, rgba(255,224,138,.85), transparent 20%),
+        radial-gradient(circle at 85% 75%, rgba(14,165,216,.55), transparent 25%);
     }
 
     .cover::after{
@@ -326,14 +471,14 @@
       position:absolute;
       inset:0;
       z-index:-1;
-      opacity:.28;
+      opacity:.22;
       background-image:
-        linear-gradient(45deg, rgba(0,0,0,.1) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(0,0,0,.1) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, rgba(0,0,0,.1) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,.1) 75%);
+        linear-gradient(45deg, rgba(16,32,51,.12) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(16,32,51,.12) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(16,32,51,.12) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(16,32,51,.12) 75%);
       background-size:22px 22px;
-      background-position:0 0, 0 11px, 11px -11px, -11px 0px;
+      background-position:0 0, 0 11px, 11px -11px, -11px 0;
     }
 
     .cover span{
@@ -341,15 +486,15 @@
       align-items:center;
       justify-content:center;
       max-width:88%;
-      min-height:clamp(42px, 4vw, 62px);
-      padding:clamp(8px, 1vw, 13px) clamp(10px, 1.4vw, 18px);
-      border-radius:clamp(12px, 1.2vw, 18px);
+      min-height:clamp(42px, 4vw, 58px);
+      padding:8px clamp(10px, 1vw, 14px);
+      border-radius:14px;
       color:#fff;
-      background:rgba(7,92,130,.86);
-      border:2px solid rgba(255,255,255,.55);
-      box-shadow:0 4px 0 rgba(0,0,0,.18);
+      background:rgba(7,92,130,.9);
+      border:2px solid rgba(255,255,255,.5);
+      box-shadow:0 4px 0 rgba(16,32,51,.18);
       font-weight:950;
-      font-size:clamp(15px, 1.45vw, 24px);
+      font-size:clamp(16px, 1.6vw, 24px);
       line-height:1.25;
       text-shadow:0 2px 0 rgba(0,0,0,.16);
     }
@@ -357,78 +502,77 @@
     .cover.yellow::before{
       background:
         linear-gradient(135deg, rgba(255,255,255,.42), transparent 44%),
-        radial-gradient(circle at 20% 18%, rgba(255,215,107,.92), transparent 25%),
+        radial-gradient(circle at 20% 18%, rgba(255,224,138,.92), transparent 25%),
         radial-gradient(circle at 90% 74%, rgba(7,92,130,.68), transparent 28%),
-        linear-gradient(145deg, #f7b638, #fff1bf);
+        linear-gradient(145deg, #F7B638, #FFF1BF);
     }
 
     .cover.blue::before{
       background:
         linear-gradient(135deg, rgba(255,255,255,.36), transparent 45%),
-        radial-gradient(circle at 20% 24%, rgba(255,215,107,.82), transparent 22%),
-        linear-gradient(145deg, #075c82, #087ca8 54%, #55bdf2);
+        radial-gradient(circle at 20% 24%, rgba(255,224,138,.82), transparent 22%),
+        linear-gradient(145deg, #075C82, #0EA5D8 54%, #7FD1F4);
     }
 
     .cover.dark::before{
       background:
         linear-gradient(135deg, rgba(255,255,255,.18), transparent 45%),
         radial-gradient(circle at 74% 78%, rgba(247,182,56,.82), transparent 23%),
-        linear-gradient(145deg, #1d2b3f, #061b2b);
+        linear-gradient(145deg, #1D2B3F, #061B2B);
     }
 
     .cover.white::before{
       background:
         radial-gradient(circle at 22% 20%, rgba(247,182,56,.5), transparent 25%),
-        radial-gradient(circle at 82% 78%, rgba(8,124,168,.35), transparent 28%),
-        linear-gradient(145deg, #fff, #edf4f8);
+        radial-gradient(circle at 82% 78%, rgba(14,165,216,.35), transparent 28%),
+        linear-gradient(145deg, #FFFFFF, #EDF4F8);
     }
 
     .cover.white span{
-      background:rgba(8,124,168,.88);
+      background:rgba(14,117,160,.92);
     }
 
     .game-name{
-      margin:clamp(9px, 1.2vw, 16px) 0 0;
+      margin:clamp(10px, 1.2vw, 14px) 0 0;
       text-align:center;
       font-weight:950;
-      font-size:clamp(14px, 1.25vw, 20px);
+      font-size:clamp(15px, 1.35vw, 20px);
       line-height:1.35;
-      color:#111;
+      color:var(--ink);
     }
 
     .game-type{
-      margin:clamp(6px, .75vw, 10px) 0 clamp(11px, 1.2vw, 18px);
+      margin:7px 0 clamp(12px, 1.5vw, 18px);
       text-align:center;
       font-weight:800;
-      color:#222;
-      font-size:clamp(11px, .9vw, 15px);
+      color:var(--muted);
+      font-size:clamp(12px, 1vw, 15px);
       line-height:1.5;
     }
 
     .card-actions{
       margin-top:auto;
       display:grid;
-      gap:clamp(8px, .9vw, 12px);
-      padding:0 clamp(5px, .8vw, 10px);
+      gap:9px;
+      padding-inline:clamp(2px, .6vw, 8px);
     }
 
     .game-btn{
-      min-height:clamp(30px, 3vw, 42px);
+      min-height:clamp(34px, 3.2vw, 44px);
       border:0;
       border-radius:999px;
-      background:var(--blue);
+      background:linear-gradient(180deg, #147FA8, var(--blue-dark));
       color:var(--white);
       display:flex;
       flex-direction:row;
       direction:ltr;
       align-items:center;
       justify-content:center;
-      gap:clamp(8px, .8vw, 12px);
-      padding:6px 10px;
-      font-size:clamp(12px, 1vw, 15px);
-      font-weight:900;
+      gap:9px;
+      font-size:clamp(12px, 1.05vw, 15px);
+      font-weight:950;
       line-height:1;
-      box-shadow:0 3px 0 rgba(247,182,56,.88);
+      box-shadow:0 4px 0 rgba(247,182,56,.88);
       cursor:pointer;
       transition:transform .16s ease, filter .16s ease;
     }
@@ -439,8 +583,8 @@
     }
 
     .icon-badge{
-      width:clamp(22px, 2.25vw, 31px);
-      height:clamp(22px, 2.25vw, 31px);
+      width:clamp(22px, 2vw, 28px);
+      height:clamp(22px, 2vw, 28px);
       border-radius:50%;
       background:var(--yellow);
       color:var(--blue-dark);
@@ -457,43 +601,41 @@
     }
 
     .footer-block{
-      min-height:clamp(88px, 10vw, 150px);
-      background:var(--blue);
-      border-top:clamp(3px, .35vw, 5px) solid var(--line);
-      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
+      min-height:clamp(86px, 10vw, 130px);
+      background:linear-gradient(180deg, var(--blue), var(--blue-dark));
+      border-top:1px solid rgba(16,32,51,.22);
     }
 
     .bottom-nav{
       position:fixed;
-      left:0;
-      right:0;
+      inset-inline:0;
       bottom:0;
-      width:100%;
-      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      background:var(--yellow);
-      border-top:clamp(3px, .35vw, 5px) solid var(--line);
       z-index:40;
       display:flex;
-      align-items:stretch;
       justify-content:center;
-      padding:0 var(--page-pad) env(safe-area-inset-bottom);
-      box-shadow:0 -5px 18px rgba(0,0,0,.16);
-      isolation:isolate;
+      padding:0 var(--page-pad) calc(10px + env(safe-area-inset-bottom));
+      pointer-events:none;
     }
 
     .bottom-nav-inner{
-      width:100%;
-      max-width:var(--nav-max);
-      height:100%;
+      pointer-events:auto;
       position:relative;
+      width:min(100%, var(--nav-max));
+      min-height:var(--bottom-nav-height);
+      background:rgba(247,182,56,.96);
+      border:1px solid rgba(255,255,255,.42);
+      border-radius:28px;
+      z-index:40;
       display:grid;
-      grid-template-columns:repeat(4, minmax(0,1fr));
+      grid-template-columns:repeat(5, minmax(0, 1fr));
       align-items:center;
-      gap:clamp(3px, .8vw, 10px);
-      padding:8px 0;
-      --indicator-w:25%;
-      --indicator-h:72px;
-      --indicator-x:0px;
+      padding:8px;
+      box-shadow:0 -10px 36px rgba(16,32,51,.18);
+      isolation:isolate;
+      backdrop-filter:blur(12px);
+      --indicator-w:calc((100% - 16px) / 5);
+      --indicator-h:calc(100% - 16px);
+      --indicator-x:calc(100% - 8px - var(--indicator-w));
       --indicator-y:8px;
     }
 
@@ -504,9 +646,9 @@
       width:var(--indicator-w);
       height:var(--indicator-h);
       border-radius:22px;
-      background:var(--blue);
-      border:2px solid rgba(255,255,255,.2);
-      box-shadow:0 5px 0 rgba(0,0,0,.2);
+      background:linear-gradient(180deg, #147FA8, var(--blue-dark));
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow:0 5px 0 rgba(16,32,51,.18);
       transform:translate3d(var(--indicator-x), var(--indicator-y), 0);
       transition:
         transform .28s cubic-bezier(.22, 1, .36, 1),
@@ -517,8 +659,7 @@
     }
 
     .nav-item{
-      min-width:0;
-      height:clamp(68px, 6.5vw, 78px);
+      min-height:calc(var(--bottom-nav-height) - 16px);
       border-radius:22px;
       display:flex;
       flex-direction:column;
@@ -527,13 +668,12 @@
       gap:4px;
       color:var(--blue-dark);
       font-weight:950;
-      font-size:clamp(11px, 1vw, 14px);
-      line-height:1.1;
+      font-size:clamp(10px, 1vw, 13px);
+      line-height:1.15;
       text-align:center;
       position:relative;
       z-index:1;
       transition:color .2s ease, transform .2s ease;
-      padding-inline:4px;
     }
 
     .nav-item.active{
@@ -541,105 +681,200 @@
       transform:translateY(-1px);
     }
 
+    .nav-item.primary:not(.active){
+      color:var(--ink);
+    }
+
+    .nav-item.primary:not(.active) .nav-icon{
+      color:var(--blue-dark);
+      background:var(--yellow-soft);
+      border-radius:999px;
+      box-shadow:0 3px 0 rgba(16,32,51,.12);
+    }
+
     .nav-icon{
-      width:clamp(32px, 3vw, 40px);
-      height:clamp(32px, 3vw, 40px);
+      width:clamp(30px, 3vw, 40px);
+      height:clamp(30px, 3vw, 40px);
       display:grid;
       place-items:center;
       color:currentColor;
-      transition:color .2s ease, transform .2s ease;
+      transition:color .2s ease, transform .2s ease, background .2s ease;
     }
 
     .nav-icon svg{
-      width:90%;
-      height:90%;
+      width:76%;
+      height:76%;
       display:block;
       stroke:currentColor;
       fill:none;
-      stroke-width:2.4;
+      stroke-width:2.35;
       stroke-linecap:round;
       stroke-linejoin:round;
     }
 
     .nav-item.active .nav-icon{
-      color:var(--yellow-light);
+      color:var(--yellow-soft);
       transform:scale(1.04);
     }
 
-    @media (min-width:640px){
+    @media (min-width:720px){
       .games-grid{
-        grid-template-columns:repeat(3, minmax(0,1fr));
+        grid-template-columns:repeat(3, minmax(0, 1fr));
       }
     }
 
     @media (min-width:1024px){
       .games-grid{
-        grid-template-columns:repeat(4, minmax(0,1fr));
-      }
-
-      .hero-text{
-        max-width:1040px;
+        grid-template-columns:repeat(4, minmax(0, 1fr));
       }
     }
 
-    @media (min-width:1600px){
+    @media (min-width:1440px){
+      .games-grid{
+        grid-template-columns:repeat(5, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width:640px){
       :root{
-        --layout-max:1560px;
+        --bottom-nav-height:88px;
       }
 
-      .games-grid{
-        grid-template-columns:repeat(5, minmax(0,1fr));
+      .hero{
+        min-height:clamp(500px, 64dvh, 620px);
+      }
+
+      .top-row{
+        gap:10px;
+      }
+
+      .brand-title{
+        font-size:clamp(17px, 5.3vw, 23px);
+      }
+
+      .login-chip{
+        min-height:38px;
+        padding:7px 13px;
+        font-size:clamp(13px, 4vw, 16px);
+        box-shadow:0 4px 0 rgba(16,32,51,.16);
+      }
+
+      .hero-inner{
+        padding-top:clamp(36px, 9vw, 54px);
+      }
+
+      .hero-title{
+        font-size:clamp(30px, 9vw, 42px);
+        line-height:1.28;
+      }
+
+      .hero-lead{
+        font-size:clamp(17px, 5vw, 22px);
+      }
+
+      .hero-actions{
+        display:grid;
+        grid-template-columns:1fr;
+        width:min(100%, 370px);
+      }
+
+      .hero-btn{
+        width:100%;
+      }
+
+      .hero-badges{
+        gap:7px;
+      }
+
+      .hero-badge{
+        min-height:32px;
+        padding:7px 10px;
+      }
+
+      .bottom-nav{
+        padding-inline:0;
+        padding-bottom:0;
+      }
+
+      .bottom-nav-inner{
+        width:100%;
+        border-radius:22px 22px 0 0;
+        border-inline:0;
+        border-bottom:0;
+        padding-bottom:calc(8px + env(safe-area-inset-bottom));
+        min-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      }
+
+      .nav-item{
+        min-height:calc(var(--bottom-nav-height) - 16px);
       }
     }
 
     @media (max-width:430px){
-      :root{
-        --bottom-nav-height:88px;
-        --page-pad:clamp(12px, 4vw, 18px);
+      .container{
+        padding-inline:14px;
       }
 
-      .hero{
-        min-height:330px;
-        padding-top:58px;
+      .hero-actions{
+        width:100%;
+      }
+
+      .games-area{
+        padding-top:22px;
+      }
+
+      .games-grid{
+        gap:18px 14px;
+      }
+
+      .game-card{
+        min-height:286px;
+        border-radius:16px;
+        padding:7px 7px 12px;
       }
 
       .cover span{
-        font-size:clamp(14px, 4.2vw, 16px);
+        font-size:clamp(14px, 4.4vw, 17px);
       }
 
       .game-name{
-        font-size:clamp(13px, 3.8vw, 14px);
+        font-size:14px;
+      }
+
+      .game-type{
+        font-size:11px;
       }
 
       .game-btn{
-        font-size:clamp(11px, 3.4vw, 12px);
+        min-height:32px;
+        font-size:12px;
+      }
+
+      .nav-item span:last-child{
+        font-size:10.5px;
       }
     }
 
     @media (max-width:360px){
       .games-grid{
-        gap:18px 12px;
+        gap:16px 11px;
       }
 
-      .card-actions{
-        padding-inline:3px;
+      .game-card{
+        min-height:272px;
       }
-    }
 
-    @media (max-width:320px){
-      .games-grid{
-        grid-template-columns:1fr;
+      .hero-badge{
+        font-size:11px;
       }
     }
 
     @media (prefers-reduced-motion:reduce){
-      *,
-      *::before,
-      *::after{
-        animation-duration:.001ms !important;
+      *, *::before, *::after{
+        animation-duration:.01ms !important;
         animation-iteration-count:1 !important;
         scroll-behavior:auto !important;
-        transition-duration:.001ms !important;
+        transition-duration:.01ms !important;
       }
     }
   </style>
@@ -648,156 +883,175 @@
 <body>
   <div class="app">
     <header class="hero" id="home">
-      <div class="top-row">
+      <div class="container top-row">
         <div class="brand-title">صندوق المسابقات</div>
-        <a class="login-chip" href="#login">تسجيل الدخول</a>
+        <a class="login-chip" href="#login" aria-label="تسجيل الدخول إلى الحساب">تسجيل الدخول</a>
       </div>
 
-      <div class="logo-wrap" aria-label="شعار صندوق المسابقات">
-        <img src="logo.PNG" alt="صندوق المسابقات" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
-        <div class="logo-fallback">صندوق<br>المسابقات</div>
-      </div>
+      <div class="container hero-inner">
+        <div class="logo-wrap" aria-label="شعار صندوق المسابقات">
+          <img src="logo.PNG" alt="صندوق المسابقات" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
+          <div class="logo-fallback">صندوق<br>المسابقات</div>
+        </div>
 
-      <div class="hero-text">
-        <p class="hero-headline">الوجهة الأولى للألعاب الجماعية</p>
-        <p class="hero-line">العاب تفاعلية تجمع المتعة والتحدي</p>
-        <p class="hero-line">بتجارب جاهزة للتجمعات والفعاليات</p>
+        <div class="hero-copy">
+          <p class="hero-eyebrow">الواجهة الرسمية للتفعيل واللعب</p>
+          <h1 class="hero-title">ألعاب جماعية جاهزة لكل جمعة وفعالية</h1>
+          <p class="hero-lead">اشترِ اللعبة من متجرنا الرسمي، فعّل الكود، وابدأ التحدي خلال دقائق.</p>
+
+          <div class="hero-actions" aria-label="روابط مهمة">
+            <a class="hero-btn primary" href="#activate-code">فعّل كودك</a>
+            <a class="hero-btn secondary" href="#bundles">تصفح البكجات</a>
+            <a class="hero-btn ghost" href="#games">شاهد الألعاب</a>
+          </div>
+
+          <div class="hero-badges" aria-label="مميزات صندوق المسابقات">
+            <span class="hero-badge"><strong>رقمية</strong> بالكامل</span>
+            <span class="hero-badge">مناسبة للعائلة والمعلمين</span>
+            <span class="hero-badge">للجمعات والفعاليات</span>
+            <span class="hero-badge">تفعيل سهل وواضح</span>
+          </div>
+        </div>
       </div>
     </header>
 
     <section class="section-title" aria-label="قسم الألعاب">
-      الألعاب
+      <div class="container">
+        <h2>الألعاب</h2>
+      </div>
     </section>
 
     <main class="games-area" id="games">
-      <div class="games-grid">
-        <article class="game-card">
-          <div class="cover blue"><span>سباق الحروف</span></div>
-          <h2 class="game-name">لعبة سباق الحروف</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
-          <div class="card-actions">
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
-              عرض اللعبة
-            </a>
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-          </div>
-        </article>
+      <div class="container">
+        <div class="games-grid">
+          <article class="game-card">
+            <div class="cover blue"><span>سباق الحروف</span></div>
+            <h3 class="game-name">لعبة سباق الحروف</h3>
+            <p class="game-type">لعبة تفاعلية جماعية</p>
+            <div class="card-actions">
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
+                عرض اللعبة
+              </a>
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+                شراء اللعبة
+              </a>
+            </div>
+          </article>
 
-        <article class="game-card">
-          <div class="cover white"><span>بدون كلام</span></div>
-          <h2 class="game-name">لعبة بدون كلام</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
-          <div class="card-actions">
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
-              عرض اللعبة
-            </a>
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-          </div>
-        </article>
+          <article class="game-card">
+            <div class="cover white"><span>بدون كلام</span></div>
+            <h3 class="game-name">لعبة بدون كلام</h3>
+            <p class="game-type">لعبة تفاعلية جماعية</p>
+            <div class="card-actions">
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
+                عرض اللعبة
+              </a>
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+                شراء اللعبة
+              </a>
+            </div>
+          </article>
 
-        <article class="game-card">
-          <div class="cover white"><span>برا السالفة؟</span></div>
-          <h2 class="game-name">لعبة برا السالفة</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
-          <div class="card-actions">
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
-              عرض اللعبة
-            </a>
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-          </div>
-        </article>
+          <article class="game-card">
+            <div class="cover white"><span>برا السالفة؟</span></div>
+            <h3 class="game-name">لعبة برا السالفة</h3>
+            <p class="game-type">لعبة تفاعلية جماعية</p>
+            <div class="card-actions">
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
+                عرض اللعبة
+              </a>
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+                شراء اللعبة
+              </a>
+            </div>
+          </article>
 
-        <article class="game-card">
-          <div class="cover dark"><span>صندوق المسابقات</span></div>
-          <h2 class="game-name">لعبة تحدي المسابقات</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
-          <div class="card-actions">
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
-              عرض اللعبة
-            </a>
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-          </div>
-        </article>
+          <article class="game-card">
+            <div class="cover dark"><span>صندوق المسابقات</span></div>
+            <h3 class="game-name">لعبة تحدي المسابقات</h3>
+            <p class="game-type">لعبة تفاعلية جماعية</p>
+            <div class="card-actions">
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
+                عرض اللعبة
+              </a>
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+                شراء اللعبة
+              </a>
+            </div>
+          </article>
 
-        <article class="game-card">
-          <div class="cover yellow"><span>فاميلي فيود</span></div>
-          <h2 class="game-name">لعبة فاميلي فيود</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
-          <div class="card-actions">
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
-              عرض اللعبة
-            </a>
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-          </div>
-        </article>
+          <article class="game-card">
+            <div class="cover yellow"><span>فاميلي فيود</span></div>
+            <h3 class="game-name">لعبة فاميلي فيود</h3>
+            <p class="game-type">لعبة تفاعلية جماعية</p>
+            <div class="card-actions">
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
+                عرض اللعبة
+              </a>
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+                شراء اللعبة
+              </a>
+            </div>
+          </article>
 
-        <article class="game-card">
-          <div class="cover blue"><span>تحدي الصور</span></div>
-          <h2 class="game-name">لعبة تحدي الصور</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
-          <div class="card-actions">
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
-              عرض اللعبة
-            </a>
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-          </div>
-        </article>
+          <article class="game-card">
+            <div class="cover blue"><span>تحدي الصور</span></div>
+            <h3 class="game-name">لعبة تحدي الصور</h3>
+            <p class="game-type">لعبة تفاعلية جماعية</p>
+            <div class="card-actions">
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
+                عرض اللعبة
+              </a>
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+                شراء اللعبة
+              </a>
+            </div>
+          </article>
 
-        <article class="game-card">
-          <div class="cover blue"><span>بنك الكلمات</span></div>
-          <h2 class="game-name">لعبة بنك الكلمات</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
-          <div class="card-actions">
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
-              عرض اللعبة
-            </a>
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-          </div>
-        </article>
+          <article class="game-card">
+            <div class="cover blue"><span>بنك الكلمات</span></div>
+            <h3 class="game-name">لعبة بنك الكلمات</h3>
+            <p class="game-type">لعبة تفاعلية جماعية</p>
+            <div class="card-actions">
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
+                عرض اللعبة
+              </a>
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+                شراء اللعبة
+              </a>
+            </div>
+          </article>
 
-        <article class="game-card">
-          <div class="cover yellow"><span>الأسرع</span></div>
-          <h2 class="game-name">لعبة الأسرع</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
-          <div class="card-actions">
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
-              عرض اللعبة
-            </a>
-            <a class="game-btn" href="#">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-          </div>
-        </article>
+          <article class="game-card">
+            <div class="cover yellow"><span>الأسرع</span></div>
+            <h3 class="game-name">لعبة الأسرع</h3>
+            <p class="game-type">لعبة تفاعلية جماعية</p>
+            <div class="card-actions">
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
+                عرض اللعبة
+              </a>
+              <a class="game-btn" href="#">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+                شراء اللعبة
+              </a>
+            </div>
+          </article>
+        </div>
       </div>
     </main>
 
@@ -807,28 +1061,33 @@
   <nav class="bottom-nav" aria-label="التنقل السفلي">
     <div class="bottom-nav-inner">
       <span class="nav-indicator" aria-hidden="true"></span>
-    <a class="nav-item active" href="#games">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
-      <span>الألعاب</span>
-    </a>
 
-    <a class="nav-item" href="#activate-code">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
-      <span>تفعيل الكود</span>
-    </a>
+      <a class="nav-item active" href="#home" aria-current="page">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5.5 10.5V20h5v-5h3v5h5v-9.5"></path></svg></span>
+        <span>الرئيسية</span>
+      </a>
 
-    <a class="nav-item" href="#activate-purchase">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
-      <span>الحساب</span>
-    </a>
+      <a class="nav-item" href="#bundles">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9h16v11H4z"></path><path d="M3 9h18V6H3z"></path><path d="M12 6v14"></path><path d="M8 6c-1.6-2.2 1.8-3.6 4 0"></path><path d="M16 6c1.6-2.2-1.8-3.6-4 0"></path></svg></span>
+        <span>البكجات</span>
+      </a>
 
-    <a class="nav-item" href="#support">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
-      <span>خدمة العملاء</span>
-    </a>
+      <a class="nav-item primary" href="#activate-code">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
+        <span>فعّل كودك</span>
+      </a>
+
+      <a class="nav-item" href="#games">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4 4 4 0 0 0-4-4H7a4 4 0 0 0-4 4 4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
+        <span>الألعاب</span>
+      </a>
+
+      <a class="nav-item" href="#login">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+        <span>حسابي</span>
+      </a>
     </div>
   </nav>
-
 
   <script>
     const bottomNav = document.querySelector('.bottom-nav-inner');
@@ -847,8 +1106,13 @@
     }
 
     function setActiveNavItem(item) {
-      navItems.forEach(navItem => navItem.classList.remove('active'));
+      navItems.forEach(navItem => {
+        navItem.classList.remove('active');
+        navItem.removeAttribute('aria-current');
+      });
+
       item.classList.add('active');
+      item.setAttribute('aria-current', 'page');
       moveBottomNavIndicator(item);
     }
 
