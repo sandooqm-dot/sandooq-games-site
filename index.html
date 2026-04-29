@@ -23,7 +23,7 @@
       --layout-max:1280px;
       --nav-max:860px;
       --page-pad:clamp(14px, 4vw, 72px);
-      --bottom-nav-height:clamp(88px, 7vw, 96px);
+      --bottom-nav-height:clamp(92px, 7.2vw, 104px);
       --card-radius:clamp(13px, 1.2vw, 19px);
     }
 
@@ -77,13 +77,14 @@
     .hero{
       position:relative;
       background:var(--blue-deep);
-      min-height:clamp(330px, 42dvh, 430px);
-      padding:clamp(10px, 1.4vw, 20px) var(--page-pad) clamp(26px, 4vw, 54px);
+      min-height:clamp(342px, 43dvh, 450px);
+      padding:clamp(62px, 6.4vw, 88px) var(--page-pad) clamp(30px, 4vw, 58px);
       border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
       overflow:hidden;
       isolation:isolate;
       display:flex;
       flex-direction:column;
+      justify-content:center;
     }
 
     .hero::before{
@@ -118,10 +119,13 @@
     }
 
     .top-row{
-      width:100%;
-      max-width:var(--layout-max);
-      margin-inline:auto;
+      position:absolute;
+      top:clamp(12px, 1.6vw, 24px);
+      left:clamp(12px, 2.3vw, 36px);
+      right:clamp(12px, 2.3vw, 36px);
+      z-index:3;
       display:flex;
+      direction:rtl;
       align-items:center;
       justify-content:space-between;
       gap:clamp(10px, 2vw, 24px);
@@ -131,7 +135,7 @@
     .brand-title{
       color:var(--white);
       font-weight:950;
-      font-size:clamp(18px, 1.55vw, 26px);
+      font-size:clamp(17px, 1.45vw, 24px);
       letter-spacing:.1px;
       text-shadow:0 2px 0 rgba(0,0,0,.12);
       white-space:nowrap;
@@ -149,7 +153,7 @@
       border:2px solid rgba(255,255,255,.35);
       box-shadow:0 3px 0 rgba(0,0,0,.2);
       font-weight:950;
-      font-size:clamp(14px, 1.15vw, 18px);
+      font-size:clamp(13px, 1.05vw, 17px);
       line-height:1;
       white-space:nowrap;
       transition:transform .18s ease, filter .18s ease;
@@ -163,7 +167,7 @@
     .logo-wrap{
       width:clamp(156px, 12vw, 204px);
       min-height:clamp(106px, 9.6vw, 144px);
-      margin:clamp(20px, 2.8vw, 42px) auto clamp(8px, 1vw, 16px);
+      margin:0 auto clamp(10px, 1.2vw, 18px);
       display:grid;
       place-items:center;
       position:relative;
@@ -212,17 +216,17 @@
     .hero-headline{
       margin:0;
       font-weight:950;
-      font-size:clamp(20px, 2.35vw, 32px);
-      line-height:1.38;
+      font-size:clamp(20px, 2.1vw, 30px);
+      line-height:1.35;
       text-shadow:0 3px 0 rgba(0,0,0,.14);
     }
 
     .hero-line{
       margin:0;
-      font-weight:850;
-      font-size:clamp(18px, 2.1vw, 30px);
-      line-height:1.52;
-      text-shadow:0 2px 0 rgba(0,0,0,.11);
+      font-weight:900;
+      font-size:clamp(22px, 2.8vw, 38px);
+      line-height:1.45;
+      text-shadow:0 3px 0 rgba(0,0,0,.12);
     }
 
     .section-title{
@@ -237,6 +241,16 @@
       font-weight:950;
       letter-spacing:.2px;
       text-align:center;
+    }
+
+    .future-anchor{
+      display:block;
+      width:1px;
+      height:1px;
+      margin-top:-1px;
+      opacity:0;
+      pointer-events:none;
+      scroll-margin-top:24px;
     }
 
     .games-area{
@@ -559,6 +573,27 @@
       transform:scale(1.04);
     }
 
+    .nav-item.nav-featured{
+      font-size:clamp(10px, .95vw, 13px);
+    }
+
+    .nav-item.nav-featured .nav-icon{
+      width:clamp(38px, 3.7vw, 50px);
+      height:clamp(38px, 3.7vw, 50px);
+      border-radius:18px;
+      background:var(--blue-dark);
+      color:var(--yellow-light);
+      box-shadow:0 4px 0 rgba(0,0,0,.18);
+      transform:translateY(-2px);
+    }
+
+    .nav-item.nav-featured.active .nav-icon{
+      background:transparent;
+      color:var(--yellow-light);
+      box-shadow:none;
+      transform:scale(1.05);
+    }
+
     @media (min-width:640px){
       .games-grid{
         grid-template-columns:repeat(3, minmax(0,1fr));
@@ -567,7 +602,7 @@
 
     @media (min-width:1024px){
       .games-grid{
-        grid-template-columns:repeat(5, minmax(0,1fr));
+        grid-template-columns:repeat(4, minmax(0,1fr));
       }
 
       .hero-text{
@@ -606,6 +641,32 @@
       .game-btn{
         font-size:clamp(11px, 3.4vw, 12px);
       }
+
+      .bottom-nav{
+        padding-inline:8px;
+      }
+
+      .bottom-nav-inner{
+        gap:2px;
+      }
+
+      .nav-item{
+        height:68px;
+        font-size:10.5px;
+        border-radius:18px;
+        padding-inline:2px;
+      }
+
+      .nav-icon{
+        width:28px;
+        height:28px;
+      }
+
+      .nav-item.nav-featured .nav-icon{
+        width:38px;
+        height:38px;
+        border-radius:16px;
+      }
     }
 
     @media (max-width:360px){
@@ -642,7 +703,7 @@
     <header class="hero" id="home">
       <div class="top-row">
         <div class="brand-title">صندوق المسابقات</div>
-        <a class="login-chip" href="#login">تسجيل الدخول</a>
+        <a class="login-chip" id="account" href="#account">تسجيل الدخول</a>
       </div>
 
       <div class="logo-wrap" aria-label="شعار صندوق المسابقات">
@@ -656,6 +717,9 @@
         <p class="hero-line">كلها في صندوق واحد..!</p>
       </div>
     </header>
+
+    <span id="bundles" class="future-anchor" aria-hidden="true"></span>
+    <span id="activate-code" class="future-anchor" aria-hidden="true"></span>
 
     <section class="section-title" aria-label="قسم الألعاب">
       الألعاب
@@ -796,36 +860,36 @@
     <div class="footer-block" aria-hidden="true"></div>
   </div>
 
-<nav class="bottom-nav" aria-label="التنقل السفلي">
-  <div class="bottom-nav-inner">
-    <span class="nav-indicator" aria-hidden="true"></span>
+  <nav class="bottom-nav" aria-label="التنقل السفلي">
+    <div class="bottom-nav-inner">
+      <span class="nav-indicator" aria-hidden="true"></span>
 
-    <a class="nav-item active" href="#home">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5.5 10.5V20h5v-5h3v5h5v-9.5"></path></svg></span>
-      <span>الرئيسية</span>
-    </a>
+      <a class="nav-item active" href="#home" aria-current="page">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 10v10h5v-6h4v6h5V10"></path></svg></span>
+        <span>الرئيسية</span>
+      </a>
 
-    <a class="nav-item" href="#bundles">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5-8 4.5-8-4.5Z"></path><path d="M4 12.5 12 17l8-4.5"></path><path d="M4 16.5 12 21l8-4.5"></path></svg></span>
-      <span>البكجات</span>
-    </a>
+      <a class="nav-item" href="#bundles">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4z"></path><path d="M4 11h16"></path><path d="M9 7V5a2 2 0 0 1 4 0v2"></path><path d="M15 7V5a2 2 0 0 1 4 0v2"></path></svg></span>
+        <span>البكجات</span>
+      </a>
 
-    <a class="nav-item" href="#activate-code">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
-      <span>تفعيل الكود</span>
-    </a>
+      <a class="nav-item nav-featured" href="#activate-code">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
+        <span>فعّل كودك</span>
+      </a>
 
-    <a class="nav-item" href="#games">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
-      <span>الألعاب</span>
-    </a>
+      <a class="nav-item" href="#games">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
+        <span>الألعاب</span>
+      </a>
 
-    <a class="nav-item" href="#account">
-      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
-      <span>الحساب</span>
-    </a>
-  </div>
-</nav>
+      <a class="nav-item" href="#account">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+        <span>الحساب</span>
+      </a>
+    </div>
+  </nav>
 
 
   <script>
@@ -845,8 +909,12 @@
     }
 
     function setActiveNavItem(item) {
-      navItems.forEach(navItem => navItem.classList.remove('active'));
+      navItems.forEach(navItem => {
+        navItem.classList.remove('active');
+        navItem.removeAttribute('aria-current');
+      });
       item.classList.add('active');
+      item.setAttribute('aria-current', 'page');
       moveBottomNavIndicator(item);
     }
 
@@ -857,7 +925,9 @@
     });
 
     window.addEventListener('load', () => {
-      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
+      moveBottomNavIndicator(activeItem);
+      window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
     });
 
     window.addEventListener('resize', () => {
