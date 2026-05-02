@@ -333,6 +333,7 @@
 
     .game-card{
       min-width:0;
+      container-type:inline-size;
       border:clamp(2px, .25vw, 3px) solid var(--line);
       border-radius:var(--card-radius);
       background:var(--white);
@@ -393,7 +394,7 @@
       background-position:0 0, 0 11px, 11px -11px, -11px 0px;
     }
 
-    .cover > span{
+    .cover span{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -440,38 +441,54 @@
         linear-gradient(145deg, #fff, #edf4f8);
     }
 
-    .cover.white > span{background:rgba(8,124,168,.88);}
+    .cover.white span{background:rgba(8,124,168,.88);}
 
     .cover-login-note{
       position:absolute;
-      left:50%;
-      right:auto;
-      bottom:clamp(4px, .55vw, 7px);
+      left:clamp(7px, 2.4cqw, 14px);
+      right:clamp(7px, 2.4cqw, 14px);
+      bottom:clamp(5px, 1.7cqw, 10px);
       z-index:2;
-      width:max-content;
-      max-width:82%;
-      min-height:clamp(12px, 1.2vw, 16px);
+      width:auto;
+      max-width:none;
+      min-height:clamp(12px, 4.2cqw, 20px);
       display:flex;
       align-items:center;
-      justify-content:center;
-      gap:clamp(2px, .3vw, 4px);
-      padding:clamp(1px, .22vw, 3px) clamp(4px, .5vw, 6px);
-      border-radius:999px;
-      background:rgba(0,0,0,.72);
+      justify-content:flex-start;
+      gap:clamp(3px, 1cqw, 6px);
+      padding:clamp(1px, .55cqw, 3px) clamp(5px, 1.6cqw, 10px);
+      border-radius:clamp(4px, 1.5cqw, 9px);
+      background:rgba(0,0,0,.64);
       color:#fff;
       font-weight:900;
-      font-size:clamp(4.6px, 1.08vw, 6.8px);
+      font-size:clamp(5px, 1.65cqw, 8.5px);
       line-height:1.05;
-      text-align:center;
+      text-align:right;
       white-space:nowrap;
       pointer-events:none;
-      box-shadow:0 1px 0 rgba(0,0,0,.18);
-      transform:translateX(-50%);
+      box-shadow:none;
+      transform:none;
+      direction:rtl;
+    }
+
+    .cover-login-note span{
+      display:inline;
+      min-height:0;
+      padding:0;
+      border:0;
+      border-radius:0;
+      background:transparent;
+      box-shadow:none;
+      color:inherit;
+      font:inherit;
+      line-height:inherit;
+      text-shadow:none;
+      white-space:nowrap;
     }
 
     .cover-login-note svg{
-      width:clamp(6px, .8vw, 9px);
-      height:clamp(6px, .8vw, 9px);
+      width:clamp(6px, 1.45cqw, 9px);
+      height:clamp(6px, 1.45cqw, 9px);
       flex:0 0 auto;
       fill:var(--yellow-light);
       stroke:#111;
@@ -527,22 +544,25 @@
     .game-desc{
       width:100%;
       max-width:100%;
-      margin:clamp(4px, .55vw, 7px) 0 clamp(8px, .9vw, 11px);
+      margin:clamp(4px, 1.25cqw, 8px) 0 clamp(8px, 2cqw, 12px);
       color:var(--muted);
       font-weight:850;
-      font-size:clamp(7.2px, .7vw, 10px);
+      font-size:clamp(7px, 2.45cqw, 12px);
       line-height:1.35;
       text-align:center;
-      white-space:nowrap;
+      white-space:normal;
+      overflow-wrap:normal;
+      text-wrap:balance;
     }
 
     .game-meta-text{
-      margin:clamp(4px, .55vw, 7px) 0 0;
+      margin:clamp(4px, 1.25cqw, 7px) 0 0;
       color:#607084;
       font-weight:900;
-      font-size:clamp(8.5px, .78vw, 11px);
+      font-size:clamp(7.5px, 2.15cqw, 12px);
       line-height:1.25;
       text-align:center;
+      white-space:nowrap;
     }
 
     .game-name{
@@ -1032,8 +1052,8 @@
       .game-title-row .game-name{font-size:clamp(10px, 2.95vw, 12px);}
       .game-btn{font-size:clamp(8.8px, 2.6vw, 10.2px);min-height:28px;}
       .icon-badge{width:22px;height:22px;}
-      .cover-login-note{font-size:clamp(4.2px, 1.12vw, 5.8px);min-height:12px;padding:1px 4px;max-width:78%;}
-      .cover-login-note svg{width:6px;height:6px;}
+      .cover-login-note{font-size:clamp(4.8px, 1.55cqw, 7px);min-height:clamp(12px, 4cqw, 17px);padding:clamp(1px, .5cqw, 2px) clamp(5px, 1.5cqw, 8px);}
+      .cover-login-note svg{width:clamp(6px, 1.35cqw, 8px);height:clamp(6px, 1.35cqw, 8px);}
       .section-title{min-height:36px;font-size:17px;}
     }
 
@@ -1137,7 +1157,7 @@
             <span class="game-status" data-status-for="horof">مقفلة</span>
           </div>
           <p class="game-meta-text">+2 لاعبين · 15–30 دقيقة</p>
-          <p class="game-desc">سباق أسئلة على الحروف مع جرس<br>لكل لاعب وخريطة تفاعلية.</p>
+          <p class="game-desc">سباق أسئلة على الحروف مع جرس لكل لاعب وخريطة تفاعلية.</p>
           <div class="card-actions">
             <a class="game-btn" href="horof.html" data-action="details">
               <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span>
