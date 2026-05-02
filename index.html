@@ -591,23 +591,27 @@
     }
 
     .game-card[data-game-id="horof"] .game-title-row,
-    .game-card[data-game-id="bdon-kalam"] .game-title-row{
+    .game-card[data-game-id="bdon-kalam"] .game-title-row,
+    .game-card[data-game-id="bra-alsalfah"] .game-title-row{
       margin-top:clamp(9px, 2.1cqw, 14px);
     }
 
     .game-card[data-game-id="horof"] .game-meta-text,
-    .game-card[data-game-id="bdon-kalam"] .game-meta-text{
+    .game-card[data-game-id="bdon-kalam"] .game-meta-text,
+    .game-card[data-game-id="bra-alsalfah"] .game-meta-text{
       margin-top:clamp(6px, 1.65cqw, 10px);
     }
 
     .game-card[data-game-id="horof"] .game-desc,
-    .game-card[data-game-id="bdon-kalam"] .game-desc{
+    .game-card[data-game-id="bdon-kalam"] .game-desc,
+    .game-card[data-game-id="bra-alsalfah"] .game-desc{
       margin-top:clamp(7px, 1.8cqw, 11px);
       margin-bottom:clamp(10px, 2.5cqw, 16px);
     }
 
     .game-card[data-game-id="horof"] .card-actions,
-    .game-card[data-game-id="bdon-kalam"] .card-actions{
+    .game-card[data-game-id="bdon-kalam"] .card-actions,
+    .game-card[data-game-id="bra-alsalfah"] .card-actions{
       margin-top:clamp(10px, 2.6cqw, 18px);
     }
 
@@ -1222,15 +1226,26 @@
           </div>
         </article>
 
-        <article class="game-card">
+        <article
+          class="game-card"
+          data-game-id="bra-alsalfah"
+        >
           <div class="cover cover-photo">
             <picture>
               <source type="image/webp" srcset="bra-alsalfah-cover-card.webp" />
               <img src="bra-alsalfah-cover.PNG" alt="غلاف لعبة برا السالفة" width="640" height="640" loading="lazy" decoding="async" />
             </picture>
+            <div class="cover-login-note" aria-label="تصفح فقط حتى تسجل الدخول">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1.2c.9 0 1.6.7 1.6 1.6v7.1c0 .9-.7 1.6-1.6 1.6H5.8c-.9 0-1.6-.7-1.6-1.6v-7.1c0-.9.7-1.6 1.6-1.6H7Zm2 0h6V8a3 3 0 0 0-6 0v2Z"></path></svg>
+              <span>تصفح فقط حتى تسجل الدخول</span>
+            </div>
           </div>
-          <h2 class="game-name">لعبة برا السالفة</h2>
-          <p class="game-type">لعبة تفاعلية جماعية</p>
+          <div class="game-title-row">
+            <h2 class="game-name">لعبة برا السالفة</h2>
+            <span class="game-status">مقفلة</span>
+          </div>
+          <p class="game-meta-text">+3 لاعبين · 10-20 دقيقة</p>
+          <p class="game-desc">كل لاعب يحاول يثبت أنه داخل السالفة... لكن واحد بينهم يمثل عليكم.</p>
           <div class="card-actions">
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
