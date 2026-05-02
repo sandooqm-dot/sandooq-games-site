@@ -564,6 +564,15 @@
       filter:saturate(1.08);
     }
 
+    .game-btn[hidden]{
+      display:none !important;
+    }
+
+    .game-btn.play-action{
+      background:var(--green);
+      box-shadow:0 3px 0 rgba(247,182,56,.88);
+    }
+
     .icon-badge{
       width:clamp(22px, 2.25vw, 31px);
       height:clamp(22px, 2.25vw, 31px);
@@ -848,18 +857,28 @@
 
     <main class="games-area" id="games">
       <div class="games-grid">
-        <article class="game-card">
+        <article
+          class="game-card"
+          data-game-id="horof"
+          data-details-url="horof.html"
+          data-buy-url="https://sandooq-m.com/rRDZGeZ"
+          data-play-url="https://horof.sandooq-games.com"
+        >
           <div class="cover blue"><span>سباق الحروف</span></div>
           <h2 class="game-name">لعبة سباق الحروف</h2>
           <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
-            <a class="game-btn" href="#">
+            <a class="game-btn" href="horof.html" data-action="details">
               <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
               عرض اللعبة
             </a>
-            <a class="game-btn" href="#">
+            <a class="game-btn" href="https://sandooq-m.com/rRDZGeZ" data-action="buy">
               <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
               شراء اللعبة
+            </a>
+            <a class="game-btn play-action" href="https://horof.sandooq-games.com" data-action="play" hidden>
+              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3.5v17l15-8.5-15-8.5Z"></path></svg></span>
+              العب
             </a>
           </div>
         </article>
