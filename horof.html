@@ -117,7 +117,12 @@
     }
 
     .login-chip{background:var(--green);}
-    .back-chip{background:rgba(255,255,255,.16);}
+    .back-chip{
+      background:var(--yellow);
+      color:var(--ink);
+      border-color:rgba(21,21,21,.42);
+      text-shadow:none;
+    }
 
     .hero-inner{
       width:100%;
@@ -129,11 +134,27 @@
       align-items:center;
     }
 
+    .hero-clean{
+      max-width:min(900px, 100%);
+      margin-top:clamp(18px, 3vw, 38px);
+      justify-items:center;
+      gap:clamp(16px, 2.4vw, 26px);
+    }
+
+    .page-game-top{
+      direction:rtl;
+    }
+
     .hero-copy{
       display:grid;
       gap:12px;
       text-align:center;
       justify-items:center;
+    }
+
+    .hero-copy-under{
+      max-width:840px;
+      gap:clamp(10px, 1.6vw, 16px);
     }
 
     .game-kicker{
@@ -151,10 +172,10 @@
 
     .page-title{
       margin:0;
-      font-size:clamp(34px, 5vw, 72px);
+      font-size:clamp(32px, 4.6vw, 58px);
       line-height:1.18;
       font-weight:950;
-      text-shadow:0 5px 0 rgba(0,0,0,.16);
+      text-shadow:0 4px 0 rgba(0,0,0,.14);
     }
 
     .page-lead{
@@ -198,12 +219,12 @@
     .btn-play{background:var(--green);color:#fff;}
 
     .hero-card{
-      width:min(620px, 100%);
+      width:min(760px, 100%);
       margin-inline:auto;
       background:var(--cream);
       border:clamp(3px, .35vw, 5px) solid var(--line);
       border-radius:var(--radius);
-      padding:clamp(12px, 1.5vw, 18px);
+      padding:clamp(10px, 1.4vw, 16px);
       box-shadow:0 10px 0 rgba(0,0,0,.22), 0 24px 44px rgba(0,0,0,.18);
     }
 
@@ -487,14 +508,14 @@
 
     @media (min-width:800px){
       .hero-inner{
-        grid-template-columns:minmax(0, 1fr) minmax(360px, 520px);
+        grid-template-columns:1fr;
       }
       .hero-copy{
-        text-align:right;
-        justify-items:start;
+        text-align:center;
+        justify-items:center;
       }
       .hero-actions{
-        justify-content:flex-start;
+        justify-content:center;
       }
       .features-grid{
         grid-template-columns:repeat(2, minmax(0,1fr));
@@ -513,7 +534,7 @@
         --page-pad:clamp(12px, 4vw, 18px);
       }
       .top-row{
-        align-items:flex-start;
+        align-items:center;
       }
       .top-actions{
         gap:8px;
@@ -548,33 +569,29 @@
 <body>
   <div class="app">
     <header class="page-top">
-      <div class="top-row">
-        <a class="brand-title" href="index.html">صندوق المسابقات</a>
-        <div class="top-actions">
-          <a class="chip back-chip" href="index.html">العودة للألعاب</a>
-          <a class="chip login-chip" href="account.html">تسجيل الدخول</a>
-        </div>
+      <div class="top-row page-game-top">
+        <a class="chip back-chip" href="index.html">العودة للألعاب</a>
+        <a class="chip login-chip" href="account.html">تسجيل الدخول</a>
       </div>
 
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <span class="game-kicker">لعبة تفاعلية جماعية</span>
-          <h1 class="page-title">لعبة سباق الحروف</h1>
-          <p class="page-lead">تجربة مسابقات عربية تجمع السرعة، التركيز، وروح التحدي. خريطة حروف تفاعلية، أسئلة جاهزة، جرس لكل لاعب، وشاشة مقدم مستقلة للجلسات العائلية والمدرسية والفعاليات.</p>
-
-          <div class="hero-actions" data-game-id="horof" data-buy-url="https://sandooq-m.com/rRDZGeZ" data-play-url="https://horof.sandooq-games.com">
-            <a class="btn btn-primary" href="https://sandooq-m.com/rRDZGeZ">شراء اللعبة</a>
-            <a class="btn btn-secondary" href="#video">شرح اللعبة</a>
-            <a class="btn btn-play" href="https://horof.sandooq-games.com" hidden>العب</a>
-          </div>
-        </div>
-
+      <div class="hero-inner hero-clean">
         <div class="hero-card" aria-label="غلاف لعبة سباق الحروف">
           <div class="cover-frame">
             <picture>
               <source type="image/webp" srcset="horof-cover-page.webp" />
               <img src="horof-cover.PNG" alt="غلاف لعبة سباق الحروف" width="1080" height="1080" loading="eager" decoding="async" fetchpriority="high" />
             </picture>
+          </div>
+        </div>
+
+        <div class="hero-copy hero-copy-under">
+          <h1 class="page-title">لعبة سباق الحروف</h1>
+          <p class="page-lead">تحدي حروفي تفاعلي يجمع السرعة، الجرس، وأكثر من 4000 سؤال جاهز في تجربة مناسبة للجمعات والمعلمين والفعاليات.</p>
+
+          <div class="hero-actions" data-game-id="horof" data-buy-url="https://sandooq-m.com/rRDZGeZ" data-play-url="https://horof.sandooq-games.com">
+            <a class="btn btn-primary js-buy-btn" href="https://sandooq-m.com/rRDZGeZ">شراء اللعبة</a>
+            <a class="btn btn-secondary" href="#video">شرح اللعبة</a>
+            <a class="btn btn-play js-play-btn" href="https://horof.sandooq-games.com" hidden>العب</a>
           </div>
         </div>
       </div>
