@@ -599,6 +599,23 @@
       stroke:currentColor;
     }
 
+    .game-btn .icon-play{
+      display:none;
+    }
+
+    .game-btn.is-play{
+      background:var(--green);
+      box-shadow:0 3px 0 rgba(7,92,130,.55);
+    }
+
+    .game-btn.is-play .icon-buy{
+      display:none;
+    }
+
+    .game-btn.is-play .icon-play{
+      display:grid;
+    }
+
     .footer-block{
       min-height:clamp(88px, 10vw, 150px);
       background:var(--blue);
@@ -883,13 +900,18 @@
               <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
               عرض اللعبة
             </a>
-            <a class="game-btn" href="https://sandooq-m.com/rRDZGeZ" data-action="buy">
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              شراء اللعبة
-            </a>
-            <a class="game-btn play-action" href="https://horof.sandooq-games.com" data-action="play" hidden>
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3.5v17l15-8.5-15-8.5Z"></path></svg></span>
-              العب
+            <a
+              class="game-btn purchase-action"
+              href="https://sandooq-m.com/rRDZGeZ"
+              data-action="buy-or-play"
+              data-buy-url="https://sandooq-m.com/rRDZGeZ"
+              data-play-url="https://horof.sandooq-games.com"
+              data-buy-label="شراء اللعبة"
+              data-play-label="العب"
+            >
+              <span class="icon-badge icon-buy" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+              <span class="icon-badge icon-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3.5v17l15-8.5-15-8.5Z"></path></svg></span>
+              <span class="action-label">شراء اللعبة</span>
             </a>
           </div>
         </article>
