@@ -6,6 +6,7 @@
   <title>صندوق المسابقات | ألعاب ومسابقات رقمية</title>
   <meta name="description" content="صندوق المسابقات وجهتك للألعاب والمسابقات الرقمية؛ الحماس والتنافس والمتعة كلها في صندوق واحد للعائلة والمعلمين والفعاليات." />
   <meta name="theme-color" content="#075c82" />
+  <link rel="preload" as="image" href="assets/images/games/horof-cover-640.webp" imagesrcset="assets/images/games/horof-cover-360.webp 360w, assets/images/games/horof-cover-640.webp 640w, assets/images/games/horof-cover-1080.webp 1080w" imagesizes="(max-width: 639px) 46vw, (max-width: 1023px) 31vw, 24vw" />
 
   <style>
     :root{
@@ -435,6 +436,22 @@
       background:#e9eef4;
     }
 
+    .cover.cover-photo::before,
+    .cover.cover-photo::after{
+      display:none;
+    }
+
+    .cover-photo picture,
+    .cover-photo img{
+      display:block;
+      width:100%;
+      height:100%;
+    }
+
+    .cover-photo img{
+      object-fit:cover;
+    }
+
     .cover::before{
       content:"";
       position:absolute;
@@ -562,15 +579,6 @@
     .game-btn:hover{
       transform:translateY(-1px);
       filter:saturate(1.08);
-    }
-
-    .game-btn[hidden]{
-      display:none !important;
-    }
-
-    .game-btn.play-action{
-      background:var(--green);
-      box-shadow:0 3px 0 rgba(247,182,56,.88);
     }
 
     .icon-badge{
@@ -864,7 +872,12 @@
           data-buy-url="https://sandooq-m.com/rRDZGeZ"
           data-play-url="https://horof.sandooq-games.com"
         >
-          <div class="cover blue"><span>سباق الحروف</span></div>
+          <div class="cover cover-photo">
+            <picture>
+              <source type="image/webp" srcset="assets/images/games/horof-cover-360.webp 360w, assets/images/games/horof-cover-640.webp 640w, assets/images/games/horof-cover-1080.webp 1080w" sizes="(max-width: 639px) 46vw, (max-width: 1023px) 31vw, 24vw" />
+              <img src="assets/images/games/horof-cover-640.jpg" alt="غلاف لعبة سباق الحروف" width="640" height="640" loading="eager" decoding="async" fetchpriority="high" />
+            </picture>
+          </div>
           <h2 class="game-name">لعبة سباق الحروف</h2>
           <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
