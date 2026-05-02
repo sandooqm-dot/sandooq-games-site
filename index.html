@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>صندوق المسابقات | ألعاب ومسابقات رقمية</title>
-  <meta name="description" content="صندوق المسابقات وجهتك للألعاب والمسابقات الرقمية؛ الحماس والتنافس والمتعة كلها في صندوق واحد للعائلة والمعلمين والفعاليات." />
-  <meta name="theme-color" content="#075c82" />
-  <link rel="preload" as="image" href="horof-cover-card.webp" />
+  <title>صندوق المسابقات | ألعاب جماعية تفاعلية</title>
+  <meta name="description" content="صندوق المسابقات منصة ألعاب جماعية تفاعلية للعائلة والمدرسة والفعاليات. تصفح الألعاب، شاهد تفاصيل كل لعبة، واشترِ من المتجر الرسمي بسهولة." />
+  <meta name="theme-color" content="#087ca8" />
 
   <style>
     :root{
@@ -16,8 +15,6 @@
       --blue-soft:#55bdf2;
       --yellow:#f7b638;
       --yellow-light:#ffd76b;
-      --nav-ink:#04384f;
-      --nav-active:#064f73;
       --white:#ffffff;
       --ink:#111827;
       --muted:#333b4a;
@@ -134,7 +131,7 @@
     .brand-title{
       color:var(--white);
       font-weight:950;
-      font-size:clamp(18px, 1.55vw, 26px);
+      font-size:clamp(14px, 1.15vw, 18px);
       letter-spacing:.1px;
       text-shadow:0 2px 0 rgba(0,0,0,.12);
       white-space:nowrap;
@@ -164,9 +161,9 @@
     }
 
     .logo-wrap{
-      width:clamp(190px, 16vw, 260px);
-      min-height:clamp(126px, 13vw, 184px);
-      margin:clamp(18px, 2.6vw, 38px) auto clamp(6px, .9vw, 14px);
+      width:clamp(130px, 10vw, 170px);
+      min-height:clamp(88px, 8vw, 120px);
+      margin:clamp(20px, 2.8vw, 42px) auto clamp(8px, 1vw, 16px);
       display:grid;
       place-items:center;
       position:relative;
@@ -179,15 +176,15 @@
     }
 
     .logo-wrap img{
-      width:clamp(182px, 15vw, 248px);
-      max-height:clamp(122px, 13vw, 178px);
+      width:clamp(122px, 9.5vw, 160px);
+      max-height:clamp(86px, 8vw, 118px);
       object-fit:contain;
       filter:drop-shadow(0 7px 0 rgba(0,0,0,.14));
     }
 
     .logo-fallback{
-      width:clamp(178px, 15vw, 240px);
-      height:clamp(118px, 12vw, 170px);
+      width:clamp(126px, 9.5vw, 160px);
+      height:clamp(80px, 7.4vw, 112px);
       display:none;
       place-items:center;
       border:3px solid rgba(255,255,255,.78);
@@ -215,7 +212,7 @@
     .hero-headline{
       margin:0;
       font-weight:950;
-      font-size:clamp(22px, 2.8vw, 34px);
+      font-size:clamp(25px, 3.4vw, 42px);
       line-height:1.35;
       text-shadow:0 3px 0 rgba(0,0,0,.14);
     }
@@ -231,146 +228,15 @@
     .section-title{
       background:var(--yellow);
       color:#111;
-      min-height:clamp(40px, 3.2vw, 52px);
-      border-bottom:clamp(2px, .25vw, 4px) solid var(--line);
+      min-height:clamp(58px, 5vw, 76px);
+      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
       display:grid;
       place-items:center;
-      padding:5px var(--page-pad);
-      font-size:clamp(18px, 1.65vw, 24px);
+      padding:8px var(--page-pad);
+      font-size:clamp(26px, 2.5vw, 38px);
       font-weight:950;
       letter-spacing:.2px;
       text-align:center;
-    }
-
-
-    .bundles-area{
-      position:relative;
-      background:linear-gradient(180deg, var(--white), #fff8e7);
-      padding:clamp(20px, 3vw, 42px) var(--page-pad);
-      border-bottom:clamp(2px, .25vw, 4px) solid var(--line);
-      overflow:hidden;
-    }
-
-    .bundles-area::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      opacity:.10;
-      background-image:radial-gradient(circle, rgba(8,124,168,.75) 0 2px, transparent 2.4px);
-      background-size:30px 30px;
-    }
-
-    .bundles-inner{
-      width:100%;
-      max-width:var(--layout-max);
-      margin-inline:auto;
-      position:relative;
-      z-index:1;
-    }
-
-    .bundles-header{
-      max-width:760px;
-      margin:0 auto clamp(18px, 2.7vw, 34px);
-      text-align:center;
-    }
-
-    .bundles-kicker{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:30px;
-      padding:6px 12px;
-      border-radius:999px;
-      background:rgba(247,182,56,.22);
-      color:var(--nav-ink);
-      text-shadow:0 1px 0 rgba(255,255,255,.28);
-      font-weight:950;
-      font-size:clamp(12px, 1vw, 15px);
-      margin-bottom:10px;
-      border:1px solid rgba(7,92,130,.14);
-    }
-
-    .bundles-title{
-      margin:0;
-      color:var(--ink);
-      font-weight:950;
-      font-size:clamp(22px, 2.6vw, 38px);
-      line-height:1.35;
-    }
-
-    .bundles-note{
-      margin:10px auto 0;
-      color:var(--muted);
-      font-weight:750;
-      font-size:clamp(14px, 1.25vw, 18px);
-      line-height:1.75;
-    }
-
-    .bundles-grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:clamp(16px, 2.5vw, 26px);
-    }
-
-    .bundle-card{
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      background:var(--white);
-      border:clamp(2px, .25vw, 3px) solid rgba(31,42,56,.32);
-      border-radius:var(--card-radius);
-      padding:clamp(16px, 2.2vw, 28px);
-      box-shadow:0 7px 0 rgba(16,32,51,.14), 0 22px 44px rgba(6,79,115,.10);
-    }
-
-    .bundle-badge{
-      align-self:flex-start;
-      border-radius:999px;
-      padding:7px 12px;
-      background:var(--yellow);
-      color:#1d2633;
-      font-weight:950;
-      font-size:clamp(12px, .95vw, 14px);
-      box-shadow:0 3px 0 rgba(16,32,51,.12);
-    }
-
-    .bundle-name{
-      margin:0;
-      color:var(--blue-dark);
-      font-weight:950;
-      font-size:clamp(20px, 2vw, 30px);
-      line-height:1.35;
-    }
-
-    .bundle-desc{
-      margin:0;
-      color:var(--muted);
-      font-weight:750;
-      font-size:clamp(14px, 1.15vw, 17px);
-      line-height:1.75;
-    }
-
-    .bundle-meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:auto;
-    }
-
-    .bundle-meta span{
-      min-height:30px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:999px;
-      padding:6px 10px;
-      background:rgba(85,189,242,.20);
-      color:var(--blue-dark);
-      font-weight:900;
-      font-size:clamp(12px, .95vw, 14px);
-      border:1px solid rgba(7,92,130,.12);
     }
 
     .games-area{
@@ -434,22 +300,6 @@
       text-align:center;
       isolation:isolate;
       background:#e9eef4;
-    }
-
-    .cover.cover-photo::before,
-    .cover.cover-photo::after{
-      display:none;
-    }
-
-    .cover-photo picture,
-    .cover-photo img{
-      display:block;
-      width:100%;
-      height:100%;
-    }
-
-    .cover-photo img{
-      object-fit:cover;
     }
 
     .cover::before{
@@ -599,28 +449,226 @@
       stroke:currentColor;
     }
 
-    .game-btn .icon-play{
-      display:none;
-    }
-
-    .game-btn.is-play{
-      background:var(--green);
-      box-shadow:0 3px 0 rgba(7,92,130,.55);
-    }
-
-    .game-btn.is-play .icon-buy{
-      display:none;
-    }
-
-    .game-btn.is-play .icon-play{
-      display:grid;
-    }
-
-    .footer-block{
-      min-height:clamp(88px, 10vw, 150px);
-      background:var(--blue);
+    .site-footer{
+      position:relative;
+      background:linear-gradient(180deg, #3c83ad 0%, #2f6f96 32%, #205b7d 100%);
       border-top:clamp(3px, .35vw, 5px) solid var(--line);
-      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
+      color:var(--white);
+      overflow:hidden;
+    }
+
+    .site-footer::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.12;
+      background-image:radial-gradient(circle, rgba(255,255,255,.92) 0 2px, transparent 2.4px);
+      background-size:28px 28px;
+      pointer-events:none;
+    }
+
+    .footer-inner{
+      position:relative;
+      z-index:1;
+      width:min(100%, var(--layout-max));
+      margin-inline:auto;
+      padding:clamp(26px, 4vw, 42px) var(--page-pad) clamp(20px, 4vw, 30px);
+    }
+
+    .footer-title{
+      margin:0 0 16px;
+      text-align:center;
+      font-size:clamp(22px, 2vw, 30px);
+      font-weight:950;
+      color:var(--white);
+    }
+
+    .reviews-wrap{
+      overflow:hidden;
+      mask-image:linear-gradient(to left, transparent, #000 8%, #000 92%, transparent);
+      -webkit-mask-image:linear-gradient(to left, transparent, #000 8%, #000 92%, transparent);
+      margin-bottom:clamp(24px, 4vw, 34px);
+    }
+
+    .reviews-track{
+      width:max-content;
+      display:flex;
+      gap:14px;
+      animation:reviewsMarquee 28s linear infinite;
+      padding-inline:4px;
+    }
+
+    .reviews-wrap:hover .reviews-track{
+      animation-play-state:paused;
+    }
+
+    @keyframes reviewsMarquee{
+      from{transform:translateX(0)}
+      to{transform:translateX(50%)}
+    }
+
+    .review-card{
+      width:min(280px, 78vw);
+      flex:0 0 auto;
+      background:rgba(255,255,255,.96);
+      color:var(--ink);
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.28);
+      padding:16px 16px 14px;
+      box-shadow:0 8px 0 rgba(16,32,51,.15);
+    }
+
+    .review-stars{
+      color:var(--yellow);
+      letter-spacing:2px;
+      font-size:15px;
+      margin-bottom:8px;
+    }
+
+    .review-text{
+      margin:0;
+      color:var(--ink);
+      font-size:clamp(13px, 1vw, 15px);
+      line-height:1.8;
+      font-weight:800;
+    }
+
+    .review-author{
+      margin:9px 0 0;
+      color:var(--blue-dark);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .footer-branding{
+      max-width:760px;
+      margin:0 auto;
+      text-align:center;
+    }
+
+    .footer-branding h3{
+      margin:0;
+      font-size:clamp(26px, 2.6vw, 36px);
+      font-weight:950;
+      color:var(--white);
+    }
+
+    .footer-branding p{
+      margin:12px 0 0;
+      color:rgba(255,255,255,.95);
+      font-size:clamp(14px, 1.15vw, 18px);
+      line-height:1.9;
+      font-weight:800;
+    }
+
+    .footer-icons{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:14px;
+      margin-top:18px;
+      flex-wrap:wrap;
+    }
+
+    .footer-icon{
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.28);
+      box-shadow:0 4px 0 rgba(16,32,51,.14);
+      transition:transform .16s ease, background .16s ease;
+    }
+
+    .footer-icon:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.22);
+    }
+
+    .footer-icon svg{
+      width:54%;
+      height:54%;
+      stroke:#fff;
+      fill:none;
+      stroke-width:2.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .quick-links-title{
+      margin:26px 0 12px;
+      text-align:center;
+      font-size:clamp(21px, 1.8vw, 28px);
+      font-weight:950;
+      color:var(--white);
+    }
+
+    .quick-links{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+      max-width:720px;
+      margin:0 auto;
+    }
+
+    .quick-link{
+      min-height:50px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:12px 14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.22);
+      color:var(--white);
+      font-weight:900;
+      box-shadow:0 4px 0 rgba(16,32,51,.12);
+    }
+
+    .quick-link.muted{
+      opacity:.85;
+    }
+
+    .footer-legal{
+      position:relative;
+      z-index:1;
+      background:#17324b;
+      border-top:1px solid rgba(255,255,255,.16);
+    }
+
+    .footer-legal-inner{
+      width:min(100%, var(--layout-max));
+      margin-inline:auto;
+      padding:14px var(--page-pad) calc(14px + env(safe-area-inset-bottom));
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+      text-align:center;
+      color:var(--white);
+    }
+
+    .legal-links{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .legal-link{
+      min-height:34px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.18);
+      color:var(--white);
+      font-size:13px;
+      font-weight:800;
+      opacity:.9;
     }
 
     .bottom-nav{
@@ -630,7 +678,7 @@
       bottom:0;
       width:100%;
       height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      background:linear-gradient(180deg, #f7b638 0%, #e99f18 100%);
+      background:var(--yellow);
       border-top:clamp(3px, .35vw, 5px) solid var(--line);
       z-index:40;
       display:flex;
@@ -664,8 +712,8 @@
       width:var(--indicator-w);
       height:var(--indicator-h);
       border-radius:22px;
-      background:var(--nav-active);
-      border:2px solid rgba(255,255,255,.32);
+      background:var(--blue);
+      border:2px solid rgba(255,255,255,.2);
       box-shadow:0 5px 0 rgba(0,0,0,.2);
       transform:translate3d(var(--indicator-x), var(--indicator-y), 0);
       transition:
@@ -685,8 +733,7 @@
       align-items:center;
       justify-content:center;
       gap:4px;
-      color:var(--nav-ink);
-      text-shadow:0 1px 0 rgba(255,255,255,.28);
+      color:var(--blue-dark);
       font-weight:950;
       font-size:clamp(11px, 1vw, 14px);
       line-height:1.1;
@@ -717,7 +764,7 @@
       display:block;
       stroke:currentColor;
       fill:none;
-      stroke-width:2.75;
+      stroke-width:2.4;
       stroke-linecap:round;
       stroke-linejoin:round;
     }
@@ -727,24 +774,7 @@
       transform:scale(1.04);
     }
 
-
-
-    .nav-item.nav-featured .nav-icon{
-      border-radius:16px;
-      background:rgba(4,56,79,.12);
-      box-shadow:inset 0 0 0 1px rgba(4,56,79,.18);
-    }
-
-    .nav-item.nav-featured.active .nav-icon{
-      background:transparent;
-      box-shadow:none;
-    }
-
     @media (min-width:640px){
-      .bundles-grid{
-        grid-template-columns:repeat(2, minmax(0,1fr));
-      }
-
       .games-grid{
         grid-template-columns:repeat(3, minmax(0,1fr));
       }
@@ -809,6 +839,17 @@
       }
     }
 
+
+    @media (max-width:640px){
+      .quick-links{
+        grid-template-columns:1fr;
+      }
+
+      .review-card{
+        width:min(248px, 82vw);
+      }
+    }
+
     @media (prefers-reduced-motion:reduce){
       *,
       *::before,
@@ -827,7 +868,7 @@
     <header class="hero" id="home">
       <div class="top-row">
         <div class="brand-title">صندوق المسابقات</div>
-        <a class="login-chip" href="account.html">تسجيل الدخول</a>
+        <a class="login-chip" href="#login">تسجيل الدخول</a>
       </div>
 
       <div class="logo-wrap" aria-label="شعار صندوق المسابقات">
@@ -836,43 +877,11 @@
       </div>
 
       <div class="hero-text">
-        <p class="hero-headline">ألعاب جماعية جاهزة لكل جمعة وفعالية</p>
-        <p class="hero-line">الحماس... التنافس... المتعة...</p>
-        <p class="hero-line">كلها في صندوق واحد..!</p>
+        <p class="hero-headline">الوجهة الأولى للألعاب الجماعية</p>
+        <p class="hero-line">العاب تفاعلية تجمع المتعة والتحدي</p>
+        <p class="hero-line">بتجارب جاهزة للتجمعات والفعاليات</p>
       </div>
     </header>
-
-    <section class="section-title" aria-label="قسم العروض">
-      العروض
-    </section>
-
-    <section class="bundles-area" id="bundles" aria-label="قسم العروض والبكجات">
-      <div class="bundles-inner">
-        <div class="bundles-grid">
-          <article class="bundle-card">
-            <span class="bundle-badge">قريبًا</span>
-            <h3 class="bundle-name">بكج بداية التحدي</h3>
-            <p class="bundle-desc">بكج مبدئي يحتوي على 3 ألعاب مختارة للجمعات الخفيفة والتجارب الأولى.</p>
-            <div class="bundle-meta" aria-label="معلومات البكج">
-              <span>3 ألعاب</span>
-              <span>للجمعات</span>
-              <span>توفير أفضل</span>
-            </div>
-          </article>
-
-          <article class="bundle-card">
-            <span class="bundle-badge">قريبًا</span>
-            <h3 class="bundle-name">بكج صندوق المسابقات الكامل</h3>
-            <p class="bundle-desc">بكج أكبر يحتوي على 5 ألعاب لتجربة أطول ومناسب للعيد والفعاليات.</p>
-            <div class="bundle-meta" aria-label="معلومات البكج">
-              <span>5 ألعاب</span>
-              <span>للعيد والفعاليات</span>
-              <span>اختيار أوفر</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
 
     <section class="section-title" aria-label="قسم الألعاب">
       الألعاب
@@ -880,38 +889,18 @@
 
     <main class="games-area" id="games">
       <div class="games-grid">
-        <article
-          class="game-card"
-          data-game-id="horof"
-          data-details-url="horof.html"
-          data-buy-url="https://sandooq-m.com/rRDZGeZ"
-          data-play-url="https://horof.sandooq-games.com"
-        >
-          <div class="cover cover-photo">
-            <picture>
-              <source type="image/webp" srcset="horof-cover-card.webp" />
-              <img src="horof-cover.PNG" alt="غلاف لعبة سباق الحروف" width="640" height="640" loading="eager" decoding="async" fetchpriority="high" />
-            </picture>
-          </div>
+        <article class="game-card">
+          <div class="cover blue"><span>سباق الحروف</span></div>
           <h2 class="game-name">لعبة سباق الحروف</h2>
           <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
-            <a class="game-btn" href="horof.html" data-action="details">
+            <a class="game-btn" href="#">
               <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></span>
               عرض اللعبة
             </a>
-            <a
-              class="game-btn purchase-action"
-              href="https://sandooq-m.com/rRDZGeZ"
-              data-action="buy-or-play"
-              data-buy-url="https://sandooq-m.com/rRDZGeZ"
-              data-play-url="https://horof.sandooq-games.com"
-              data-buy-label="شراء اللعبة"
-              data-play-label="العب"
-            >
-              <span class="icon-badge icon-buy" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
-              <span class="icon-badge icon-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3.5v17l15-8.5-15-8.5Z"></path></svg></span>
-              <span class="action-label">شراء اللعبة</span>
+            <a class="game-btn" href="#">
+              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-2 8H8L6 3H3"></path><circle cx="9" cy="20" r="1.7"></circle><circle cx="18" cy="20" r="1.7"></circle></svg></span>
+              شراء اللعبة
             </a>
           </div>
         </article>
@@ -1030,33 +1019,113 @@
       </div>
     </main>
 
-    <div class="footer-block" id="account" aria-hidden="true"></div>
+    <footer class="site-footer" aria-label="ذيل الصفحة">
+      <div class="footer-inner">
+        <h2 class="footer-title">آراء العملاء</h2>
+        <div class="reviews-wrap">
+          <div class="reviews-track">
+            <article class="review-card">
+              <div class="review-stars" aria-hidden="true">★★★★★</div>
+              <p class="review-text">الألعاب سهلة وواضحة جدًا، شغلناها بسرعة وصارت الجلسة كلها حماس وضحك.</p>
+              <p class="review-author">أحد العملاء</p>
+            </article>
+            <article class="review-card">
+              <div class="review-stars" aria-hidden="true">★★★★★</div>
+              <p class="review-text">أكثر شيء أعجبني أن التشغيل بسيط وتقدر تبدأ اللعب من الجوال بدون تعقيد.</p>
+              <p class="review-author">تقييم عميل</p>
+            </article>
+            <article class="review-card">
+              <div class="review-stars" aria-hidden="true">★★★★★</div>
+              <p class="review-text">مناسبة جدًا للعيد والجمعات، وفعلًا تغيّر جو السهرة وتخليها أمتع.</p>
+              <p class="review-author">عميل من المتجر</p>
+            </article>
+            <article class="review-card">
+              <div class="review-stars" aria-hidden="true">★★★★★</div>
+              <p class="review-text">واجهة جميلة والشرح واضح، والناس تفاعلت مع الألعاب من أول مرة.</p>
+              <p class="review-author">رأي عميل</p>
+            </article>
+            <article class="review-card" aria-hidden="true">
+              <div class="review-stars" aria-hidden="true">★★★★★</div>
+              <p class="review-text">الألعاب سهلة وواضحة جدًا، شغلناها بسرعة وصارت الجلسة كلها حماس وضحك.</p>
+              <p class="review-author">أحد العملاء</p>
+            </article>
+            <article class="review-card" aria-hidden="true">
+              <div class="review-stars" aria-hidden="true">★★★★★</div>
+              <p class="review-text">أكثر شيء أعجبني أن التشغيل بسيط وتقدر تبدأ اللعب من الجوال بدون تعقيد.</p>
+              <p class="review-author">تقييم عميل</p>
+            </article>
+            <article class="review-card" aria-hidden="true">
+              <div class="review-stars" aria-hidden="true">★★★★★</div>
+              <p class="review-text">مناسبة جدًا للعيد والجمعات، وفعلًا تغيّر جو السهرة وتخليها أمتع.</p>
+              <p class="review-author">عميل من المتجر</p>
+            </article>
+            <article class="review-card" aria-hidden="true">
+              <div class="review-stars" aria-hidden="true">★★★★★</div>
+              <p class="review-text">واجهة جميلة والشرح واضح، والناس تفاعلت مع الألعاب من أول مرة.</p>
+              <p class="review-author">رأي عميل</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="footer-branding">
+          <h3>صندوق المسابقات</h3>
+          <p>متجر ألعاب ومسابقات رقمية يقدم ألعابًا جاهزة للجمعات والفعاليات والمدارس، ويجمع بين سهولة التشغيل، وضوح الواجهة، والتجارب التي تصنع جوًا ممتعًا وتفاعليًا.</p>
+          <div class="footer-icons">
+            <a class="footer-icon" href="#support" aria-label="واتساب">
+              <svg viewBox="0 0 24 24"><path d="M20 11.5A8 8 0 0 1 8.1 18.8L4 20l1.3-4.1A8 8 0 1 1 20 11.5Z"></path><path d="M8.6 9.4c.2-.5.4-.5.7-.5h.6c.2 0 .5 0 .7.4l.7 1.6c.1.2.1.5 0 .7l-.3.5c-.1.1-.2.3 0 .6.3.5 1 1.6 2.3 2.2.4.2.6.1.8-.1l.4-.5c.2-.2.4-.2.7-.1l1.6.7c.2.1.4.2.5.4.1.2.1 1-.2 1.4-.3.4-1 .9-1.8.9s-1.7-.3-3-.8c-1.5-.7-2.8-2-3.4-3.3-.6-1.2-.9-2.4-.9-3 0-.6.3-1 .6-1.4Z"></path></svg>
+            </a>
+            <a class="footer-icon" href="https://sandooq-m.com" target="_blank" rel="noopener" aria-label="المتجر">
+              <svg viewBox="0 0 24 24"><path d="M4 7h16"></path><path d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"></path><path d="M5 7h14l-1 12H6L5 7Z"></path><path d="M9.5 11.5h5"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="quick-links-title">روابط سريعة</div>
+        <div class="quick-links">
+          <a class="quick-link" href="#games">ألعابنا</a>
+          <a class="quick-link" href="#bundles">الباقات والعروض</a>
+          <a class="quick-link muted" href="#">المدونة</a>
+          <a class="quick-link" href="https://sandooq-m.com" target="_blank" rel="noopener">المتجر</a>
+        </div>
+      </div>
+
+      <div class="footer-legal">
+        <div class="footer-legal-inner">
+          <div>© 2025 صندوق المسابقات - جميع الحقوق محفوظة</div>
+          <div class="legal-links">
+            <a class="legal-link" href="#">من نحن</a>
+            <a class="legal-link" href="#">الخصوصية</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
+
   <nav class="bottom-nav" aria-label="التنقل السفلي">
     <div class="bottom-nav-inner">
       <span class="nav-indicator" aria-hidden="true"></span>
+    <a class="nav-item active" href="#games">
+      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
+      <span>الألعاب</span>
+    </a>
 
-      <a class="nav-item active" href="index.html" aria-current="page">
-        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
-        <span>الألعاب</span>
-      </a>
+    <a class="nav-item" href="#activate-code">
+      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
+      <span>تفعيل الكود</span>
+    </a>
 
-      <a class="nav-item nav-featured" href="purchase-activation.html">
-        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
-        <span>تفعيل الألعاب</span>
-      </a>
+    <a class="nav-item" href="#activate-purchase">
+      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+      <span>تفعيل الشراء</span>
+    </a>
 
-      <a class="nav-item" href="account.html">
-        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
-        <span>الحساب</span>
-      </a>
-
-      <a class="nav-item" href="support.html">
-        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
-        <span>الدعم</span>
-      </a>
+    <a class="nav-item" href="#support">
+      <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
+      <span>خدمة العملاء</span>
+    </a>
     </div>
   </nav>
+
 
   <script>
     const bottomNav = document.querySelector('.bottom-nav-inner');
