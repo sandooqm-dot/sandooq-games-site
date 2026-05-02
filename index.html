@@ -189,28 +189,27 @@
     .hero-text{
       width:100%;
       max-width:min(920px, 100%);
-      margin:clamp(0px, .25vw, 4px) auto 0;
+      margin:clamp(4px, .75vw, 12px) auto 0;
       text-align:center;
       color:var(--white);
       display:flex;
       flex-direction:column;
-      gap:clamp(5px, .7vw, 10px);
+      gap:clamp(3px, .55vw, 8px);
     }
 
     .hero-headline{
       margin:0;
       font-weight:950;
-      font-size:clamp(15.5px, 4vw, 32px);
-      line-height:1.25;
-      white-space:nowrap;
+      font-size:clamp(22px, 2.8vw, 34px);
+      line-height:1.35;
       text-shadow:0 3px 0 rgba(0,0,0,.14);
     }
 
     .hero-line{
       margin:0;
-      font-weight:900;
-      font-size:clamp(14.5px, 3.7vw, 27px);
-      line-height:1.45;
+      font-weight:850;
+      font-size:clamp(15px, 1.45vw, 21px);
+      line-height:1.55;
       text-shadow:0 2px 0 rgba(0,0,0,.11);
     }
 
@@ -334,7 +333,6 @@
 
     .game-card{
       min-width:0;
-      min-height:clamp(335px, 36vw, 470px);
       border:clamp(2px, .25vw, 3px) solid var(--line);
       border-radius:var(--card-radius);
       background:var(--white);
@@ -444,6 +442,100 @@
 
     .cover.white span{background:rgba(8,124,168,.88);}
 
+    .cover-login-note{
+      position:absolute;
+      left:clamp(6px, 1vw, 10px);
+      right:clamp(6px, 1vw, 10px);
+      bottom:clamp(6px, 1vw, 10px);
+      z-index:2;
+      min-height:clamp(22px, 2.2vw, 30px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:clamp(5px, .7vw, 8px);
+      padding:clamp(4px, .65vw, 7px) clamp(8px, 1vw, 12px);
+      border-radius:999px;
+      background:rgba(0,0,0,.74);
+      color:#fff;
+      font-weight:900;
+      font-size:clamp(8.5px, 2.15vw, 12px);
+      line-height:1.15;
+      text-align:center;
+      white-space:nowrap;
+      pointer-events:none;
+      box-shadow:0 3px 0 rgba(0,0,0,.18);
+    }
+
+    .cover-login-note svg{
+      width:clamp(13px, 1.6vw, 18px);
+      height:clamp(13px, 1.6vw, 18px);
+      flex:0 0 auto;
+      fill:var(--yellow-light);
+      stroke:#111;
+      stroke-width:1.6;
+      stroke-linejoin:round;
+    }
+
+    .game-card.game-unlocked .cover-login-note{display:none;}
+
+    .game-title-row{
+      width:100%;
+      margin:clamp(9px, 1.2vw, 16px) 0 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:clamp(6px, .8vw, 10px);
+      min-width:0;
+    }
+
+    .game-title-row .game-name{
+      margin:0;
+      flex:1 1 auto;
+      min-width:0;
+      text-align:right;
+    }
+
+    .game-status{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:clamp(18px, 1.9vw, 25px);
+      padding:clamp(2px, .45vw, 5px) clamp(7px, .9vw, 11px);
+      border-radius:999px;
+      border:clamp(1.5px, .18vw, 2px) solid var(--line);
+      background:#f5f7fb;
+      color:#1d2633;
+      font-weight:950;
+      font-size:clamp(8.5px, 2.2vw, 12px);
+      line-height:1;
+      white-space:nowrap;
+      box-shadow:0 2px 0 rgba(0,0,0,.12);
+    }
+
+    .game-card.game-unlocked .game-status{
+      background:#d7f8e7;
+      color:#075c45;
+    }
+
+    .game-desc{
+      margin:clamp(8px, 1vw, 13px) 0 0;
+      color:var(--muted);
+      font-weight:850;
+      font-size:clamp(10.5px, .95vw, 14px);
+      line-height:1.65;
+      text-align:center;
+    }
+
+    .game-meta-text{
+      margin:clamp(4px, .55vw, 7px) 0 clamp(9px, 1vw, 12px);
+      color:#607084;
+      font-weight:900;
+      font-size:clamp(9.5px, .85vw, 12.5px);
+      line-height:1.35;
+      text-align:center;
+    }
+
     .game-name{
       margin:clamp(9px, 1.2vw, 16px) 0 0;
       text-align:center;
@@ -465,24 +557,24 @@
     .card-actions{
       margin-top:auto;
       display:grid;
-      gap:clamp(6px, .75vw, 10px);
-      padding:0 clamp(4px, .65vw, 8px);
+      gap:clamp(8px, .9vw, 12px);
+      padding:0 clamp(5px, .8vw, 10px);
     }
 
     .game-btn{
-      min-height:clamp(30px, 2.6vw, 40px);
+      min-height:clamp(34px, 3.2vw, 46px);
       border:0;
       border-radius:999px;
       background:var(--blue);
       color:var(--white);
       display:grid;
-      grid-template-columns:clamp(24px, 2.2vw, 32px) 1fr clamp(14px, 1.1vw, 18px);
+      grid-template-columns:clamp(30px, 2.8vw, 38px) 1fr clamp(18px, 1.4vw, 24px);
       direction:ltr;
       align-items:center;
       justify-items:center;
-      gap:clamp(4px, .6vw, 8px);
-      padding:4px clamp(6px, .8vw, 11px);
-      font-size:clamp(10.5px, .9vw, 13.5px);
+      gap:clamp(6px, .8vw, 10px);
+      padding:6px clamp(8px, 1vw, 14px);
+      font-size:clamp(12px, 1vw, 15px);
       font-weight:900;
       line-height:1;
       box-shadow:0 3px 0 rgba(247,182,56,.88);
@@ -493,7 +585,7 @@
     .game-btn-text{
       direction:rtl;
       justify-self:center;
-      transform:translateX(4px);
+      transform:translateX(6px);
       white-space:nowrap;
     }
 
@@ -502,8 +594,8 @@
     .game-btn.play-action{background:var(--green);box-shadow:0 3px 0 rgba(247,182,56,.88);}
 
     .icon-badge{
-      width:clamp(24px, 2.15vw, 32px);
-      height:clamp(24px, 2.15vw, 32px);
+      width:clamp(28px, 2.55vw, 37px);
+      height:clamp(28px, 2.55vw, 37px);
       border-radius:50%;
       background:var(--yellow);
       color:var(--blue-dark);
@@ -596,13 +688,13 @@
     .review-card{
       width:100%;
       height:clamp(220px, 24vw, 280px);
-      display:grid;
-      grid-template-rows:auto 1fr;
-      align-items:stretch;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
       background:rgba(255,255,255,.97);
       color:var(--ink);
       border-radius:clamp(22px, 3vw, 36px);
-      padding:clamp(22px, 2.8vw, 34px) clamp(22px, 3.4vw, 42px);
+      padding:clamp(18px, 2.6vw, 30px);
       box-shadow:0 10px 0 rgba(16,32,51,.16), 0 28px 40px rgba(0,0,0,.12);
       text-align:center;
       border:1px solid rgba(255,255,255,.26);
@@ -610,16 +702,14 @@
     }
 
     .review-head{
-      width:100%;
       display:flex;
-      flex-direction:row;
+      flex-direction:row-reverse;
       align-items:center;
-      justify-content:flex-start;
-      gap:clamp(7px, 1vw, 12px);
-      margin:0;
+      justify-content:center;
+      gap:clamp(8px, 1.2vw, 14px);
+      margin-bottom:clamp(10px, 1.4vw, 16px);
       flex-wrap:nowrap;
       min-width:0;
-      direction:rtl;
     }
 
     .review-name{
@@ -627,9 +717,7 @@
       font-size:clamp(13px, 1.25vw, 18px);
       font-weight:950;
       line-height:1.35;
-      width:auto;
-      max-width:58%;
-      flex:0 1 auto;
+      max-width:52%;
       overflow-wrap:anywhere;
       text-align:right;
     }
@@ -637,19 +725,14 @@
     .review-stars{
       color:var(--yellow);
       letter-spacing:2px;
-      font-size:clamp(18px, 2vw, 29px);
-      line-height:1;
+      font-size:clamp(18px, 2.15vw, 30px);
       direction:ltr;
       white-space:nowrap;
       flex:0 0 auto;
-      text-align:right;
     }
 
     .review-text{
-      align-self:center;
-      justify-self:center;
-      max-width:94%;
-      margin:clamp(10px, 1.4vw, 18px) 0 0;
+      margin:0;
       color:var(--ink);
       font-size:clamp(15px, 1.5vw, 23px);
       line-height:1.75;
@@ -659,19 +742,7 @@
 
     .review-card.name-long .review-name{
       font-size:clamp(11px, 1vw, 15px);
-      line-height:1.3;
-      max-width:60%;
-    }
-
-    .review-card.name-very-long .review-name{
-      font-size:clamp(9.5px, .9vw, 13px);
-      line-height:1.25;
-      max-width:63%;
-    }
-
-    .review-card.text-medium .review-text{
-      font-size:clamp(13.5px, 1.35vw, 20px);
-      line-height:1.7;
+      max-width:48%;
     }
 
     .review-card.text-long .review-text{
@@ -952,7 +1023,7 @@
       .hero{min-height:330px;}
       .cover span{font-size:clamp(14px, 4.2vw, 16px);}
       .game-name{font-size:clamp(13px, 3.8vw, 14px);}
-      .game-btn{font-size:clamp(10px, 3.1vw, 11.5px);min-height:30px;}
+      .game-btn{font-size:clamp(11px, 3.4vw, 12px);}
       .section-title{min-height:36px;font-size:17px;}
     }
 
@@ -990,8 +1061,9 @@
       </div>
 
       <div class="hero-text">
-        <p class="hero-headline">كل أجواء اللعب والتحدي في صندوق واحد..!</p>
-        <p class="hero-line">العاب جماعية جاهزة للتجمعات والفعاليات</p>
+        <p class="hero-headline">ألعاب جماعية جاهزة لكل جمعة وفعالية</p>
+        <p class="hero-line">الحماس... التنافس... المتعة...</p>
+        <p class="hero-line">كلها في صندوق واحد..!</p>
       </div>
     </header>
 
@@ -1045,9 +1117,18 @@
               <source type="image/webp" srcset="horof-cover-card.webp" />
               <img src="horof-cover.PNG" alt="غلاف لعبة سباق الحروف" width="640" height="640" loading="eager" decoding="async" fetchpriority="high" />
             </picture>
+            <div class="cover-login-note" aria-label="تصفح فقط حتى تسجل الدخول">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1.2c.9 0 1.6.7 1.6 1.6v7.1c0 .9-.7 1.6-1.6 1.6H5.8c-.9 0-1.6-.7-1.6-1.6v-7.1c0-.9.7-1.6 1.6-1.6H7Zm2 0h6V8a3 3 0 0 0-6 0v2Z"></path></svg>
+              <span>تصفح فقط حتى تسجل الدخول</span>
+            </div>
           </div>
-          <h2 class="game-name">لعبة سباق الحروف</h2>
+          <div class="game-title-row">
+            <h2 class="game-name">لعبة سباق الحروف</h2>
+            <span class="game-status" data-status-for="horof">مقفلة</span>
+          </div>
           <p class="game-type">لعبة تفاعلية جماعية</p>
+          <p class="game-desc">سباق أسئلة على الحروف مع جرس لكل لاعب وخريطة تفاعلية.</p>
+          <p class="game-meta-text">+2 لاعبين · 15–30 دقيقة</p>
           <div class="card-actions">
             <a class="game-btn" href="horof.html" data-action="details">
               <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span>
@@ -1298,15 +1379,12 @@
       const name = card.querySelector('.review-name');
       const text = card.querySelector('.review-text');
 
-      if (name) {
-        const nameLength = name.textContent.trim().length;
-        if (nameLength > 18) card.classList.add('name-long');
-        if (nameLength > 28) card.classList.add('name-very-long');
+      if (name && name.textContent.trim().length > 18) {
+        card.classList.add('name-long');
       }
 
       if (text) {
         const length = text.textContent.trim().length;
-        if (length > 65) card.classList.add('text-medium');
         if (length > 92) card.classList.add('text-long');
         if (length > 135) card.classList.add('text-very-long');
       }
@@ -1384,6 +1462,31 @@
       }, { passive:true });
 
       restartReviewTimer();
+    }
+
+    const horofCard = document.querySelector('.game-card[data-game-id="horof"]');
+    const horofStatus = document.querySelector('[data-status-for="horof"]');
+    const horofActivationKeys = [
+      'horof_access_ok_v1',
+      'horof_activation_ok_v1',
+      'horof_auth_passed_v1',
+      'sandooq_horof_active_v1'
+    ];
+
+    function hasHorofActivation() {
+      return horofActivationKeys.some(key => {
+        try {
+          const value = localStorage.getItem(key) || sessionStorage.getItem(key);
+          return value && value !== '0' && value !== 'false' && value !== 'no';
+        } catch (e) {
+          return false;
+        }
+      });
+    }
+
+    if (horofCard && horofStatus && hasHorofActivation()) {
+      horofCard.classList.add('game-unlocked');
+      horofStatus.textContent = 'مفعّلة';
     }
   </script>
 </body>
