@@ -216,7 +216,8 @@
     .btn:hover{transform:translateY(-1px);filter:saturate(1.08);}
     .btn-primary{background:var(--orange);color:#fff;}
     .btn-secondary{background:#fff;color:var(--ink);}
-    .btn-play{background:var(--green);color:#fff;}
+    .btn-play,
+    .js-game-cta[data-state="play"]{background:var(--green);color:#fff;}
 
     .hero-card{
       width:min(760px, 100%);
@@ -415,20 +416,6 @@
       box-shadow:0 0 0 3px rgba(255,107,26,.12);
     }
 
-    .final-cta{
-      display:grid;
-      gap:14px;
-      justify-items:center;
-      text-align:center;
-      background:linear-gradient(135deg, var(--blue-dark), var(--blue));
-      color:#fff;
-      border-color:var(--line);
-    }
-
-    .final-cta .section-heading,
-    .final-cta .section-text{
-      color:#fff;
-    }
 
     .bottom-nav{
       position:fixed;
@@ -588,10 +575,9 @@
           <h1 class="page-title">لعبة سباق الحروف</h1>
           <p class="page-lead">تحدي حروفي تفاعلي يجمع السرعة، الجرس، وأكثر من 4000 سؤال جاهز في تجربة مناسبة للجمعات والمعلمين والفعاليات.</p>
 
-          <div class="hero-actions" data-game-id="horof" data-buy-url="https://sandooq-m.com/rRDZGeZ" data-play-url="https://horof.sandooq-games.com">
-            <a class="btn btn-primary js-buy-btn" href="https://sandooq-m.com/rRDZGeZ">شراء اللعبة</a>
+          <div class="hero-actions" data-game-id="horof">
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/rRDZGeZ" data-game-id="horof" data-state="buy" data-buy-url="https://sandooq-m.com/rRDZGeZ" data-play-url="https://horof.sandooq-games.com" data-buy-label="شراء اللعبة" data-play-label="العب">شراء اللعبة</a>
             <a class="btn btn-secondary" href="#video">شرح اللعبة</a>
-            <a class="btn btn-play js-play-btn" href="https://horof.sandooq-games.com" hidden>العب</a>
           </div>
         </div>
       </div>
@@ -680,15 +666,6 @@
           </ul>
         </section>
 
-        <section class="section-card final-cta" data-game-id="horof" data-buy-url="https://sandooq-m.com/rRDZGeZ" data-play-url="https://horof.sandooq-games.com">
-          <h2 class="section-heading">جاهز تبدأ سباق الحروف؟</h2>
-          <p class="section-text">اشترِ اللعبة الآن، وبعد ربط الحساب ستظهر لك ضمن ألعابك المفعّلة.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://sandooq-m.com/rRDZGeZ">شراء اللعبة</a>
-            <a class="btn btn-secondary" href="index.html">العودة للألعاب</a>
-            <a class="btn btn-play" href="https://horof.sandooq-games.com" hidden>العب</a>
-          </div>
-        </section>
       </div>
     </main>
   </div>
