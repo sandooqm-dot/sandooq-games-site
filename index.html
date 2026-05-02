@@ -189,27 +189,27 @@
     .hero-text{
       width:100%;
       max-width:min(920px, 100%);
-      margin:clamp(4px, .75vw, 12px) auto 0;
+      margin:clamp(0px, .25vw, 4px) auto 0;
       text-align:center;
       color:var(--white);
       display:flex;
       flex-direction:column;
-      gap:clamp(3px, .55vw, 8px);
+      gap:clamp(5px, .7vw, 10px);
     }
 
     .hero-headline{
       margin:0;
       font-weight:950;
-      font-size:clamp(22px, 2.8vw, 34px);
-      line-height:1.35;
+      font-size:clamp(23px, 3vw, 38px);
+      line-height:1.25;
       text-shadow:0 3px 0 rgba(0,0,0,.14);
     }
 
     .hero-line{
       margin:0;
-      font-weight:850;
-      font-size:clamp(15px, 1.45vw, 21px);
-      line-height:1.55;
+      font-weight:900;
+      font-size:clamp(17px, 1.75vw, 25px);
+      line-height:1.45;
       text-shadow:0 2px 0 rgba(0,0,0,.11);
     }
 
@@ -334,6 +334,7 @@
     .game-card{
       min-width:0;
       container-type:inline-size;
+      min-height:clamp(335px, 36vw, 470px);
       border:clamp(2px, .25vw, 3px) solid var(--line);
       border-radius:var(--card-radius);
       background:var(--white);
@@ -394,7 +395,7 @@
       background-position:0 0, 0 11px, 11px -11px, -11px 0px;
     }
 
-    .cover span{
+    .cover > span{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -441,28 +442,27 @@
         linear-gradient(145deg, #fff, #edf4f8);
     }
 
-    .cover.white span{background:rgba(8,124,168,.88);}
+    .cover.white > span{background:rgba(8,124,168,.88);}
 
     .cover-login-note{
       position:absolute;
-      left:clamp(7px, 2.4cqw, 14px);
-      right:clamp(7px, 2.4cqw, 14px);
-      bottom:clamp(5px, 1.7cqw, 10px);
+      left:0;
+      right:0;
+      bottom:0;
       z-index:2;
-      width:auto;
-      max-width:none;
-      min-height:clamp(12px, 4.2cqw, 20px);
+      width:100%;
+      min-height:clamp(9px, 3.05cqw, 17px);
       display:flex;
       align-items:center;
       justify-content:flex-start;
-      gap:clamp(3px, 1cqw, 6px);
-      padding:clamp(1px, .55cqw, 3px) clamp(5px, 1.6cqw, 10px);
-      border-radius:clamp(4px, 1.5cqw, 9px);
-      background:rgba(0,0,0,.64);
+      gap:clamp(2px, .7cqw, 5px);
+      padding:clamp(1px, .32cqw, 2px) clamp(4px, 1.25cqw, 8px);
+      border-radius:0;
+      background:rgba(0,0,0,.55);
       color:#fff;
       font-weight:900;
-      font-size:clamp(5px, 1.65cqw, 8.5px);
-      line-height:1.05;
+      font-size:clamp(3.8px, 1.15cqw, 7px);
+      line-height:1;
       text-align:right;
       white-space:nowrap;
       pointer-events:none;
@@ -474,6 +474,7 @@
     .cover-login-note span{
       display:inline;
       min-height:0;
+      max-width:none;
       padding:0;
       border:0;
       border-radius:0;
@@ -487,12 +488,12 @@
     }
 
     .cover-login-note svg{
-      width:clamp(6px, 1.45cqw, 9px);
-      height:clamp(6px, 1.45cqw, 9px);
+      width:clamp(5px, 1.05cqw, 8px);
+      height:clamp(5px, 1.05cqw, 8px);
       flex:0 0 auto;
       fill:var(--yellow-light);
       stroke:#111;
-      stroke-width:1.4;
+      stroke-width:1.35;
       stroke-linejoin:round;
     }
 
@@ -566,14 +567,12 @@
     }
 
     .game-name{
-      margin:clamp(8px, 1vw, 13px) 0 0;
+      margin:clamp(9px, 1.2vw, 16px) 0 0;
       text-align:center;
       font-weight:950;
-      font-size:clamp(11.5px, 2.9vw, 18px);
-      line-height:1.25;
+      font-size:clamp(14px, 1.25vw, 20px);
+      line-height:1.35;
       color:#111;
-      white-space:nowrap;
-      overflow:hidden;
     }
 
     .game-type{
@@ -583,24 +582,24 @@
     .card-actions{
       margin-top:auto;
       display:grid;
-      gap:clamp(5px, .65vw, 8px);
-      padding:0 clamp(3px, .55vw, 7px);
+      gap:clamp(6px, .75vw, 10px);
+      padding:0 clamp(4px, .65vw, 8px);
     }
 
     .game-btn{
-      min-height:clamp(28px, 2.35vw, 36px);
+      min-height:clamp(30px, 2.6vw, 40px);
       border:0;
       border-radius:999px;
       background:var(--blue);
       color:var(--white);
       display:grid;
-      grid-template-columns:clamp(22px, 1.9vw, 28px) 1fr clamp(12px, 1vw, 16px);
+      grid-template-columns:clamp(24px, 2.2vw, 32px) 1fr clamp(14px, 1.1vw, 18px);
       direction:ltr;
       align-items:center;
       justify-items:center;
-      gap:clamp(3px, .45vw, 6px);
-      padding:3px clamp(5px, .7vw, 9px);
-      font-size:clamp(9.5px, .82vw, 12px);
+      gap:clamp(4px, .6vw, 8px);
+      padding:4px clamp(6px, .8vw, 11px);
+      font-size:clamp(10.5px, .9vw, 13.5px);
       font-weight:900;
       line-height:1;
       box-shadow:0 3px 0 rgba(247,182,56,.88);
@@ -611,7 +610,7 @@
     .game-btn-text{
       direction:rtl;
       justify-self:center;
-      transform:translateX(3px);
+      transform:translateX(4px);
       white-space:nowrap;
     }
 
@@ -620,8 +619,8 @@
     .game-btn.play-action{background:var(--green);box-shadow:0 3px 0 rgba(247,182,56,.88);}
 
     .icon-badge{
-      width:clamp(22px, 1.9vw, 28px);
-      height:clamp(22px, 1.9vw, 28px);
+      width:clamp(24px, 2.15vw, 32px);
+      height:clamp(24px, 2.15vw, 32px);
       border-radius:50%;
       background:var(--yellow);
       color:var(--blue-dark);
@@ -714,13 +713,13 @@
     .review-card{
       width:100%;
       height:clamp(220px, 24vw, 280px);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+      display:grid;
+      grid-template-rows:auto 1fr;
+      align-items:stretch;
       background:rgba(255,255,255,.97);
       color:var(--ink);
       border-radius:clamp(22px, 3vw, 36px);
-      padding:clamp(18px, 2.6vw, 30px);
+      padding:clamp(22px, 2.8vw, 34px) clamp(22px, 3.4vw, 42px);
       box-shadow:0 10px 0 rgba(16,32,51,.16), 0 28px 40px rgba(0,0,0,.12);
       text-align:center;
       border:1px solid rgba(255,255,255,.26);
@@ -728,14 +727,16 @@
     }
 
     .review-head{
+      width:100%;
       display:flex;
-      flex-direction:row-reverse;
+      flex-direction:row;
       align-items:center;
-      justify-content:center;
-      gap:clamp(8px, 1.2vw, 14px);
-      margin-bottom:clamp(10px, 1.4vw, 16px);
+      justify-content:flex-start;
+      gap:clamp(7px, 1vw, 12px);
+      margin:0;
       flex-wrap:nowrap;
       min-width:0;
+      direction:rtl;
     }
 
     .review-name{
@@ -743,7 +744,9 @@
       font-size:clamp(13px, 1.25vw, 18px);
       font-weight:950;
       line-height:1.35;
-      max-width:52%;
+      width:auto;
+      max-width:58%;
+      flex:0 1 auto;
       overflow-wrap:anywhere;
       text-align:right;
     }
@@ -751,14 +754,19 @@
     .review-stars{
       color:var(--yellow);
       letter-spacing:2px;
-      font-size:clamp(18px, 2.15vw, 30px);
+      font-size:clamp(18px, 2vw, 29px);
+      line-height:1;
       direction:ltr;
       white-space:nowrap;
       flex:0 0 auto;
+      text-align:right;
     }
 
     .review-text{
-      margin:0;
+      align-self:center;
+      justify-self:center;
+      max-width:94%;
+      margin:clamp(10px, 1.4vw, 18px) 0 0;
       color:var(--ink);
       font-size:clamp(15px, 1.5vw, 23px);
       line-height:1.75;
@@ -768,7 +776,19 @@
 
     .review-card.name-long .review-name{
       font-size:clamp(11px, 1vw, 15px);
-      max-width:48%;
+      line-height:1.3;
+      max-width:60%;
+    }
+
+    .review-card.name-very-long .review-name{
+      font-size:clamp(9.5px, .9vw, 13px);
+      line-height:1.25;
+      max-width:63%;
+    }
+
+    .review-card.text-medium .review-text{
+      font-size:clamp(13.5px, 1.35vw, 20px);
+      line-height:1.7;
     }
 
     .review-card.text-long .review-text{
@@ -1047,13 +1067,9 @@
     @media (max-width:430px){
       :root{--bottom-nav-height:88px;--page-pad:clamp(12px, 4vw, 18px);}
       .hero{min-height:330px;}
-      .cover span{font-size:clamp(14px, 4.2vw, 16px);}
-      .game-name{font-size:clamp(10.5px, 3.15vw, 12.4px);}
-      .game-title-row .game-name{font-size:clamp(10px, 2.95vw, 12px);}
-      .game-btn{font-size:clamp(8.8px, 2.6vw, 10.2px);min-height:28px;}
-      .icon-badge{width:22px;height:22px;}
-      .cover-login-note{font-size:clamp(4.8px, 1.55cqw, 7px);min-height:clamp(12px, 4cqw, 17px);padding:clamp(1px, .5cqw, 2px) clamp(5px, 1.5cqw, 8px);}
-      .cover-login-note svg{width:clamp(6px, 1.35cqw, 8px);height:clamp(6px, 1.35cqw, 8px);}
+      .cover > span{font-size:clamp(14px, 4.2vw, 16px);}
+      .game-name{font-size:clamp(13px, 3.8vw, 14px);}
+      .game-btn{font-size:clamp(10px, 3.1vw, 11.5px);min-height:30px;}
       .section-title{min-height:36px;font-size:17px;}
     }
 
@@ -1091,9 +1107,8 @@
       </div>
 
       <div class="hero-text">
-        <p class="hero-headline">ألعاب جماعية جاهزة لكل جمعة وفعالية</p>
-        <p class="hero-line">الحماس... التنافس... المتعة...</p>
-        <p class="hero-line">كلها في صندوق واحد..!</p>
+        <p class="hero-headline">كل أجواء اللعب والتحدي في صندوق واحد..!</p>
+        <p class="hero-line">العاب جماعية جاهزة للتجمعات والفعاليات</p>
       </div>
     </header>
 
@@ -1173,6 +1188,7 @@
         <article class="game-card">
           <div class="cover white"><span>بدون كلام</span></div>
           <h2 class="game-name">لعبة بدون كلام</h2>
+          <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
             <a class="game-btn" href="#">
               <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span>
@@ -1188,6 +1204,7 @@
         <article class="game-card">
           <div class="cover white"><span>برا السالفة؟</span></div>
           <h2 class="game-name">لعبة برا السالفة</h2>
+          <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
@@ -1197,6 +1214,7 @@
         <article class="game-card">
           <div class="cover dark"><span>صندوق المسابقات</span></div>
           <h2 class="game-name">لعبة تحدي المسابقات</h2>
+          <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
@@ -1206,6 +1224,7 @@
         <article class="game-card">
           <div class="cover yellow"><span>فاميلي فيود</span></div>
           <h2 class="game-name">لعبة فاميلي فيود</h2>
+          <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
@@ -1215,6 +1234,7 @@
         <article class="game-card">
           <div class="cover blue"><span>تحدي الصور</span></div>
           <h2 class="game-name">لعبة تحدي الصور</h2>
+          <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
@@ -1224,6 +1244,7 @@
         <article class="game-card">
           <div class="cover blue"><span>بنك الكلمات</span></div>
           <h2 class="game-name">لعبة بنك الكلمات</h2>
+          <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
@@ -1233,6 +1254,7 @@
         <article class="game-card">
           <div class="cover yellow"><span>الأسرع</span></div>
           <h2 class="game-name">لعبة الأسرع</h2>
+          <p class="game-type">لعبة تفاعلية جماعية</p>
           <div class="card-actions">
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
             <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
@@ -1401,12 +1423,15 @@
       const name = card.querySelector('.review-name');
       const text = card.querySelector('.review-text');
 
-      if (name && name.textContent.trim().length > 18) {
-        card.classList.add('name-long');
+      if (name) {
+        const nameLength = name.textContent.trim().length;
+        if (nameLength > 18) card.classList.add('name-long');
+        if (nameLength > 28) card.classList.add('name-very-long');
       }
 
       if (text) {
         const length = text.textContent.trim().length;
+        if (length > 65) card.classList.add('text-medium');
         if (length > 92) card.classList.add('text-long');
         if (length > 135) card.classList.add('text-very-long');
       }
@@ -1510,6 +1535,7 @@
       horofCard.classList.add('game-unlocked');
       horofStatus.textContent = 'مفعّلة';
     }
+
   </script>
 </body>
 </html>
