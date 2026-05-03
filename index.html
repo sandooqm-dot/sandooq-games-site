@@ -10,6 +10,7 @@
   <link rel="preload" as="image" href="logo.PNG" />
   <link rel="preload" as="image" href="horof-cover-card.webp" />
   <link rel="preload" as="image" href="sandooq-almusabaqat-cover-card.webp" />
+  <link rel="preload" as="image" href="horof-edu-cover-card.webp" />
 
   <style>
     @font-face{
@@ -1146,6 +1147,32 @@
       will-change:transform;
     }
 
+
+    /* تثبيت جذري للشريط السفلي على الجوال و iOS */
+    :root{
+      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      --visual-viewport-bottom:0px;
+    }
+
+    .app{
+      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      inset-inline:0 !important;
+      top:auto !important;
+      bottom:var(--visual-viewport-bottom) !important;
+      width:100% !important;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
+      contain:layout paint style;
+      will-change:transform, bottom;
+    }
+
   </style>
 </head>
 
@@ -1361,8 +1388,11 @@
           class="game-card"
           data-game-id="horof-edu"
         >
-          <div class="cover blue">
-            <span>سباق الحروف التعليمية</span>
+          <div class="cover cover-photo">
+            <picture>
+              <source type="image/webp" srcset="horof-edu-cover-card.webp" />
+              <img src="horof-edu-cover.PNG" alt="غلاف لعبة سباق الحروف التعليمية" width="640" height="640" loading="lazy" decoding="async" />
+            </picture>
             <div class="cover-login-note" aria-label="تصفح فقط حتى تسجل الدخول">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1.2c.9 0 1.6.7 1.6 1.6v7.1c0 .9-.7 1.6-1.6 1.6H5.8c-.9 0-1.6-.7-1.6-1.6v-7.1c0-.9.7-1.6 1.6-1.6H7Zm2 0h6V8a3 3 0 0 0-6 0v2Z"></path></svg>
               <span>تصفح فقط حتى تسجل الدخول</span>
@@ -1670,6 +1700,36 @@
     if (horofCard && horofStatus && hasHorofActivation()) {
       horofCard.classList.add('game-unlocked');
       horofStatus.textContent = 'مفعّلة';
+    }
+
+    function stabilizeBottomNav() {
+      const nav = document.querySelector('.bottom-nav');
+      if (!nav) return;
+
+      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
+      if (navHeight > 0) {
+        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+      }
+
+      let bottomOffset = 0;
+      if (window.visualViewport) {
+        bottomOffset = Math.max(
+          0,
+          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
+        );
+      }
+
+      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
+    }
+
+    stabilizeBottomNav();
+    window.addEventListener('load', stabilizeBottomNav);
+    window.addEventListener('resize', stabilizeBottomNav);
+    window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
+      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
     }
 
   </script>
