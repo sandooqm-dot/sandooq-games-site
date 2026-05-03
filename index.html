@@ -9,6 +9,7 @@
   <link rel="preload" href="NotoIKEAArabic-Bold.ttf" as="font" type="font/ttf" crossorigin />
   <link rel="preload" as="image" href="logo.PNG" />
   <link rel="preload" as="image" href="horof-cover-card.webp" />
+  <link rel="preload" as="image" href="sandooq-cover-card.webp" />
 
   <style>
     @font-face{
@@ -594,7 +595,7 @@
     .game-card[data-game-id="bdon-kalam"] .game-title-row,
     .game-card[data-game-id="bra-alsalfah"] .game-title-row,
     .game-card[data-game-id="family-feud"] .game-title-row,
-    .game-card[data-game-id="sandooq-box"] .game-title-row{
+    .game-card[data-game-id="sandooq"] .game-title-row{
       margin-top:clamp(9px, 2.1cqw, 14px);
     }
 
@@ -602,7 +603,7 @@
     .game-card[data-game-id="bdon-kalam"] .game-meta-text,
     .game-card[data-game-id="bra-alsalfah"] .game-meta-text,
     .game-card[data-game-id="family-feud"] .game-meta-text,
-    .game-card[data-game-id="sandooq-box"] .game-meta-text{
+    .game-card[data-game-id="sandooq"] .game-meta-text{
       margin-top:clamp(6px, 1.65cqw, 10px);
     }
 
@@ -610,7 +611,7 @@
     .game-card[data-game-id="bdon-kalam"] .game-desc,
     .game-card[data-game-id="bra-alsalfah"] .game-desc,
     .game-card[data-game-id="family-feud"] .game-desc,
-    .game-card[data-game-id="sandooq-box"] .game-desc{
+    .game-card[data-game-id="sandooq"] .game-desc{
       margin-top:clamp(7px, 1.8cqw, 11px);
       margin-bottom:clamp(10px, 2.5cqw, 16px);
     }
@@ -619,7 +620,7 @@
     .game-card[data-game-id="bdon-kalam"] .card-actions,
     .game-card[data-game-id="bra-alsalfah"] .card-actions,
     .game-card[data-game-id="family-feud"] .card-actions,
-    .game-card[data-game-id="sandooq-box"] .card-actions{
+    .game-card[data-game-id="sandooq"] .card-actions{
       margin-top:clamp(10px, 2.6cqw, 18px);
     }
 
@@ -1107,6 +1108,18 @@
         transition-duration:.001ms !important;
       }
     }
+
+    /* تثبيت الشريط السفلي دائماً (حماية إضافية خصوصاً على iOS) */
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      bottom:0 !important;
+      transform:translateZ(0);
+      -webkit-transform:translateZ(0);
+      will-change:transform;
+    }
+
   </style>
 </head>
 
@@ -1264,8 +1277,11 @@
           class="game-card"
           data-game-id="family-feud"
         >
-          <div class="cover dark">
-            <span>فاميلي فيود</span>
+          <div class="cover cover-photo">
+            <picture>
+              <source type="image/webp" srcset="family-feud-cover-card.webp" />
+              <img src="family-feud-cover.PNG" alt="غلاف لعبة فاميلي فيود" width="640" height="640" loading="lazy" decoding="async" />
+            </picture>
             <div class="cover-login-note" aria-label="تصفح فقط حتى تسجل الدخول">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1.2c.9 0 1.6.7 1.6 1.6v7.1c0 .9-.7 1.6-1.6 1.6H5.8c-.9 0-1.6-.7-1.6-1.6v-7.1c0-.9.7-1.6 1.6-1.6H7Zm2 0h6V8a3 3 0 0 0-6 0v2Z"></path></svg>
               <span>تصفح فقط حتى تسجل الدخول</span>
@@ -1278,17 +1294,20 @@
           <p class="game-meta-text">+ لاعبين · 15–30 دقيقة</p>
           <p class="game-desc">تحدي الإجابات الأكثر شعبية بجرس وشاشة عرض وأصوات حماسية</p>
           <div class="card-actions">
-            <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
+            <a class="game-btn" href="family-feud.html"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
             <a class="game-btn" href="https://sandooq-m.com/wAReOlN"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
           </div>
         </article>
 
         <article
           class="game-card"
-          data-game-id="sandooq-box"
+          data-game-id="sandooq"
         >
-          <div class="cover yellow">
-            <span>صندوق<br>المسابقات</span>
+          <div class="cover cover-photo">
+            <picture>
+              <source type="image/webp" srcset="sandooq-cover-card.webp" />
+              <img src="sandooq-cover.PNG" alt="غلاف لعبة صندوق المسابقات" width="640" height="640" loading="lazy" decoding="async" />
+            </picture>
             <div class="cover-login-note" aria-label="تصفح فقط حتى تسجل الدخول">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1.2c.9 0 1.6.7 1.6 1.6v7.1c0 .9-.7 1.6-1.6 1.6H5.8c-.9 0-1.6-.7-1.6-1.6v-7.1c0-.9.7-1.6 1.6-1.6H7Zm2 0h6V8a3 3 0 0 0-6 0v2Z"></path></svg>
               <span>تصفح فقط حتى تسجل الدخول</span>
@@ -1296,13 +1315,19 @@
           </div>
           <div class="game-title-row">
             <h2 class="game-name">لعبة صندوق المسابقات</h2>
-            <span class="game-status">مقفلة</span>
+            <span class="game-status" data-status-for="sandooq">مقفلة</span>
           </div>
           <p class="game-meta-text">+2 لاعبين · 20–40 دقيق</p>
           <p class="game-desc">صندوق واحد يجمع أكثر من نوع تحدي لتجربة مسابقات ممتعة في كل جَمعة</p>
           <div class="card-actions">
-            <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
-            <a class="game-btn" href="#"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span><span class="game-btn-text">شراء اللعبة</span></a>
+            <a class="game-btn" href="#">
+              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span>
+              <span class="game-btn-text">عرض اللعبة</span>
+            </a>
+            <a class="game-btn" href="#">
+              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span>
+              <span class="game-btn-text">شراء اللعبة</span>
+            </a>
           </div>
         </article>
 
