@@ -42,7 +42,8 @@
       --nav-max:860px;
       --page-pad:clamp(16px, 4vw, 28px);
       --bottom-nav-height:clamp(88px, 7vw, 96px);
-      --radius-lg:30px;
+            --radius:clamp(18px, 2vw, 30px);
+--radius-lg:30px;
       --radius-md:22px;
       --radius-sm:18px;
     }
@@ -182,10 +183,12 @@
       margin:18px 0 6px;
       color:#fff;
       font-weight:950;
-      font-size:clamp(30px, 7.7vw, 64px);
-      
+      font-size:clamp(30px, 6vw, 58px);
+      line-height:1.06;
       white-space:nowrap;
-      max-width:100%;line-height:1.06;
+      max-width:100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
       text-shadow:0 5px 0 rgba(0,0,0,.24);
     }
 
@@ -237,6 +240,106 @@
       display:grid;
       gap:22px;
     }
+    /* بطاقات بنفس مقاسات الألعاب الأخرى (Feature / Section) */
+    .features-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:clamp(12px, 1.6vw, 18px);
+    }
+
+    .feature-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(16px, 2vw, 26px);
+      box-shadow:0 6px 0 rgba(0,0,0,.12);
+      min-height:120px;
+      overflow:hidden;
+    }
+
+    .feature-title{
+      margin:0 0 8px;
+      font-weight:950;
+      font-size:clamp(18px, 1.6vw, 26px);
+      line-height:1.35;
+      color:var(--ink);
+    }
+
+    .feature-desc{
+      margin:0;
+      color:var(--muted);
+      font-weight:760;
+      font-size:clamp(14px, 1.15vw, 17px);
+      line-height:1.8;
+    }
+
+    .section-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.5vw, 32px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      overflow:hidden;
+    }
+
+    .section-card.soft-yellow{background:#fff8ed;}
+    .section-card.soft-blue{background:#eaf8ff;}
+    .section-card.soft-purple{background:#f4eaff;}
+    .section-card.soft-mint{background:#ecfffb;}
+
+    .section-heading{
+      margin:0 0 10px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(24px, 2.6vw, 38px);
+      line-height:1.35;
+    }
+
+    .section-text{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(15px, 1.35vw, 20px);
+      line-height:1.9;
+    }
+
+    .bullets{
+      margin:12px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+      color:var(--muted);
+      font-weight:820;
+      font-size:clamp(15px, 1.25vw, 19px);
+      line-height:1.85;
+    }
+
+    .bullets li{
+      position:relative;
+      padding-right:24px;
+    }
+
+    .bullets li::before{
+      content:"";
+      position:absolute;
+      right:0;
+      top:.8em;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#eb7b3c;
+      box-shadow:0 0 0 3px rgba(235,123,60,.12);
+    }
+
+    @media (min-width:800px){
+      .features-grid{grid-template-columns:repeat(2, minmax(0,1fr));}
+    }
+
+    @media (min-width:1180px){
+      .features-grid{grid-template-columns:repeat(3, minmax(0,1fr));}
+    }
+
 
     .info-card{
       background:#f6f7f9;
@@ -513,40 +616,42 @@
 
     <main class="content">
       <div class="stack">
-        <section class="info-card tone-white">
-          <h2 class="card-title">طريقة التشغيل</h2>
-          <p class="card-text">تعمل عبر البوربوينت<br>افتح ملف اللعبة داخل PowerPoint، واضغط بدء العرض وابدأ المسابقة مباشرة</p>
+        <section class="features-grid" aria-label="مميزات لعبة صندوق المسابقات">
+          <article class="feature-card">
+            <h2 class="feature-title">طريقة التشغيل</h2>
+            <p class="feature-desc">تعمل عبر البوربوينت<br>افتح ملف اللعبة داخل PowerPoint، واضغط بدء العرض وابدأ المسابقة مباشرة</p>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-title">أقسام متنوعة</h2>
+            <p class="feature-desc">تجمع اللعبة بين الأسئلة الثقافية والدينية والرياضية وأعلام الدول وخمن اسم الدولة وخمن الشعار الصحيح وخمن المَثل بدون كلام</p>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-title">120 سؤالًا جاهزاً</h2>
+            <p class="feature-desc">كمية مناسبة من الأسئلة والتحديات الجاهزة تجعل المسابقة سريعة التحضير ومتنوعة في كل جولة</p>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-title">نظام فرق ونقاط</h2>
+            <p class="feature-desc">قسّم اللاعبين إلى فرقين واجمع النقاط مع كل إجابة صحيحة حتى نهاية التحدي</p>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-title">سهلة العرض للجميع</h2>
+            <p class="feature-desc">شغّل اللعبة من جهازك واعرضها على شاشة أو تلفاز ليستمتع الجميع بأجواء المسابقة.</p>
+          </article>
+
+          <article class="feature-card">
+            <h2 class="feature-title">تعمل على مختلف الأجهزة</h2>
+            <p class="feature-desc">يمكن تشغيلها من الجوال أو التابلت أو الكمبيوتر ثم عرضها بسهولة على الشاشة</p>
+          </article>
         </section>
 
-        <section class="info-card tone-lilac">
-          <h2 class="card-title">أقسام متنوعة</h2>
-          <p class="card-text">تجمع اللعبة بين الأسئلة الثقافية والدينية والرياضية وأعلام الدول وخمن اسم الدولة وخمن الشعار الصحيح وخمن المَثل بدون كلام</p>
-        </section>
-
-        <section class="info-card tone-blue">
-          <h2 class="card-title">120 سؤالًا جاهزاً</h2>
-          <p class="card-text">كمية مناسبة من الأسئلة والتحديات الجاهزة تجعل المسابقة سريعة التحضير ومتنوعة في كل جولة</p>
-        </section>
-
-        <section class="info-card tone-cream">
-          <h2 class="card-title">نظام فرق ونقاط</h2>
-          <p class="card-text">قسّم اللاعبين إلى فرقين واجمع النقاط مع كل إجابة صحيحة حتى نهاية التحدي</p>
-        </section>
-
-        <section class="info-card tone-green">
-          <h2 class="card-title">سهلة العرض للجميع</h2>
-          <p class="card-text">شغّل اللعبة من جهازك واعرضها على شاشة أو تلفاز ليستمتع الجميع بأجواء المسابقة.</p>
-        </section>
-
-        <section class="info-card tone-white">
-          <h2 class="card-title">تعمل على مختلف الأجهزة</h2>
-          <p class="card-text">يمكن تشغيلها من الجوال أو التابلت أو الكمبيوتر ثم عرضها بسهولة على الشاشة</p>
-        </section>
-
-        <section class="info-card tone-lilac">
-          <h2 class="card-title">فكرة اللعبة</h2>
-          <p class="card-text">يختار المقدم أحد أقسام صندوق المسابقات ثم تبدأ الفرق بالإجابة وجمع النقاط.<br>كل قسم يعطي جواً مختلفاً، بين أسئلة مباشرة، أعلام، شعارات، أمثال، وتحديات جماعية.</p>
-          <ul class="list-dots">
+        <section class="section-card soft-purple">
+          <h2 class="section-heading">فكرة اللعبة</h2>
+          <p class="section-text">يختار المقدم أحد أقسام صندوق المسابقات ثم تبدأ الفرق بالإجابة وجمع النقاط.<br>كل قسم يعطي جواً مختلفاً، بين أسئلة مباشرة، أعلام، شعارات، أمثال، وتحديات جماعية.</p>
+          <ul class="bullets">
             <li>اختيار قسم من أقسام المسابقة.</li>
             <li>ظهور السؤال أو التحدي داخل العرض.</li>
             <li>إجابة الفرق وجمع النقاط.</li>
@@ -554,9 +659,9 @@
           </ul>
         </section>
 
-        <section class="info-card tone-blue" id="video-section">
-          <h2 class="card-title">شرح اللعبة بالفيديو</h2>
-          <p class="card-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
+        <section class="section-card soft-blue" id="video-section">
+          <h2 class="section-heading">شرح اللعبة بالفيديو</h2>
+          <p class="section-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
 
           <div class="video-placeholder">
             <img class="video-bg" id="videoBgImage" src="sandooq-almusabaqat-cover.PNG" alt="خلفية شرح لعبة صندوق المسابقات" loading="lazy" decoding="async" />
@@ -568,9 +673,9 @@
           </div>
         </section>
 
-        <section class="info-card tone-green">
-          <h2 class="card-title">لماذا تختار صندوق المسابقات؟</h2>
-          <ul class="list-dots">
+        <section class="section-card soft-mint">
+          <h2 class="section-heading">لماذا تختار صندوق المسابقات؟</h2>
+          <ul class="bullets">
             <li>لعبة مسابقات جاهزة وسهلة التشغيل.</li>
             <li>تجمع أكثر من نوع تحدي داخل لعبة واحدة.</li>
             <li>مناسبة للتجمعات، والسهرات، والرحلات، والفعاليات.</li>
@@ -579,9 +684,9 @@
           </ul>
         </section>
 
-        <section class="info-card tone-white">
-          <h2 class="card-title">طريقة التشغيل</h2>
-          <ul class="list-dots">
+        <section class="section-card">
+          <h2 class="section-heading">طريقة التشغيل</h2>
+          <ul class="bullets">
             <li>اشترِ اللعبة من متجر صندوق المسابقات.</li>
             <li>بعد الشراء يصلك رابط يحتوي على ملف اللعبة.</li>
             <li>افتح الملف داخل برنامج PowerPoint.</li>
