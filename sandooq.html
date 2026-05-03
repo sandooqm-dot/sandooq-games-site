@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>لعبة صندوق المسابقات | صندوق المسابقات</title>
+  <meta name="description" content="صفحة لعبة صندوق المسابقات من صندوق المسابقات. لعبة مسابقات متكاملة بتحديات متنوعة وتجربة جماعية حماسية." />
+  <meta name="theme-color" content="#075c82" />
+  <link rel="preload" href="NotoIKEAArabic-Bold.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" as="image" href="logo.PNG" />
+
+  <style>
+    @font-face{
+      font-family:"NotoIKEAArabic";
+      src:url("NotoIKEAArabic-Bold.ttf") format("truetype");
+      font-weight:700 950;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    :root{
+      --blue:#087ca8;
+      --blue-dark:#075c82;
+      --blue-deep:#066fae;
+      --blue-soft:#55bdf2;
+      --bg-page:#dfeaf2;
+      --yellow:#f7b638;
+      --yellow-dark:#e8a321;
+      --yellow-light:#ffd76b;
+      --orange:#f07a34;
+      --green:#56b87d;
+      --green-dark:#2f8e59;
+      --nav-ink:#04384f;
+      --nav-active:#064f73;
+      --white:#ffffff;
+      --ink:#111827;
+      --muted:#364152;
+      --line:#202020;
+      --shadow:0 7px 0 rgba(0,0,0,.15), 0 16px 30px rgba(0,0,0,.08);
+      --soft-shadow:0 6px 0 rgba(0,0,0,.12), 0 10px 18px rgba(0,0,0,.08);
+      --layout-max:960px;
+      --nav-max:860px;
+      --page-pad:clamp(16px, 4vw, 28px);
+      --bottom-nav-height:clamp(88px, 7vw, 96px);
+      --radius-lg:30px;
+      --radius-md:22px;
+      --radius-sm:18px;
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html{width:100%;min-height:100%;scroll-behavior:smooth;background:var(--bg-page);}
+    body{
+      margin:0;
+      min-height:100dvh;
+      font-family:"NotoIKEAArabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      background:var(--bg-page);
+      color:var(--ink);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    img,svg{max-width:100%;display:block;}
+    button,a{font:inherit;}
+
+    .app{
+      min-height:100dvh;
+      padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      background:var(--bg-page);
+    }
+
+    .hero{
+      position:relative;
+      background:linear-gradient(180deg, #2b78a7 0%, #4288b9 100%);
+      border-bottom:4px solid var(--line);
+      overflow:hidden;
+      padding:18px var(--page-pad) 28px;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.18;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.92) 0 2px, transparent 2.6px),
+        radial-gradient(circle, rgba(255,255,255,.6) 0 1.8px, transparent 2.2px);
+      background-size:40px 40px, 56px 56px;
+      background-position:0 0, 16px 20px;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:var(--layout-max);
+      margin:0 auto;
+    }
+
+    .hero-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .chip-btn{
+      min-height:50px;
+      padding:10px 20px;
+      border-radius:999px;
+      border:3px solid rgba(0,0,0,.24);
+      font-weight:950;
+      font-size:clamp(16px, 3.7vw, 22px);
+      line-height:1;
+      box-shadow:0 4px 0 rgba(0,0,0,.18);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+    }
+    .chip-btn.green{
+      background:var(--green);
+      color:#fff;
+      border-color:rgba(255,255,255,.25);
+    }
+    .chip-btn.yellow{
+      background:var(--yellow);
+      color:#1a1a1a;
+    }
+
+    .hero-card-wrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+    }
+
+    .cover-frame{
+      width:min(100%, 660px);
+      background:#f7f4ec;
+      border:5px solid var(--line);
+      border-radius:30px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .cover-image{
+      position:relative;
+      width:100%;
+      aspect-ratio:1/1;
+      background:#dde3ea;
+      border:5px solid var(--line);
+      border-radius:20px;
+      overflow:hidden;
+    }
+
+    .cover-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:#dde3ea;
+    }
+
+    .cover-fallback{
+      position:absolute;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:
+        radial-gradient(circle at 25% 20%, rgba(255,215,107,.35), transparent 20%),
+        linear-gradient(145deg, #f7b638, #fff0c1);
+      color:#193654;
+      font-weight:950;
+      font-size:clamp(28px, 8vw, 64px);
+      text-align:center;
+      line-height:1.15;
+    }
+
+    .hero-title{
+      margin:18px 0 6px;
+      color:#fff;
+      font-weight:950;
+      font-size:clamp(34px, 9vw, 70px);
+      line-height:1.06;
+      text-shadow:0 5px 0 rgba(0,0,0,.24);
+    }
+
+    .hero-desc{
+      margin:0;
+      max-width:900px;
+      color:#fff;
+      font-weight:850;
+      font-size:clamp(18px, 4.1vw, 28px);
+      line-height:1.8;
+      text-shadow:0 2px 0 rgba(0,0,0,.16);
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+      margin-top:24px;
+    }
+
+    .cta-btn{
+      min-width:min(44vw, 210px);
+      min-height:64px;
+      padding:12px 22px;
+      border-radius:999px;
+      border:4px solid var(--line);
+      box-shadow:0 4px 0 rgba(0,0,0,.2);
+      font-weight:950;
+      font-size:clamp(18px, 4.4vw, 24px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform .18s ease, filter .18s ease;
+    }
+    .cta-btn:hover{transform:translateY(-1px);filter:saturate(1.04);}
+    .cta-btn.white{background:#fff;color:#111;}
+    .cta-btn.orange{background:var(--orange);color:#fff;}
+
+    .content{
+      width:100%;
+      max-width:var(--layout-max);
+      margin:0 auto;
+      padding:28px var(--page-pad) 44px;
+    }
+
+    .stack{
+      display:grid;
+      gap:22px;
+    }
+
+    .info-card{
+      background:#f6f7f9;
+      border:5px solid var(--line);
+      border-radius:30px;
+      padding:22px 24px;
+      box-shadow:var(--soft-shadow);
+    }
+    .tone-white{background:#fbfbfb;}
+    .tone-blue{background:#e8f1f5;}
+    .tone-lilac{background:#ece8f5;}
+    .tone-cream{background:#f3efe6;}
+    .tone-green{background:#e5f0ef;}
+
+    .card-title{
+      margin:0 0 12px;
+      font-weight:950;
+      font-size:clamp(24px, 6vw, 34px);
+      line-height:1.25;
+      color:#0d1830;
+      text-align:right;
+    }
+
+    .card-text{
+      margin:0;
+      color:#364152;
+      font-weight:820;
+      font-size:clamp(18px, 4.3vw, 24px);
+      line-height:1.9;
+    }
+
+    .list-dots{
+      list-style:none;
+      padding:0;
+      margin:20px 0 0;
+      display:grid;
+      gap:14px;
+    }
+
+    .list-dots li{
+      position:relative;
+      padding-right:34px;
+      color:#364152;
+      font-weight:850;
+      font-size:clamp(18px, 4.1vw, 24px);
+      line-height:1.8;
+    }
+
+    .list-dots li::before{
+      content:"";
+      position:absolute;
+      right:0;
+      top:.72em;
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      background:#eb7b3c;
+      box-shadow:0 0 0 5px rgba(235,123,60,.2);
+      transform:translateY(-50%);
+    }
+
+    .video-placeholder{
+      position:relative;
+      margin-top:18px;
+      width:100%;
+      min-height:300px;
+      border:5px solid var(--line);
+      border-radius:26px;
+      overflow:hidden;
+      background:#1f3d55;
+      box-shadow:var(--soft-shadow);
+      isolation:isolate;
+    }
+
+    .video-bg{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:blur(.3px);
+      transform:scale(1.02);
+    }
+
+    .video-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(13,26,48,.28), rgba(13,26,48,.62));
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:24px;
+      color:#fff;
+    }
+
+    .play-badge{
+      width:116px;
+      height:116px;
+      border-radius:50%;
+      background:#ef3b2d;
+      border:6px solid rgba(255,255,255,.92);
+      box-shadow:0 10px 24px rgba(0,0,0,.24);
+      display:grid;
+      place-items:center;
+      margin-bottom:18px;
+    }
+    .play-badge::before{
+      content:"";
+      width:0;
+      height:0;
+      border-top:18px solid transparent;
+      border-bottom:18px solid transparent;
+      border-right:none;
+      border-left:28px solid #fff;
+      margin-right:-6px;
+    }
+
+    .video-title{
+      margin:0 0 8px;
+      font-weight:950;
+      font-size:clamp(28px, 7vw, 48px);
+      line-height:1.2;
+      text-shadow:0 3px 0 rgba(0,0,0,.22);
+    }
+
+    .video-text{
+      margin:0;
+      max-width:820px;
+      font-weight:850;
+      font-size:clamp(18px, 4.2vw, 28px);
+      line-height:1.75;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      bottom:0 !important;
+      width:100%;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      background:linear-gradient(180deg, #f7b638 0%, #e5a733 100%);
+      border-top:4px solid var(--line);
+      z-index:50;
+      display:flex;
+      align-items:stretch;
+      justify-content:center;
+      padding:0 var(--page-pad) env(safe-area-inset-bottom);
+      box-shadow:0 -6px 18px rgba(0,0,0,.16);
+      transform:translateZ(0);
+      -webkit-transform:translateZ(0);
+      will-change:transform;
+    }
+
+    .bottom-nav-inner{
+      width:100%;
+      max-width:var(--nav-max);
+      height:100%;
+      position:relative;
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      align-items:center;
+      gap:clamp(3px, .8vw, 10px);
+      padding:8px 0;
+      --indicator-w:25%;
+      --indicator-h:72px;
+      --indicator-x:0px;
+      --indicator-y:8px;
+    }
+
+    .nav-indicator{
+      position:absolute;
+      top:0;
+      left:0;
+      width:var(--indicator-w);
+      height:var(--indicator-h);
+      border-radius:22px;
+      background:var(--nav-active);
+      border:2px solid rgba(255,255,255,.32);
+      box-shadow:0 5px 0 rgba(0,0,0,.2);
+      transform:translate3d(var(--indicator-x), var(--indicator-y), 0);
+      transition:transform .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1), height .28s cubic-bezier(.22,1,.36,1);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .nav-item{
+      min-width:0;
+      height:clamp(68px, 6.5vw, 78px);
+      border-radius:22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      color:var(--nav-ink);
+      text-shadow:0 1px 0 rgba(255,255,255,.28);
+      font-weight:950;
+      font-size:clamp(11px, 1vw, 14px);
+      line-height:1.1;
+      text-align:center;
+      position:relative;
+      z-index:1;
+      transition:color .2s ease, transform .2s ease;
+      padding-inline:4px;
+    }
+    .nav-item.active{color:#fff;transform:translateY(-1px);}
+    .nav-icon{
+      width:clamp(32px, 3vw, 40px);
+      height:clamp(32px, 3vw, 40px);
+      display:grid;
+      place-items:center;
+      color:currentColor;
+      transition:color .2s ease, transform .2s ease;
+    }
+    .nav-icon svg{
+      width:90%;height:90%;stroke:currentColor;fill:none;stroke-width:2.75;stroke-linecap:round;stroke-linejoin:round;
+    }
+    .nav-item.active .nav-icon{color:var(--yellow-light);transform:scale(1.04);}
+    .nav-item.nav-featured .nav-icon{border-radius:16px;background:rgba(4,56,79,.12);box-shadow:inset 0 0 0 1px rgba(4,56,79,.18);}
+    .nav-item.nav-featured.active .nav-icon{background:transparent;box-shadow:none;}
+
+    @media (max-width:640px){
+      .hero{padding-top:20px;}
+      .hero-top{margin-bottom:14px;}
+      .chip-btn{min-height:48px;padding:10px 18px;}
+      .cover-frame{padding:14px;border-width:4px;}
+      .cover-image{border-width:4px;}
+      .hero-actions{gap:14px;}
+      .cta-btn{min-height:60px;min-width:42vw;}
+      .info-card{padding:20px 18px;border-width:4px;}
+      .video-placeholder{min-height:270px;border-width:4px;}
+    }
+
+    @media (min-width:860px){
+      .hero-title{font-size:64px;}
+      .hero-desc{font-size:26px;}
+      .content{padding-top:34px;}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="hero-top">
+          <a class="chip-btn yellow" href="index.html">العودة للألعاب</a>
+          <a class="chip-btn green" href="account.html">تسجيل الدخول</a>
+        </div>
+
+        <div class="hero-card-wrap">
+          <div class="cover-frame">
+            <div class="cover-image">
+              <img id="heroGameImage" src="sandooq-almusabaqat-cover.PNG" alt="غلاف لعبة صندوق المسابقات" loading="eager" decoding="async" />
+              <div class="cover-fallback" id="coverFallback">صندوق<br>المسابقات</div>
+            </div>
+          </div>
+
+          <h1 class="hero-title">لعبة صندوق المسابقات</h1>
+          <p class="hero-desc">صندوق مسابقات متكامل يجمع أقسامًا متنوعة وتحديات مختلفة في تجربة جماعية حماسية</p>
+
+          <div class="hero-actions">
+            <a class="cta-btn orange" href="https://sandooq-m.com/bwdZAqe" target="_blank" rel="noopener">شراء اللعبة</a>
+            <a class="cta-btn white" href="#video-section">شرح اللعبة</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="stack">
+        <section class="info-card tone-white">
+          <h2 class="card-title">طريقة التشغيل</h2>
+          <p class="card-text">تعمل عبر البوربوينت<br>افتح ملف اللعبة داخل PowerPoint، واضغط بدء العرض وابدأ المسابقة مباشرة</p>
+        </section>
+
+        <section class="info-card tone-lilac">
+          <h2 class="card-title">أقسام متنوعة</h2>
+          <p class="card-text">تجمع اللعبة بين الأسئلة الثقافية والدينية والرياضية وأعلام الدول وخمن اسم الدولة وخمن الشعار الصحيح وخمن المَثل بدون كلام</p>
+        </section>
+
+        <section class="info-card tone-blue">
+          <h2 class="card-title">120 سؤالًا جاهزاً</h2>
+          <p class="card-text">كمية مناسبة من الأسئلة والتحديات الجاهزة تجعل المسابقة سريعة التحضير ومتنوعة في كل جولة</p>
+        </section>
+
+        <section class="info-card tone-cream">
+          <h2 class="card-title">نظام فرق ونقاط</h2>
+          <p class="card-text">قسّم اللاعبين إلى فرقين واجمع النقاط مع كل إجابة صحيحة حتى نهاية التحدي</p>
+        </section>
+
+        <section class="info-card tone-green">
+          <h2 class="card-title">سهلة العرض للجميع</h2>
+          <p class="card-text">شغّل اللعبة من جهازك واعرضها على شاشة أو تلفاز ليستمتع الجميع بأجواء المسابقة.</p>
+        </section>
+
+        <section class="info-card tone-white">
+          <h2 class="card-title">تعمل على مختلف الأجهزة</h2>
+          <p class="card-text">يمكن تشغيلها من الجوال أو التابلت أو الكمبيوتر ثم عرضها بسهولة على الشاشة</p>
+        </section>
+
+        <section class="info-card tone-lilac">
+          <h2 class="card-title">فكرة اللعبة</h2>
+          <p class="card-text">يختار المقدم أحد أقسام صندوق المسابقات ثم تبدأ الفرق بالإجابة وجمع النقاط.<br>كل قسم يعطي جواً مختلفاً، بين أسئلة مباشرة، أعلام، شعارات، أمثال، وتحديات جماعية.</p>
+          <ul class="list-dots">
+            <li>اختيار قسم من أقسام المسابقة.</li>
+            <li>ظهور السؤال أو التحدي داخل العرض.</li>
+            <li>إجابة الفرق وجمع النقاط.</li>
+            <li>الانتقال بين الأقسام حتى نهاية اللعبة.</li>
+          </ul>
+        </section>
+
+        <section class="info-card tone-blue" id="video-section">
+          <h2 class="card-title">شرح اللعبة بالفيديو</h2>
+          <p class="card-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
+
+          <div class="video-placeholder">
+            <img class="video-bg" id="videoBgImage" src="sandooq-almusabaqat-cover.PNG" alt="خلفية شرح لعبة صندوق المسابقات" loading="lazy" decoding="async" />
+            <div class="video-overlay">
+              <div class="play-badge" aria-hidden="true"></div>
+              <h3 class="video-title">فيديو الشرح قريبًا</h3>
+              <p class="video-text">لن يتم تحميل أي فيديو الآن حتى تبقى الصفحة سريعة وخفيفة.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="info-card tone-green">
+          <h2 class="card-title">لماذا تختار صندوق المسابقات؟</h2>
+          <ul class="list-dots">
+            <li>لعبة مسابقات جاهزة وسهلة التشغيل.</li>
+            <li>تجمع أكثر من نوع تحدي داخل لعبة واحدة.</li>
+            <li>مناسبة للتجمعات، والسهرات، والرحلات، والفعاليات.</li>
+            <li>أقسام متنوعة تمنع التكرار وتزيد متعة اللعب.</li>
+            <li>تجربة واضحة ومناسبة للعرض على شاشة أمام الجميع.</li>
+          </ul>
+        </section>
+
+        <section class="info-card tone-white">
+          <h2 class="card-title">طريقة التشغيل</h2>
+          <ul class="list-dots">
+            <li>اشترِ اللعبة من متجر صندوق المسابقات.</li>
+            <li>بعد الشراء يصلك رابط يحتوي على ملف اللعبة.</li>
+            <li>افتح الملف داخل برنامج PowerPoint.</li>
+            <li>اضغط بدء العرض وابدأ المسابقة.</li>
+            <li>اعرضها على التلفاز أو الشاشة ليستمتع الجميع بالتحدي.</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" aria-label="التنقل السفلي">
+    <div class="bottom-nav-inner">
+      <span class="nav-indicator" aria-hidden="true"></span>
+
+      <a class="nav-item active" href="index.html" aria-current="page">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
+        <span>الألعاب</span>
+      </a>
+
+      <a class="nav-item nav-featured" href="purchase-activation.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
+        <span>تفعيل الألعاب</span>
+      </a>
+
+      <a class="nav-item" href="account.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+        <span>الحساب</span>
+      </a>
+
+      <a class="nav-item" href="support.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
+        <span>الدعم</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    const bottomNav = document.querySelector('.bottom-nav-inner');
+    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+
+    function moveBottomNavIndicator(item) {
+      if (!bottomNav || !item) return;
+      const navRect = bottomNav.getBoundingClientRect();
+      const itemRect = item.getBoundingClientRect();
+      bottomNav.style.setProperty('--indicator-x', `${itemRect.left - navRect.left}px`);
+      bottomNav.style.setProperty('--indicator-y', `${itemRect.top - navRect.top}px`);
+      bottomNav.style.setProperty('--indicator-w', `${itemRect.width}px`);
+      bottomNav.style.setProperty('--indicator-h', `${itemRect.height}px`);
+    }
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(navItem => navItem.classList.remove('active'));
+        item.classList.add('active');
+        moveBottomNavIndicator(item);
+      });
+    });
+
+    window.addEventListener('load', () => {
+      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+      window.setTimeout(() => moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active')), 120);
+    });
+
+    window.addEventListener('resize', () => {
+      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+    });
+
+    const imageCandidates = [
+      'sandooq-almusabaqat-cover.PNG',
+      'sandooq-almusabaqat-cover.png',
+      'sandooq-almusabaqat-cover.webp',
+      'sandooq-almusabaqat-cover-page.webp',
+      'sandooq-almusabaqat-page.webp',
+      'sandooq-cover.PNG',
+      'sandooq-cover.png',
+      'sandooq-cover.webp',
+      'sandooq-cover-page.webp',
+      'sandooq-cover-card.webp'
+    ];
+
+    function attachImageFallback(imgEl, fallbackEl) {
+      if (!imgEl) return;
+      let index = 0;
+      const tried = new Set();
+
+      function tryNext() {
+        while (index < imageCandidates.length && tried.has(imageCandidates[index])) index++;
+        if (index >= imageCandidates.length) {
+          imgEl.style.display = 'none';
+          if (fallbackEl) fallbackEl.style.display = 'flex';
+          return;
+        }
+        const nextSrc = imageCandidates[index++];
+        tried.add(nextSrc);
+        imgEl.src = nextSrc;
+      }
+
+      imgEl.addEventListener('error', tryNext);
+      const current = imgEl.getAttribute('src');
+      if (current) tried.add(current);
+    }
+
+    attachImageFallback(document.getElementById('heroGameImage'), document.getElementById('coverFallback'));
+    attachImageFallback(document.getElementById('videoBgImage'));
+  </script>
+</body>
+</html>
