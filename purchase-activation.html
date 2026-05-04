@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>تفعيل الألعاب | صندوق المسابقات</title>
+  <meta name="description" content="تفعيل ألعاب صندوق المسابقات برقم الجوال واسترجاع الألعاب وربط الألعاب بالحساب." />
+  <meta name="theme-color" content="#075c82" />
+  <link rel="preload" as="image" href="logo.PNG" />
+  <link rel="preload" as="image" href="horof-cover-card.webp" />
+  <link rel="preload" as="image" href="sandooq-almusabaqat-cover-card.webp" />
+
+  <style>
+    :root{
+      --blue:#087ca8;
+      --blue-dark:#075c82;
+      --blue-deep:#066FAE;
+      --blue-soft:#55bdf2;
+      --yellow:#f7b638;
+      --yellow-light:#ffd76b;
+      --cream:#fff8ed;
+      --white:#ffffff;
+      --ink:#111827;
+      --muted:#394354;
+      --green:#2faf72;
+      --orange:#ff6b1a;
+      --line:#151515;
+      --nav-ink:#04384f;
+      --nav-active:#064f73;
+      --layout-max:1180px;
+      --nav-max:860px;
+      --page-pad:clamp(14px, 4vw, 72px);
+      --bottom-nav-height:clamp(88px, 7vw, 96px);
+      --radius:clamp(18px, 2vw, 30px);
+      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      --visual-viewport-bottom:0px;
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html{width:100%;min-height:100%;scroll-behavior:smooth;background:#f7fbff;}
+    body{
+      width:100%;
+      min-height:100dvh;
+      margin:0;
+      color:var(--ink);
+      font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      background:#f7fbff;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    button,input,a{font:inherit;}
+    img,svg{max-width:100%;}
+
+    .app{
+      min-height:100dvh;
+      padding-bottom:calc(var(--bottom-nav-space) + 26px);
+      background:#f7fbff;
+    }
+
+    .page-top{
+      position:relative;
+      background:
+        radial-gradient(circle at 12% 80%, rgba(255,215,107,.26), transparent 30%),
+        radial-gradient(circle at 86% 18%, rgba(255,255,255,.20), transparent 24%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue-deep));
+      color:#fff;
+      padding:clamp(10px, 1.4vw, 20px) var(--page-pad) clamp(24px, 4vw, 52px);
+      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .page-top::before{
+      content:"";
+      position:absolute;
+      inset:-16px;
+      z-index:-1;
+      opacity:.16;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.9) 0 2px, transparent 2.5px),
+        radial-gradient(circle, rgba(255,255,255,.48) 0 1.4px, transparent 1.9px);
+      background-size:24px 24px, 38px 38px;
+      background-position:0 0, 10px 12px;
+    }
+
+    .top-row{
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      min-height:clamp(34px, 4vw, 52px);
+      direction:rtl;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:clamp(32px, 3.2vw, 44px);
+      padding:7px clamp(12px, 1.5vw, 18px);
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,.38);
+      color:#fff;
+      font-weight:950;
+      font-size:clamp(13px, 1vw, 16px);
+      line-height:1.1;
+      box-shadow:0 3px 0 rgba(0,0,0,.18);
+      white-space:nowrap;
+    }
+
+    .login-chip{background:var(--green);}
+    .back-chip{
+      background:var(--yellow);
+      color:var(--ink);
+      border-color:rgba(21,21,21,.42);
+      text-shadow:none;
+    }
+
+    .activation-hero{
+      width:100%;
+      max-width:var(--layout-max);
+      margin:clamp(22px, 4vw, 56px) auto 0;
+      display:grid;
+      justify-items:center;
+      gap:clamp(12px, 2vw, 20px);
+      text-align:center;
+    }
+
+    .title-icon{
+      width:clamp(52px, 9vw, 70px);
+      height:clamp(52px, 9vw, 70px);
+      display:grid;
+      place-items:center;
+      background:var(--yellow);
+      color:var(--ink);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(14px, 1.6vw, 22px);
+      box-shadow:0 6px 0 rgba(0,0,0,.20);
+    }
+
+    .title-icon svg{
+      width:56%;
+      height:56%;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2.8;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .page-title{
+      margin:0;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.14;
+      font-weight:950;
+      text-shadow:0 4px 0 rgba(0,0,0,.14);
+      white-space:nowrap;
+    }
+
+    .page-lead{
+      margin:0;
+      max-width:850px;
+      color:rgba(255,255,255,.96);
+      font-weight:850;
+      font-size:clamp(16px, 1.55vw, 22px);
+      line-height:1.9;
+      text-shadow:0 2px 0 rgba(0,0,0,.10);
+    }
+
+    .content-area{
+      padding:clamp(20px, 4vw, 54px) var(--page-pad) clamp(34px, 7vw, 90px);
+      background:
+        radial-gradient(circle at 10% 4%, rgba(85,189,242,.22), transparent 28%),
+        linear-gradient(180deg, #ffffff, #f7fbff);
+    }
+
+    .content-inner{
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      display:grid;
+      gap:clamp(16px, 2vw, 28px);
+    }
+
+    .section-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.5vw, 32px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      overflow:hidden;
+    }
+
+    .section-card.soft-yellow{background:#fff8ed;}
+    .section-card.soft-blue{background:#eaf8ff;}
+
+    .section-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:clamp(16px, 2vw, 24px);
+    }
+
+    .section-heading{
+      margin:0 0 10px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(24px, 2.6vw, 38px);
+      line-height:1.35;
+    }
+
+    .section-text{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(15px, 1.35vw, 20px);
+      line-height:1.9;
+    }
+
+    .section-badge{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:clamp(34px, 4vw, 46px);
+      padding:7px clamp(12px, 1.5vw, 18px);
+      border-radius:999px;
+      border:3px solid var(--line);
+      background:var(--yellow-light);
+      color:var(--ink);
+      box-shadow:0 4px 0 rgba(0,0,0,.14);
+      font-weight:950;
+      font-size:clamp(12px, 1vw, 16px);
+      white-space:nowrap;
+    }
+
+    .lookup-form{
+      display:grid;
+      gap:14px;
+      margin-top:clamp(14px, 2vw, 22px);
+    }
+
+    .phone-field{
+      width:100%;
+      min-height:clamp(54px, 6vw, 66px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(14px, 1.4vw, 20px);
+      background:#f1f5f9;
+      color:var(--ink);
+      padding:0 clamp(14px, 2vw, 22px);
+      font-weight:900;
+      font-size:clamp(16px, 1.6vw, 23px);
+      direction:ltr;
+      text-align:left;
+      outline:none;
+      box-shadow:inset 0 2px 0 rgba(0,0,0,.08);
+    }
+
+    .phone-field:focus{background:#fff;border-color:var(--blue-dark);}
+    .phone-field::placeholder{color:#9ca7b7;}
+
+    .lookup-btn{
+      min-height:clamp(54px, 6vw, 66px);
+      border:3px solid var(--line);
+      border-radius:999px;
+      background:var(--orange);
+      color:#fff;
+      box-shadow:0 6px 0 rgba(0,0,0,.22);
+      font-weight:950;
+      font-size:clamp(16px, 1.4vw, 21px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+    }
+
+    .lookup-btn[disabled]{cursor:wait;opacity:.78;}
+    .spinner{
+      width:1.15em;
+      height:1.15em;
+      border:3px solid rgba(255,255,255,.45);
+      border-top-color:#fff;
+      border-radius:50%;
+      display:none;
+      animation:spin .8s linear infinite;
+    }
+
+    .lookup-btn.is-loading .spinner{display:inline-block;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .form-note{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-weight:800;
+      text-align:center;
+      font-size:clamp(13px, 1.1vw, 16px);
+      line-height:1.7;
+    }
+
+    .message-area{
+      min-height:46px;
+      display:grid;
+      gap:10px;
+    }
+
+    .status-message,
+    .empty-state{
+      display:none;
+      border:3px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:900;
+      font-size:clamp(13px, 1.1vw, 16px);
+      line-height:1.7;
+      text-align:center;
+    }
+
+    .status-message.success{display:block;background:#e9fff3;color:#075c45;border-color:#0f7b52;}
+    .status-message.error{display:block;background:#fff1f1;color:#a42121;border-color:#b72c2c;}
+    .empty-state.is-visible{display:block;background:#fff8ed;color:#5c4300;border-color:#c48a00;}
+
+    .games-list{
+      display:grid;
+      gap:clamp(12px, 1.6vw, 18px);
+    }
+
+    .game-row{
+      display:grid;
+      grid-template-columns:clamp(62px, 8vw, 92px) 1fr auto;
+      align-items:center;
+      gap:clamp(10px, 1.8vw, 18px);
+      min-height:clamp(92px, 12vw, 120px);
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(8px, 1.4vw, 14px);
+      box-shadow:0 5px 0 rgba(0,0,0,.10);
+    }
+
+    .game-row.bundle{background:#fff8ed;}
+
+    .game-thumb{
+      width:100%;
+      aspect-ratio:1/1;
+      border:3px solid var(--line);
+      border-radius:clamp(12px, 1.5vw, 18px);
+      overflow:hidden;
+      background:#eaf3f8;
+      box-shadow:0 3px 0 rgba(0,0,0,.12);
+    }
+
+    .game-thumb img{
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .game-info{
+      min-width:0;
+      text-align:right;
+      display:grid;
+      gap:5px;
+    }
+
+    .game-tag{
+      justify-self:start;
+      width:max-content;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:24px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#111827;
+      color:#fff;
+      font-weight:950;
+      font-size:clamp(9px, .9vw, 12px);
+    }
+
+    .game-name{
+      margin:0;
+      color:var(--ink);
+      font-size:clamp(15px, 1.45vw, 21px);
+      line-height:1.35;
+      font-weight:950;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .game-meta{
+      margin:0;
+      color:#607084;
+      font-size:clamp(11px, 1vw, 15px);
+      line-height:1.55;
+      font-weight:850;
+    }
+
+    .game-action{
+      min-width:clamp(58px, 9vw, 96px);
+      min-height:clamp(42px, 4.5vw, 56px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:clamp(12px, 1.4vw, 18px);
+      background:#111;
+      color:#fff;
+      font-weight:950;
+      font-size:clamp(11px, 1vw, 15px);
+      box-shadow:0 5px 0 rgba(0,0,0,.16);
+      white-space:nowrap;
+    }
+
+    .game-row.is-owned .game-action{background:var(--green);}
+
+    .dev-notes{
+      position:absolute;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+      clip:rect(0 0 0 0);
+      white-space:nowrap;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:var(--visual-viewport-bottom);
+      width:100%;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      background:linear-gradient(180deg, #f7b638 0%, #e99f18 100%);
+      border-top:clamp(3px, .35vw, 5px) solid var(--line);
+      z-index:40;
+      display:flex;
+      align-items:stretch;
+      justify-content:center;
+      padding:0 var(--page-pad) env(safe-area-inset-bottom);
+      box-shadow:0 -5px 18px rgba(0,0,0,.16);
+      isolation:isolate;
+      transform:translate3d(0,0,0);
+      -webkit-transform:translate3d(0,0,0);
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
+      contain:layout paint style;
+      will-change:transform, bottom;
+    }
+
+    .bottom-nav-inner{
+      width:100%;
+      max-width:var(--nav-max);
+      height:100%;
+      position:relative;
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      align-items:center;
+      gap:clamp(3px, .8vw, 10px);
+      padding:8px 0;
+      --indicator-w:25%;
+      --indicator-h:72px;
+      --indicator-x:0px;
+      --indicator-y:8px;
+    }
+
+    .nav-indicator{
+      position:absolute;
+      top:0;
+      left:0;
+      width:var(--indicator-w);
+      height:var(--indicator-h);
+      border-radius:22px;
+      background:var(--nav-active);
+      border:2px solid rgba(255,255,255,.32);
+      box-shadow:0 5px 0 rgba(0,0,0,.2);
+      transform:translate3d(var(--indicator-x), var(--indicator-y), 0);
+      transition:transform .28s cubic-bezier(.22, 1, .36, 1), width .28s cubic-bezier(.22, 1, .36, 1), height .28s cubic-bezier(.22, 1, .36, 1);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .nav-item{
+      min-width:0;
+      height:clamp(68px, 6.5vw, 78px);
+      border-radius:22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      color:var(--nav-ink);
+      text-shadow:0 1px 0 rgba(255,255,255,.28);
+      font-weight:950;
+      font-size:clamp(11px, 1vw, 14px);
+      line-height:1.1;
+      text-align:center;
+      position:relative;
+      z-index:1;
+      transition:color .2s ease, transform .2s ease;
+      padding-inline:4px;
+    }
+
+    .nav-item.active{color:#fff;transform:translateY(-1px);text-shadow:none;}
+    .nav-icon{width:clamp(32px, 3vw, 40px);height:clamp(32px, 3vw, 40px);display:grid;place-items:center;color:currentColor;transition:color .2s ease, transform .2s ease;}
+    .nav-icon svg{width:90%;height:90%;display:block;stroke:currentColor;fill:none;stroke-width:2.75;stroke-linecap:round;stroke-linejoin:round;}
+    .nav-item.active .nav-icon{color:var(--yellow-light);transform:scale(1.04);}
+    .nav-item.nav-featured .nav-icon{border-radius:16px;background:rgba(4,56,79,.12);box-shadow:inset 0 0 0 1px rgba(4,56,79,.18);}
+    .nav-item.nav-featured.active .nav-icon{background:transparent;box-shadow:none;}
+
+
+    .private-browser-note{
+      margin:0;
+      color:#5b6677;
+      font-weight:820;
+      text-align:center;
+      font-size:clamp(12px, 1vw, 15px);
+      line-height:1.7;
+    }
+
+    .legacy-code-entry{
+      display:grid;
+      justify-items:center;
+      gap:5px;
+      margin-top:2px;
+    }
+
+    .legacy-toggle{
+      border:0;
+      background:transparent;
+      color:var(--blue-dark);
+      font-weight:950;
+      font-size:clamp(13px, 1.1vw, 16px);
+      cursor:pointer;
+      text-decoration:underline;
+      text-underline-offset:4px;
+      padding:4px 8px;
+    }
+
+    .legacy-hint{
+      margin:0;
+      color:#7a8494;
+      font-weight:780;
+      font-size:clamp(10px, .9vw, 12px);
+      line-height:1.6;
+      text-align:center;
+    }
+
+    .legacy-code-box{
+      display:grid;
+      gap:10px;
+      margin-top:4px;
+      padding:clamp(14px, 2vw, 20px);
+      border:clamp(2px, .3vw, 4px) solid rgba(21,21,21,.65);
+      border-radius:clamp(14px, 1.8vw, 22px);
+      background:#fff8ed;
+      box-shadow:0 5px 0 rgba(0,0,0,.10);
+    }
+
+    .legacy-code-box[hidden]{display:none !important;}
+
+    .legacy-title{
+      margin:0;
+      color:var(--ink);
+      font-size:clamp(17px, 1.55vw, 24px);
+      font-weight:950;
+      line-height:1.35;
+    }
+
+    .legacy-text{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(13px, 1.1vw, 16px);
+      line-height:1.8;
+    }
+
+    .code-field{
+      width:100%;
+      min-height:clamp(48px, 5vw, 58px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(13px, 1.4vw, 18px);
+      background:#fff;
+      color:var(--ink);
+      padding:0 clamp(12px, 2vw, 18px);
+      font-weight:900;
+      font-size:clamp(14px, 1.25vw, 18px);
+      direction:ltr;
+      text-align:left;
+      outline:none;
+    }
+
+    .code-field:focus{border-color:var(--blue-dark);}
+
+    .legacy-btn{
+      min-height:clamp(48px, 5vw, 58px);
+      border:3px solid var(--line);
+      border-radius:999px;
+      background:var(--blue-dark);
+      color:#fff;
+      box-shadow:0 5px 0 rgba(0,0,0,.18);
+      font-weight:950;
+      font-size:clamp(14px, 1.2vw, 18px);
+      cursor:pointer;
+    }
+
+    .small-note{
+      margin:0;
+      text-align:center;
+      color:#6b7280;
+      font-weight:780;
+      font-size:clamp(11px, .95vw, 13px);
+      line-height:1.7;
+    }
+
+    @media (max-width:560px){
+      .section-head{display:grid;}
+      .section-badge{justify-self:start;}
+      .game-row{grid-template-columns:56px 1fr auto;}
+      .game-action{min-width:56px;padding-inline:8px;}
+    }
+
+    @media (max-width:430px){
+      :root{--bottom-nav-height:88px;--page-pad:clamp(12px, 4vw, 18px);}
+      .chip{min-height:30px;padding:6px 10px;font-size:12px;}
+      .page-title{font-size:clamp(31px, 8.5vw, 42px);}
+      .page-lead{font-size:15px;}
+      .section-card{border-width:4px;}
+      .game-row{border-width:4px;}
+    }
+
+    @media (max-width:350px){
+      .game-row{grid-template-columns:52px 1fr auto;gap:8px;}
+      .game-action{min-width:50px;font-size:11px;}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        transition-duration:.001ms !important;
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="page-top">
+      <div class="top-row">
+        <a class="chip back-chip" href="index.html">العودة للألعاب</a>
+        <a class="chip login-chip" href="account.html" id="loginStatusButton">تسجيل الدخول</a>
+      </div>
+
+      <div class="activation-hero">
+        <span class="title-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="7" y="2.8" width="10" height="18.4" rx="2"></rect><path d="M10 6h4"></path><path d="M11.5 18h1"></path></svg>
+        </span>
+        <h1 class="page-title">تفعيل الألعاب</h1>
+        <p class="page-lead">أدخل رقم الجوال المستخدم في الشراء، وسنعرض لك ألعابك مباشرة.</p>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <div class="content-inner">
+        <section class="section-card soft-blue" aria-label="استرجاع الألعاب">
+          <div class="section-head">
+            <div>
+              <h2 class="section-heading">استرجع ألعابك برقم الجوال</h2>
+              <p class="section-text">اكتب نفس رقم الجوال الذي استخدمته عند الشراء من متجر صندوق المسابقات، وستظهر لك الألعاب المرتبطة بهذا الرقم.</p>
+            </div>
+            <span class="section-badge">استرجاع الألعاب</span>
+          </div>
+
+          <form class="lookup-form" id="purchaseLookupForm" data-hook="purchase-lookup-form">
+            <input
+              class="phone-field"
+              id="phoneInput"
+              name="phone"
+              data-hook="phone-input"
+              type="tel"
+              inputmode="numeric"
+              autocomplete="tel"
+              placeholder="05xxxxxxxx"
+              aria-label="رقم الجوال المستخدم في الشراء"
+            />
+
+            <button class="lookup-btn" id="lookupButton" data-hook="lookup-button" type="submit">
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="button-label">استرجاع مشترياتي</span>
+            </button>
+
+            <p class="form-note">لا تحتاج إيميل أو كلمة مرور. رقم الجوال هو طريقة الدخول إلى ألعابك.</p>
+
+            <p class="private-browser-note">للدخول المباشر لاحقًا، استخدم المتصفح العادي وليس المتصفح الخفي.</p>
+
+            <div class="legacy-code-entry">
+              <button class="legacy-toggle" id="legacyToggle" data-hook="legacy-code-toggle" type="button">لديك كود تفعيل سابق؟</button>
+              <p class="legacy-hint">اربط كودك القديم برقم جوالك مرة واحدة فقط.</p>
+            </div>
+
+            <div
+              class="legacy-code-box"
+              id="legacyCodeBox"
+              data-hook="legacy-code-box"
+              data-success-message="تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك."
+              data-invalid-message="الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى."
+              data-used-message="هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم."
+              data-missing-phone-message="اكتب رقم الجوال أولًا، ثم أدخل كود التفعيل السابق."
+              hidden
+            >
+              <h3 class="legacy-title">ربط كود تفعيل سابق</h3>
+              <p class="legacy-text">إذا كان لديك كود تفعيل قديم، أدخله هنا مع رقم جوالك. بعد الربط لن تحتاج إلى الكود مرة أخرى، وستظهر اللعبة ضمن ألعابك برقم الجوال.</p>
+              <input class="code-field" id="legacyCodeInput" data-hook="legacy-code-input" type="text" placeholder="أدخل كود التفعيل السابق" autocomplete="off">
+              <button class="legacy-btn" id="legacyCodeButton" data-hook="legacy-code-button" type="button">ربط الكود برقم جوالي</button>
+              <p class="small-note">يُستخدم الكود القديم للربط مرة واحدة فقط.</p>
+              <div class="status-message" id="legacyCodeMessage" data-hook="legacy-code-message"></div>
+            </div>
+
+            <div class="message-area" aria-live="polite">
+              <div class="status-message" id="statusMessage" data-hook="status-message"></div>
+              <div class="empty-state" id="emptyState" data-hook="empty-state">لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.</div>
+            </div>
+          </form>
+        </section>
+
+        <section class="section-card" aria-label="الألعاب المتاحة">
+          <div class="section-head">
+            <div>
+              <h2 class="section-heading">الألعاب المتاحة</h2>
+              <p class="section-text">الألعاب التي اشتريتها ستظهر لك بزر “العب”، وباقي الألعاب يمكنك شراؤها من المتجر.</p>
+            </div>
+          </div>
+
+          <div class="games-list" id="gamesList" data-hook="games-cards">
+            <article class="game-row bundle" data-game-id="bundle">
+              <div class="game-thumb"><img src="sandooq-almusabaqat-cover-card.webp" alt="بكج ألعاب صندوق المسابقات" loading="lazy" decoding="async"></div>
+              <div class="game-info">
+                <span class="game-tag">البكج الكامل</span>
+                <h3 class="game-name">بكج ألعاب صندوق المسابقات</h3>
+                <p class="game-meta">يشمل مجموعة ألعاب مختارة لتجربة أطول.</p>
+              </div>
+              <a class="game-action" data-hook="game-button" data-buy-label="عرض البكج" data-play-label="عرض البكج" href="https://sandooq-m.com" target="_blank" rel="noopener">عرض البكج</a>
+            </article>
+
+            <article class="game-row" data-game-id="horof">
+              <div class="game-thumb"><img src="horof-cover-card.webp" alt="لعبة سباق الحروف" loading="lazy" decoding="async"></div>
+              <div class="game-info">
+                <h3 class="game-name">لعبة سباق الحروف</h3>
+                <p class="game-meta">+2 لاعبين · 15-30 دقيقة</p>
+              </div>
+              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/rRDZGeZ" target="_blank" rel="noopener">شراء</a>
+            </article>
+
+            <article class="game-row" data-game-id="horof-edu">
+              <div class="game-thumb"><img src="horof-edu-cover-card.webp" alt="لعبة سباق الحروف التعليمية" loading="lazy" decoding="async"></div>
+              <div class="game-info">
+                <h3 class="game-name">سباق الحروف التعليمية</h3>
+                <p class="game-meta">+2 لاعبين/فرق · قابلة للتعديل</p>
+              </div>
+              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/bwvKNPe" target="_blank" rel="noopener">شراء</a>
+            </article>
+
+            <article class="game-row" data-game-id="bdon-kalam">
+              <div class="game-thumb"><img src="bdon-kalam-cover-card.webp" alt="لعبة بدون كلام" loading="lazy" decoding="async"></div>
+              <div class="game-info">
+                <h3 class="game-name">لعبة بدون كلام</h3>
+                <p class="game-meta">+2 لاعبين · تحديات تمثيل</p>
+              </div>
+              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/gygPeBK" target="_blank" rel="noopener">شراء</a>
+            </article>
+
+            <article class="game-row" data-game-id="bra-alsalfah">
+              <div class="game-thumb"><img src="bra-alsalfah-cover-card.webp" alt="لعبة برا السالفة" loading="lazy" decoding="async"></div>
+              <div class="game-info">
+                <h3 class="game-name">لعبة برا السالفة</h3>
+                <p class="game-meta">+3 لاعبين · كشف وتمويه</p>
+              </div>
+              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/YzZqAlO" target="_blank" rel="noopener">شراء</a>
+            </article>
+
+            <article class="game-row" data-game-id="family-feud">
+              <div class="game-thumb"><img src="family-feud-cover-card.webp" alt="لعبة فاميلي فيود" loading="lazy" decoding="async"></div>
+              <div class="game-info">
+                <h3 class="game-name">لعبة فاميلي فيود</h3>
+                <p class="game-meta">+ فريقين · شاشة عرض وجرس</p>
+              </div>
+              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/wAReOlN" target="_blank" rel="noopener">شراء</a>
+            </article>
+
+            <article class="game-row" data-game-id="sandooq">
+              <div class="game-thumb"><img src="sandooq-almusabaqat-cover-card.webp" alt="لعبة صندوق المسابقات" loading="lazy" decoding="async"></div>
+              <div class="game-info">
+                <h3 class="game-name">لعبة صندوق المسابقات</h3>
+                <p class="game-meta">+2 لاعبين · مسابقات متنوعة</p>
+              </div>
+              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/bwdZAqe" target="_blank" rel="noopener">شراء</a>
+            </article>
+          </div>
+        </section>
+
+        <div class="dev-notes" aria-hidden="true">
+          hooks: phone-input / lookup-button / status-message / empty-state / games-cards / game-button
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" aria-label="التنقل السفلي">
+    <div class="bottom-nav-inner">
+      <span class="nav-indicator" aria-hidden="true"></span>
+
+      <a class="nav-item" href="index.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
+        <span>الألعاب</span>
+      </a>
+
+      <a class="nav-item nav-featured active" href="purchase-activation.html" aria-current="page">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
+        <span>تفعيل الألعاب</span>
+      </a>
+
+      <a class="nav-item" href="account.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+        <span>الحساب</span>
+      </a>
+
+      <a class="nav-item" href="support.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
+        <span>الدعم</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    const bottomNav = document.querySelector('.bottom-nav-inner');
+    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+
+    function moveBottomNavIndicator(item) {
+      if (!bottomNav || !item) return;
+      const navRect = bottomNav.getBoundingClientRect();
+      const itemRect = item.getBoundingClientRect();
+      bottomNav.style.setProperty('--indicator-x', `${itemRect.left - navRect.left}px`);
+      bottomNav.style.setProperty('--indicator-y', `${itemRect.top - navRect.top}px`);
+      bottomNav.style.setProperty('--indicator-w', `${itemRect.width}px`);
+      bottomNav.style.setProperty('--indicator-h', `${itemRect.height}px`);
+    }
+
+    function setActiveNavItem(item) {
+      navItems.forEach(navItem => navItem.classList.remove('active'));
+      item.classList.add('active');
+      moveBottomNavIndicator(item);
+    }
+
+    navItems.forEach(item => item.addEventListener('click', () => setActiveNavItem(item)));
+
+    window.addEventListener('load', () => {
+      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
+      moveBottomNavIndicator(activeItem);
+      window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
+    });
+
+    window.addEventListener('resize', () => {
+      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+    });
+
+    function stabilizeBottomNav() {
+      const nav = document.querySelector('.bottom-nav');
+      if (!nav) return;
+
+      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
+      if (navHeight > 0) {
+        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+      }
+
+      let bottomOffset = 0;
+      if (window.visualViewport) {
+        bottomOffset = Math.max(
+          0,
+          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
+        );
+      }
+
+      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
+    }
+
+    stabilizeBottomNav();
+    window.addEventListener('load', stabilizeBottomNav);
+    window.addEventListener('resize', stabilizeBottomNav);
+    window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
+      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
+    }
+
+    const form = document.getElementById('purchaseLookupForm');
+    const phoneInput = document.getElementById('phoneInput');
+    const button = document.getElementById('lookupButton');
+    const label = button ? button.querySelector('.button-label') : null;
+    const statusMessage = document.getElementById('statusMessage');
+    const emptyState = document.getElementById('emptyState');
+
+    const legacyToggle = document.getElementById('legacyToggle');
+    const legacyCodeBox = document.getElementById('legacyCodeBox');
+    const legacyCodeInput = document.getElementById('legacyCodeInput');
+    const legacyCodeButton = document.getElementById('legacyCodeButton');
+    const legacyCodeMessage = document.getElementById('legacyCodeMessage');
+
+    const messages = {
+      found: 'تم العثور على ألعابك. اختر اللعبة واضغط “العب”.',
+      empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.',
+      invalidPhone: 'أدخل رقم جوال صحيح يبدأ بـ 05.',
+      loading: 'جاري البحث عن مشترياتك…'
+    };
+
+    function isValidSaudiPhone(value) {
+      return /^05\\d{8}$/.test(String(value || '').trim());
+    }
+
+    function resetMainMessages() {
+      if (statusMessage) {
+        statusMessage.className = 'status-message';
+        statusMessage.textContent = '';
+      }
+
+      if (emptyState) {
+        emptyState.classList.remove('is-visible');
+        emptyState.textContent = messages.empty;
+      }
+    }
+
+    function showMainStatus(type, text) {
+      if (!statusMessage) return;
+      statusMessage.className = `status-message ${type}`;
+      statusMessage.textContent = text;
+    }
+
+    function showCodeStatus(type, text) {
+      if (!legacyCodeMessage) return;
+      legacyCodeMessage.className = `status-message ${type}`;
+      legacyCodeMessage.textContent = text;
+    }
+
+    if (legacyToggle && legacyCodeBox) {
+      legacyToggle.addEventListener('click', () => {
+        legacyCodeBox.hidden = !legacyCodeBox.hidden;
+      });
+    }
+
+    if (legacyCodeButton) {
+      legacyCodeButton.addEventListener('click', () => {
+        const phone = phoneInput ? phoneInput.value : '';
+
+        if (!isValidSaudiPhone(phone)) {
+          showCodeStatus('error', legacyCodeBox.dataset.missingPhoneMessage || 'اكتب رقم الجوال أولًا، ثم أدخل كود التفعيل السابق.');
+          return;
+        }
+
+        const code = legacyCodeInput ? legacyCodeInput.value.trim() : '';
+
+        if (!code) {
+          showCodeStatus('error', legacyCodeBox.dataset.invalidMessage || 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
+          return;
+        }
+
+        showCodeStatus('error', legacyCodeBox.dataset.invalidMessage || 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
+      });
+    }
+
+    if (form && button) {
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        resetMainMessages();
+
+        if (!isValidSaudiPhone(phoneInput ? phoneInput.value : '')) {
+          showMainStatus('error', messages.invalidPhone);
+          return;
+        }
+
+        button.classList.add('is-loading');
+        button.setAttribute('disabled', 'disabled');
+        if (label) label.textContent = messages.loading;
+
+        window.setTimeout(() => {
+          button.classList.remove('is-loading');
+          button.removeAttribute('disabled');
+          if (label) label.textContent = 'استرجاع مشترياتي';
+
+          if (emptyState) {
+            emptyState.textContent = messages.empty;
+            emptyState.classList.add('is-visible');
+          }
+        }, 900);
+      });
+    }
+  </script>
+</body>
+</html>
