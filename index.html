@@ -1428,6 +1428,45 @@
       height:clamp(17px, 4.4vw, 23px) !important;
     }
 
+
+    /* ضبط شريط الحقوق وإزالة المسافة السماوية أسفله */
+    .footer-legal{
+      margin-bottom:calc((var(--bottom-nav-space, calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))) + 26px) * -1) !important;
+    }
+
+    .footer-legal-inner{
+      padding:14px var(--page-pad) calc(14px + env(safe-area-inset-bottom) + var(--bottom-nav-space, calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))) + 26px) !important;
+      display:flex !important;
+      flex-direction:row !important;
+      align-items:center !important;
+      justify-content:center !important;
+      gap:0 !important;
+      text-align:center !important;
+      white-space:nowrap !important;
+      font-size:clamp(8.8px, 2.65vw, 14px) !important;
+      line-height:1.4 !important;
+      letter-spacing:-.12px;
+    }
+
+    .legal-line{
+      color:var(--white);
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .legal-line .legal-link{
+      min-height:auto !important;
+      display:inline !important;
+      padding:0 !important;
+      border-radius:0 !important;
+      background:transparent !important;
+      border:0 !important;
+      color:var(--white) !important;
+      font-size:inherit !important;
+      font-weight:inherit !important;
+      opacity:1 !important;
+    }
+
   </style>
 </head>
 
@@ -1925,11 +1964,7 @@
 
       <div class="footer-legal">
         <div class="footer-legal-inner">
-          <div>جميع الحقوق محفوظة © 2025 صندوق المسابقات</div>
-          <div class="legal-links">
-            <a class="legal-link" href="#">من نحن</a>
-            <a class="legal-link" href="#">الخصوصية</a>
-          </div>
+          <div class="legal-line">جميع الحقوق محفوظة © 2025 صندوق المسابقات | <a class="legal-link" href="about.html">من نحن</a> | <a class="legal-link" href="privacy.html">الخصوصية</a></div>
         </div>
       </div>
     </footer>
