@@ -34,7 +34,7 @@
   <div class="hero">
     <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
     <h1>الحساب</h1>
-    <p id="heroLead">ملفك جاهز بعد تسجيل الدخول. راجع مكتبتك بسهولة.</p>
+    <p id="heroLead">سجّل دخولك برقم الجوال لعرض ألعابك المرتبطة بسهولة.</p>
   </div>
 </header>
 
@@ -44,7 +44,7 @@
       <div class="head">
         <div>
           <h2>لم تسجل الدخول بعد</h2>
-          <p>أنشئ حسابك لتبقى ألعابك ومشترياتك معك دائمًا.</p>
+          <p>ادخل برقم الجوال المستخدم في الشراء، بدون إيميل أو كلمة مرور.</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
       <form class="form" id="authForm">
         <input class="field phone" id="accountPhoneInput" type="tel" inputmode="numeric" autocomplete="tel" placeholder="05xxxxxxxx" aria-label="رقم الجوال">
         <button class="btn" id="authSubmitBtn" type="submit"><span class="button-label">تسجيل الدخول</span></button>
-        <p class="note">استخدم نفس رقم الجوال المستخدم في الشراء حتى تظهر ألعابك داخل الحساب.</p>
+        <p class="note">استخدم نفس رقم الجوال المستخدم في الشراء. إذا كانت لديك ألعاب مفعّلة ستظهر داخل الحساب بعد تحديث التفعيل.</p>
         <div class="msg" id="authMessage"></div>
       </form>
     </section>
@@ -65,7 +65,7 @@
       <div class="head">
         <div>
           <h2>معلومات الحساب</h2>
-          <p>ملفك الشخصي ومكتبتك الجاهزة في مكان واحد.</p>
+          <p>رقمك ومكتبتك الجاهزة للعب في مكان واحد.</p>
         </div>
         <span class="status">حساب نشط</span>
       </div>
@@ -84,8 +84,9 @@
           <span class="value" id="lastSyncValue">لم يتم الربط بعد</span>
         </div>
         <div class="info linked">
-          <h3 class="label" style="margin:0;color:var(--ink);font-size:clamp(14px,1.2vw,18px)">الألعاب المرتبطة بهذا الحساب</h3>
-          <div class="pills" id="linkedGamesList"><span class="pill">لا توجد ألعاب بعد</span></div>
+          <h3 class="label" style="margin:0;color:var(--ink);font-size:clamp(14px,1.2vw,18px)">الألعاب المرتبطة بهذا الرقم</h3>
+          <div class="pills" id="linkedGamesList"><span class="pill">لا توجد ألعاب مرتبطة بعد</span></div>
+          <p class="note" id="linkedGamesNote" style="text-align:right;margin-top:10px">إذا اشتريت لعبة ولم تظهر هنا، اضغط تحديث التفعيل.</p>
         </div>
       </div>
     </section>
@@ -107,7 +108,7 @@
       <div class="head">
         <div>
           <h2>إدارة الحساب</h2>
-          <p>حدّث تفعيلك، راجع الدعم، وابق قريبًا من مكتبتك الجاهزة للعب.</p>
+          <p>حدّث تفعيلك، أو غيّر الرقم، أو سجّل الخروج من هذا الجهاز.</p>
         </div>
       </div>
       <div class="actions">
@@ -122,7 +123,7 @@
       <ol class="steps">
         <li>اشترِ اللعبة من متجر صندوق المسابقات بالطريقة المعتادة.</li>
         <li>افتح صفحة تفعيل الألعاب واكتب رقم الجوال المستخدم في الطلب.</li>
-        <li>تحقق من الرقم ثم حدّث الربط لتدخل اللعبة الجديدة مباشرة إلى مكتبتك.</li>
+        <li>اضغط تحديث التفعيل لتظهر اللعبة الجديدة داخل حسابك.</li>
       </ol>
     </section>
   </div>
@@ -146,25 +147,83 @@ navItems.forEach(i=>i.addEventListener('click',()=>{navItems.forEach(n=>n.classL
 window.addEventListener('load',()=>{const a=document.querySelector('.navitem.active');move(a);setTimeout(()=>move(a),120)});
 window.addEventListener('resize',()=>move(document.querySelector('.navitem.active')));
 
-const PHONE_KEY='sandooq_account_phone_v1',NAME_KEY='sandooq_player_name_v1';
+const PHONE_KEY='sandooq_account_phone_v1',NAME_KEY='sandooq_player_name_v1',LINKED_GAMES_KEY='sandooq_linked_games_v1',LAST_SYNC_KEY='sandooq_last_sync_v1';
 const loggedOut=document.getElementById('loggedOutView'),loggedIn=document.getElementById('loggedInView'),nameSec=document.getElementById('playerNameSection'),manageSec=document.getElementById('manageSection'),afterSec=document.getElementById('afterPurchaseSection');
 const welcome=document.getElementById('welcomeChip'),lead=document.getElementById('heroLead'),phoneValue=document.getElementById('phoneValue'),nameInput=document.getElementById('playerNameInput');
+const gamesCountValue=document.getElementById('gamesCountValue'),lastSyncValue=document.getElementById('lastSyncValue'),linkedGamesList=document.getElementById('linkedGamesList');
 const loginBtn=document.getElementById('loginModeBtn'),createBtn=document.getElementById('createModeBtn'),form=document.getElementById('authForm'),phoneInput=document.getElementById('accountPhoneInput'),submitBtn=document.getElementById('authSubmitBtn'),label=submitBtn.querySelector('.button-label'),msg=document.getElementById('authMessage'),nameForm=document.getElementById('playerNameForm'),logout=document.getElementById('logoutButton');
 let mode='login';
+const GAME_NAMES={
+  bundle:'بكج ألعاب صندوق المسابقات',
+  horof:'سباق الحروف',
+  'horof-edu':'سباق الحروف التعليمية',
+  'bdon-kalam':'بدون كلام',
+  'bra-alsalfah':'برا السالفة',
+  'family-feud':'فاميلي فيود',
+  sandooq:'صندوق المسابقات'
+};
 function valid(v){return /^05\d{8}$/.test(String(v||'').trim())}
 function get(k){try{return localStorage.getItem(k)||''}catch(e){return''}}
 function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function readLinkedGames(){
+  try{
+    const raw=get(LINKED_GAMES_KEY);
+    if(!raw) return [];
+    const parsed=JSON.parse(raw);
+    if(Array.isArray(parsed)) return parsed.map(String).filter(Boolean);
+    if(parsed&&typeof parsed==='object') return Object.keys(parsed).filter(k=>parsed[k]);
+  }catch(e){}
+  return [];
+}
+function gameLabel(id){return GAME_NAMES[id]||String(id||'لعبة')}
 function setMode(m){mode=m;loginBtn.classList.toggle('active',m==='login');createBtn.classList.toggle('active',m==='create');label.textContent=m==='create'?'إنشاء الحساب':'تسجيل الدخول';msg.className='msg';msg.textContent=''}
 function show(t,x){msg.className='msg '+t;msg.textContent=x}
+function renderLinkedGames(){
+  const games=readLinkedGames();
+  if(gamesCountValue) gamesCountValue.textContent=games.length?`${games.length} لعبة`:'0 لعبة';
+  if(lastSyncValue) lastSyncValue.textContent=get(LAST_SYNC_KEY)||'لم يتم الربط بعد';
+  if(!linkedGamesList) return;
+  linkedGamesList.innerHTML='';
+  if(!games.length){
+    const span=document.createElement('span');
+    span.className='pill';
+    span.textContent='لا توجد ألعاب مرتبطة بعد';
+    linkedGamesList.appendChild(span);
+    return;
+  }
+  games.forEach(id=>{
+    const span=document.createElement('span');
+    span.className='pill';
+    span.textContent=gameLabel(id);
+    linkedGamesList.appendChild(span);
+  });
+}
 function render(){
   const phone=get(PHONE_KEY),name=get(NAME_KEY),on=!!phone;
   loggedOut.hidden=on;loggedIn.hidden=!on;nameSec.hidden=!on;manageSec.hidden=!on;afterSec.hidden=!on;
-  if(on){welcome.textContent=name?`مرحبًا ${name}`:'مرحبًا بك';lead.textContent='ملفك جاهز. عدّل اسمك وراجع مكتبتك بسهولة.';phoneValue.textContent=phone;if(nameInput)nameInput.value=name}
-  else{welcome.textContent='تسجيل الدخول';lead.textContent='ملفك جاهز بعد تسجيل الدخول. راجع مكتبتك بسهولة.'}
+  if(on){
+    welcome.textContent=name?`مرحبًا ${name}`:'مرحبًا بك';
+    lead.textContent='حسابك جاهز. راجع رقمك وألعابك المرتبطة بسهولة.';
+    phoneValue.textContent=phone;
+    if(nameInput) nameInput.value=name;
+    renderLinkedGames();
+  }else{
+    welcome.textContent='تسجيل الدخول';
+    lead.textContent='سجّل دخولك برقم الجوال لعرض ألعابك المرتبطة بسهولة.';
+  }
 }
-loginBtn.addEventListener('click',()=>setMode('login'));createBtn.addEventListener('click',()=>setMode('create'));
-form.addEventListener('submit',e=>{e.preventDefault();const p=phoneInput.value.trim();if(!valid(p)){show('error','أدخل رقم جوال صحيح يبدأ بـ 05.');return}set(PHONE_KEY,p);show('success',mode==='create'?'تم إنشاء الحساب بنجاح.':'تم تسجيل الدخول بنجاح.');render();scrollTo({top:0,behavior:'smooth'})});
+loginBtn.addEventListener('click',()=>setMode('login'));
+createBtn.addEventListener('click',()=>setMode('create'));
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const p=phoneInput.value.trim();
+  if(!valid(p)){show('error','أدخل رقم جوال صحيح يبدأ بـ 05.');return}
+  set(PHONE_KEY,p);
+  show('success',mode==='create'?'تم إنشاء الحساب بنجاح.':'تم تسجيل الدخول بنجاح.');
+  render();
+  scrollTo({top:0,behavior:'smooth'});
+});
 nameForm.addEventListener('submit',e=>{e.preventDefault();const n=nameInput.value.trim();if(n)set(NAME_KEY,n);render()});
 logout.addEventListener('click',()=>{del(PHONE_KEY);del(NAME_KEY);phoneInput.value='';setMode('login');render();scrollTo({top:0,behavior:'smooth'})});
 setMode('login');render();
