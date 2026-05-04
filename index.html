@@ -2251,27 +2251,79 @@
       else link.textContent = text;
     }
 
+    const PLAY_BUTTON_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l7-4.5-7-4.5Z" fill="currentColor" stroke="none"></path></svg>';
+
+    function prepareAccessButton(link) {
+      if (!link || link.dataset.accessPrepared === '1') return;
+      const label = link.querySelector('.game-btn-text');
+      const badge = link.querySelector('.icon-badge');
+      link.dataset.accessPrepared = '1';
+      link.dataset.originalHref = link.getAttribute('href') || '#';
+      link.dataset.originalAction = link.dataset.action || 'buy';
+      link.dataset.originalLabel = label ? label.textContent.trim() : (link.textContent || '').trim();
+      if (badge) badge.dataset.originalIcon = badge.innerHTML;
+    }
+
+    function setButtonIcon(link, html) {
+      const badge = link ? link.querySelector('.icon-badge') : null;
+      if (badge) badge.innerHTML = html;
+    }
+
+    function restoreButtonIcon(link) {
+      const badge = link ? link.querySelector('.icon-badge') : null;
+      if (badge && badge.dataset.originalIcon) badge.innerHTML = badge.dataset.originalIcon;
+    }
+
+    function resetAccessButton(link) {
+      if (!link) return;
+      prepareAccessButton(link);
+      link.classList.remove('play-action');
+      link.dataset.action = link.dataset.originalAction || 'buy';
+      link.setAttribute('href', link.dataset.originalHref || '#');
+      setButtonLabel(link, link.dataset.originalLabel || 'شراء اللعبة');
+      restoreButtonIcon(link);
+    }
+
+    function activateAccessButton(link, card, gameId) {
+      if (!link) return;
+      prepareAccessButton(link);
+      link.classList.add('play-action');
+      link.dataset.action = 'play';
+      link.href = card.dataset.playUrl || GAME_PLAY_URLS[gameId] || link.href;
+      setButtonLabel(link, 'العب');
+      setButtonIcon(link, PLAY_BUTTON_ICON);
+    }
+
+    function findAccessButton(card) {
+      let accessButton = card.querySelector('.game-btn[data-access-button="1"]');
+      if (accessButton) return accessButton;
+
+      accessButton = Array.from(card.querySelectorAll('.game-btn')).find(link => {
+        const text = (link.textContent || '').trim();
+        return text.includes('شراء') || link.dataset.action === 'buy';
+      });
+
+      if (accessButton) accessButton.dataset.accessButton = '1';
+      return accessButton;
+    }
+
     function prepareGameCardsForAccessStates() {
       const ownedIds = readOwnedGames();
       document.querySelectorAll('.game-card[data-game-id]').forEach(card => {
         const gameId = card.dataset.gameId;
         const status = card.querySelector('.game-status');
-        const buyButton = Array.from(card.querySelectorAll('.game-btn')).find(link => {
-          const text = (link.textContent || '').trim();
-          return text.includes('شراء') || link.dataset.action === 'buy';
-        });
+        const accessButton = findAccessButton(card);
+
+        if (accessButton) prepareAccessButton(accessButton);
 
         if (ownedIds.has(gameId)) {
           card.classList.add('game-unlocked');
           if (status) status.textContent = 'مفعّلة';
-          if (buyButton) {
-            buyButton.classList.add('play-action');
-            buyButton.dataset.action = 'play';
-            buyButton.href = card.dataset.playUrl || GAME_PLAY_URLS[gameId] || buyButton.href;
-            setButtonLabel(buyButton, 'العب');
-          }
+          activateAccessButton(accessButton, card, gameId);
         } else {
+          card.classList.remove('game-unlocked');
           if (status) status.textContent = 'مقفلة';
+          resetAccessButton(accessButton);
         }
       });
     }
