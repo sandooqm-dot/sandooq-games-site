@@ -1413,6 +1413,7 @@
     const loginStatusButton = document.getElementById('loginStatusButton');
 
     const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const lookupResultPanel = document.getElementById('lookupResultPanel');
     const resultTitle = document.getElementById('resultTitle');
     const resultPhonePill = document.getElementById('resultPhonePill');
@@ -1467,9 +1468,33 @@
       legacyCodeMessage.textContent = text;
     }
 
+    function getStoredAccountValue(key) {
+      try { return String(localStorage.getItem(key) || '').trim(); } catch (e) { return ''; }
+    }
+
+    function formatAccountName(name) {
+      const clean = String(name || '').replace(/\s+/g, ' ').trim();
+      if (!clean) return '';
+      return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
+    }
+
+    function renderLoginStatusButton() {
+      if (!loginStatusButton) return;
+      const phone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
+      const name = formatAccountName(getStoredAccountValue(ACCOUNT_NAME_KEY));
+
+      if (name) {
+        loginStatusButton.textContent = `مرحبًا ${name}`;
+      } else if (phone) {
+        loginStatusButton.textContent = 'حسابي';
+      } else {
+        loginStatusButton.textContent = 'تسجيل الدخول';
+      }
+    }
+
     function savePhoneToAccount(phone) {
       try { localStorage.setItem(ACCOUNT_PHONE_KEY, String(phone || '').trim()); } catch (e) {}
-      if (loginStatusButton) loginStatusButton.textContent = 'حسابي';
+      renderLoginStatusButton();
     }
 
     function getGameNameFromRow(row) {
@@ -1591,6 +1616,8 @@
         showCodeStatus('error', legacyCodeBox.dataset.invalidMessage || 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
       });
     }
+
+    renderLoginStatusButton();
 
     if (form && button) {
       form.addEventListener('submit', event => {
