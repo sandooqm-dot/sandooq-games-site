@@ -908,6 +908,43 @@
       max-width:48%;
     }
 
+
+    /* تحسين مساحة نص التقييم داخل منطقة داخلية آمنة بدون الاقتراب من أطراف البطاقة */
+    .review-card .review-text{
+      width:min(86%, 560px);
+      max-width:86%;
+      align-self:center;
+      flex:1 1 auto;
+      padding:clamp(10px, 1.35vw, 18px) clamp(12px, 2vw, 24px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-size:clamp(14px, 1.32vw, 21px);
+      line-height:1.62;
+    }
+
+    .review-card.text-long .review-text{
+      width:min(88%, 580px);
+      max-width:88%;
+      font-size:clamp(13px, 1.2vw, 18px);
+      line-height:1.55;
+    }
+
+    .review-card.text-very-long .review-text{
+      width:min(90%, 600px);
+      max-width:90%;
+      font-size:clamp(12px, 1.08vw, 16.5px);
+      line-height:1.48;
+    }
+
+    .review-card.text-ultra-long .review-text{
+      width:min(90%, 600px);
+      max-width:90%;
+      font-size:clamp(11px, 1vw, 15.5px);
+      line-height:1.42;
+    }
+
     .footer-branding{
       max-width:760px;
       margin:0 auto;
