@@ -1479,6 +1479,45 @@
       text-underline-offset:4px;
     }
 
+
+    /* ✅ تحديث الموقع: شريط سفلي أنعم وثابت بدون تعليق */
+    .bottom-nav{
+      bottom:0 !important;
+      border:clamp(3px, .35vw, 5px) solid var(--line) !important;
+      border-bottom:0 !important;
+      border-radius:clamp(28px, 3vw, 44px) clamp(28px, 3vw, 44px) 0 0 !important;
+      overflow:hidden !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      will-change:transform !important;
+    }
+
+    .bottom-nav-inner{
+      padding-top:clamp(7px, .9vw, 10px) !important;
+      padding-bottom:8px !important;
+    }
+
+    .nav-indicator{
+      border-radius:clamp(18px, 2vw, 28px) !important;
+    }
+
+    .nav-item{
+      transition:color .18s ease, transform .18s ease !important;
+    }
+
+    .game-btn.play-action{
+      background:var(--green) !important;
+      color:#fff !important;
+    }
+
+    @media (max-width:430px){
+      .bottom-nav{
+        border-radius:28px 28px 0 0 !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -1487,7 +1526,7 @@
     <header class="hero" id="home">
       <div class="top-row">
         <div class="brand-title">صندوق المسابقات</div>
-        <a class="login-chip" href="account.html">تسجيل الدخول</a>
+        <a class="login-chip" id="loginStatusButton" href="account.html">تسجيل الدخول</a>
       </div>
 
       <div class="logo-wrap" aria-label="شعار صندوق المسابقات">
@@ -2009,6 +2048,28 @@
   </nav>
 
   <script>
+    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+
+    function readLocalValue(key) {
+      try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
+    }
+
+    function refreshLoginChip() {
+      const loginChip = document.getElementById('loginStatusButton') || document.querySelector('.login-chip');
+      if (!loginChip) return;
+      const phone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
+      const playerName = readLocalValue(ACCOUNT_NAME_KEY).trim();
+
+      if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
+      else if (phone) loginChip.textContent = 'حسابي';
+      else loginChip.textContent = 'تسجيل الدخول';
+    }
+
+    refreshLoginChip();
+    window.addEventListener('pageshow', refreshLoginChip);
+    window.addEventListener('storage', refreshLoginChip);
+
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
@@ -2162,6 +2223,63 @@
       horofStatus.textContent = 'مفعّلة';
     }
 
+    const GAME_PLAY_URLS = {
+      'horof': 'https://horof.sandooq-games.com',
+      'bdon-kalam': 'https://bdon-kalam.sandooq-games.com',
+      'bra-alsalfah': 'https://bra-alsalfah.sandooq-games.com',
+      'family-feud': 'https://family.sandooq-games.com',
+      'sandooq': '#',
+      'horof-edu': 'https://horof.sandooq-games.com'
+    };
+
+    function readOwnedGames() {
+      const ids = new Set();
+      try {
+        const raw = localStorage.getItem('sandooq_owned_games_v1');
+        const parsed = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(parsed)) parsed.forEach(id => id && ids.add(String(id)));
+      } catch (e) {}
+
+      if (hasHorofActivation()) ids.add('horof');
+      return ids;
+    }
+
+    function setButtonLabel(link, text) {
+      if (!link) return;
+      const label = link.querySelector('.game-btn-text');
+      if (label) label.textContent = text;
+      else link.textContent = text;
+    }
+
+    function prepareGameCardsForAccessStates() {
+      const ownedIds = readOwnedGames();
+      document.querySelectorAll('.game-card[data-game-id]').forEach(card => {
+        const gameId = card.dataset.gameId;
+        const status = card.querySelector('.game-status');
+        const buyButton = Array.from(card.querySelectorAll('.game-btn')).find(link => {
+          const text = (link.textContent || '').trim();
+          return text.includes('شراء') || link.dataset.action === 'buy';
+        });
+
+        if (ownedIds.has(gameId)) {
+          card.classList.add('game-unlocked');
+          if (status) status.textContent = 'مفعّلة';
+          if (buyButton) {
+            buyButton.classList.add('play-action');
+            buyButton.dataset.action = 'play';
+            buyButton.href = card.dataset.playUrl || GAME_PLAY_URLS[gameId] || buyButton.href;
+            setButtonLabel(buyButton, 'العب');
+          }
+        } else {
+          if (status) status.textContent = 'مقفلة';
+        }
+      });
+    }
+
+    prepareGameCardsForAccessStates();
+    window.addEventListener('pageshow', prepareGameCardsForAccessStates);
+    window.addEventListener('storage', prepareGameCardsForAccessStates);
+
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
       if (!nav) return;
@@ -2171,26 +2289,14 @@
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
       }
 
-      let bottomOffset = 0;
-      if (window.visualViewport) {
-        bottomOffset = Math.max(
-          0,
-          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
-        );
-      }
-
-      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
+      // لا نرفع الشريط مع شريط المتصفح/الكيبورد حتى يبقى ثابت وسلس.
+      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
     }
 
     stabilizeBottomNav();
     window.addEventListener('load', stabilizeBottomNav);
     window.addEventListener('resize', stabilizeBottomNav);
     window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
-      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
-    }
 
   </script>
 </body>
