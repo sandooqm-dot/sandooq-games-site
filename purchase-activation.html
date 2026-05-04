@@ -646,6 +646,29 @@
         scroll-behavior:auto !important;
       }
     }
+
+    /* تثبيت نهائي للشريط السفلي: لا يتحرك مع التصفح أو لوحة المفاتيح */
+    :root{
+      --visual-viewport-bottom:0px !important;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:0 !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      will-change:transform !important;
+    }
+
+    .app{
+      padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + 26px) !important;
+    }
+
   </style>
 </head>
 
@@ -878,26 +901,13 @@
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
       }
 
-      let bottomOffset = 0;
-      if (window.visualViewport) {
-        bottomOffset = Math.max(
-          0,
-          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
-        );
-      }
-
-      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
+      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
     }
 
     stabilizeBottomNav();
     window.addEventListener('load', stabilizeBottomNav);
     window.addEventListener('resize', stabilizeBottomNav);
     window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
-      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
-    }
 
     const form = document.getElementById('purchaseLookupForm');
     const phoneInput = document.getElementById('phoneInput');
