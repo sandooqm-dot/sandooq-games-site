@@ -822,6 +822,348 @@
       padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + 26px) !important;
     }
 
+
+    /* ✅ v3: تصغير الصفحة وتنظيم المسافات + زر التحديث بهوية صندوق المسابقات */
+    :root{
+      --layout-max:900px;
+      --page-pad:clamp(12px, 3.4vw, 38px);
+      --radius:clamp(16px, 1.7vw, 24px);
+    }
+
+    .page-top{
+      padding:clamp(8px, 1.2vw, 16px) var(--page-pad) clamp(18px, 3vw, 36px);
+    }
+
+    .activation-hero{
+      margin:clamp(14px, 2.8vw, 34px) auto 0;
+      gap:clamp(9px, 1.5vw, 15px);
+    }
+
+    .title-icon{
+      width:clamp(44px, 7vw, 58px);
+      height:clamp(44px, 7vw, 58px);
+      border-width:3px;
+      box-shadow:0 5px 0 rgba(0,0,0,.18);
+    }
+
+    .page-title{
+      font-size:clamp(30px, 4.8vw, 52px);
+    }
+
+    .page-lead{
+      max-width:720px;
+      font-size:clamp(14px, 1.25vw, 18px);
+      line-height:1.7;
+    }
+
+    .content-area{
+      padding:clamp(14px, 3vw, 36px) var(--page-pad) clamp(28px, 5vw, 70px);
+    }
+
+    .content-inner{
+      max-width:900px;
+      gap:clamp(12px, 1.5vw, 20px);
+    }
+
+    .section-card{
+      padding:clamp(14px, 1.8vw, 24px);
+      border-width:clamp(3px, .28vw, 4px);
+      box-shadow:0 5px 0 rgba(0,0,0,.12);
+    }
+
+    .section-head{
+      margin-bottom:clamp(12px, 1.6vw, 18px);
+    }
+
+    .section-heading{
+      font-size:clamp(22px, 2vw, 32px);
+      line-height:1.3;
+      margin-bottom:7px;
+    }
+
+    .section-text{
+      font-size:clamp(14px, 1.1vw, 18px);
+      line-height:1.75;
+    }
+
+    .section-badge{
+      min-height:clamp(30px, 3.4vw, 40px);
+      padding:6px clamp(10px, 1.25vw, 15px);
+      border-width:3px;
+      font-size:clamp(11px, .9vw, 14px);
+      box-shadow:0 3px 0 rgba(0,0,0,.12);
+    }
+
+    .lookup-form{
+      gap:10px;
+      margin-top:clamp(10px, 1.5vw, 16px);
+    }
+
+    .phone-field,
+    .lookup-btn{
+      min-height:clamp(50px, 5.2vw, 60px);
+      font-size:clamp(15px, 1.3vw, 20px);
+      border-width:clamp(3px, .3vw, 4px);
+    }
+
+    .form-note,
+    .private-browser-note{
+      font-size:clamp(12px, .95vw, 14px);
+      line-height:1.65;
+    }
+
+    .legacy-code-entry{
+      gap:3px;
+    }
+
+    .legacy-toggle{
+      font-size:clamp(12px, 1vw, 15px);
+      padding:2px 8px;
+    }
+
+    .legacy-hint{
+      font-size:clamp(10px, .85vw, 12px);
+    }
+
+    .legacy-code-box{
+      padding:clamp(12px, 1.6vw, 16px);
+      gap:8px;
+      border-width:3px;
+      box-shadow:0 4px 0 rgba(0,0,0,.08);
+    }
+
+    .legacy-title{
+      font-size:clamp(16px, 1.35vw, 21px);
+    }
+
+    .legacy-text{
+      font-size:clamp(12px, 1vw, 14px);
+      line-height:1.7;
+    }
+
+    .code-field,
+    .legacy-btn{
+      min-height:clamp(44px, 4.5vw, 52px);
+      font-size:clamp(13px, 1.1vw, 16px);
+      border-width:3px;
+    }
+
+    .lookup-result-panel{
+      gap:clamp(9px, 1.3vw, 14px);
+      margin-top:clamp(12px, 1.5vw, 18px);
+      padding:clamp(12px, 1.8vw, 20px);
+      border-width:clamp(3px, .3vw, 4px);
+      border-radius:clamp(16px, 1.7vw, 24px);
+      box-shadow:0 5px 0 rgba(0,0,0,.09);
+    }
+
+    .result-kicker{
+      font-size:clamp(11px, .9vw, 14px);
+    }
+
+    .result-title{
+      font-size:clamp(22px, 2.05vw, 31px);
+      line-height:1.28;
+    }
+
+    .result-text,
+    .sync-text{
+      font-size:clamp(13px, 1.05vw, 16px);
+      line-height:1.75;
+    }
+
+    .phone-pill{
+      min-height:34px;
+      padding:6px 15px;
+      border-width:3px;
+      font-size:clamp(13px, 1vw, 16px);
+      box-shadow:0 3px 0 rgba(0,0,0,.08);
+    }
+
+    .owned-pills{
+      gap:8px;
+    }
+
+    .owned-pill{
+      min-height:34px;
+      padding:6px 12px;
+      font-size:clamp(11px, .9vw, 14px);
+    }
+
+    .result-bundle-row,
+    .sync-box{
+      padding:clamp(9px, 1.3vw, 14px);
+      border-width:clamp(3px, .3vw, 4px);
+      border-radius:clamp(14px, 1.5vw, 20px);
+      box-shadow:0 4px 0 rgba(0,0,0,.07);
+    }
+
+    .result-bundle-row{
+      grid-template-columns:clamp(54px, 7vw, 78px) 1fr auto;
+      gap:10px;
+    }
+
+    .sync-btn{
+      min-height:clamp(48px, 5vw, 58px);
+      width:min(100%, 390px);
+      border-radius:clamp(14px, 1.4vw, 18px);
+      background:linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
+      border-color:var(--line);
+      color:#fff;
+      box-shadow:0 6px 0 rgba(4,56,79,.25);
+      font-size:clamp(14px, 1.18vw, 18px);
+      transition:transform .15s ease, filter .15s ease, opacity .15s ease;
+    }
+
+    .sync-btn:active{
+      transform:translateY(1px);
+      box-shadow:0 5px 0 rgba(4,56,79,.25);
+    }
+
+    .sync-btn[disabled]{
+      cursor:wait;
+      opacity:.92;
+      filter:saturate(.85);
+    }
+
+    .sync-btn.is-loading{
+      background:linear-gradient(180deg, var(--blue-soft) 0%, var(--blue-dark) 100%);
+    }
+
+    .sync-btn-icon{
+      width:30px;
+      height:30px;
+      font-size:18px;
+    }
+
+    .sync-spinner{
+      display:none;
+      width:1.05em;
+      height:1.05em;
+      border:3px solid rgba(255,255,255,.35);
+      border-top-color:#fff;
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      flex:0 0 auto;
+    }
+
+    .sync-btn.is-loading .sync-spinner{
+      display:inline-block;
+    }
+
+    .games-list{
+      gap:clamp(10px, 1.2vw, 14px);
+    }
+
+    .game-row{
+      grid-template-columns:clamp(54px, 7vw, 78px) 1fr auto;
+      min-height:clamp(78px, 9vw, 100px);
+      gap:clamp(8px, 1.2vw, 14px);
+      padding:clamp(7px, 1vw, 11px);
+      border-width:clamp(3px, .3vw, 4px);
+      box-shadow:0 4px 0 rgba(0,0,0,.08);
+    }
+
+    .game-thumb{
+      border-width:3px;
+      border-radius:clamp(11px, 1.2vw, 16px);
+      box-shadow:0 2px 0 rgba(0,0,0,.10);
+    }
+
+    .game-tag{
+      min-height:22px;
+      padding:3px 8px;
+      font-size:clamp(9px, .75vw, 11px);
+    }
+
+    .game-name{
+      font-size:clamp(14px, 1.2vw, 18px);
+    }
+
+    .game-meta{
+      font-size:clamp(10px, .9vw, 13px);
+      line-height:1.45;
+    }
+
+    .game-action{
+      min-width:clamp(54px, 7.5vw, 82px);
+      min-height:clamp(38px, 4vw, 48px);
+      border-radius:clamp(11px, 1.2vw, 15px);
+      font-size:clamp(10px, .88vw, 13px);
+      box-shadow:0 4px 0 rgba(0,0,0,.14);
+      padding-inline:8px;
+    }
+
+    .all-owned-notice{
+      margin-top:clamp(10px, 1.2vw, 14px);
+      padding:clamp(10px, 1.4vw, 14px);
+      border-width:3px;
+      font-size:clamp(13px, 1vw, 16px);
+      line-height:1.75;
+    }
+
+    @media (max-width:560px){
+      .section-card{
+        padding:14px;
+        border-radius:20px;
+      }
+      .section-heading{
+        font-size:24px;
+      }
+      .section-text{
+        font-size:14px;
+      }
+      .lookup-result-panel{
+        padding:12px;
+        border-radius:20px;
+      }
+      .result-title{
+        font-size:24px;
+      }
+      .result-bundle-row,
+      .game-row{
+        grid-template-columns:54px 1fr auto;
+        min-height:78px;
+        gap:8px;
+        padding:8px;
+      }
+      .owned-pills{
+        gap:7px;
+      }
+      .owned-pill{
+        min-height:32px;
+        padding:6px 10px;
+        font-size:12px;
+      }
+      .sync-btn{
+        width:100%;
+        min-height:48px;
+        font-size:14px;
+      }
+    }
+
+    @media (max-width:430px){
+      :root{
+        --page-pad:clamp(10px, 3.5vw, 14px);
+        --bottom-nav-height:84px;
+      }
+      .content-area{
+        padding-top:12px;
+      }
+      .phone-field,
+      .lookup-btn{
+        min-height:50px;
+      }
+      .game-action{
+        min-width:52px;
+        min-height:38px;
+        font-size:11px;
+      }
+      .result-bundle-row{
+        grid-template-columns:52px 1fr auto;
+      }
+    }
+
   </style>
 </head>
 
@@ -923,7 +1265,7 @@
 
             <div class="sync-box">
               <p class="sync-text">هذا الرقم مرتبط بحسابك حاليًا. استخدم الزر التالي لتحديث مكتبتك وإضافة أي مشتريات جديدة ظهرت على الرقم.</p>
-              <button class="sync-btn" id="syncAccountButton" type="button"><span class="sync-btn-icon" aria-hidden="true">🔗</span><span>تحديث وربط الألعاب بالحساب</span></button>
+              <button class="sync-btn" id="syncAccountButton" type="button"><span class="sync-spinner" aria-hidden="true"></span><span class="sync-btn-icon" aria-hidden="true">🔗</span><span class="sync-label">تحديث وربط الألعاب بالحساب</span></button>
             </div>
           </div>
         </section>
@@ -1213,10 +1555,32 @@
     }
 
     if (syncAccountButton) {
+      const syncLabel = syncAccountButton.querySelector('.sync-label');
+      const syncDefaultLabel = syncLabel ? syncLabel.textContent : 'تحديث وربط الألعاب بالحساب';
+
       syncAccountButton.addEventListener('click', () => {
         const phone = phoneInput ? phoneInput.value.trim() : '';
-        if (isValidSaudiPhone(phone)) savePhoneToAccount(phone);
-        showMainStatus('success', 'تم تحديث حسابك وربط الألعاب الظاهرة بهذا الرقم.');
+
+        if (!isValidSaudiPhone(phone)) {
+          showMainStatus('error', messages.invalidPhone);
+          return;
+        }
+
+        resetMainMessages();
+        syncAccountButton.classList.add('is-loading');
+        syncAccountButton.setAttribute('disabled', 'disabled');
+        if (syncLabel) syncLabel.textContent = 'جاري تحديث المكتبة...';
+
+        // واجهة مؤقتة الآن: تعيد البحث وتحدّث المكتبة من نفس بيانات العرض.
+        // عند ربط Cloudflare لاحقًا، هذا المكان هو الذي يستدعي API الحقيقي.
+        window.setTimeout(() => {
+          savePhoneToAccount(phone);
+          applyLookupResult(phone);
+          showMainStatus('success', 'تم تحديث مكتبتك وإضافة أي مشتريات جديدة ظهرت على الرقم.');
+          syncAccountButton.classList.remove('is-loading');
+          syncAccountButton.removeAttribute('disabled');
+          if (syncLabel) syncLabel.textContent = syncDefaultLabel;
+        }, 900);
       });
     }
 
