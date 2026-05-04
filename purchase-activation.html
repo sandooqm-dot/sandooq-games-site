@@ -617,6 +617,159 @@
       line-height:1.7;
     }
 
+
+    .lookup-result-panel{
+      display:grid;
+      gap:clamp(12px, 1.8vw, 18px);
+      margin-top:clamp(16px, 2vw, 24px);
+      padding:clamp(16px, 2.3vw, 28px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(18px, 2vw, 28px);
+      background:#f8fbff;
+      box-shadow:0 6px 0 rgba(0,0,0,.10);
+    }
+
+    .lookup-result-panel[hidden],
+    .game-row[hidden],
+    .all-owned-notice[hidden]{display:none !important;}
+
+    .result-kicker{
+      margin:0;
+      color:#697386;
+      font-weight:900;
+      font-size:clamp(12px, 1vw, 15px);
+      line-height:1.5;
+    }
+
+    .result-title{
+      margin:0;
+      color:var(--ink);
+      font-size:clamp(24px, 2.6vw, 38px);
+      line-height:1.35;
+      font-weight:950;
+    }
+
+    .result-text{
+      margin:0;
+      color:var(--muted);
+      font-weight:820;
+      font-size:clamp(15px, 1.25vw, 19px);
+      line-height:1.9;
+    }
+
+    .phone-pill{
+      justify-self:start;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:40px;
+      padding:7px 18px;
+      border-radius:999px;
+      border:4px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(14px, 1.2vw, 18px);
+      direction:ltr;
+      box-shadow:0 4px 0 rgba(0,0,0,.10);
+    }
+
+    .owned-pills{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .owned-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:38px;
+      padding:7px 14px;
+      border-radius:999px;
+      background:#111;
+      color:#fff;
+      font-weight:950;
+      font-size:clamp(12px, 1vw, 15px);
+      line-height:1.15;
+      white-space:nowrap;
+    }
+
+    .result-bundle-row,
+    .sync-box{
+      display:grid;
+      gap:12px;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(16px, 1.8vw, 24px);
+      background:#fff8ed;
+      padding:clamp(10px, 1.5vw, 16px);
+      box-shadow:0 5px 0 rgba(0,0,0,.08);
+    }
+
+    .result-bundle-row{
+      grid-template-columns:clamp(62px, 8vw, 92px) 1fr auto;
+      align-items:center;
+    }
+
+    .sync-box{
+      background:#fff;
+      justify-items:center;
+      text-align:center;
+    }
+
+    .sync-text{
+      margin:0;
+      color:var(--muted);
+      font-weight:850;
+      font-size:clamp(15px, 1.2vw, 19px);
+      line-height:1.9;
+    }
+
+    .sync-btn{
+      min-height:clamp(52px, 5.4vw, 64px);
+      border:3px solid var(--line);
+      border-radius:clamp(14px, 1.6vw, 22px);
+      background:#111;
+      color:#fff;
+      box-shadow:0 6px 0 rgba(0,0,0,.18);
+      font-weight:950;
+      font-size:clamp(15px, 1.3vw, 20px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      padding:0 clamp(16px, 2vw, 28px);
+      width:min(100%, 430px);
+    }
+
+    .sync-btn-icon{
+      width:34px;
+      height:34px;
+      flex:0 0 auto;
+      display:inline-grid;
+      place-items:center;
+      border-radius:999px;
+      background:var(--yellow-light);
+      color:#111;
+      font-size:20px;
+      line-height:1;
+    }
+
+    .all-owned-notice{
+      margin-top:clamp(12px, 1.6vw, 18px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(16px, 1.8vw, 24px);
+      background:#e9fff3;
+      color:#16634a;
+      font-weight:900;
+      font-size:clamp(14px, 1.15vw, 18px);
+      line-height:1.9;
+      text-align:center;
+      padding:clamp(12px, 1.8vw, 18px);
+    }
+
     @media (max-width:560px){
       .section-head{display:grid;}
       .section-badge{justify-self:start;}
@@ -684,8 +837,8 @@
         <span class="title-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24"><rect x="7" y="2.8" width="10" height="18.4" rx="2"></rect><path d="M10 6h4"></path><path d="M11.5 18h1"></path></svg>
         </span>
-        <h1 class="page-title">تفعيل الألعاب</h1>
-        <p class="page-lead">أدخل رقم الجوال المستخدم في الشراء، وسنعرض لك ألعابك مباشرة.</p>
+        <h1 class="page-title">تفعيل الشراء</h1>
+        <p class="page-lead">تحقق برقم الجوال أولًا، ثم اربط مشترياتك بحسابك وادخل عالم اللعب.</p>
       </div>
     </header>
 
@@ -694,10 +847,10 @@
         <section class="section-card soft-blue" aria-label="استرجاع الألعاب">
           <div class="section-head">
             <div>
-              <h2 class="section-heading">استرجع ألعابك برقم الجوال</h2>
-              <p class="section-text">اكتب نفس رقم الجوال الذي استخدمته عند الشراء من متجر صندوق المسابقات، وستظهر لك الألعاب المرتبطة بهذا الرقم.</p>
+              <h2 class="section-heading">ابحث عن ألعابك برقم الجوال</h2>
+              <p class="section-text">اكتب الرقم الذي استخدمته في الشراء، وسنعرض الألعاب الموجودة عليه. بعدها يمكنك ربطها بحسابك مرة واحدة فقط.</p>
             </div>
-            <span class="section-badge">استرجاع الألعاب</span>
+            <span class="section-badge">استرجاع المشتريات</span>
           </div>
 
           <form class="lookup-form" id="purchaseLookupForm" data-hook="purchase-lookup-form">
@@ -715,10 +868,10 @@
 
             <button class="lookup-btn" id="lookupButton" data-hook="lookup-button" type="submit">
               <span class="spinner" aria-hidden="true"></span>
-              <span class="button-label">استرجاع مشترياتي</span>
+              <span class="button-label">التحقق من الرقم</span>
             </button>
 
-            <p class="form-note">لا تحتاج إيميل أو كلمة مرور. رقم الجوال هو طريقة الدخول إلى ألعابك.</p>
+            <p class="form-note">سجل دخول أو قم بإنشاء حساب للتحقق من الرقم.</p>
 
             <p class="private-browser-note">للدخول المباشر لاحقًا، استخدم المتصفح العادي وليس المتصفح الخفي.</p>
 
@@ -750,13 +903,36 @@
               <div class="empty-state" id="emptyState" data-hook="empty-state">لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.</div>
             </div>
           </form>
+
+          <div class="lookup-result-panel" id="lookupResultPanel" data-hook="lookup-result-panel" hidden>
+            <p class="result-kicker">نتيجة التحقق</p>
+            <h3 class="result-title" id="resultTitle">وجدنا ألعابًا على هذا الرقم</h3>
+            <p class="result-text">خطوتك الأخيرة الآن هي ربط هذه الألعاب بحسابك لتبقى محفوظة عند كل تسجيل دخول.</p>
+            <span class="phone-pill" id="resultPhonePill">05xxxxxxxx</span>
+            <div class="owned-pills" id="ownedGamesPills" aria-label="الألعاب الموجودة على الرقم"></div>
+
+            <div class="result-bundle-row">
+              <div class="game-thumb"><img src="sandooq-almusabaqat-cover-card.webp" alt="بكج ألعاب صندوق المسابقات" loading="lazy" decoding="async"></div>
+              <div class="game-info">
+                <span class="game-tag">البكج الكامل</span>
+                <h3 class="game-name">بكج ألعاب صندوق المسابقات</h3>
+                <p class="game-meta">يجمع ألعاب صندوق المسابقات في تجربة واحدة.</p>
+              </div>
+              <a class="game-action" href="https://sandooq-m.com" target="_blank" rel="noopener">عرض البكج</a>
+            </div>
+
+            <div class="sync-box">
+              <p class="sync-text">هذا الرقم مرتبط بحسابك حاليًا. استخدم الزر التالي لتحديث مكتبتك وإضافة أي مشتريات جديدة ظهرت على الرقم.</p>
+              <button class="sync-btn" id="syncAccountButton" type="button"><span class="sync-btn-icon" aria-hidden="true">🔗</span><span>تحديث وربط الألعاب بالحساب</span></button>
+            </div>
+          </div>
         </section>
 
-        <section class="section-card" aria-label="الألعاب المتاحة">
+        <section class="section-card" id="availableGamesSection" aria-label="الألعاب المتاحة">
           <div class="section-head">
             <div>
-              <h2 class="section-heading">الألعاب المتاحة</h2>
-              <p class="section-text">الألعاب التي اشتريتها ستظهر لك بزر “العب”، وباقي الألعاب يمكنك شراؤها من المتجر.</p>
+              <h2 class="section-heading" id="availableGamesTitle">الألعاب المتوفرة للشراء</h2>
+              <p class="section-text" id="availableGamesLead">هذه هي الألعاب المتاحة الآن في متجر صندوق المسابقات، ويمكنك شراء ما يناسبك والعودة لتفعيله من هنا.</p>
             </div>
           </div>
 
@@ -824,6 +1000,7 @@
               </div>
               <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/bwdZAqe" target="_blank" rel="noopener">شراء</a>
             </article>
+            <div class="all-owned-notice" id="allOwnedNotice" hidden>كل الألعاب الموجودة في المتجر أصبحت ضمن هذا الرقم حاليًا، ولا توجد ألعاب إضافية تحتاج شراء الآن.</div>
           </div>
         </section>
 
@@ -915,6 +1092,21 @@
     const label = button ? button.querySelector('.button-label') : null;
     const statusMessage = document.getElementById('statusMessage');
     const emptyState = document.getElementById('emptyState');
+    const loginStatusButton = document.getElementById('loginStatusButton');
+
+    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const lookupResultPanel = document.getElementById('lookupResultPanel');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultPhonePill = document.getElementById('resultPhonePill');
+    const ownedGamesPills = document.getElementById('ownedGamesPills');
+    const syncAccountButton = document.getElementById('syncAccountButton');
+    const availableGamesTitle = document.getElementById('availableGamesTitle');
+    const availableGamesLead = document.getElementById('availableGamesLead');
+    const allOwnedNotice = document.getElementById('allOwnedNotice');
+
+    // واجهة مؤقتة للعرض فقط إلى أن يتم ربطها لاحقًا بواجهة Cloudflare API.
+    // عند الربط الحقيقي سيتم استبدال هذه القائمة بالألعاب الراجعة من النظام.
+    const DEMO_OWNED_GAME_IDS = ['horof', 'horof-edu', 'bdon-kalam', 'bra-alsalfah', 'family-feud', 'sandooq'];
 
     const legacyToggle = document.getElementById('legacyToggle');
     const legacyCodeBox = document.getElementById('legacyCodeBox');
@@ -923,14 +1115,14 @@
     const legacyCodeMessage = document.getElementById('legacyCodeMessage');
 
     const messages = {
-      found: 'تم العثور على ألعابك. اختر اللعبة واضغط “العب”.',
+      found: 'تم العثور على ألعابك. يمكنك تحديث الربط لتظهر داخل الحساب.',
       empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.',
       invalidPhone: 'أدخل رقم جوال صحيح يبدأ بـ 05.',
-      loading: 'جاري البحث عن مشترياتك…'
+      loading: 'جاري التحقق من الرقم…'
     };
 
     function isValidSaudiPhone(value) {
-      return /^05\\d{8}$/.test(String(value || '').trim());
+      return /^05\d{8}$/.test(String(value || '').trim());
     }
 
     function resetMainMessages() {
@@ -955,6 +1147,77 @@
       if (!legacyCodeMessage) return;
       legacyCodeMessage.className = `status-message ${type}`;
       legacyCodeMessage.textContent = text;
+    }
+
+    function savePhoneToAccount(phone) {
+      try { localStorage.setItem(ACCOUNT_PHONE_KEY, String(phone || '').trim()); } catch (e) {}
+      if (loginStatusButton) loginStatusButton.textContent = 'حسابي';
+    }
+
+    function getGameNameFromRow(row) {
+      const name = row ? row.querySelector('.game-name') : null;
+      return name ? name.textContent.trim() : '';
+    }
+
+    function getOwnedRows() {
+      return Array.from(document.querySelectorAll('.game-row[data-game-id]'))
+        .filter(row => DEMO_OWNED_GAME_IDS.includes(row.dataset.gameId));
+    }
+
+    function renderOwnedPills() {
+      if (!ownedGamesPills) return;
+      ownedGamesPills.innerHTML = '';
+      const rows = getOwnedRows();
+      rows.forEach(row => {
+        const pill = document.createElement('span');
+        pill.className = 'owned-pill';
+        pill.textContent = getGameNameFromRow(row);
+        ownedGamesPills.appendChild(pill);
+      });
+    }
+
+    function applyLookupResult(phone) {
+      const ownedIds = new Set(DEMO_OWNED_GAME_IDS);
+      const gameRows = Array.from(document.querySelectorAll('.game-row[data-game-id]'));
+      const ownedRows = gameRows.filter(row => ownedIds.has(row.dataset.gameId));
+      const ownedCount = ownedRows.length;
+
+      savePhoneToAccount(phone);
+
+      if (lookupResultPanel) lookupResultPanel.hidden = false;
+      if (resultTitle) resultTitle.textContent = ownedCount ? `وجدنا ${ownedCount} لعبة على هذا الرقم` : 'لم نجد ألعابًا على هذا الرقم';
+      if (resultPhonePill) resultPhonePill.textContent = phone;
+      renderOwnedPills();
+
+      if (availableGamesTitle) availableGamesTitle.textContent = 'الألعاب التي ما زالت متاحة للشراء';
+      if (availableGamesLead) availableGamesLead.textContent = 'استبعدنا لك الألعاب التي ظهرت على الرقم الحالي حتى يبقى المتجر واضحًا لك وينقصك فقط.';
+
+      let visibleUnowned = 0;
+      gameRows.forEach(row => {
+        const id = row.dataset.gameId;
+        if (id === 'bundle') {
+          row.hidden = false;
+          return;
+        }
+
+        if (ownedIds.has(id)) {
+          row.hidden = true;
+          row.classList.add('is-owned');
+        } else {
+          row.hidden = false;
+          visibleUnowned += 1;
+        }
+      });
+
+      if (allOwnedNotice) allOwnedNotice.hidden = visibleUnowned > 0;
+    }
+
+    if (syncAccountButton) {
+      syncAccountButton.addEventListener('click', () => {
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        if (isValidSaudiPhone(phone)) savePhoneToAccount(phone);
+        showMainStatus('success', 'تم تحديث حسابك وربط الألعاب الظاهرة بهذا الرقم.');
+      });
     }
 
     if (legacyToggle && legacyCodeBox) {
@@ -1000,12 +1263,11 @@
         window.setTimeout(() => {
           button.classList.remove('is-loading');
           button.removeAttribute('disabled');
-          if (label) label.textContent = 'استرجاع مشترياتي';
+          if (label) label.textContent = 'التحقق من الرقم';
 
-          if (emptyState) {
-            emptyState.textContent = messages.empty;
-            emptyState.classList.add('is-visible');
-          }
+          const phone = phoneInput ? phoneInput.value.trim() : '';
+          applyLookupResult(phone);
+          showMainStatus('success', messages.found);
         }, 900);
       });
     }
