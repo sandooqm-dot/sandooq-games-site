@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>الحساب | صندوق المسابقات</title>
+<meta name="theme-color" content="#075c82">
+<style>
+:root{--blue:#087ca8;--dark:#075c82;--deep:#066FAE;--yellow:#f7b638;--yl:#ffd76b;--green:#2faf72;--orange:#ff6b1a;--ink:#111827;--muted:#394354;--line:#151515;--nav:#064f73;--pad:clamp(14px,4vw,72px);--navh:clamp(88px,7vw,96px);--r:clamp(18px,2vw,30px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{background:#f7fbff;scroll-behavior:smooth}body{margin:0;background:#f7fbff;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;overflow-x:hidden}a{text-decoration:none;color:inherit}button,input{font:inherit}.app{min-height:100dvh;padding-bottom:calc(var(--navh) + env(safe-area-inset-bottom) + 26px);background:#f7fbff}
+.top{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:radial-gradient(circle at 12% 80%,rgba(255,215,107,.26),transparent 30%),radial-gradient(circle at 86% 18%,rgba(255,255,255,.20),transparent 24%),linear-gradient(135deg,var(--dark),var(--deep));padding:clamp(10px,1.4vw,20px) var(--pad) clamp(24px,4vw,52px);border-bottom:clamp(3px,.35vw,5px) solid var(--line)}
+.top:before{content:"";position:absolute;inset:-16px;z-index:-1;opacity:.16;background-image:radial-gradient(circle,rgba(255,255,255,.9) 0 2px,transparent 2.5px),radial-gradient(circle,rgba(255,255,255,.48) 0 1.4px,transparent 1.9px);background-size:24px 24px,38px 38px;background-position:0 0,10px 12px}
+.top-row{max-width:1180px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:clamp(34px,4vw,52px)}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-height:clamp(32px,3.2vw,44px);padding:7px clamp(12px,1.5vw,18px);border-radius:999px;border:2px solid rgba(255,255,255,.38);font-weight:950;font-size:clamp(13px,1vw,16px);box-shadow:0 3px 0 rgba(0,0,0,.18);white-space:nowrap}.chip.back{background:var(--yellow);color:var(--ink);border-color:rgba(21,21,21,.42)}.chip.login{background:var(--green);color:#fff}
+.hero{max-width:1180px;margin:clamp(22px,4vw,56px) auto 0;display:grid;justify-items:center;text-align:center;gap:clamp(12px,2vw,20px)}.icon{width:clamp(52px,9vw,70px);height:clamp(52px,9vw,70px);display:grid;place-items:center;background:var(--yellow);color:var(--ink);border:clamp(3px,.35vw,5px) solid var(--line);border-radius:clamp(14px,1.6vw,22px);box-shadow:0 6px 0 rgba(0,0,0,.20)}.icon svg{width:56%;height:56%;stroke:currentColor;fill:none;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.hero h1{margin:0;font-size:clamp(34px,6vw,64px);font-weight:950;line-height:1.14;text-shadow:0 4px 0 rgba(0,0,0,.14)}.hero p{margin:0;max-width:850px;color:rgba(255,255,255,.96);font-weight:850;font-size:clamp(16px,1.55vw,22px);line-height:1.9;text-shadow:0 2px 0 rgba(0,0,0,.10)}
+.main{padding:clamp(20px,4vw,54px) var(--pad) clamp(34px,7vw,90px);background:radial-gradient(circle at 10% 4%,rgba(85,189,242,.22),transparent 28%),linear-gradient(180deg,#fff,#f7fbff)}.inner{max-width:1180px;margin:auto;display:grid;gap:clamp(16px,2vw,28px)}
+.card{background:#fff;border:clamp(3px,.35vw,5px) solid var(--line);border-radius:var(--r);padding:clamp(18px,2.5vw,32px);box-shadow:0 7px 0 rgba(0,0,0,.13);overflow:hidden}.card.yellow{background:#fff8ed}.head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:clamp(16px,2vw,24px)}.head h2{margin:0 0 10px;font-size:clamp(24px,2.6vw,38px);font-weight:950;line-height:1.35}.head p,.text{margin:0;color:var(--muted);font-weight:780;font-size:clamp(15px,1.35vw,20px);line-height:1.9}.status{display:inline-flex;align-items:center;justify-content:center;min-height:clamp(34px,4vw,46px);padding:7px clamp(12px,1.5vw,18px);border-radius:999px;border:3px solid var(--line);background:var(--yl);color:var(--ink);box-shadow:0 4px 0 rgba(0,0,0,.14);font-weight:950;font-size:clamp(12px,1vw,16px);white-space:nowrap}
+.tabs{display:flex;gap:clamp(10px,1.5vw,18px);flex-wrap:wrap;margin-bottom:clamp(16px,2vw,24px)}.tab{min-height:clamp(46px,5vw,58px);min-width:clamp(130px,15vw,190px);padding:9px clamp(14px,2vw,26px);border:3px solid var(--line);border-radius:clamp(12px,1.4vw,18px);background:#fff;color:var(--ink);box-shadow:0 5px 0 rgba(0,0,0,.15);font-weight:950;font-size:clamp(14px,1.2vw,18px);cursor:pointer}.tab.active{background:#111;color:#fff}
+.form{display:grid;gap:14px}.field{width:100%;min-height:clamp(54px,6vw,66px);border:clamp(3px,.35vw,5px) solid var(--line);border-radius:clamp(14px,1.4vw,20px);background:#f1f5f9;color:var(--ink);padding:0 clamp(14px,2vw,22px);font-weight:900;font-size:clamp(16px,1.6vw,23px);outline:none;box-shadow:inset 0 2px 0 rgba(0,0,0,.08)}.field:focus{background:#fff;border-color:var(--dark)}.phone{direction:ltr;text-align:left}.btn{min-height:clamp(54px,6vw,66px);border:3px solid var(--line);border-radius:999px;background:var(--orange);color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.22);font-weight:950;font-size:clamp(16px,1.4vw,21px);display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}.btn.black{background:#111}.btn.white{background:#fff;color:var(--ink)}.btn.small{min-height:clamp(44px,4.8vw,56px);padding:8px clamp(14px,2vw,22px)}
+.note{margin:2px 0 0;color:var(--muted);font-weight:800;text-align:center;font-size:clamp(13px,1.1vw,16px);line-height:1.7}.msg{display:none;border:3px solid var(--line);border-radius:16px;padding:12px 14px;font-weight:900;font-size:clamp(13px,1.1vw,16px);line-height:1.7;text-align:center}.msg.success{display:block;background:#e9fff3;color:#075c45;border-color:#0f7b52}.msg.error{display:block;background:#fff1f1;color:#a42121;border-color:#b72c2c}
+.list{display:grid;gap:clamp(12px,1.6vw,18px);margin-top:clamp(16px,2vw,24px)}.info{border:clamp(3px,.35vw,5px) solid var(--line);border-radius:clamp(14px,1.6vw,22px);background:#f8fafc;padding:clamp(13px,1.7vw,20px);display:grid;gap:8px;box-shadow:0 4px 0 rgba(0,0,0,.08)}.label{color:#697386;font-weight:850;font-size:clamp(12px,1vw,15px)}.value{color:var(--ink);font-weight:950;font-size:clamp(15px,1.35vw,20px);line-height:1.5;direction:ltr;text-align:right;overflow-wrap:anywhere}.linked{background:#fff9bf}.pills{display:flex;flex-wrap:wrap;gap:10px}.pill{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:7px 12px;border-radius:999px;background:#111;color:#fff;font-weight:900;font-size:clamp(12px,1vw,15px)}
+.actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:clamp(10px,1.4vw,18px);margin-top:clamp(14px,2vw,22px)}.steps{margin:clamp(10px,1.5vw,14px) 0 0;padding:0;list-style:none;display:grid;gap:10px;color:var(--muted);font-weight:820;font-size:clamp(14px,1.15vw,18px);line-height:1.9;counter-reset:s}.steps li{counter-increment:s}.steps li:before{content:counter(s) ". ";color:var(--ink);font-weight:950}[hidden]{display:none!important}
+.nav{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:100%;height:calc(var(--navh) + env(safe-area-inset-bottom));background:linear-gradient(180deg,#f7b638 0%,#e99f18 100%);border-top:clamp(3px,.35vw,5px) solid var(--line);z-index:40;display:flex;align-items:stretch;justify-content:center;padding:0 var(--pad) env(safe-area-inset-bottom);box-shadow:0 -5px 18px rgba(0,0,0,.16);transform:translate3d(0,0,0)!important;backface-visibility:hidden!important;contain:layout paint style}.navin{width:100%;max-width:860px;height:100%;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;gap:clamp(3px,.8vw,10px);padding:8px 0;--x:0px;--w:25%;--h:72px;--y:8px}.ind{position:absolute;top:0;left:0;width:var(--w);height:var(--h);border-radius:22px;background:var(--nav);border:2px solid rgba(255,255,255,.32);box-shadow:0 5px 0 rgba(0,0,0,.2);transform:translate3d(var(--x),var(--y),0);pointer-events:none;z-index:0;transition:transform .28s cubic-bezier(.22,1,.36,1),width .28s,height .28s}.navitem{min-width:0;height:clamp(68px,6.5vw,78px);border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#04384f;text-shadow:0 1px 0 rgba(255,255,255,.28);font-weight:950;font-size:clamp(11px,1vw,14px);line-height:1.1;text-align:center;position:relative;z-index:1;padding-inline:4px}.navitem.active{color:#fff;transform:translateY(-1px);text-shadow:none}.navicon{width:clamp(32px,3vw,40px);height:clamp(32px,3vw,40px);display:grid;place-items:center;color:currentColor}.navicon svg{width:90%;height:90%;stroke:currentColor;fill:none;stroke-width:2.75;stroke-linecap:round;stroke-linejoin:round}.navitem.active .navicon{color:var(--yl)}
+@media(max-width:560px){.head{display:grid}.status{justify-self:start}.tabs{justify-content:center}.tab{min-width:min(46%,180px)}.actions{display:grid;grid-template-columns:1fr}.btn.small{width:100%}}@media(max-width:430px){:root{--navh:88px;--pad:clamp(12px,4vw,18px)}.chip{min-height:30px;padding:6px 10px;font-size:12px}.hero h1{font-size:clamp(31px,8.5vw,42px)}.hero p{font-size:15px}.card,.info{border-width:4px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <div class="top-row">
+    <a class="chip back" href="index.html">العودة للألعاب</a>
+    <a class="chip login" id="welcomeChip" href="account.html">تسجيل الدخول</a>
+  </div>
+  <div class="hero">
+    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+    <h1>الحساب</h1>
+    <p id="heroLead">ملفك جاهز بعد تسجيل الدخول. راجع مكتبتك بسهولة.</p>
+  </div>
+</header>
+
+<main class="main">
+  <div class="inner">
+    <section class="card" id="loggedOutView" aria-label="لم تسجل الدخول بعد">
+      <div class="head">
+        <div>
+          <h2>لم تسجل الدخول بعد</h2>
+          <p>أنشئ حسابك لتبقى ألعابك ومشترياتك معك دائمًا.</p>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" id="loginModeBtn" type="button">تسجيل الدخول</button>
+        <button class="tab" id="createModeBtn" type="button">إنشاء حساب</button>
+      </div>
+
+      <form class="form" id="authForm">
+        <input class="field phone" id="accountPhoneInput" type="tel" inputmode="numeric" autocomplete="tel" placeholder="05xxxxxxxx" aria-label="رقم الجوال">
+        <button class="btn" id="authSubmitBtn" type="submit"><span class="button-label">تسجيل الدخول</span></button>
+        <p class="note">استخدم نفس رقم الجوال المستخدم في الشراء حتى تظهر ألعابك داخل الحساب.</p>
+        <div class="msg" id="authMessage"></div>
+      </form>
+    </section>
+
+    <section class="card" id="loggedInView" aria-label="معلومات الحساب" hidden>
+      <div class="head">
+        <div>
+          <h2>معلومات الحساب</h2>
+          <p>ملفك الشخصي ومكتبتك الجاهزة في مكان واحد.</p>
+        </div>
+        <span class="status">حساب نشط</span>
+      </div>
+
+      <div class="list">
+        <div class="info">
+          <span class="label">رقم الجوال المرتبط</span>
+          <span class="value" id="phoneValue">—</span>
+        </div>
+        <div class="info">
+          <span class="label">عدد الألعاب المرتبطة</span>
+          <span class="value" id="gamesCountValue">0 لعبة</span>
+        </div>
+        <div class="info">
+          <span class="label">آخر ربط مشتريات</span>
+          <span class="value" id="lastSyncValue">لم يتم الربط بعد</span>
+        </div>
+        <div class="info linked">
+          <h3 class="label" style="margin:0;color:var(--ink);font-size:clamp(14px,1.2vw,18px)">الألعاب المرتبطة بهذا الحساب</h3>
+          <div class="pills" id="linkedGamesList"><span class="pill">لا توجد ألعاب بعد</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="playerNameSection" aria-label="اسم اللاعب" hidden>
+      <div class="head">
+        <div>
+          <h2>اسم اللاعب</h2>
+          <p>اختر الاسم الذي يظهر لك داخل المنصة وفي الشريط الجانبي.</p>
+        </div>
+      </div>
+      <form class="form" id="playerNameForm">
+        <input class="field" id="playerNameInput" type="text" placeholder="اكتب اسمك هنا" autocomplete="name">
+        <button class="btn" type="submit">حفظ الاسم</button>
+      </form>
+    </section>
+
+    <section class="card" id="manageSection" aria-label="إدارة الحساب" hidden>
+      <div class="head">
+        <div>
+          <h2>إدارة الحساب</h2>
+          <p>حدّث تفعيلك، راجع الدعم، وابق قريبًا من مكتبتك الجاهزة للعب.</p>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn small" href="purchase-activation.html">تحديث التفعيل</a>
+        <a class="btn small white" href="support.html">الدعم</a>
+        <button class="btn small black" id="logoutButton" type="button">تسجيل الخروج</button>
+      </div>
+    </section>
+
+    <section class="card yellow" id="afterPurchaseSection" aria-label="ماذا يحدث بعد شراء لعبة جديدة؟" hidden>
+      <h2 class="head" style="margin:0 0 10px;display:block">ماذا يحدث بعد شراء لعبة جديدة؟</h2>
+      <ol class="steps">
+        <li>اشترِ اللعبة من متجر صندوق المسابقات بالطريقة المعتادة.</li>
+        <li>افتح صفحة تفعيل الألعاب واكتب رقم الجوال المستخدم في الطلب.</li>
+        <li>تحقق من الرقم ثم حدّث الربط لتدخل اللعبة الجديدة مباشرة إلى مكتبتك.</li>
+      </ol>
+    </section>
+  </div>
+</main>
+</div>
+
+<nav class="nav" aria-label="التنقل السفلي">
+  <div class="navin">
+    <span class="ind" aria-hidden="true"></span>
+    <a class="navitem" href="index.html"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span><span>الألعاب</span></a>
+    <a class="navitem" href="purchase-activation.html"><span class="navicon"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span><span>تفعيل الألعاب</span></a>
+    <a class="navitem active" href="account.html" aria-current="page"><span class="navicon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span><span>الحساب</span></a>
+    <a class="navitem" href="support.html"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span><span>الدعم</span></a>
+  </div>
+</nav>
+
+<script>
+const nav=document.querySelector('.navin'),navItems=document.querySelectorAll('.navitem');
+function move(item){if(!nav||!item)return;const n=nav.getBoundingClientRect(),r=item.getBoundingClientRect();nav.style.setProperty('--x',`${r.left-n.left}px`);nav.style.setProperty('--y',`${r.top-n.top}px`);nav.style.setProperty('--w',`${r.width}px`);nav.style.setProperty('--h',`${r.height}px`)}
+navItems.forEach(i=>i.addEventListener('click',()=>{navItems.forEach(n=>n.classList.remove('active'));i.classList.add('active');move(i)}));
+window.addEventListener('load',()=>{const a=document.querySelector('.navitem.active');move(a);setTimeout(()=>move(a),120)});
+window.addEventListener('resize',()=>move(document.querySelector('.navitem.active')));
+
+const PHONE_KEY='sandooq_account_phone_v1',NAME_KEY='sandooq_player_name_v1';
+const loggedOut=document.getElementById('loggedOutView'),loggedIn=document.getElementById('loggedInView'),nameSec=document.getElementById('playerNameSection'),manageSec=document.getElementById('manageSection'),afterSec=document.getElementById('afterPurchaseSection');
+const welcome=document.getElementById('welcomeChip'),lead=document.getElementById('heroLead'),phoneValue=document.getElementById('phoneValue'),nameInput=document.getElementById('playerNameInput');
+const loginBtn=document.getElementById('loginModeBtn'),createBtn=document.getElementById('createModeBtn'),form=document.getElementById('authForm'),phoneInput=document.getElementById('accountPhoneInput'),submitBtn=document.getElementById('authSubmitBtn'),label=submitBtn.querySelector('.button-label'),msg=document.getElementById('authMessage'),nameForm=document.getElementById('playerNameForm'),logout=document.getElementById('logoutButton');
+let mode='login';
+function valid(v){return /^05\d{8}$/.test(String(v||'').trim())}
+function get(k){try{return localStorage.getItem(k)||''}catch(e){return''}}
+function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function setMode(m){mode=m;loginBtn.classList.toggle('active',m==='login');createBtn.classList.toggle('active',m==='create');label.textContent=m==='create'?'إنشاء الحساب':'تسجيل الدخول';msg.className='msg';msg.textContent=''}
+function show(t,x){msg.className='msg '+t;msg.textContent=x}
+function render(){
+  const phone=get(PHONE_KEY),name=get(NAME_KEY),on=!!phone;
+  loggedOut.hidden=on;loggedIn.hidden=!on;nameSec.hidden=!on;manageSec.hidden=!on;afterSec.hidden=!on;
+  if(on){welcome.textContent=name?`مرحبًا ${name}`:'مرحبًا بك';lead.textContent='ملفك جاهز. عدّل اسمك وراجع مكتبتك بسهولة.';phoneValue.textContent=phone;if(nameInput)nameInput.value=name}
+  else{welcome.textContent='تسجيل الدخول';lead.textContent='ملفك جاهز بعد تسجيل الدخول. راجع مكتبتك بسهولة.'}
+}
+loginBtn.addEventListener('click',()=>setMode('login'));createBtn.addEventListener('click',()=>setMode('create'));
+form.addEventListener('submit',e=>{e.preventDefault();const p=phoneInput.value.trim();if(!valid(p)){show('error','أدخل رقم جوال صحيح يبدأ بـ 05.');return}set(PHONE_KEY,p);show('success',mode==='create'?'تم إنشاء الحساب بنجاح.':'تم تسجيل الدخول بنجاح.');render();scrollTo({top:0,behavior:'smooth'})});
+nameForm.addEventListener('submit',e=>{e.preventDefault();const n=nameInput.value.trim();if(n)set(NAME_KEY,n);render()});
+logout.addEventListener('click',()=>{del(PHONE_KEY);del(NAME_KEY);phoneInput.value='';setMode('login');render();scrollTo({top:0,behavior:'smooth'})});
+setMode('login');render();
+</script>
+</body>
+</html>
