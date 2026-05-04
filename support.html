@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>الدعم | صندوق المسابقات</title>
+<meta name="description" content="صفحة دعم صندوق المسابقات للأسئلة الشائعة والمساعدة عبر واتساب.">
+<meta name="theme-color" content="#075c82">
+<style>
+:root{--blue:#087ca8;--dark:#075c82;--deep:#066FAE;--yellow:#f7b638;--yl:#ffd76b;--green:#2faf72;--orange:#ff6b1a;--ink:#111827;--muted:#394354;--line:#151515;--nav:#064f73;--pad:clamp(14px,4vw,72px);--navh:clamp(88px,7vw,96px);--r:clamp(18px,2vw,30px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{background:#f7fbff;scroll-behavior:smooth}body{margin:0;background:#f7fbff;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;overflow-x:hidden}a{text-decoration:none;color:inherit}button,input{font:inherit}.app{min-height:100dvh;padding-bottom:calc(var(--navh) + env(safe-area-inset-bottom) + 26px);background:#f7fbff}
+.top{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:radial-gradient(circle at 12% 80%,rgba(255,215,107,.26),transparent 30%),radial-gradient(circle at 86% 18%,rgba(255,255,255,.20),transparent 24%),linear-gradient(135deg,var(--dark),var(--deep));padding:clamp(10px,1.4vw,20px) var(--pad) clamp(24px,4vw,52px);border-bottom:clamp(3px,.35vw,5px) solid var(--line)}
+.top:before{content:"";position:absolute;inset:-16px;z-index:-1;opacity:.16;background-image:radial-gradient(circle,rgba(255,255,255,.9) 0 2px,transparent 2.5px),radial-gradient(circle,rgba(255,255,255,.48) 0 1.4px,transparent 1.9px);background-size:24px 24px,38px 38px;background-position:0 0,10px 12px}
+.top-row{max-width:1180px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:clamp(34px,4vw,52px)}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-height:clamp(32px,3.2vw,44px);padding:7px clamp(12px,1.5vw,18px);border-radius:999px;border:2px solid rgba(255,255,255,.38);font-weight:950;font-size:clamp(13px,1vw,16px);box-shadow:0 3px 0 rgba(0,0,0,.18);white-space:nowrap}.chip.back{background:var(--yellow);color:var(--ink);border-color:rgba(21,21,21,.42)}.chip.login{background:var(--green);color:#fff}
+.hero{max-width:1180px;margin:clamp(22px,4vw,56px) auto 0;display:grid;justify-items:center;text-align:center;gap:clamp(12px,2vw,20px)}.icon{width:clamp(52px,9vw,70px);height:clamp(52px,9vw,70px);display:grid;place-items:center;background:var(--yellow);color:var(--ink);border:clamp(3px,.35vw,5px) solid var(--line);border-radius:clamp(14px,1.6vw,22px);box-shadow:0 6px 0 rgba(0,0,0,.20)}.icon svg{width:56%;height:56%;stroke:currentColor;fill:none;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.hero h1{margin:0;font-size:clamp(34px,6vw,64px);font-weight:950;line-height:1.14;text-shadow:0 4px 0 rgba(0,0,0,.14)}.hero p{margin:0;max-width:850px;color:rgba(255,255,255,.96);font-weight:850;font-size:clamp(16px,1.55vw,22px);line-height:1.9;text-shadow:0 2px 0 rgba(0,0,0,.10)}
+.main{padding:clamp(20px,4vw,54px) var(--pad) clamp(34px,7vw,90px);background:radial-gradient(circle at 10% 4%,rgba(85,189,242,.22),transparent 28%),linear-gradient(180deg,#fff,#f7fbff)}.inner{max-width:1180px;margin:auto;display:grid;gap:clamp(16px,2vw,28px)}
+.card{background:#fff;border:clamp(3px,.35vw,5px) solid var(--line);border-radius:var(--r);padding:clamp(18px,2.5vw,32px);box-shadow:0 7px 0 rgba(0,0,0,.13);overflow:hidden}.card.mint{background:#d8fae6}.card.yellow{background:#fff8c7}.head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:clamp(14px,2vw,22px)}.head h2{margin:0 0 10px;font-size:clamp(24px,2.6vw,38px);font-weight:950;line-height:1.35}.head p,.text{margin:0;color:var(--muted);font-weight:780;font-size:clamp(15px,1.35vw,20px);line-height:1.9}.pill{display:inline-flex;align-items:center;justify-content:center;min-height:clamp(34px,4vw,46px);padding:7px clamp(12px,1.5vw,18px);border-radius:999px;border:3px solid var(--line);background:var(--green);color:#111;box-shadow:0 4px 0 rgba(0,0,0,.14);font-weight:950;font-size:clamp(12px,1vw,16px);white-space:nowrap}
+.status-line{display:flex;align-items:center;gap:12px;font-size:clamp(20px,2.1vw,32px);font-weight:950;line-height:1.4}.dot{width:18px;height:18px;border-radius:50%;background:var(--green);display:inline-block;box-shadow:0 0 0 5px rgba(47,175,114,.14)}
+.search-wrap{position:relative;margin:clamp(14px,2vw,22px) 0}.search{width:100%;min-height:clamp(54px,6vw,66px);border:clamp(3px,.35vw,5px) solid var(--line);border-radius:clamp(14px,1.4vw,20px);background:#f1f5f9;color:var(--ink);padding:0 clamp(52px,5vw,70px) 0 clamp(14px,2vw,22px);font-weight:900;font-size:clamp(16px,1.6vw,23px);outline:none;box-shadow:inset 0 2px 0 rgba(0,0,0,.08)}.search:focus{background:#fff;border-color:var(--dark)}.search-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:clamp(38px,5vw,50px);height:clamp(38px,5vw,50px);display:grid;place-items:center;border:3px solid var(--line);border-radius:50%;background:var(--yl);box-shadow:0 3px 0 rgba(0,0,0,.16)}.search-icon svg{width:60%;height:60%;stroke:var(--ink);fill:none;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.filters{display:flex;gap:clamp(8px,1.4vw,14px);flex-wrap:wrap;margin-bottom:clamp(14px,2vw,22px)}.filter{min-height:clamp(40px,4.5vw,52px);border:0;border-radius:999px;background:#eef2f7;color:#334155;padding:8px clamp(13px,2vw,22px);font-weight:950;font-size:clamp(13px,1.1vw,16px);cursor:pointer}.filter.active{background:var(--orange);color:#fff;border:3px solid var(--line);box-shadow:0 4px 0 rgba(0,0,0,.16)}
+.faqs{display:grid;gap:clamp(12px,1.5vw,18px)}.faq{border:clamp(3px,.35vw,5px) solid var(--line);border-radius:clamp(14px,1.6vw,22px);background:#f8fafc;overflow:hidden}.q{width:100%;min-height:clamp(62px,7vw,80px);border:0;background:#f8fafc;color:var(--ink);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:clamp(13px,1.8vw,20px);font-weight:950;font-size:clamp(15px,1.35vw,20px);text-align:right;cursor:pointer}.chev{width:clamp(34px,4vw,46px);height:clamp(34px,4vw,46px);border-radius:50%;border:3px solid #000;background:#ffe98c;box-shadow:0 4px 0 #000;display:grid;place-items:center;flex:0 0 auto}.chev svg{width:52%;height:52%;stroke:#111;fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}.faq.open .chev svg{transform:rotate(180deg)}.a{display:none;border-top:clamp(2px,.25vw,4px) solid var(--line);padding:clamp(14px,2vw,22px);color:var(--muted);font-weight:820;font-size:clamp(14px,1.2vw,18px);line-height:2;background:#fff}.faq.open .a{display:block}
+.whatsapp{display:grid;justify-items:center;text-align:center;gap:clamp(12px,2vw,20px)}.whatsapp .pill{justify-self:start;background:#8ff0b2}.wa-title{margin:0;color:var(--ink);font-size:clamp(28px,3.2vw,48px);font-weight:950;line-height:1.35}.wa-text{margin:0;max-width:850px;color:var(--muted);font-size:clamp(15px,1.3vw,20px);font-weight:820;line-height:1.9}.wa-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:clamp(52px,6vw,68px);padding:10px clamp(18px,3vw,34px);border:3px solid var(--line);border-radius:clamp(14px,1.7vw,22px);background:#5bd46f;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.20);font-weight:950;font-size:clamp(15px,1.3vw,20px)}.wa-btn svg{width:1.35em;height:1.35em;stroke:#111;fill:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;background:#eaffef;border-radius:50%;padding:3px}
+.nav{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:100%;height:calc(var(--navh) + env(safe-area-inset-bottom));background:linear-gradient(180deg,#f7b638 0%,#e99f18 100%);border-top:clamp(3px,.35vw,5px) solid var(--line);z-index:40;display:flex;align-items:stretch;justify-content:center;padding:0 var(--pad) env(safe-area-inset-bottom);box-shadow:0 -5px 18px rgba(0,0,0,.16);transform:translate3d(0,0,0)!important;backface-visibility:hidden!important;contain:layout paint style}.navin{width:100%;max-width:860px;height:100%;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;gap:clamp(3px,.8vw,10px);padding:8px 0;--x:0px;--w:25%;--h:72px;--y:8px}.ind{position:absolute;top:0;left:0;width:var(--w);height:var(--h);border-radius:22px;background:var(--nav);border:2px solid rgba(255,255,255,.32);box-shadow:0 5px 0 rgba(0,0,0,.2);transform:translate3d(var(--x),var(--y),0);pointer-events:none;z-index:0;transition:transform .28s cubic-bezier(.22,1,.36,1),width .28s,height .28s}.navitem{min-width:0;height:clamp(68px,6.5vw,78px);border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#04384f;text-shadow:0 1px 0 rgba(255,255,255,.28);font-weight:950;font-size:clamp(11px,1vw,14px);line-height:1.1;text-align:center;position:relative;z-index:1;padding-inline:4px}.navitem.active{color:#fff;transform:translateY(-1px);text-shadow:none}.navicon{width:clamp(32px,3vw,40px);height:clamp(32px,3vw,40px);display:grid;place-items:center;color:currentColor}.navicon svg{width:90%;height:90%;stroke:currentColor;fill:none;stroke-width:2.75;stroke-linecap:round;stroke-linejoin:round}.navitem.active .navicon{color:var(--yl)}
+@media(max-width:560px){.head{display:grid}.pill{justify-self:start}.filters{justify-content:center}.wa-title{font-size:clamp(25px,7vw,36px)}}@media(max-width:430px){:root{--navh:88px;--pad:clamp(12px,4vw,18px)}.chip{min-height:30px;padding:6px 10px;font-size:12px}.hero h1{font-size:clamp(31px,8.5vw,42px)}.hero p{font-size:15px}.card,.faq{border-width:4px}.q{font-size:15px}}
+
+/* تعديلات الدعم: تصغير البطاقات والنصوص + ألوان الهوية الزرقاء + واتساب لامع */
+.main{
+  padding:clamp(14px, 3vw, 34px) var(--pad) clamp(30px, 6vw, 72px) !important;
+}
+
+.inner{
+  gap:clamp(12px, 1.4vw, 18px) !important;
+}
+
+.card{
+  padding:clamp(13px, 1.7vw, 22px) !important;
+  border-radius:clamp(14px, 1.65vw, 24px) !important;
+  box-shadow:0 5px 0 rgba(0,0,0,.12) !important;
+}
+
+.head{
+  margin-bottom:clamp(10px, 1.4vw, 16px) !important;
+  gap:10px !important;
+}
+
+.head h2{
+  font-size:clamp(20px, 2.1vw, 30px) !important;
+  margin-bottom:6px !important;
+}
+
+.head p,
+.text{
+  font-size:clamp(13px, 1.05vw, 16px) !important;
+  line-height:1.65 !important;
+}
+
+.pill{
+  min-height:clamp(28px, 3.2vw, 38px) !important;
+  padding:5px clamp(10px, 1.2vw, 14px) !important;
+  font-size:clamp(11px, .92vw, 14px) !important;
+}
+
+.status-line{
+  font-size:clamp(17px, 1.65vw, 24px) !important;
+  gap:9px !important;
+}
+
+.dot{
+  width:14px !important;
+  height:14px !important;
+  box-shadow:0 0 0 4px rgba(47,175,114,.14) !important;
+}
+
+.search-wrap{
+  margin:clamp(10px, 1.4vw, 16px) 0 !important;
+}
+
+.search{
+  min-height:clamp(46px, 4.8vw, 56px) !important;
+  border-radius:clamp(12px, 1.2vw, 16px) !important;
+  font-size:clamp(14px, 1.15vw, 18px) !important;
+  padding-right:clamp(46px, 4.4vw, 60px) !important;
+}
+
+.search-icon{
+  width:clamp(34px, 4.2vw, 44px) !important;
+  height:clamp(34px, 4.2vw, 44px) !important;
+  right:8px !important;
+  background:linear-gradient(180deg, var(--blue), var(--dark)) !important;
+  border-color:var(--line) !important;
+  box-shadow:0 3px 0 rgba(0,0,0,.18), inset 0 2px 0 rgba(255,255,255,.20) !important;
+}
+
+.search-icon svg{
+  stroke:#fff !important;
+}
+
+.filters{
+  gap:clamp(7px, 1vw, 11px) !important;
+  margin-bottom:clamp(10px, 1.4vw, 16px) !important;
+}
+
+.filter{
+  min-height:clamp(34px, 3.7vw, 42px) !important;
+  padding:6px clamp(11px, 1.5vw, 17px) !important;
+  font-size:clamp(12px, .95vw, 14px) !important;
+}
+
+.filter.active{
+  background:linear-gradient(180deg, var(--blue), var(--dark)) !important;
+  color:#fff !important;
+  border-color:var(--line) !important;
+  box-shadow:0 4px 0 rgba(0,0,0,.16), inset 0 2px 0 rgba(255,255,255,.18) !important;
+}
+
+.faqs{
+  gap:clamp(9px, 1.1vw, 13px) !important;
+}
+
+.faq{
+  border-radius:clamp(12px, 1.35vw, 18px) !important;
+}
+
+.q{
+  min-height:clamp(48px, 5vw, 58px) !important;
+  padding:clamp(10px, 1.3vw, 15px) !important;
+  font-size:clamp(13.5px, 1.05vw, 16px) !important;
+}
+
+.chev{
+  width:clamp(30px, 3.3vw, 38px) !important;
+  height:clamp(30px, 3.3vw, 38px) !important;
+  background:linear-gradient(180deg, var(--blue), var(--dark)) !important;
+  box-shadow:0 3px 0 #000 !important;
+}
+
+.chev svg{
+  stroke:#fff !important;
+}
+
+.a{
+  padding:clamp(11px, 1.55vw, 17px) !important;
+  font-size:clamp(12.5px, 1vw, 15px) !important;
+  line-height:1.75 !important;
+}
+
+.whatsapp{
+  gap:clamp(10px, 1.6vw, 16px) !important;
+}
+
+.whatsapp .pill{
+  background:linear-gradient(180deg, #9ff2bc 0%, #55d987 55%, #2faf72 100%) !important;
+  color:#0b3d27 !important;
+  box-shadow:0 4px 0 rgba(0,0,0,.16), inset 0 2px 0 rgba(255,255,255,.45) !important;
+}
+
+.wa-title{
+  font-size:clamp(24px, 2.5vw, 38px) !important;
+}
+
+.wa-text{
+  font-size:clamp(13.5px, 1.1vw, 17px) !important;
+  line-height:1.75 !important;
+}
+
+.wa-btn{
+  min-height:clamp(46px, 5vw, 58px) !important;
+  padding:9px clamp(16px, 2.5vw, 28px) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.38) 0%, rgba(255,255,255,0) 36%),
+    linear-gradient(180deg, #62df8a 0%, #2faf72 58%, #18894e 100%) !important;
+  color:#fff !important;
+  border-color:var(--line) !important;
+  box-shadow:
+    0 7px 0 #0e6339,
+    0 14px 20px rgba(15,112,65,.18),
+    inset 0 2px 0 rgba(255,255,255,.45) !important;
+  text-shadow:0 2px 0 rgba(0,0,0,.18) !important;
+}
+
+.wa-btn svg{
+  background:rgba(255,255,255,.95) !important;
+  fill:#fff !important;
+  stroke:#0c6d3f !important;
+}
+
+@media(max-width:430px){
+  .card{
+    padding:14px !important;
+  }
+
+  .q{
+    min-height:50px !important;
+    font-size:13.5px !important;
+  }
+
+  .a{
+    font-size:12.5px !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <div class="top-row">
+    <a class="chip back" href="index.html">العودة للألعاب</a>
+    <a class="chip login" href="account.html">تسجيل الدخول</a>
+  </div>
+  <div class="hero">
+    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
+    <h1>الدعم</h1>
+    <p>مساعدة سريعة وحلول جاهزة لكل لحظة لعب.</p>
+  </div>
+</header>
+
+<main class="main">
+  <div class="inner">
+    <section class="card mint" aria-label="حالة الخدمة">
+      <div class="head">
+        <div>
+          <p class="text">حالة الخدمة</p>
+          <div class="status-line"><span class="dot"></span>جميع الألعاب تعمل بشكل طبيعي</div>
+          <p class="text">الخدمة مستقرة وجاهزة للعب.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card yellow" aria-label="متى أحتاج الدعم؟">
+      <p class="text">متى أحتاج الدعم؟</p>
+      <h2 style="margin:8px 0 0;font-size:clamp(20px,2.2vw,32px);font-weight:950;line-height:1.5">عند أي استفسار عن اللعب أو التفعيل أو الحساب.</h2>
+    </section>
+
+    <section class="card" aria-label="الأسئلة الشائعة">
+      <div class="head">
+        <div>
+          <h2>الأسئلة الشائعة</h2>
+          <p>ابحث بسرعة أو اختر التصنيف المناسب للوصول إلى الإجابة.</p>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6"></circle><path d="M16 16l4 4"></path></svg></span>
+        <input class="search" id="faqSearch" type="search" placeholder="ابحث في الأسئلة...">
+      </div>
+
+      <div class="filters" aria-label="تصنيفات الأسئلة">
+        <button class="filter active" data-filter="all" type="button">الكل</button>
+        <button class="filter" data-filter="play" type="button">طريقة اللعب</button>
+        <button class="filter" data-filter="tech" type="button">مشاكل تقنية</button>
+        <button class="filter" data-filter="account" type="button">الحساب والشراء</button>
+      </div>
+
+      <div class="faqs" id="faqList">
+        <article class="faq open" data-cat="play"><button class="q" type="button"><span>كيف أبدأ اللعب في صندوق المسابقات؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">ادخل إلى لوحة الألعاب، تصفح بحرية أو افتح صفحة التفعيل للتحقق برقم الجوال أولًا. بعد ذلك سجّل الدخول واربط مشترياتك بحسابك لتتمكن من الدخول مباشرة إلى الألعاب التي اشتريتها.</div></article>
+        <article class="faq" data-cat="play"><button class="q" type="button"><span>كم عدد اللاعبين المطلوب للعب؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">جميع ألعاب صندوق المسابقات مصممة للعب الجماعي، ومعظمها مناسبة لاثنين فأكثر حسب نوع اللعبة.</div></article>
+        <article class="faq" data-cat="play"><button class="q" type="button"><span>هل يمكن اللعب على جهاز واحد؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">يعتمد ذلك على اللعبة. بعض الألعاب تحتاج شاشة عرض فقط، وبعضها يعمل بشكل أفضل عند وجود جهاز للمقدم أو المضيف بالإضافة إلى شاشة اللعب.</div></article>
+        <article class="faq" data-cat="tech"><button class="q" type="button"><span>اللعبة لا تعمل، ماذا أفعل؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">أعد تحميل الصفحة، وتأكد من اتصال الإنترنت، وجرّب متصفحًا حديثًا مثل Chrome أو Safari. إذا استمرت المشكلة تواصل معنا عبر واتساب وسنراجع الحالة معك خطوة بخطوة.</div></article>
+        <article class="faq" data-cat="tech"><button class="q" type="button"><span>ما المتصفحات المدعومة؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">الألعاب تعمل على Chrome وSafari وFirefox وEdge، سواء على الجوال أو الآيباد أو الكمبيوتر. يُفضّل دائمًا استخدام آخر إصدار من المتصفح.</div></article>
+        <article class="faq" data-cat="account"><button class="q" type="button"><span>هل الألعاب مجانية أم مدفوعة؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">الألعاب مدفوعة دفعة واحدة لكل لعبة، بدون اشتراك شهري أو رسوم متكررة.</div></article>
+        <article class="faq" data-cat="account"><button class="q" type="button"><span>كيف أشتري لعبة من متجر صندوق المسابقات؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">توجه إلى متجرنا على <a href="https://sandooq-m.com" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:underline">sandooq-m.com</a> واختر اللعبة المناسبة، ثم أكمل الدفع برقم الجوال الذي ترغب بربط الشراء به.</div></article>
+        <article class="faq" data-cat="account"><button class="q" type="button"><span>كيف أفعل اللعبة بعد الشراء؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">افتح صفحة تفعيل الألعاب، أدخل رقم الجوال المستخدم في الشراء، وستظهر لك ألعابك المرتبطة بهذا الرقم.</div></article>
+        <article class="faq" data-cat="account"><button class="q" type="button"><span>نسيت رقم الجوال المسجل أو أريد تغيير الحساب، ماذا أفعل؟</span><span class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span></button><div class="a">تواصل معنا عبر واتساب واذكر رقم الطلب أو أي معلومات عن الشراء، وسنساعدك في مراجعة الحساب.</div></article>
+      </div>
+    </section>
+
+    <section class="card whatsapp" aria-label="تواصل معنا">
+      <span class="pill">واتساب</span>
+      <h2 class="wa-title">تواصل معنا عن طريق الواتساب</h2>
+      <p class="wa-text">إذا احتجت مساعدة في حسابك أو تفعيل ألعابك أو الوصول إلى مشترياتك، تواصل معنا مباشرة وسنرد عليك بسرعة.</p>
+      <a class="wa-btn" href="https://wa.me/966550960290" target="_blank" rel="noopener">
+        <span>تواصل عبر واتساب</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.7a8 8 0 0 1-11.8 7L4 20l1.3-4.1A8 8 0 1 1 20 11.7Z"></path><path d="M8.7 8.6c.3 3.5 3.2 6.4 6.7 6.7"></path><path d="M8.7 8.6l1.6-.9 1.2 2.4-1.1.8"></path><path d="M15.4 15.3l.8-1.1 2.4 1.2-.9 1.6"></path></svg>
+      </a>
+    </section>
+  </div>
+</main>
+</div>
+
+<nav class="nav" aria-label="التنقل السفلي">
+  <div class="navin">
+    <span class="ind" aria-hidden="true"></span>
+    <a class="navitem" href="index.html"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span><span>الألعاب</span></a>
+    <a class="navitem" href="purchase-activation.html"><span class="navicon"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span><span>تفعيل الألعاب</span></a>
+    <a class="navitem" href="account.html"><span class="navicon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span><span>الحساب</span></a>
+    <a class="navitem active" href="support.html" aria-current="page"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span><span>الدعم</span></a>
+  </div>
+</nav>
+
+<script>
+const nav=document.querySelector('.navin'),navItems=document.querySelectorAll('.navitem');
+function move(item){if(!nav||!item)return;const n=nav.getBoundingClientRect(),r=item.getBoundingClientRect();nav.style.setProperty('--x',`${r.left-n.left}px`);nav.style.setProperty('--y',`${r.top-n.top}px`);nav.style.setProperty('--w',`${r.width}px`);nav.style.setProperty('--h',`${r.height}px`)}
+navItems.forEach(i=>i.addEventListener('click',()=>{navItems.forEach(n=>n.classList.remove('active'));i.classList.add('active');move(i)}));
+window.addEventListener('load',()=>{const a=document.querySelector('.navitem.active');move(a);setTimeout(()=>move(a),120)});
+window.addEventListener('resize',()=>move(document.querySelector('.navitem.active')));
+
+const faqs=[...document.querySelectorAll('.faq')],filters=[...document.querySelectorAll('.filter')],search=document.getElementById('faqSearch');
+faqs.forEach(f=>f.querySelector('.q').addEventListener('click',()=>f.classList.toggle('open')));
+let current='all';
+function apply(){
+  const q=(search.value||'').trim().toLowerCase();
+  faqs.forEach(f=>{
+    const okCat=current==='all'||f.dataset.cat===current;
+    const okText=!q||f.textContent.toLowerCase().includes(q);
+    f.style.display=okCat&&okText?'block':'none';
+  });
+}
+filters.forEach(btn=>btn.addEventListener('click',()=>{filters.forEach(b=>b.classList.remove('active'));btn.classList.add('active');current=btn.dataset.filter;apply()}));
+search.addEventListener('input',apply);
+</script>
+</body>
+</html>
