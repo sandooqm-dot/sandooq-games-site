@@ -696,7 +696,6 @@
       white-space:nowrap;
     }
 
-    .result-bundle-row,
     .sync-box{
       display:grid;
       gap:12px;
@@ -707,10 +706,6 @@
       box-shadow:0 5px 0 rgba(0,0,0,.08);
     }
 
-    .result-bundle-row{
-      grid-template-columns:clamp(62px, 8vw, 92px) 1fr auto;
-      align-items:center;
-    }
 
     .sync-box{
       background:#fff;
@@ -990,7 +985,6 @@
       font-size:clamp(11px, .9vw, 14px);
     }
 
-    .result-bundle-row,
     .sync-box{
       padding:clamp(9px, 1.3vw, 14px);
       border-width:clamp(3px, .3vw, 4px);
@@ -998,10 +992,6 @@
       box-shadow:0 4px 0 rgba(0,0,0,.07);
     }
 
-    .result-bundle-row{
-      grid-template-columns:clamp(54px, 7vw, 78px) 1fr auto;
-      gap:10px;
-    }
 
     .sync-btn{
       min-height:clamp(48px, 5vw, 58px);
@@ -1120,8 +1110,7 @@
       .result-title{
         font-size:24px;
       }
-      .result-bundle-row,
-      .game-row{
+        .game-row{
         grid-template-columns:54px 1fr auto;
         min-height:78px;
         gap:8px;
@@ -1158,9 +1147,6 @@
         min-width:52px;
         min-height:38px;
         font-size:11px;
-      }
-      .result-bundle-row{
-        grid-template-columns:52px 1fr auto;
       }
     }
 
@@ -1249,23 +1235,13 @@
           <div class="lookup-result-panel" id="lookupResultPanel" data-hook="lookup-result-panel" hidden>
             <p class="result-kicker">نتيجة التحقق</p>
             <h3 class="result-title" id="resultTitle">وجدنا ألعابًا على هذا الرقم</h3>
-            <p class="result-text">خطوتك الأخيرة الآن هي ربط هذه الألعاب بحسابك لتبقى محفوظة عند كل تسجيل دخول.</p>
+            <p class="result-text">هذه الألعاب مرتبطة بهذا الرقم.</p>
             <span class="phone-pill" id="resultPhonePill">05xxxxxxxx</span>
             <div class="owned-pills" id="ownedGamesPills" aria-label="الألعاب الموجودة على الرقم"></div>
 
-            <div class="result-bundle-row">
-              <div class="game-thumb"><img src="sandooq-almusabaqat-cover-card.webp" alt="بكج ألعاب صندوق المسابقات" loading="lazy" decoding="async"></div>
-              <div class="game-info">
-                <span class="game-tag">البكج الكامل</span>
-                <h3 class="game-name">بكج ألعاب صندوق المسابقات</h3>
-                <p class="game-meta">يجمع ألعاب صندوق المسابقات في تجربة واحدة.</p>
-              </div>
-              <a class="game-action" href="https://sandooq-m.com" target="_blank" rel="noopener">عرض البكج</a>
-            </div>
-
             <div class="sync-box">
-              <p class="sync-text">هذا الرقم مرتبط بحسابك حاليًا. استخدم الزر التالي لتحديث مكتبتك وإضافة أي مشتريات جديدة ظهرت على الرقم.</p>
-              <button class="sync-btn" id="syncAccountButton" type="button"><span class="sync-spinner" aria-hidden="true"></span><span class="sync-btn-icon" aria-hidden="true">🔗</span><span class="sync-label">تحديث وربط الألعاب بالحساب</span></button>
+              <p class="sync-text">اشتريت لعبة جديدة وما ظهرت؟ اضغط لتحديث مكتبتك.</p>
+              <button class="sync-btn" id="syncAccountButton" type="button"><span class="sync-spinner" aria-hidden="true"></span><span class="sync-btn-icon" aria-hidden="true">🔗</span><span class="sync-label">تحديث ربط الألعاب</span></button>
             </div>
           </div>
         </section>
@@ -1457,7 +1433,7 @@
     const legacyCodeMessage = document.getElementById('legacyCodeMessage');
 
     const messages = {
-      found: 'تم العثور على ألعابك. يمكنك تحديث الربط لتظهر داخل الحساب.',
+      found: 'تم العثور على ألعابك.',
       empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.',
       invalidPhone: 'أدخل رقم جوال صحيح يبدأ بـ 05.',
       loading: 'جاري التحقق من الرقم…'
@@ -1518,6 +1494,12 @@
       });
     }
 
+    function formatFoundTitle(count) {
+      if (count === 1) return 'وجدنا لعبة واحدة على هذا الرقم';
+      if (count === 2) return 'وجدنا لعبتين على هذا الرقم';
+      return `وجدنا ${count} ألعاب على هذا الرقم`;
+    }
+
     function applyLookupResult(phone) {
       const ownedIds = new Set(DEMO_OWNED_GAME_IDS);
       const gameRows = Array.from(document.querySelectorAll('.game-row[data-game-id]'));
@@ -1527,7 +1509,7 @@
       savePhoneToAccount(phone);
 
       if (lookupResultPanel) lookupResultPanel.hidden = false;
-      if (resultTitle) resultTitle.textContent = ownedCount ? `وجدنا ${ownedCount} لعبة على هذا الرقم` : 'لم نجد ألعابًا على هذا الرقم';
+      if (resultTitle) resultTitle.textContent = ownedCount ? formatFoundTitle(ownedCount) : 'لم نجد ألعابًا على هذا الرقم';
       if (resultPhonePill) resultPhonePill.textContent = phone;
       renderOwnedPills();
 
@@ -1556,7 +1538,7 @@
 
     if (syncAccountButton) {
       const syncLabel = syncAccountButton.querySelector('.sync-label');
-      const syncDefaultLabel = syncLabel ? syncLabel.textContent : 'تحديث وربط الألعاب بالحساب';
+      const syncDefaultLabel = syncLabel ? syncLabel.textContent : 'تحديث ربط الألعاب';
 
       syncAccountButton.addEventListener('click', () => {
         const phone = phoneInput ? phoneInput.value.trim() : '';
@@ -1569,14 +1551,14 @@
         resetMainMessages();
         syncAccountButton.classList.add('is-loading');
         syncAccountButton.setAttribute('disabled', 'disabled');
-        if (syncLabel) syncLabel.textContent = 'جاري تحديث المكتبة...';
+        if (syncLabel) syncLabel.textContent = 'جاري تحديث الألعاب...';
 
         // واجهة مؤقتة الآن: تعيد البحث وتحدّث المكتبة من نفس بيانات العرض.
         // عند ربط Cloudflare لاحقًا، هذا المكان هو الذي يستدعي API الحقيقي.
         window.setTimeout(() => {
           savePhoneToAccount(phone);
           applyLookupResult(phone);
-          showMainStatus('success', 'تم تحديث مكتبتك وإضافة أي مشتريات جديدة ظهرت على الرقم.');
+          showMainStatus('success', 'تم تحديث ربط الألعاب وإضافة أي مشتريات ظهرت على الرقم.');
           syncAccountButton.classList.remove('is-loading');
           syncAccountButton.removeAttribute('disabled');
           if (syncLabel) syncLabel.textContent = syncDefaultLabel;
