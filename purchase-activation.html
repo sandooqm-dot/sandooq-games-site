@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>تفعيل الألعاب | صندوق المسابقات</title>
-  <meta name="description" content="تفعيل ألعاب صندوق المسابقات برقم الجوال واسترجاع الألعاب وربط الألعاب بالحساب." />
+  <meta name="description" content="تفعيل ألعاب صندوق المسابقات برقم الجوال واسترجاع المشتريات وربط الألعاب بالحساب." />
   <meta name="theme-color" content="#075c82" />
   <link rel="preload" as="image" href="logo.PNG" />
   <link rel="preload" as="image" href="horof-cover-card.webp" />
@@ -512,259 +512,6 @@
     .nav-item.nav-featured .nav-icon{border-radius:16px;background:rgba(4,56,79,.12);box-shadow:inset 0 0 0 1px rgba(4,56,79,.18);}
     .nav-item.nav-featured.active .nav-icon{background:transparent;box-shadow:none;}
 
-
-    .private-browser-note{
-      margin:0;
-      color:#5b6677;
-      font-weight:820;
-      text-align:center;
-      font-size:clamp(12px, 1vw, 15px);
-      line-height:1.7;
-    }
-
-    .legacy-code-entry{
-      display:grid;
-      justify-items:center;
-      gap:5px;
-      margin-top:2px;
-    }
-
-    .legacy-toggle{
-      border:0;
-      background:transparent;
-      color:var(--blue-dark);
-      font-weight:950;
-      font-size:clamp(13px, 1.1vw, 16px);
-      cursor:pointer;
-      text-decoration:underline;
-      text-underline-offset:4px;
-      padding:4px 8px;
-    }
-
-    .legacy-hint{
-      margin:0;
-      color:#7a8494;
-      font-weight:780;
-      font-size:clamp(10px, .9vw, 12px);
-      line-height:1.6;
-      text-align:center;
-    }
-
-    .legacy-code-box{
-      display:grid;
-      gap:10px;
-      margin-top:4px;
-      padding:clamp(14px, 2vw, 20px);
-      border:clamp(2px, .3vw, 4px) solid rgba(21,21,21,.65);
-      border-radius:clamp(14px, 1.8vw, 22px);
-      background:#fff8ed;
-      box-shadow:0 5px 0 rgba(0,0,0,.10);
-    }
-
-    .legacy-code-box[hidden]{display:none !important;}
-
-    .legacy-title{
-      margin:0;
-      color:var(--ink);
-      font-size:clamp(17px, 1.55vw, 24px);
-      font-weight:950;
-      line-height:1.35;
-    }
-
-    .legacy-text{
-      margin:0;
-      color:var(--muted);
-      font-weight:780;
-      font-size:clamp(13px, 1.1vw, 16px);
-      line-height:1.8;
-    }
-
-    .code-field{
-      width:100%;
-      min-height:clamp(48px, 5vw, 58px);
-      border:clamp(3px, .35vw, 5px) solid var(--line);
-      border-radius:clamp(13px, 1.4vw, 18px);
-      background:#fff;
-      color:var(--ink);
-      padding:0 clamp(12px, 2vw, 18px);
-      font-weight:900;
-      font-size:clamp(14px, 1.25vw, 18px);
-      direction:ltr;
-      text-align:left;
-      outline:none;
-    }
-
-    .code-field:focus{border-color:var(--blue-dark);}
-
-    .legacy-btn{
-      min-height:clamp(48px, 5vw, 58px);
-      border:3px solid var(--line);
-      border-radius:999px;
-      background:var(--blue-dark);
-      color:#fff;
-      box-shadow:0 5px 0 rgba(0,0,0,.18);
-      font-weight:950;
-      font-size:clamp(14px, 1.2vw, 18px);
-      cursor:pointer;
-    }
-
-    .small-note{
-      margin:0;
-      text-align:center;
-      color:#6b7280;
-      font-weight:780;
-      font-size:clamp(11px, .95vw, 13px);
-      line-height:1.7;
-    }
-
-
-    .lookup-result-panel{
-      display:grid;
-      gap:clamp(12px, 1.8vw, 18px);
-      margin-top:clamp(16px, 2vw, 24px);
-      padding:clamp(16px, 2.3vw, 28px);
-      border:clamp(3px, .35vw, 5px) solid var(--line);
-      border-radius:clamp(18px, 2vw, 28px);
-      background:#f8fbff;
-      box-shadow:0 6px 0 rgba(0,0,0,.10);
-    }
-
-    .lookup-result-panel[hidden],
-    .game-row[hidden],
-    .all-owned-notice[hidden]{display:none !important;}
-
-    .result-kicker{
-      margin:0;
-      color:#697386;
-      font-weight:900;
-      font-size:clamp(12px, 1vw, 15px);
-      line-height:1.5;
-    }
-
-    .result-title{
-      margin:0;
-      color:var(--ink);
-      font-size:clamp(24px, 2.6vw, 38px);
-      line-height:1.35;
-      font-weight:950;
-    }
-
-    .result-text{
-      margin:0;
-      color:var(--muted);
-      font-weight:820;
-      font-size:clamp(15px, 1.25vw, 19px);
-      line-height:1.9;
-    }
-
-    .phone-pill{
-      justify-self:start;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:40px;
-      padding:7px 18px;
-      border-radius:999px;
-      border:4px solid var(--line);
-      background:#fff;
-      color:var(--ink);
-      font-weight:950;
-      font-size:clamp(14px, 1.2vw, 18px);
-      direction:ltr;
-      box-shadow:0 4px 0 rgba(0,0,0,.10);
-    }
-
-    .owned-pills{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:10px;
-    }
-
-    .owned-pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:38px;
-      padding:7px 14px;
-      border-radius:999px;
-      background:#111;
-      color:#fff;
-      font-weight:950;
-      font-size:clamp(12px, 1vw, 15px);
-      line-height:1.15;
-      white-space:nowrap;
-    }
-
-    .sync-box{
-      display:grid;
-      gap:12px;
-      border:clamp(3px, .35vw, 5px) solid var(--line);
-      border-radius:clamp(16px, 1.8vw, 24px);
-      background:#fff8ed;
-      padding:clamp(10px, 1.5vw, 16px);
-      box-shadow:0 5px 0 rgba(0,0,0,.08);
-    }
-
-
-    .sync-box{
-      background:#fff;
-      justify-items:center;
-      text-align:center;
-    }
-
-    .sync-text{
-      margin:0;
-      color:var(--muted);
-      font-weight:850;
-      font-size:clamp(15px, 1.2vw, 19px);
-      line-height:1.9;
-    }
-
-    .sync-btn{
-      min-height:clamp(52px, 5.4vw, 64px);
-      border:3px solid var(--line);
-      border-radius:clamp(14px, 1.6vw, 22px);
-      background:#111;
-      color:#fff;
-      box-shadow:0 6px 0 rgba(0,0,0,.18);
-      font-weight:950;
-      font-size:clamp(15px, 1.3vw, 20px);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      cursor:pointer;
-      padding:0 clamp(16px, 2vw, 28px);
-      width:min(100%, 430px);
-    }
-
-    .sync-btn-icon{
-      width:34px;
-      height:34px;
-      flex:0 0 auto;
-      display:inline-grid;
-      place-items:center;
-      border-radius:999px;
-      background:var(--yellow-light);
-      color:#111;
-      font-size:20px;
-      line-height:1;
-    }
-
-    .all-owned-notice{
-      margin-top:clamp(12px, 1.6vw, 18px);
-      border:clamp(3px, .35vw, 5px) solid var(--line);
-      border-radius:clamp(16px, 1.8vw, 24px);
-      background:#e9fff3;
-      color:#16634a;
-      font-weight:900;
-      font-size:clamp(14px, 1.15vw, 18px);
-      line-height:1.9;
-      text-align:center;
-      padding:clamp(12px, 1.8vw, 18px);
-    }
-
     @media (max-width:560px){
       .section-head{display:grid;}
       .section-badge{justify-self:start;}
@@ -794,362 +541,6 @@
         scroll-behavior:auto !important;
       }
     }
-
-    /* تثبيت نهائي للشريط السفلي: لا يتحرك مع التصفح أو لوحة المفاتيح */
-    :root{
-      --visual-viewport-bottom:0px !important;
-    }
-
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      top:auto !important;
-      bottom:0 !important;
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
-      backface-visibility:hidden !important;
-      -webkit-backface-visibility:hidden !important;
-      will-change:transform !important;
-    }
-
-    .app{
-      padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + 26px) !important;
-    }
-
-
-    /* ✅ v3: تصغير الصفحة وتنظيم المسافات + زر التحديث بهوية صندوق المسابقات */
-    :root{
-      --layout-max:900px;
-      --page-pad:clamp(12px, 3.4vw, 38px);
-      --radius:clamp(16px, 1.7vw, 24px);
-    }
-
-    .page-top{
-      padding:clamp(8px, 1.2vw, 16px) var(--page-pad) clamp(18px, 3vw, 36px);
-    }
-
-    .activation-hero{
-      margin:clamp(14px, 2.8vw, 34px) auto 0;
-      gap:clamp(9px, 1.5vw, 15px);
-    }
-
-    .title-icon{
-      width:clamp(44px, 7vw, 58px);
-      height:clamp(44px, 7vw, 58px);
-      border-width:3px;
-      box-shadow:0 5px 0 rgba(0,0,0,.18);
-    }
-
-    .page-title{
-      font-size:clamp(30px, 4.8vw, 52px);
-    }
-
-    .page-lead{
-      max-width:720px;
-      font-size:clamp(14px, 1.25vw, 18px);
-      line-height:1.7;
-    }
-
-    .content-area{
-      padding:clamp(14px, 3vw, 36px) var(--page-pad) clamp(28px, 5vw, 70px);
-    }
-
-    .content-inner{
-      max-width:900px;
-      gap:clamp(12px, 1.5vw, 20px);
-    }
-
-    .section-card{
-      padding:clamp(14px, 1.8vw, 24px);
-      border-width:clamp(3px, .28vw, 4px);
-      box-shadow:0 5px 0 rgba(0,0,0,.12);
-    }
-
-    .section-head{
-      margin-bottom:clamp(12px, 1.6vw, 18px);
-    }
-
-    .section-heading{
-      font-size:clamp(22px, 2vw, 32px);
-      line-height:1.3;
-      margin-bottom:7px;
-    }
-
-    .section-text{
-      font-size:clamp(14px, 1.1vw, 18px);
-      line-height:1.75;
-    }
-
-    .section-badge{
-      min-height:clamp(30px, 3.4vw, 40px);
-      padding:6px clamp(10px, 1.25vw, 15px);
-      border-width:3px;
-      font-size:clamp(11px, .9vw, 14px);
-      box-shadow:0 3px 0 rgba(0,0,0,.12);
-    }
-
-    .lookup-form{
-      gap:10px;
-      margin-top:clamp(10px, 1.5vw, 16px);
-    }
-
-    .phone-field,
-    .lookup-btn{
-      min-height:clamp(50px, 5.2vw, 60px);
-      font-size:clamp(15px, 1.3vw, 20px);
-      border-width:clamp(3px, .3vw, 4px);
-    }
-
-    .form-note,
-    .private-browser-note{
-      font-size:clamp(12px, .95vw, 14px);
-      line-height:1.65;
-    }
-
-    .legacy-code-entry{
-      gap:3px;
-    }
-
-    .legacy-toggle{
-      font-size:clamp(12px, 1vw, 15px);
-      padding:2px 8px;
-    }
-
-    .legacy-hint{
-      font-size:clamp(10px, .85vw, 12px);
-    }
-
-    .legacy-code-box{
-      padding:clamp(12px, 1.6vw, 16px);
-      gap:8px;
-      border-width:3px;
-      box-shadow:0 4px 0 rgba(0,0,0,.08);
-    }
-
-    .legacy-title{
-      font-size:clamp(16px, 1.35vw, 21px);
-    }
-
-    .legacy-text{
-      font-size:clamp(12px, 1vw, 14px);
-      line-height:1.7;
-    }
-
-    .code-field,
-    .legacy-btn{
-      min-height:clamp(44px, 4.5vw, 52px);
-      font-size:clamp(13px, 1.1vw, 16px);
-      border-width:3px;
-    }
-
-    .lookup-result-panel{
-      gap:clamp(9px, 1.3vw, 14px);
-      margin-top:clamp(12px, 1.5vw, 18px);
-      padding:clamp(12px, 1.8vw, 20px);
-      border-width:clamp(3px, .3vw, 4px);
-      border-radius:clamp(16px, 1.7vw, 24px);
-      box-shadow:0 5px 0 rgba(0,0,0,.09);
-    }
-
-    .result-kicker{
-      font-size:clamp(11px, .9vw, 14px);
-    }
-
-    .result-title{
-      font-size:clamp(22px, 2.05vw, 31px);
-      line-height:1.28;
-    }
-
-    .result-text,
-    .sync-text{
-      font-size:clamp(13px, 1.05vw, 16px);
-      line-height:1.75;
-    }
-
-    .phone-pill{
-      min-height:34px;
-      padding:6px 15px;
-      border-width:3px;
-      font-size:clamp(13px, 1vw, 16px);
-      box-shadow:0 3px 0 rgba(0,0,0,.08);
-    }
-
-    .owned-pills{
-      gap:8px;
-    }
-
-    .owned-pill{
-      min-height:34px;
-      padding:6px 12px;
-      font-size:clamp(11px, .9vw, 14px);
-    }
-
-    .sync-box{
-      padding:clamp(9px, 1.3vw, 14px);
-      border-width:clamp(3px, .3vw, 4px);
-      border-radius:clamp(14px, 1.5vw, 20px);
-      box-shadow:0 4px 0 rgba(0,0,0,.07);
-    }
-
-
-    .sync-btn{
-      min-height:clamp(48px, 5vw, 58px);
-      width:min(100%, 390px);
-      border-radius:clamp(14px, 1.4vw, 18px);
-      background:linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
-      border-color:var(--line);
-      color:#fff;
-      box-shadow:0 6px 0 rgba(4,56,79,.25);
-      font-size:clamp(14px, 1.18vw, 18px);
-      transition:transform .15s ease, filter .15s ease, opacity .15s ease;
-    }
-
-    .sync-btn:active{
-      transform:translateY(1px);
-      box-shadow:0 5px 0 rgba(4,56,79,.25);
-    }
-
-    .sync-btn[disabled]{
-      cursor:wait;
-      opacity:.92;
-      filter:saturate(.85);
-    }
-
-    .sync-btn.is-loading{
-      background:linear-gradient(180deg, var(--blue-soft) 0%, var(--blue-dark) 100%);
-    }
-
-    .sync-btn-icon{
-      width:30px;
-      height:30px;
-      font-size:18px;
-    }
-
-    .sync-spinner{
-      display:none;
-      width:1.05em;
-      height:1.05em;
-      border:3px solid rgba(255,255,255,.35);
-      border-top-color:#fff;
-      border-radius:50%;
-      animation:spin .8s linear infinite;
-      flex:0 0 auto;
-    }
-
-    .sync-btn.is-loading .sync-spinner{
-      display:inline-block;
-    }
-
-    .games-list{
-      gap:clamp(10px, 1.2vw, 14px);
-    }
-
-    .game-row{
-      grid-template-columns:clamp(54px, 7vw, 78px) 1fr auto;
-      min-height:clamp(78px, 9vw, 100px);
-      gap:clamp(8px, 1.2vw, 14px);
-      padding:clamp(7px, 1vw, 11px);
-      border-width:clamp(3px, .3vw, 4px);
-      box-shadow:0 4px 0 rgba(0,0,0,.08);
-    }
-
-    .game-thumb{
-      border-width:3px;
-      border-radius:clamp(11px, 1.2vw, 16px);
-      box-shadow:0 2px 0 rgba(0,0,0,.10);
-    }
-
-    .game-tag{
-      min-height:22px;
-      padding:3px 8px;
-      font-size:clamp(9px, .75vw, 11px);
-    }
-
-    .game-name{
-      font-size:clamp(14px, 1.2vw, 18px);
-    }
-
-    .game-meta{
-      font-size:clamp(10px, .9vw, 13px);
-      line-height:1.45;
-    }
-
-    .game-action{
-      min-width:clamp(54px, 7.5vw, 82px);
-      min-height:clamp(38px, 4vw, 48px);
-      border-radius:clamp(11px, 1.2vw, 15px);
-      font-size:clamp(10px, .88vw, 13px);
-      box-shadow:0 4px 0 rgba(0,0,0,.14);
-      padding-inline:8px;
-    }
-
-    .all-owned-notice{
-      margin-top:clamp(10px, 1.2vw, 14px);
-      padding:clamp(10px, 1.4vw, 14px);
-      border-width:3px;
-      font-size:clamp(13px, 1vw, 16px);
-      line-height:1.75;
-    }
-
-    @media (max-width:560px){
-      .section-card{
-        padding:14px;
-        border-radius:20px;
-      }
-      .section-heading{
-        font-size:24px;
-      }
-      .section-text{
-        font-size:14px;
-      }
-      .lookup-result-panel{
-        padding:12px;
-        border-radius:20px;
-      }
-      .result-title{
-        font-size:24px;
-      }
-        .game-row{
-        grid-template-columns:54px 1fr auto;
-        min-height:78px;
-        gap:8px;
-        padding:8px;
-      }
-      .owned-pills{
-        gap:7px;
-      }
-      .owned-pill{
-        min-height:32px;
-        padding:6px 10px;
-        font-size:12px;
-      }
-      .sync-btn{
-        width:100%;
-        min-height:48px;
-        font-size:14px;
-      }
-    }
-
-    @media (max-width:430px){
-      :root{
-        --page-pad:clamp(10px, 3.5vw, 14px);
-        --bottom-nav-height:84px;
-      }
-      .content-area{
-        padding-top:12px;
-      }
-      .phone-field,
-      .lookup-btn{
-        min-height:50px;
-      }
-      .game-action{
-        min-width:52px;
-        min-height:38px;
-        font-size:11px;
-      }
-    }
-
   </style>
 </head>
 
@@ -1172,11 +563,11 @@
 
     <main class="content-area">
       <div class="content-inner">
-        <section class="section-card soft-blue" aria-label="استرجاع الألعاب">
+        <section class="section-card soft-blue" aria-label="استرجاع المشتريات">
           <div class="section-head">
             <div>
               <h2 class="section-heading">ابحث عن ألعابك برقم الجوال</h2>
-              <p class="section-text">اكتب الرقم الذي استخدمته في الشراء، وسنعرض الألعاب الموجودة عليه. بعدها يمكنك ربطها بحسابك مرة واحدة فقط.</p>
+              <p class="section-text">سجّل دخولك أو أنشئ حسابًا أولًا، ثم تحقق من رقم الجوال لعرض ألعابك وربطها بحسابك.</p>
             </div>
             <span class="section-badge">استرجاع المشتريات</span>
           </div>
@@ -1199,58 +590,20 @@
               <span class="button-label">التحقق من الرقم</span>
             </button>
 
-            <p class="form-note">سجل دخول أو قم بإنشاء حساب للتحقق من الرقم.</p>
-
-            <p class="private-browser-note">للدخول المباشر لاحقًا، استخدم المتصفح العادي وليس المتصفح الخفي.</p>
-
-            <div class="legacy-code-entry">
-              <button class="legacy-toggle" id="legacyToggle" data-hook="legacy-code-toggle" type="button">لديك كود تفعيل سابق؟</button>
-              <p class="legacy-hint">اربط كودك القديم برقم جوالك مرة واحدة فقط.</p>
-            </div>
-
-            <div
-              class="legacy-code-box"
-              id="legacyCodeBox"
-              data-hook="legacy-code-box"
-              data-success-message="تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك."
-              data-invalid-message="الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى."
-              data-used-message="هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم."
-              data-missing-phone-message="اكتب رقم الجوال أولًا، ثم أدخل كود التفعيل السابق."
-              hidden
-            >
-              <h3 class="legacy-title">ربط كود تفعيل سابق</h3>
-              <p class="legacy-text">إذا كان لديك كود تفعيل قديم، أدخله هنا مع رقم جوالك. بعد الربط لن تحتاج إلى الكود مرة أخرى، وستظهر اللعبة ضمن ألعابك برقم الجوال.</p>
-              <input class="code-field" id="legacyCodeInput" data-hook="legacy-code-input" type="text" placeholder="أدخل كود التفعيل السابق" autocomplete="off">
-              <button class="legacy-btn" id="legacyCodeButton" data-hook="legacy-code-button" type="button">ربط الكود برقم جوالي</button>
-              <p class="small-note">يُستخدم الكود القديم للربط مرة واحدة فقط.</p>
-              <div class="status-message" id="legacyCodeMessage" data-hook="legacy-code-message"></div>
-            </div>
+            <p class="form-note">سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.</p>
 
             <div class="message-area" aria-live="polite">
               <div class="status-message" id="statusMessage" data-hook="status-message"></div>
-              <div class="empty-state" id="emptyState" data-hook="empty-state">لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.</div>
+              <div class="empty-state" id="emptyState" data-hook="empty-state">لم نجد مشتريات على هذا الرقم.</div>
             </div>
           </form>
-
-          <div class="lookup-result-panel" id="lookupResultPanel" data-hook="lookup-result-panel" hidden>
-            <p class="result-kicker">نتيجة التحقق</p>
-            <h3 class="result-title" id="resultTitle">وجدنا ألعابًا على هذا الرقم</h3>
-            <p class="result-text">هذه الألعاب مرتبطة بهذا الرقم.</p>
-            <span class="phone-pill" id="resultPhonePill">05xxxxxxxx</span>
-            <div class="owned-pills" id="ownedGamesPills" aria-label="الألعاب الموجودة على الرقم"></div>
-
-            <div class="sync-box">
-              <p class="sync-text">اشتريت لعبة جديدة وما ظهرت؟ اضغط لتحديث مكتبتك.</p>
-              <button class="sync-btn" id="syncAccountButton" type="button"><span class="sync-spinner" aria-hidden="true"></span><span class="sync-btn-icon" aria-hidden="true">🔗</span><span class="sync-label">تحديث ربط الألعاب</span></button>
-            </div>
-          </div>
         </section>
 
-        <section class="section-card" id="availableGamesSection" aria-label="الألعاب المتاحة">
+        <section class="section-card" aria-label="الألعاب المتوفرة للشراء">
           <div class="section-head">
             <div>
-              <h2 class="section-heading" id="availableGamesTitle">الألعاب المتوفرة للشراء</h2>
-              <p class="section-text" id="availableGamesLead">هذه هي الألعاب المتاحة الآن في متجر صندوق المسابقات، ويمكنك شراء ما يناسبك والعودة لتفعيله من هنا.</p>
+              <h2 class="section-heading">الألعاب المتوفرة للشراء</h2>
+              <p class="section-text">هذه هي الألعاب المتاحة الآن في متجر صندوق المسابقات، ويمكنك شراؤها أو تفعيلها من هنا.</p>
             </div>
           </div>
 
@@ -1262,7 +615,7 @@
                 <h3 class="game-name">بكج ألعاب صندوق المسابقات</h3>
                 <p class="game-meta">يشمل مجموعة ألعاب مختارة لتجربة أطول.</p>
               </div>
-              <a class="game-action" data-hook="game-button" data-buy-label="عرض البكج" data-play-label="عرض البكج" href="https://sandooq-m.com" target="_blank" rel="noopener">عرض البكج</a>
+              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com" target="_blank" rel="noopener">عرض البكج</a>
             </article>
 
             <article class="game-row" data-game-id="horof">
@@ -1271,7 +624,7 @@
                 <h3 class="game-name">لعبة سباق الحروف</h3>
                 <p class="game-meta">+2 لاعبين · 15-30 دقيقة</p>
               </div>
-              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/rRDZGeZ" target="_blank" rel="noopener">شراء</a>
+              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com/rRDZGeZ" target="_blank" rel="noopener">شراء</a>
             </article>
 
             <article class="game-row" data-game-id="horof-edu">
@@ -1280,7 +633,7 @@
                 <h3 class="game-name">سباق الحروف التعليمية</h3>
                 <p class="game-meta">+2 لاعبين/فرق · قابلة للتعديل</p>
               </div>
-              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/bwvKNPe" target="_blank" rel="noopener">شراء</a>
+              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com/bwvKNPe" target="_blank" rel="noopener">شراء</a>
             </article>
 
             <article class="game-row" data-game-id="bdon-kalam">
@@ -1289,7 +642,7 @@
                 <h3 class="game-name">لعبة بدون كلام</h3>
                 <p class="game-meta">+2 لاعبين · تحديات تمثيل</p>
               </div>
-              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/gygPeBK" target="_blank" rel="noopener">شراء</a>
+              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com/gygPeBK" target="_blank" rel="noopener">شراء</a>
             </article>
 
             <article class="game-row" data-game-id="bra-alsalfah">
@@ -1298,7 +651,7 @@
                 <h3 class="game-name">لعبة برا السالفة</h3>
                 <p class="game-meta">+3 لاعبين · كشف وتمويه</p>
               </div>
-              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/YzZqAlO" target="_blank" rel="noopener">شراء</a>
+              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com/YzZqAlO" target="_blank" rel="noopener">شراء</a>
             </article>
 
             <article class="game-row" data-game-id="family-feud">
@@ -1307,7 +660,7 @@
                 <h3 class="game-name">لعبة فاميلي فيود</h3>
                 <p class="game-meta">+ فريقين · شاشة عرض وجرس</p>
               </div>
-              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/wAReOlN" target="_blank" rel="noopener">شراء</a>
+              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com/wAReOlN" target="_blank" rel="noopener">شراء</a>
             </article>
 
             <article class="game-row" data-game-id="sandooq">
@@ -1316,9 +669,8 @@
                 <h3 class="game-name">لعبة صندوق المسابقات</h3>
                 <p class="game-meta">+2 لاعبين · مسابقات متنوعة</p>
               </div>
-              <a class="game-action" data-hook="game-button" data-buy-label="شراء" data-play-label="العب" href="https://sandooq-m.com/bwdZAqe" target="_blank" rel="noopener">شراء</a>
+              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com/bwdZAqe" target="_blank" rel="noopener">شراء</a>
             </article>
-            <div class="all-owned-notice" id="allOwnedNotice" hidden>كل الألعاب الموجودة في المتجر أصبحت ضمن هذا الرقم حاليًا، ولا توجد ألعاب إضافية تحتاج شراء الآن.</div>
           </div>
         </section>
 
@@ -1356,6 +708,25 @@
   </nav>
 
   <script>
+    const API_BASE = 'https://sandooq-games-api.sandooq-m.workers.dev';
+    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const TOKEN_KEY = 'sandooq_auth_token_v1';
+    const DEVICE_KEY = 'sandooq_device_token_v1';
+    const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
+    const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
+    const LAST_SYNC_KEY = 'sandooq_last_sync_v1';
+
+    const GAME_NAMES = {
+      bundle:'بكج ألعاب صندوق المسابقات',
+      horof:'سباق الحروف',
+      'horof-edu':'سباق الحروف التعليمية',
+      'bdon-kalam':'بدون كلام',
+      'bra-alsalfah':'برا السالفة',
+      'family-feud':'فاميلي فيود',
+      sandooq:'صندوق المسابقات'
+    };
+
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
@@ -1411,9 +782,6 @@
     const statusMessage = document.getElementById('statusMessage');
     const emptyState = document.getElementById('emptyState');
     const loginStatusButton = document.getElementById('loginStatusButton');
-
-    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
-    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const lookupResultPanel = document.getElementById('lookupResultPanel');
     const resultTitle = document.getElementById('resultTitle');
     const resultPhonePill = document.getElementById('resultPhonePill');
@@ -1422,11 +790,6 @@
     const availableGamesTitle = document.getElementById('availableGamesTitle');
     const availableGamesLead = document.getElementById('availableGamesLead');
     const allOwnedNotice = document.getElementById('allOwnedNotice');
-
-    // واجهة مؤقتة للعرض فقط إلى أن يتم ربطها لاحقًا بواجهة Cloudflare API.
-    // عند الربط الحقيقي سيتم استبدال هذه القائمة بالألعاب الراجعة من النظام.
-    const DEMO_OWNED_GAME_IDS = ['horof', 'horof-edu', 'bdon-kalam', 'bra-alsalfah', 'family-feud', 'sandooq'];
-
     const legacyToggle = document.getElementById('legacyToggle');
     const legacyCodeBox = document.getElementById('legacyCodeBox');
     const legacyCodeInput = document.getElementById('legacyCodeInput');
@@ -1434,14 +797,97 @@
     const legacyCodeMessage = document.getElementById('legacyCodeMessage');
 
     const messages = {
-      found: 'تم العثور على ألعابك.',
+      found: 'تم العثور على ألعابك وربطها بحسابك.',
       empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.',
       invalidPhone: 'أدخل رقم جوال صحيح يبدأ بـ 05.',
-      loading: 'جاري التحقق من الرقم…'
+      loading: 'جاري التحقق من الرقم…',
+      network: 'تعذر الاتصال بالخدمة. حاول مرة أخرى.'
     };
+
+    function getStoredAccountValue(key) {
+      try { return String(localStorage.getItem(key) || '').trim(); } catch (e) { return ''; }
+    }
+
+    function setStoredAccountValue(key, value) {
+      try { localStorage.setItem(key, String(value || '')); } catch (e) {}
+    }
+
+    function nowText() {
+      try {
+        return new Date().toLocaleString('ar-SA', { hour12:true });
+      } catch (e) {
+        return new Date().toISOString();
+      }
+    }
 
     function isValidSaudiPhone(value) {
       return /^05\d{8}$/.test(String(value || '').trim());
+    }
+
+    function cleanName(value) {
+      return String(value || '').trim().replace(/\s+/g, ' ').slice(0, 40);
+    }
+
+    function formatAccountName(name) {
+      const clean = cleanName(name);
+      if (!clean) return '';
+      return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
+    }
+
+    function gameLabel(id) {
+      return GAME_NAMES[id] || String(id || 'لعبة');
+    }
+
+    function getDeviceToken() {
+      let token = getStoredAccountValue(DEVICE_KEY);
+      if (token) return token;
+
+      try {
+        const bytes = new Uint8Array(16);
+        crypto.getRandomValues(bytes);
+        token = Array.from(bytes).map(byte => byte.toString(16).padStart(2, '0')).join('');
+      } catch (e) {
+        token = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      }
+
+      setStoredAccountValue(DEVICE_KEY, token);
+      return token;
+    }
+
+    function savePhoneToAccount(phone) {
+      setStoredAccountValue(ACCOUNT_PHONE_KEY, String(phone || '').trim());
+      renderLoginStatusButton();
+    }
+
+    function saveLinkedGames(games) {
+      const safeGames = Array.isArray(games) ? games : [];
+      const ids = safeGames.map(game => String(game.id || game.slug || '')).filter(Boolean);
+      setStoredAccountValue(LINKED_GAMES_KEY, JSON.stringify(ids));
+      setStoredAccountValue(LINKED_GAMES_DETAILS_KEY, JSON.stringify(safeGames));
+      setStoredAccountValue(LAST_SYNC_KEY, nowText());
+    }
+
+    function readLinkedGameDetails() {
+      try {
+        const parsed = JSON.parse(getStoredAccountValue(LINKED_GAMES_DETAILS_KEY) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderLoginStatusButton() {
+      if (!loginStatusButton) return;
+      const phone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
+      const name = formatAccountName(getStoredAccountValue(ACCOUNT_NAME_KEY));
+
+      if (name) {
+        loginStatusButton.textContent = `مرحبًا ${name}`;
+      } else if (phone) {
+        loginStatusButton.textContent = 'حسابي';
+      } else {
+        loginStatusButton.textContent = 'تسجيل الدخول';
+      }
     }
 
     function resetMainMessages() {
@@ -1462,88 +908,116 @@
       statusMessage.textContent = text;
     }
 
+    function showEmptyState(text) {
+      if (!emptyState) return;
+      emptyState.textContent = text || messages.empty;
+      emptyState.classList.add('is-visible');
+    }
+
     function showCodeStatus(type, text) {
       if (!legacyCodeMessage) return;
       legacyCodeMessage.className = `status-message ${type}`;
       legacyCodeMessage.textContent = text;
     }
 
-    function getStoredAccountValue(key) {
-      try { return String(localStorage.getItem(key) || '').trim(); } catch (e) { return ''; }
+    function setLookupLoading(isLoading, text) {
+      if (!button) return;
+      button.classList.toggle('is-loading', !!isLoading);
+      button.disabled = !!isLoading;
+      if (label) label.textContent = isLoading ? (text || messages.loading) : 'التحقق من الرقم';
     }
 
-    function formatAccountName(name) {
-      const clean = String(name || '').replace(/\s+/g, ' ').trim();
-      if (!clean) return '';
-      return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
+    function setSyncLoading(isLoading) {
+      if (!syncAccountButton) return;
+      const syncLabel = syncAccountButton.querySelector('.sync-label');
+      syncAccountButton.classList.toggle('is-loading', !!isLoading);
+      syncAccountButton.disabled = !!isLoading;
+      if (syncLabel) syncLabel.textContent = isLoading ? 'جاري تحديث الألعاب...' : 'تحديث ربط الألعاب';
     }
 
-    function renderLoginStatusButton() {
-      if (!loginStatusButton) return;
-      const phone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
-      const name = formatAccountName(getStoredAccountValue(ACCOUNT_NAME_KEY));
-
-      if (name) {
-        loginStatusButton.textContent = `مرحبًا ${name}`;
-      } else if (phone) {
-        loginStatusButton.textContent = 'حسابي';
-      } else {
-        loginStatusButton.textContent = 'تسجيل الدخول';
-      }
-    }
-
-    function savePhoneToAccount(phone) {
-      try { localStorage.setItem(ACCOUNT_PHONE_KEY, String(phone || '').trim()); } catch (e) {}
-      renderLoginStatusButton();
-    }
-
-    function getGameNameFromRow(row) {
-      const name = row ? row.querySelector('.game-name') : null;
-      return name ? name.textContent.trim() : '';
-    }
-
-    function getOwnedRows() {
-      return Array.from(document.querySelectorAll('.game-row[data-game-id]'))
-        .filter(row => DEMO_OWNED_GAME_IDS.includes(row.dataset.gameId));
-    }
-
-    function renderOwnedPills() {
-      if (!ownedGamesPills) return;
-      ownedGamesPills.innerHTML = '';
-      const rows = getOwnedRows();
-      rows.forEach(row => {
-        const pill = document.createElement('span');
-        pill.className = 'owned-pill';
-        pill.textContent = getGameNameFromRow(row);
-        ownedGamesPills.appendChild(pill);
+    async function api(path, options = {}) {
+      const response = await fetch(API_BASE + path, {
+        method: options.method || 'GET',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          ...(options.headers || {})
+        },
+        body: options.body ? JSON.stringify(options.body) : undefined
       });
+
+      let data = {};
+      try { data = await response.json(); } catch (e) {}
+
+      if (!response.ok || data.ok === false) {
+        const error = new Error(data.message || messages.network);
+        error.data = data;
+        error.status = response.status;
+        throw error;
+      }
+
+      return data;
+    }
+
+    async function loginSilently(phone, displayName) {
+      try {
+        const data = await api('/api/auth/login', {
+          method: 'POST',
+          body: {
+            phone,
+            display_name: displayName || getStoredAccountValue(ACCOUNT_NAME_KEY) || '',
+            device_token: getDeviceToken(),
+            is_temporary: false
+          }
+        });
+
+        if (data.token) setStoredAccountValue(TOKEN_KEY, data.token);
+        if (data.customer && data.customer.phone) setStoredAccountValue(ACCOUNT_PHONE_KEY, data.customer.phone);
+        if (data.customer && data.customer.display_name) setStoredAccountValue(ACCOUNT_NAME_KEY, data.customer.display_name);
+        if (Array.isArray(data.games)) saveLinkedGames(data.games);
+        renderLoginStatusButton();
+      } catch (e) {}
+    }
+
+    function getStaticGameRows() {
+      return Array.from(document.querySelectorAll('.game-row[data-game-id]'));
     }
 
     function formatFoundTitle(count) {
       if (count === 1) return 'وجدنا لعبة واحدة على هذا الرقم';
       if (count === 2) return 'وجدنا لعبتين على هذا الرقم';
+      if (count === 0) return 'لم نجد ألعابًا على هذا الرقم';
       return `وجدنا ${count} ألعاب على هذا الرقم`;
     }
 
-    function applyLookupResult(phone) {
-      const ownedIds = new Set(DEMO_OWNED_GAME_IDS);
-      const gameRows = Array.from(document.querySelectorAll('.game-row[data-game-id]'));
-      const ownedRows = gameRows.filter(row => ownedIds.has(row.dataset.gameId));
-      const ownedCount = ownedRows.length;
+    function renderOwnedPills(games) {
+      if (!ownedGamesPills) return;
+      ownedGamesPills.innerHTML = '';
 
-      savePhoneToAccount(phone);
+      const safeGames = Array.isArray(games) ? games : [];
+      if (!safeGames.length) {
+        const pill = document.createElement('span');
+        pill.className = 'owned-pill';
+        pill.textContent = 'لا توجد ألعاب مرتبطة بعد';
+        ownedGamesPills.appendChild(pill);
+        return;
+      }
 
-      if (lookupResultPanel) lookupResultPanel.hidden = false;
-      if (resultTitle) resultTitle.textContent = ownedCount ? formatFoundTitle(ownedCount) : 'لم نجد ألعابًا على هذا الرقم';
-      if (resultPhonePill) resultPhonePill.textContent = phone;
-      renderOwnedPills();
+      safeGames.forEach(game => {
+        const pill = document.createElement('span');
+        pill.className = 'owned-pill';
+        pill.textContent = game.name || gameLabel(game.id || game.slug);
+        ownedGamesPills.appendChild(pill);
+      });
+    }
 
-      if (availableGamesTitle) availableGamesTitle.textContent = 'الألعاب التي ما زالت متاحة للشراء';
-      if (availableGamesLead) availableGamesLead.textContent = 'استبعدنا لك الألعاب التي ظهرت على الرقم الحالي حتى يبقى المتجر واضحًا لك وينقصك فقط.';
-
+    function updateAvailableGames(ownedGames) {
+      const ownedIds = new Set((ownedGames || []).map(game => String(game.id || game.slug || '')).filter(Boolean));
+      const rows = getStaticGameRows();
       let visibleUnowned = 0;
-      gameRows.forEach(row => {
+
+      rows.forEach(row => {
         const id = row.dataset.gameId;
+
         if (id === 'bundle') {
           row.hidden = false;
           return;
@@ -1554,40 +1028,82 @@
           row.classList.add('is-owned');
         } else {
           row.hidden = false;
+          row.classList.remove('is-owned');
           visibleUnowned += 1;
         }
       });
 
+      if (availableGamesTitle) availableGamesTitle.textContent = ownedIds.size ? 'الألعاب التي ما زالت متاحة للشراء' : 'الألعاب المتوفرة للشراء';
+      if (availableGamesLead) {
+        availableGamesLead.textContent = ownedIds.size
+          ? 'استبعدنا لك الألعاب التي ظهرت على الرقم الحالي حتى يبقى المتجر واضحًا لك وينقصك فقط.'
+          : 'هذه هي الألعاب المتاحة الآن في متجر صندوق المسابقات، ويمكنك شراء ما يناسبك والعودة لتفعيله من هنا.';
+      }
+
       if (allOwnedNotice) allOwnedNotice.hidden = visibleUnowned > 0;
     }
 
-    if (syncAccountButton) {
-      const syncLabel = syncAccountButton.querySelector('.sync-label');
-      const syncDefaultLabel = syncLabel ? syncLabel.textContent : 'تحديث ربط الألعاب';
+    function applyLookupData(data, phone, options = {}) {
+      const games = Array.isArray(data.games) ? data.games : [];
+      const ownedCount = Number(data.owned_count ?? games.length ?? 0);
+      const resolvedPhone = data.phone || phone;
 
-      syncAccountButton.addEventListener('click', () => {
+      savePhoneToAccount(resolvedPhone);
+      if (data.customer && data.customer.display_name) setStoredAccountValue(ACCOUNT_NAME_KEY, data.customer.display_name);
+      saveLinkedGames(games);
+      renderLoginStatusButton();
+
+      if (lookupResultPanel) lookupResultPanel.hidden = ownedCount === 0;
+      if (resultTitle) resultTitle.textContent = formatFoundTitle(ownedCount);
+      if (resultPhonePill) resultPhonePill.textContent = resolvedPhone;
+      renderOwnedPills(games);
+      updateAvailableGames(games);
+
+      if (ownedCount > 0) {
+        showMainStatus('success', options.successMessage || data.message || messages.found);
+      } else {
+        if (lookupResultPanel) lookupResultPanel.hidden = true;
+        showEmptyState(data.message || messages.empty);
+      }
+
+      if (data.customer_exists || ownedCount > 0 || data.customer) {
+        loginSilently(resolvedPhone, data.customer && data.customer.display_name ? data.customer.display_name : '');
+      }
+    }
+
+    async function lookupPurchases(phone, mode = 'lookup') {
+      const endpoint = mode === 'sync' ? '/api/purchases/sync' : '/api/purchases/lookup';
+      const data = await api(endpoint, {
+        method: 'POST',
+        body: { phone }
+      });
+      applyLookupData(data, phone, {
+        successMessage: mode === 'sync'
+          ? 'تم تحديث ربط الألعاب وإضافة أي مشتريات ظهرت على الرقم.'
+          : undefined
+      });
+      return data;
+    }
+
+    if (syncAccountButton) {
+      syncAccountButton.addEventListener('click', async () => {
         const phone = phoneInput ? phoneInput.value.trim() : '';
+
+        resetMainMessages();
 
         if (!isValidSaudiPhone(phone)) {
           showMainStatus('error', messages.invalidPhone);
           return;
         }
 
-        resetMainMessages();
-        syncAccountButton.classList.add('is-loading');
-        syncAccountButton.setAttribute('disabled', 'disabled');
-        if (syncLabel) syncLabel.textContent = 'جاري تحديث الألعاب...';
-
-        // واجهة مؤقتة الآن: تعيد البحث وتحدّث المكتبة من نفس بيانات العرض.
-        // عند ربط Cloudflare لاحقًا، هذا المكان هو الذي يستدعي API الحقيقي.
-        window.setTimeout(() => {
-          savePhoneToAccount(phone);
-          applyLookupResult(phone);
-          showMainStatus('success', 'تم تحديث ربط الألعاب وإضافة أي مشتريات ظهرت على الرقم.');
-          syncAccountButton.classList.remove('is-loading');
-          syncAccountButton.removeAttribute('disabled');
-          if (syncLabel) syncLabel.textContent = syncDefaultLabel;
-        }, 900);
+        try {
+          setSyncLoading(true);
+          await lookupPurchases(phone, 'sync');
+        } catch (error) {
+          showMainStatus('error', error.message || messages.network);
+        } finally {
+          setSyncLoading(false);
+        }
       });
     }
 
@@ -1598,52 +1114,110 @@
     }
 
     if (legacyCodeButton) {
-      legacyCodeButton.addEventListener('click', () => {
-        const phone = phoneInput ? phoneInput.value : '';
+      legacyCodeButton.addEventListener('click', async () => {
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        const code = legacyCodeInput ? legacyCodeInput.value.trim() : '';
 
         if (!isValidSaudiPhone(phone)) {
           showCodeStatus('error', legacyCodeBox.dataset.missingPhoneMessage || 'اكتب رقم الجوال أولًا، ثم أدخل كود التفعيل السابق.');
           return;
         }
 
-        const code = legacyCodeInput ? legacyCodeInput.value.trim() : '';
-
         if (!code) {
           showCodeStatus('error', legacyCodeBox.dataset.invalidMessage || 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
           return;
         }
 
-        showCodeStatus('error', legacyCodeBox.dataset.invalidMessage || 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
+        legacyCodeButton.disabled = true;
+        legacyCodeButton.style.cursor = 'wait';
+        legacyCodeButton.textContent = 'جاري ربط الكود...';
+
+        try {
+          const data = await api('/api/legacy/link', {
+            method: 'POST',
+            body: {
+              phone,
+              code,
+              display_name: getStoredAccountValue(ACCOUNT_NAME_KEY) || ''
+            }
+          });
+
+          savePhoneToAccount(phone);
+          if (Array.isArray(data.games)) saveLinkedGames(data.games);
+          if (data.customer && data.customer.display_name) setStoredAccountValue(ACCOUNT_NAME_KEY, data.customer.display_name);
+          renderLoginStatusButton();
+          applyLookupData({
+            ok: true,
+            phone,
+            customer_exists: true,
+            customer: data.customer,
+            owned_count: Array.isArray(data.games) ? data.games.length : 0,
+            games: data.games || [],
+            message: data.message || legacyCodeBox.dataset.successMessage
+          }, phone, { successMessage: data.message || legacyCodeBox.dataset.successMessage });
+
+          showCodeStatus('success', data.message || legacyCodeBox.dataset.successMessage || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.');
+          if (legacyCodeInput) legacyCodeInput.value = '';
+          loginSilently(phone, data.customer && data.customer.display_name ? data.customer.display_name : '');
+        } catch (error) {
+          const err = error.data && error.data.error ? error.data.error : '';
+          if (err === 'CODE_ALREADY_USED') {
+            showCodeStatus('error', legacyCodeBox.dataset.usedMessage || error.message);
+          } else if (err === 'INVALID_CODE') {
+            showCodeStatus('error', legacyCodeBox.dataset.invalidMessage || error.message);
+          } else {
+            showCodeStatus('error', error.message || messages.network);
+          }
+        } finally {
+          legacyCodeButton.disabled = false;
+          legacyCodeButton.style.cursor = 'pointer';
+          legacyCodeButton.textContent = 'ربط الكود برقم جوالي';
+        }
       });
     }
 
     renderLoginStatusButton();
 
+    if (phoneInput) {
+      const storedPhone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
+      if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
+
+      const details = readLinkedGameDetails();
+      if (storedPhone && details.length) {
+        applyLookupData({
+          ok: true,
+          phone: storedPhone,
+          customer_exists: true,
+          owned_count: details.length,
+          games: details,
+          message: 'هذه الألعاب محفوظة من آخر تحديث.'
+        }, storedPhone, { successMessage: 'هذه الألعاب محفوظة من آخر تحديث.' });
+      }
+    }
+
     if (form && button) {
-      form.addEventListener('submit', event => {
+      form.addEventListener('submit', async event => {
         event.preventDefault();
         resetMainMessages();
 
-        if (!isValidSaudiPhone(phoneInput ? phoneInput.value : '')) {
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+
+        if (!isValidSaudiPhone(phone)) {
           showMainStatus('error', messages.invalidPhone);
           return;
         }
 
-        button.classList.add('is-loading');
-        button.setAttribute('disabled', 'disabled');
-        if (label) label.textContent = messages.loading;
-
-        window.setTimeout(() => {
-          button.classList.remove('is-loading');
-          button.removeAttribute('disabled');
-          if (label) label.textContent = 'التحقق من الرقم';
-
-          const phone = phoneInput ? phoneInput.value.trim() : '';
-          applyLookupResult(phone);
-          showMainStatus('success', messages.found);
-        }, 900);
+        try {
+          setLookupLoading(true, messages.loading);
+          await lookupPurchases(phone, 'lookup');
+        } catch (error) {
+          showMainStatus('error', error.message || messages.network);
+        } finally {
+          setLookupLoading(false);
+        }
       });
     }
   </script>
+
 </body>
 </html>
