@@ -711,6 +711,7 @@
     const API_BASE = 'https://sandooq-games-api.sandooq-m.workers.dev';
     const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
     const TOKEN_KEY = 'sandooq_auth_token_v1';
     const DEVICE_KEY = 'sandooq_device_token_v1';
     const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
@@ -812,6 +813,14 @@
       try { localStorage.setItem(key, String(value || '')); } catch (e) {}
     }
 
+    function isAccountNameConfirmed() {
+      return getStoredAccountValue(ACCOUNT_NAME_CONFIRMED_KEY) === '1';
+    }
+
+    function getConfirmedAccountName() {
+      return isAccountNameConfirmed() ? getStoredAccountValue(ACCOUNT_NAME_KEY) : '';
+    }
+
     function nowText() {
       try {
         return new Date().toLocaleString('ar-SA', { hour12:true });
@@ -879,12 +888,12 @@
     function renderLoginStatusButton() {
       if (!loginStatusButton) return;
       const phone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
-      const name = formatAccountName(getStoredAccountValue(ACCOUNT_NAME_KEY));
+      const name = formatAccountName(getConfirmedAccountName());
 
       if (name) {
         loginStatusButton.textContent = `مرحبًا ${name}`;
       } else if (phone) {
-        loginStatusButton.textContent = 'حسابي';
+        loginStatusButton.textContent = 'تم الدخول';
       } else {
         loginStatusButton.textContent = 'تسجيل الدخول';
       }
@@ -964,7 +973,7 @@
           method: 'POST',
           body: {
             phone,
-            display_name: displayName || getStoredAccountValue(ACCOUNT_NAME_KEY) || '',
+            display_name: displayName || getConfirmedAccountName() || '',
             device_token: getDeviceToken(),
             is_temporary: false
           }
@@ -972,7 +981,6 @@
 
         if (data.token) setStoredAccountValue(TOKEN_KEY, data.token);
         if (data.customer && data.customer.phone) setStoredAccountValue(ACCOUNT_PHONE_KEY, data.customer.phone);
-        if (data.customer && data.customer.display_name) setStoredAccountValue(ACCOUNT_NAME_KEY, data.customer.display_name);
         if (Array.isArray(data.games)) saveLinkedGames(data.games);
         renderLoginStatusButton();
       } catch (e) {}
@@ -1049,7 +1057,6 @@
       const resolvedPhone = data.phone || phone;
 
       savePhoneToAccount(resolvedPhone);
-      if (data.customer && data.customer.display_name) setStoredAccountValue(ACCOUNT_NAME_KEY, data.customer.display_name);
       saveLinkedGames(games);
       renderLoginStatusButton();
 
@@ -1067,7 +1074,7 @@
       }
 
       if (data.customer_exists || ownedCount > 0 || data.customer) {
-        loginSilently(resolvedPhone, data.customer && data.customer.display_name ? data.customer.display_name : '');
+        loginSilently(resolvedPhone, getConfirmedAccountName());
       }
     }
 
@@ -1138,13 +1145,12 @@
             body: {
               phone,
               code,
-              display_name: getStoredAccountValue(ACCOUNT_NAME_KEY) || ''
+              display_name: getConfirmedAccountName() || ''
             }
           });
 
           savePhoneToAccount(phone);
           if (Array.isArray(data.games)) saveLinkedGames(data.games);
-          if (data.customer && data.customer.display_name) setStoredAccountValue(ACCOUNT_NAME_KEY, data.customer.display_name);
           renderLoginStatusButton();
           applyLookupData({
             ok: true,
@@ -1158,7 +1164,7 @@
 
           showCodeStatus('success', data.message || legacyCodeBox.dataset.successMessage || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.');
           if (legacyCodeInput) legacyCodeInput.value = '';
-          loginSilently(phone, data.customer && data.customer.display_name ? data.customer.display_name : '');
+          loginSilently(phone, getConfirmedAccountName());
         } catch (error) {
           const err = error.data && error.data.error ? error.data.error : '';
           if (err === 'CODE_ALREADY_USED') {
