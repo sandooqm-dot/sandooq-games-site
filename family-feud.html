@@ -676,6 +676,7 @@
   <script>
     const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
 
     function readLocalValue(key) {
       try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
@@ -686,10 +687,10 @@
       if (!loginChip) return;
 
       const phone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
-      const playerName = readLocalValue(ACCOUNT_NAME_KEY).trim();
+      const playerName = readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1' ? readLocalValue(ACCOUNT_NAME_KEY).trim() : '';
 
       if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
-      else if (phone) loginChip.textContent = 'حسابي';
+      else if (phone) loginChip.textContent = 'تم الدخول';
       else loginChip.textContent = 'تسجيل الدخول';
     }
 
