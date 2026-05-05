@@ -725,6 +725,7 @@
   <script>
     const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
     const OWNED_GAMES_KEY = 'sandooq_owned_games_v1';
     const CURRENT_GAME_ID = 'horof';
     const LEGACY_HOROF_KEYS = [
@@ -742,10 +743,10 @@
       const loginChip = document.getElementById('loginStatusButton') || document.querySelector('.login-chip');
       if (!loginChip) return;
       const phone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
-      const playerName = readLocalValue(ACCOUNT_NAME_KEY).trim();
+      const playerName = readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1' ? readLocalValue(ACCOUNT_NAME_KEY).trim() : '';
 
       if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
-      else if (phone) loginChip.textContent = 'حسابي';
+      else if (phone) loginChip.textContent = 'تم الدخول';
       else loginChip.textContent = 'تسجيل الدخول';
     }
 
