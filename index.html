@@ -2012,6 +2012,7 @@
     const API_BASE = 'https://sandooq-games-api.sandooq-m.workers.dev';
     const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
     const TOKEN_KEY = 'sandooq_auth_token_v1';
     const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
     const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
@@ -2056,14 +2057,22 @@
       return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
     }
 
+    function isAccountNameConfirmed() {
+      return readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1';
+    }
+
+    function getConfirmedAccountName() {
+      return isAccountNameConfirmed() ? readLocalValue(ACCOUNT_NAME_KEY) : '';
+    }
+
     function refreshLoginChip() {
       const loginChip = document.getElementById('loginStatusButton') || document.querySelector('.login-chip');
       if (!loginChip) return;
       const phone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
-      const playerName = formatAccountName(readLocalValue(ACCOUNT_NAME_KEY));
+      const playerName = formatAccountName(getConfirmedAccountName());
 
       if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
-      else if (phone) loginChip.textContent = 'حسابي';
+      else if (phone) loginChip.textContent = 'تم الدخول';
       else loginChip.textContent = 'تسجيل الدخول';
     }
 
@@ -2156,7 +2165,6 @@
         });
 
         if (data.customer && data.customer.phone) writeLocalValue(ACCOUNT_PHONE_KEY, data.customer.phone);
-        if (data.customer && data.customer.display_name) writeLocalValue(ACCOUNT_NAME_KEY, data.customer.display_name);
         saveLinkedGames(data.games || []);
         return data;
       } catch (error) {
