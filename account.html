@@ -144,6 +144,7 @@
 const API_BASE='https://sandooq-games-api.sandooq-m.workers.dev';
 const PHONE_KEY='sandooq_account_phone_v1';
 const NAME_KEY='sandooq_player_name_v1';
+const NAME_CONFIRMED_KEY='sandooq_player_name_confirmed_v1';
 const TOKEN_KEY='sandooq_auth_token_v1';
 const DEVICE_KEY='sandooq_device_token_v1';
 const LINKED_GAMES_KEY='sandooq_linked_games_v1';
@@ -177,6 +178,8 @@ function valid(v){return /^05\d{8}$/.test(String(v||'').trim())}
 function get(k){try{return localStorage.getItem(k)||''}catch(e){return''}}
 function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function isNameConfirmed(){return get(NAME_CONFIRMED_KEY)==='1'}
+function getConfirmedName(){return isNameConfirmed()?get(NAME_KEY):''}
 function nowText(){return new Date().toLocaleString('ar-SA',{hour12:true})}
 function cleanName(v){return String(v||'').trim().replace(/\s+/g,' ').slice(0,40)}
 function gameLabel(id){return GAME_NAMES[id]||String(id||'لعبة')}
@@ -267,7 +270,6 @@ async function loginToApi(phone,displayName){
   });
   if(data.token) set(TOKEN_KEY,data.token);
   if(data.customer&&data.customer.phone) set(PHONE_KEY,data.customer.phone);
-  if(data.customer&&data.customer.display_name) set(NAME_KEY,data.customer.display_name);
   saveLinkedGames(data.games||[]);
   return data;
 }
@@ -278,7 +280,6 @@ async function fetchMyAccount(){
   try{
     const data=await api('/api/account/me',{headers:{Authorization:`Bearer ${token}`}});
     if(data.customer&&data.customer.phone) set(PHONE_KEY,data.customer.phone);
-    if(data.customer&&data.customer.display_name) set(NAME_KEY,data.customer.display_name);
     saveLinkedGames(data.games||[]);
     return data;
   }catch(e){
@@ -319,14 +320,14 @@ function renderLinkedGames(){
 }
 
 function render(){
-  const phone=get(PHONE_KEY),name=get(NAME_KEY),on=!!phone;
+  const phone=get(PHONE_KEY),name=getConfirmedName(),on=!!phone;
   loggedOut.hidden=on;
   loggedIn.hidden=!on;
   nameSec.hidden=!on;
   manageSec.hidden=!on;
   afterSec.hidden=!on;
   if(on){
-    welcome.textContent=name?`مرحبًا ${name}`:'مرحبًا بك';
+    welcome.textContent=name?`مرحبًا ${name}`:'تم الدخول';
     lead.textContent='حسابك جاهز. راجع رقمك وألعابك المرتبطة بسهولة.';
     phoneValue.textContent=phone;
     if(nameInput) nameInput.value=name;
@@ -347,7 +348,7 @@ form.addEventListener('submit',async e=>{
   if(!valid(p)){setMessage('error','أدخل رقم جوال صحيح يبدأ بـ 05.');return}
   try{
     setLoading(true,mode==='create'?'جاري إنشاء الحساب...':'جاري تسجيل الدخول...');
-    const existingName=get(NAME_KEY);
+    const existingName=getConfirmedName();
     const data=await loginToApi(p,existingName);
     setMessage('success',mode==='create'?'تم إنشاء الحساب بنجاح.':'تم تسجيل الدخول بنجاح.');
     render();
@@ -364,6 +365,7 @@ nameForm.addEventListener('submit',async e=>{
   const name=cleanName(nameInput.value);
   if(!name)return;
   set(NAME_KEY,name);
+  set(NAME_CONFIRMED_KEY,'1');
   render();
   const phone=get(PHONE_KEY);
   if(phone){
@@ -374,6 +376,7 @@ nameForm.addEventListener('submit',async e=>{
 logout.addEventListener('click',()=>{
   del(PHONE_KEY);
   del(NAME_KEY);
+  del(NAME_CONFIRMED_KEY);
   del(TOKEN_KEY);
   del(LINKED_GAMES_KEY);
   del(LINKED_GAMES_DETAILS_KEY);
