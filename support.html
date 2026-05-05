@@ -296,17 +296,17 @@ navItems.forEach(i=>i.addEventListener('click',()=>{navItems.forEach(n=>n.classL
 window.addEventListener('load',()=>{const a=document.querySelector('.navitem.active');move(a);setTimeout(()=>move(a),120)});
 window.addEventListener('resize',()=>move(document.querySelector('.navitem.active')));
 
-const ACCOUNT_PHONE_KEY='sandooq_account_phone_v1',ACCOUNT_NAME_KEY='sandooq_player_name_v1';
+const ACCOUNT_PHONE_KEY='sandooq_account_phone_v1',ACCOUNT_NAME_KEY='sandooq_player_name_v1',ACCOUNT_NAME_CONFIRMED_KEY='sandooq_player_name_confirmed_v1';
 function readLocalValue(key){try{return localStorage.getItem(key)||''}catch(e){return''}}
 function updateLoginStatusButton(){
   const btn=document.getElementById('loginStatusButton');
   if(!btn)return;
   const phone=readLocalValue(ACCOUNT_PHONE_KEY).trim();
-  const name=readLocalValue(ACCOUNT_NAME_KEY).trim();
+  const name=readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim()==='1'?readLocalValue(ACCOUNT_NAME_KEY).trim():'';
   if(name){
     btn.textContent=`مرحبًا ${name}`;
   }else if(phone){
-    btn.textContent='حسابي';
+    btn.textContent='تم الدخول';
   }else{
     btn.textContent='تسجيل الدخول';
   }
