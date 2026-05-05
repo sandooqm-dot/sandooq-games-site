@@ -141,18 +141,28 @@
 </nav>
 
 <script>
+const API_BASE='https://sandooq-games-api.sandooq-m.workers.dev';
+const PHONE_KEY='sandooq_account_phone_v1';
+const NAME_KEY='sandooq_player_name_v1';
+const TOKEN_KEY='sandooq_auth_token_v1';
+const DEVICE_KEY='sandooq_device_token_v1';
+const LINKED_GAMES_KEY='sandooq_linked_games_v1';
+const LINKED_GAMES_DETAILS_KEY='sandooq_linked_games_details_v1';
+const LAST_SYNC_KEY='sandooq_last_sync_v1';
+
 const nav=document.querySelector('.navin'),navItems=document.querySelectorAll('.navitem');
 function move(item){if(!nav||!item)return;const n=nav.getBoundingClientRect(),r=item.getBoundingClientRect();nav.style.setProperty('--x',`${r.left-n.left}px`);nav.style.setProperty('--y',`${r.top-n.top}px`);nav.style.setProperty('--w',`${r.width}px`);nav.style.setProperty('--h',`${r.height}px`)}
 navItems.forEach(i=>i.addEventListener('click',()=>{navItems.forEach(n=>n.classList.remove('active'));i.classList.add('active');move(i)}));
 window.addEventListener('load',()=>{const a=document.querySelector('.navitem.active');move(a);setTimeout(()=>move(a),120)});
 window.addEventListener('resize',()=>move(document.querySelector('.navitem.active')));
 
-const PHONE_KEY='sandooq_account_phone_v1',NAME_KEY='sandooq_player_name_v1',LINKED_GAMES_KEY='sandooq_linked_games_v1',LAST_SYNC_KEY='sandooq_last_sync_v1';
 const loggedOut=document.getElementById('loggedOutView'),loggedIn=document.getElementById('loggedInView'),nameSec=document.getElementById('playerNameSection'),manageSec=document.getElementById('manageSection'),afterSec=document.getElementById('afterPurchaseSection');
 const welcome=document.getElementById('welcomeChip'),lead=document.getElementById('heroLead'),phoneValue=document.getElementById('phoneValue'),nameInput=document.getElementById('playerNameInput');
 const gamesCountValue=document.getElementById('gamesCountValue'),lastSyncValue=document.getElementById('lastSyncValue'),linkedGamesList=document.getElementById('linkedGamesList');
 const loginBtn=document.getElementById('loginModeBtn'),createBtn=document.getElementById('createModeBtn'),form=document.getElementById('authForm'),phoneInput=document.getElementById('accountPhoneInput'),submitBtn=document.getElementById('authSubmitBtn'),label=submitBtn.querySelector('.button-label'),msg=document.getElementById('authMessage'),nameForm=document.getElementById('playerNameForm'),logout=document.getElementById('logoutButton');
 let mode='login';
+let isLoading=false;
+
 const GAME_NAMES={
   bundle:'بكج ألعاب صندوق المسابقات',
   horof:'سباق الحروف',
@@ -162,10 +172,29 @@ const GAME_NAMES={
   'family-feud':'فاميلي فيود',
   sandooq:'صندوق المسابقات'
 };
+
 function valid(v){return /^05\d{8}$/.test(String(v||'').trim())}
 function get(k){try{return localStorage.getItem(k)||''}catch(e){return''}}
 function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function nowText(){return new Date().toLocaleString('ar-SA',{hour12:true})}
+function cleanName(v){return String(v||'').trim().replace(/\s+/g,' ').slice(0,40)}
+function gameLabel(id){return GAME_NAMES[id]||String(id||'لعبة')}
+
+function getDeviceToken(){
+  let token=get(DEVICE_KEY);
+  if(token) return token;
+  try{
+    const bytes=new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    token=Array.from(bytes).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }catch(e){
+    token=String(Date.now())+'-'+Math.random().toString(16).slice(2);
+  }
+  set(DEVICE_KEY,token);
+  return token;
+}
+
 function readLinkedGames(){
   try{
     const raw=get(LINKED_GAMES_KEY);
@@ -176,32 +205,126 @@ function readLinkedGames(){
   }catch(e){}
   return [];
 }
-function gameLabel(id){return GAME_NAMES[id]||String(id||'لعبة')}
-function setMode(m){mode=m;loginBtn.classList.toggle('active',m==='login');createBtn.classList.toggle('active',m==='create');label.textContent=m==='create'?'إنشاء الحساب':'تسجيل الدخول';msg.className='msg';msg.textContent=''}
-function show(t,x){msg.className='msg '+t;msg.textContent=x}
+
+function readLinkedGameDetails(){
+  try{
+    const raw=get(LINKED_GAMES_DETAILS_KEY);
+    const parsed=JSON.parse(raw||'[]');
+    return Array.isArray(parsed)?parsed:[];
+  }catch(e){return []}
+}
+
+function saveLinkedGames(games){
+  const safeGames=Array.isArray(games)?games:[];
+  const ids=safeGames.map(game=>String(game.id||game.slug||'')).filter(Boolean);
+  set(LINKED_GAMES_KEY,JSON.stringify(ids));
+  set(LINKED_GAMES_DETAILS_KEY,JSON.stringify(safeGames));
+  set(LAST_SYNC_KEY,nowText());
+}
+
+function setMessage(type,text){
+  msg.className='msg';
+  msg.textContent='';
+  if(!type||!text)return;
+  msg.className='msg '+type;
+  msg.textContent=text;
+}
+
+function setLoading(on,text){
+  isLoading=!!on;
+  submitBtn.disabled=!!on;
+  submitBtn.style.opacity=on?'.72':'1';
+  submitBtn.style.cursor=on?'wait':'pointer';
+  label.textContent=on?(text||'جاري المعالجة...'):(mode==='create'?'إنشاء الحساب':'تسجيل الدخول');
+}
+
+async function api(path,options={}){
+  const response=await fetch(API_BASE+path,{
+    method:options.method||'GET',
+    headers:{'Content-Type':'application/json; charset=utf-8',...(options.headers||{})},
+    body:options.body?JSON.stringify(options.body):undefined
+  });
+  let data={};
+  try{data=await response.json()}catch(e){}
+  if(!response.ok||data.ok===false){
+    const error=new Error(data.message||'تعذر الاتصال بالخدمة. حاول مرة أخرى.');
+    error.data=data;
+    error.status=response.status;
+    throw error;
+  }
+  return data;
+}
+
+async function loginToApi(phone,displayName){
+  const data=await api('/api/auth/login',{
+    method:'POST',
+    body:{
+      phone,
+      display_name:displayName||'',
+      device_token:getDeviceToken(),
+      is_temporary:false
+    }
+  });
+  if(data.token) set(TOKEN_KEY,data.token);
+  if(data.customer&&data.customer.phone) set(PHONE_KEY,data.customer.phone);
+  if(data.customer&&data.customer.display_name) set(NAME_KEY,data.customer.display_name);
+  saveLinkedGames(data.games||[]);
+  return data;
+}
+
+async function fetchMyAccount(){
+  const token=get(TOKEN_KEY);
+  if(!token)return null;
+  try{
+    const data=await api('/api/account/me',{headers:{Authorization:`Bearer ${token}`}});
+    if(data.customer&&data.customer.phone) set(PHONE_KEY,data.customer.phone);
+    if(data.customer&&data.customer.display_name) set(NAME_KEY,data.customer.display_name);
+    saveLinkedGames(data.games||[]);
+    return data;
+  }catch(e){
+    return null;
+  }
+}
+
+function setMode(m){
+  mode=m;
+  loginBtn.classList.toggle('active',m==='login');
+  createBtn.classList.toggle('active',m==='create');
+  label.textContent=m==='create'?'إنشاء الحساب':'تسجيل الدخول';
+  setMessage('','');
+}
+
 function renderLinkedGames(){
-  const games=readLinkedGames();
-  if(gamesCountValue) gamesCountValue.textContent=games.length?`${games.length} لعبة`:'0 لعبة';
+  const ids=readLinkedGames();
+  const details=readLinkedGameDetails();
+  const detailMap=new Map(details.map(game=>[String(game.id||game.slug||''),game]));
+  if(gamesCountValue) gamesCountValue.textContent=ids.length?`${ids.length} لعبة`:'0 لعبة';
   if(lastSyncValue) lastSyncValue.textContent=get(LAST_SYNC_KEY)||'لم يتم الربط بعد';
-  if(!linkedGamesList) return;
+  if(!linkedGamesList)return;
   linkedGamesList.innerHTML='';
-  if(!games.length){
+  if(!ids.length){
     const span=document.createElement('span');
     span.className='pill';
     span.textContent='لا توجد ألعاب مرتبطة بعد';
     linkedGamesList.appendChild(span);
     return;
   }
-  games.forEach(id=>{
+  ids.forEach(id=>{
+    const game=detailMap.get(id);
     const span=document.createElement('span');
     span.className='pill';
-    span.textContent=gameLabel(id);
+    span.textContent=(game&&game.name)||gameLabel(id);
     linkedGamesList.appendChild(span);
   });
 }
+
 function render(){
   const phone=get(PHONE_KEY),name=get(NAME_KEY),on=!!phone;
-  loggedOut.hidden=on;loggedIn.hidden=!on;nameSec.hidden=!on;manageSec.hidden=!on;afterSec.hidden=!on;
+  loggedOut.hidden=on;
+  loggedIn.hidden=!on;
+  nameSec.hidden=!on;
+  manageSec.hidden=!on;
+  afterSec.hidden=!on;
   if(on){
     welcome.textContent=name?`مرحبًا ${name}`:'مرحبًا بك';
     lead.textContent='حسابك جاهز. راجع رقمك وألعابك المرتبطة بسهولة.';
@@ -213,20 +336,64 @@ function render(){
     lead.textContent='سجّل دخولك برقم الجوال لعرض ألعابك المرتبطة بسهولة.';
   }
 }
+
 loginBtn.addEventListener('click',()=>setMode('login'));
 createBtn.addEventListener('click',()=>setMode('create'));
-form.addEventListener('submit',e=>{
+
+form.addEventListener('submit',async e=>{
   e.preventDefault();
+  if(isLoading)return;
   const p=phoneInput.value.trim();
-  if(!valid(p)){show('error','أدخل رقم جوال صحيح يبدأ بـ 05.');return}
-  set(PHONE_KEY,p);
-  show('success',mode==='create'?'تم إنشاء الحساب بنجاح.':'تم تسجيل الدخول بنجاح.');
+  if(!valid(p)){setMessage('error','أدخل رقم جوال صحيح يبدأ بـ 05.');return}
+  try{
+    setLoading(true,mode==='create'?'جاري إنشاء الحساب...':'جاري تسجيل الدخول...');
+    const existingName=get(NAME_KEY);
+    const data=await loginToApi(p,existingName);
+    setMessage('success',mode==='create'?'تم إنشاء الحساب بنجاح.':'تم تسجيل الدخول بنجاح.');
+    render();
+    scrollTo({top:0,behavior:'smooth'});
+  }catch(error){
+    setMessage('error',error.message||'تعذر تسجيل الدخول. حاول مرة أخرى.');
+  }finally{
+    setLoading(false);
+  }
+});
+
+nameForm.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const name=cleanName(nameInput.value);
+  if(!name)return;
+  set(NAME_KEY,name);
+  render();
+  const phone=get(PHONE_KEY);
+  if(phone){
+    try{await loginToApi(phone,name);render()}catch(e){}
+  }
+});
+
+logout.addEventListener('click',()=>{
+  del(PHONE_KEY);
+  del(NAME_KEY);
+  del(TOKEN_KEY);
+  del(LINKED_GAMES_KEY);
+  del(LINKED_GAMES_DETAILS_KEY);
+  del(LAST_SYNC_KEY);
+  phoneInput.value='';
+  setMode('login');
   render();
   scrollTo({top:0,behavior:'smooth'});
 });
-nameForm.addEventListener('submit',e=>{e.preventDefault();const n=nameInput.value.trim();if(n)set(NAME_KEY,n);render()});
-logout.addEventListener('click',()=>{del(PHONE_KEY);del(NAME_KEY);phoneInput.value='';setMode('login');render();scrollTo({top:0,behavior:'smooth'})});
-setMode('login');render();
+
+setMode('login');
+render();
+
+(async()=>{
+  const token=get(TOKEN_KEY);
+  if(token){
+    await fetchMyAccount();
+    render();
+  }
+})();
 </script>
 </body>
 </html>
