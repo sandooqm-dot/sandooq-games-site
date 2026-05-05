@@ -494,6 +494,40 @@
         scroll-behavior:auto !important;
       }
     }
+
+
+    /* ✅ حالة زر الشراء/اللعب + أيقونة تشغيل داخل دائرة */
+    .js-game-cta .cta-icon{
+      width:clamp(24px, 2vw, 30px);
+      height:clamp(24px, 2vw, 30px);
+      border-radius:50%;
+      display:none;
+      place-items:center;
+      background:rgba(255,255,255,.96);
+      color:var(--green);
+      border:2px solid rgba(0,0,0,.18);
+      box-shadow:0 2px 0 rgba(0,0,0,.10);
+      flex:0 0 auto;
+    }
+
+    .js-game-cta .cta-icon svg{
+      width:66%;
+      height:66%;
+      display:block;
+      fill:currentColor;
+      stroke:none;
+      transform:translateX(-1px);
+    }
+
+    .js-game-cta[data-state="play"]{
+      background:var(--green);
+      color:#fff;
+    }
+
+    .js-game-cta[data-state="play"] .cta-icon{
+      display:grid;
+    }
+
   </style>
 </head>
 <body>
@@ -501,7 +535,7 @@
     <header class="page-top">
       <div class="top-row page-game-top">
         <a class="chip back-chip" href="index.html">العودة للألعاب</a>
-        <a class="chip login-chip" href="account.html">تسجيل الدخول</a>
+        <a class="chip login-chip" id="loginStatusButton" href="account.html">تسجيل الدخول</a>
       </div>
 
       <div class="hero-inner hero-clean">
@@ -518,8 +552,11 @@
           <h1 class="page-title">لعبة سباق الحروف التعليمية</h1>
           <p class="page-lead">لعبة تعليمية تفاعلية قابلة للتعديل<br>أضف أسئلتك واجعل الحصة حماسية</p>
 
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://sandooq-m.com/rRDZGeZ">شراء اللعبة</a>
+          <div class="hero-actions" data-game-id="horof-edu">
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/rRDZGeZ" data-game-id="horof-edu" data-state="buy" data-buy-url="https://sandooq-m.com/rRDZGeZ" data-play-url="https://horof.sandooq-games.com" data-buy-label="شراء اللعبة" data-play-label="العب">
+              <span class="cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></span>
+              <span class="cta-label">شراء اللعبة</span>
+            </a>
             <a class="btn btn-secondary" href="#video">شرح اللعبة</a>
           </div>
         </div>
@@ -644,6 +681,71 @@
   </nav>
 
   <script>
+    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+
+    function readLocalValue(key) {
+      try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
+    }
+
+    function refreshLoginChip() {
+      const loginChip = document.getElementById('loginStatusButton') || document.querySelector('.login-chip');
+      if (!loginChip) return;
+      const phone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
+      const playerName = readLocalValue(ACCOUNT_NAME_KEY).trim();
+
+      if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
+      else if (phone) loginChip.textContent = 'حسابي';
+      else loginChip.textContent = 'تسجيل الدخول';
+    }
+
+    const GAME_PLAY_URLS = {
+      'horof-edu': 'https://horof.sandooq-games.com'
+    };
+
+    function readOwnedGames() {
+      const ids = new Set();
+      try {
+        const raw = localStorage.getItem('sandooq_owned_games_v1');
+        const parsed = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(parsed)) parsed.forEach(id => id && ids.add(String(id)));
+      } catch (e) {}
+      return ids;
+    }
+
+    function setCtaLabel(link, text) {
+      if (!link) return;
+      const label = link.querySelector('.cta-label');
+      if (label) label.textContent = text;
+      else link.textContent = text;
+    }
+
+    function updateGameCtaState() {
+      const cta = document.querySelector('.js-game-cta[data-game-id="horof-edu"]');
+      if (!cta) return;
+      const ownedIds = readOwnedGames();
+      const isOwned = ownedIds.has('horof-edu');
+      const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
+      const playUrl = cta.dataset.playUrl || GAME_PLAY_URLS['horof-edu'] || '#';
+
+      if (isOwned) {
+        cta.dataset.state = 'play';
+        cta.classList.add('btn-play');
+        cta.href = playUrl;
+        setCtaLabel(cta, cta.dataset.playLabel || 'العب');
+      } else {
+        cta.dataset.state = 'buy';
+        cta.classList.remove('btn-play');
+        cta.href = buyUrl;
+        setCtaLabel(cta, cta.dataset.buyLabel || 'شراء اللعبة');
+      }
+    }
+
+    refreshLoginChip();
+    updateGameCtaState();
+    window.addEventListener('pageshow', () => { refreshLoginChip(); updateGameCtaState(); });
+    window.addEventListener('storage', () => { refreshLoginChip(); updateGameCtaState(); });
+
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
