@@ -1479,6 +1479,49 @@
       text-underline-offset:4px;
     }
 
+
+
+    /* حل جذري لتثبيت الشريط السفلي ومنع الطفو على iOS والجوال */
+    :root{
+      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      --visual-viewport-bottom:0px;
+    }
+
+    html,
+    body{
+      min-height:100% !important;
+      overflow-x:hidden !important;
+    }
+
+    .app{
+      min-height:100dvh !important;
+      overflow:visible !important;
+      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:var(--visual-viewport-bottom, 0px) !important;
+      width:100% !important;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
+      z-index:2147483000 !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      contain:layout paint style !important;
+      will-change:transform, bottom !important;
+      margin:0 !important;
+    }
+
+    .bottom-nav-inner{
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+    }
+
   </style>
 </head>
 
@@ -2014,6 +2057,7 @@
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
     const TOKEN_KEY = 'sandooq_auth_token_v1';
+    const DEVICE_KEY = 'sandooq_device_token_v1';
     const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
     const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
     const LAST_SYNC_KEY = 'sandooq_last_sync_v1';
@@ -2087,6 +2131,28 @@
       });
     }
 
+    function getOrCreateDeviceToken() {
+      let token = readLocalValue(DEVICE_KEY).trim();
+      if (token) return token;
+
+      try {
+        if (crypto.randomUUID) token = 'site_' + crypto.randomUUID();
+      } catch (e) {}
+
+      if (!token) {
+        try {
+          const bytes = new Uint8Array(16);
+          crypto.getRandomValues(bytes);
+          token = 'site_' + Array.from(bytes).map(byte => byte.toString(16).padStart(2, '0')).join('');
+        } catch (e) {
+          token = 'site_' + Date.now().toString(36) + Math.random().toString(36).slice(2);
+        }
+      }
+
+      writeLocalValue(DEVICE_KEY, token);
+      return token;
+    }
+
     function readLinkedGameIds() {
       const ids = new Set();
 
@@ -2141,7 +2207,8 @@
           'Content-Type': 'application/json; charset=utf-8',
           ...(options.headers || {})
         },
-        body: options.body ? JSON.stringify(options.body) : undefined
+        body: options.body ? JSON.stringify(options.body) : undefined,
+        cache: 'no-store'
       });
 
       let data = {};
@@ -2201,14 +2268,6 @@
       if (badge) badge.dataset.originalIcon = badge.innerHTML;
     }
 
-    function findDetailsButton(card) {
-      return Array.from(card.querySelectorAll('.game-btn')).find(link => {
-        const text = (link.textContent || '').trim();
-        const href = link.getAttribute('href') || '';
-        return text.includes('عرض') || /\.html(?:$|#|\?)/.test(href);
-      });
-    }
-
     function findAccessButton(card) {
       let accessButton = card.querySelector('.game-btn[data-access-button="1"]');
       if (accessButton) return accessButton;
@@ -2234,6 +2293,27 @@
       return GAME_PLAY_URLS[gameId] || GAME_DETAILS_URLS[gameId] || '#';
     }
 
+    function buildPlayUrlWithAccess(playUrl, gameId) {
+      if (!playUrl || playUrl === '#') return playUrl;
+
+      // فاميلي فيود فقط مفعّل الآن على الميدلوير الجديد.
+      if (gameId !== 'family-feud') return playUrl;
+
+      const token = readLocalValue(TOKEN_KEY).trim();
+      if (!token) return playUrl;
+
+      const deviceToken = getOrCreateDeviceToken();
+
+      try {
+        const url = new URL(playUrl, window.location.href);
+        url.searchParams.set('sg_token', token);
+        url.searchParams.set('sg_device', deviceToken);
+        return url.toString();
+      } catch (e) {
+        return playUrl;
+      }
+    }
+
     function resetAccessButton(link) {
       if (!link) return;
       prepareAccessButton(link);
@@ -2246,8 +2326,9 @@
     function activateAccessButton(link, card, gameId, detailsMap) {
       if (!link) return;
       prepareAccessButton(link);
+      const basePlayUrl = getPlayUrl(card, gameId, detailsMap);
       link.classList.add('play-action');
-      link.setAttribute('href', getPlayUrl(card, gameId, detailsMap));
+      link.setAttribute('href', buildPlayUrlWithAccess(basePlayUrl, gameId));
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
     }
@@ -2307,31 +2388,13 @@
       moveBottomNavIndicator(item);
     }
 
-    navItems.forEach(item => {
-      item.addEventListener('click', () => {
-        setActiveNavItem(item);
-      });
-    });
-
-    window.addEventListener('load', () => {
-      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
-      moveBottomNavIndicator(activeItem);
-      window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
-      scrollToReview(0, 'auto');
-    });
-
-    window.addEventListener('resize', () => {
-      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
-      scrollToReview(currentReview, 'auto');
-    });
+    navItems.forEach(item => item.addEventListener('click', () => setActiveNavItem(item)));
 
     document.querySelectorAll('.review-card').forEach(card => {
       const name = card.querySelector('.review-name');
       const text = card.querySelector('.review-text');
 
-      if (name && name.textContent.trim().length > 18) {
-        card.classList.add('name-long');
-      }
+      if (name && name.textContent.trim().length > 18) card.classList.add('name-long');
 
       if (text) {
         const length = text.textContent.trim().length;
@@ -2358,9 +2421,7 @@
 
     function restartReviewTimer() {
       if (reviewTimer) window.clearInterval(reviewTimer);
-      reviewTimer = window.setInterval(() => {
-        scrollToReview(currentReview + 1);
-      }, 4000);
+      reviewTimer = window.setInterval(() => scrollToReview(currentReview + 1), 4000);
     }
 
     function updateReviewFromScroll() {
@@ -2392,11 +2453,7 @@
         const diff = touchEndX - touchStartX;
 
         if (Math.abs(diff) > 40) {
-          if (diff < 0) {
-            scrollToReview(currentReview + 1);
-          } else {
-            scrollToReview(currentReview - 1);
-          }
+          scrollToReview(diff < 0 ? currentReview + 1 : currentReview - 1);
         } else {
           updateReviewFromScroll();
           scrollToReview(currentReview);
@@ -2407,35 +2464,87 @@
 
       reviewViewport.addEventListener('scroll', () => {
         if (reviewScrollDebounce) window.clearTimeout(reviewScrollDebounce);
-        reviewScrollDebounce = window.setTimeout(() => {
-          updateReviewFromScroll();
-        }, 120);
+        reviewScrollDebounce = window.setTimeout(updateReviewFromScroll, 120);
       }, { passive:true });
 
       restartReviewTimer();
     }
 
+    function getViewportBottomOffset() {
+      const vv = window.visualViewport;
+      if (!vv) return 0;
+
+      const layoutHeight = Math.max(
+        document.documentElement.clientHeight || 0,
+        window.innerHeight || 0
+      );
+
+      return Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
+    }
+
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
+      const navInner = document.querySelector('.bottom-nav-inner');
       if (!nav) return;
+
+      const bottomOffset = getViewportBottomOffset();
+      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
+
+      nav.style.position = 'fixed';
+      nav.style.left = '0px';
+      nav.style.right = '0px';
+      nav.style.top = 'auto';
+      nav.style.bottom = `${bottomOffset}px`;
+      nav.style.transform = 'translate3d(0,0,0)';
+      nav.style.webkitTransform = 'translate3d(0,0,0)';
+      nav.style.zIndex = '2147483000';
 
       const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
       if (navHeight > 0) {
-        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight + bottomOffset}px`);
+        const app = document.querySelector('.app');
+        if (app) app.style.paddingBottom = `${navHeight + bottomOffset + 26}px`;
       }
 
-      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
+      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
+      if (navInner && activeItem) moveBottomNavIndicator(activeItem);
+    }
+
+    function scheduleBottomNavStabilize(delay = 0) {
+      window.setTimeout(stabilizeBottomNav, delay);
+      window.requestAnimationFrame(stabilizeBottomNav);
+    }
+
+    window.addEventListener('load', () => {
+      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
+      moveBottomNavIndicator(activeItem);
+      window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
+      scrollToReview(0, 'auto');
+      scheduleBottomNavStabilize();
+      scheduleBottomNavStabilize(250);
+    });
+
+    window.addEventListener('resize', () => {
+      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+      scrollToReview(currentReview, 'auto');
+      scheduleBottomNavStabilize();
+    });
+
+    window.addEventListener('orientationchange', () => {
+      scheduleBottomNavStabilize(80);
+      scheduleBottomNavStabilize(240);
+      scheduleBottomNavStabilize(520);
+    }, { passive:true });
+
+    window.addEventListener('scroll', () => scheduleBottomNavStabilize(), { passive:true });
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', () => scheduleBottomNavStabilize(), { passive:true });
+      window.visualViewport.addEventListener('scroll', () => scheduleBottomNavStabilize(), { passive:true });
     }
 
     stabilizeBottomNav();
-    window.addEventListener('load', stabilizeBottomNav);
-    window.addEventListener('resize', stabilizeBottomNav);
-    window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
-      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
-    }
+    window.setInterval(stabilizeBottomNav, 900);
 
   </script>
 </body>
