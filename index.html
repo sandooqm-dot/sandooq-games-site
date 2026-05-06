@@ -1480,10 +1480,54 @@
     }
 
 
-    /* ضبط نهائي محافظ للشريط السفلي: ثابت بدون رفع مع الكيبورد وبدون تحريك الصفحة يمين/يسار */
+
+    /* حل جذري لتثبيت الشريط السفلي ومنع الطفو على iOS والجوال */
     :root{
       --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      --nav-keyboard-y:0px;
+      --visual-viewport-bottom:0px;
+    }
+
+    html,
+    body{
+      min-height:100% !important;
+      overflow-x:hidden !important;
+    }
+
+    .app{
+      min-height:100dvh !important;
+      overflow:visible !important;
+      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:var(--visual-viewport-bottom, 0px) !important;
+      width:100% !important;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
+      z-index:2147483000 !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      contain:layout paint style !important;
+      will-change:transform, bottom !important;
+      margin:0 !important;
+    }
+
+    .bottom-nav-inner{
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+    }
+
+
+
+    /* ضبط نهائي ثابت للشريط السفلي بدون تحريك الصفحة يمين/يسار */
+    :root{
+      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      --keyboard-offset:0px;
     }
 
     html,
@@ -1491,16 +1535,14 @@
       width:100% !important;
       max-width:100% !important;
       overflow-x:hidden !important;
-      background:var(--blue-soft) !important;
     }
 
     .app{
       width:100% !important;
       max-width:100% !important;
-      min-height:100dvh !important;
-      overflow:hidden !important;
+      overflow-x:hidden !important;
+      overflow-y:visible !important;
       padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
-      background:var(--blue-soft) !important;
     }
 
     .bottom-nav{
@@ -1510,28 +1552,24 @@
       top:auto !important;
       bottom:0 !important;
       width:100% !important;
-      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      z-index:9999 !important;
-      transform:translate3d(0,var(--nav-keyboard-y),0) !important;
-      -webkit-transform:translate3d(0,var(--nav-keyboard-y),0) !important;
+      height:var(--bottom-nav-space) !important;
+      padding:0 var(--page-pad) env(safe-area-inset-bottom) !important;
+      z-index:2147483000 !important;
+      transform:none !important;
+      -webkit-transform:none !important;
       backface-visibility:hidden !important;
       -webkit-backface-visibility:hidden !important;
-      contain:layout paint style !important;
+      contain:none !important;
       will-change:auto !important;
       margin:0 !important;
     }
 
-    .bottom-nav-inner{
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
+    body.keyboard-open .bottom-nav{
+      bottom:calc(var(--keyboard-offset, 0px) * -1) !important;
     }
 
-    .games-area,
-    .site-footer,
-    .bundles-area,
-    .hero{
-      max-width:100% !important;
-      overflow-x:hidden !important;
+    body.keyboard-open .app{
+      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
     }
 
   </style>
@@ -2099,20 +2137,12 @@
       'sandooq_horof_active_v1'
     ];
 
-    let privateModeDetected = false;
-    let privateModeChecked = false;
-    let privateModePromise = null;
-
     function readLocalValue(key) {
       try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
     }
 
     function writeLocalValue(key, value) {
       try { localStorage.setItem(key, String(value || '')); } catch (e) {}
-    }
-
-    function readSessionValue(key) {
-      try { return sessionStorage.getItem(key) || ''; } catch (e) { return ''; }
     }
 
     function formatAccountName(name) {
@@ -2136,7 +2166,7 @@
       const playerName = formatAccountName(getConfirmedAccountName());
 
       if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
-      else if (phone) loginChip.textContent = 'حسابي';
+      else if (phone) loginChip.textContent = 'تم الدخول';
       else loginChip.textContent = 'تسجيل الدخول';
     }
 
@@ -2172,6 +2202,94 @@
       writeLocalValue(DEVICE_KEY, token);
       return token;
     }
+
+    function hasSavedDeviceToken() {
+      return !!readLocalValue(DEVICE_KEY).trim();
+    }
+
+    let privateModePromise = null;
+    let privateModeDetected = false;
+    let privateModeReady = false;
+
+    function isSafariBrowser() {
+      const ua = String(navigator.userAgent || '');
+      return /Safari/i.test(ua) && !/CriOS|FxiOS|EdgiOS|Chrome|Chromium|Android/i.test(ua);
+    }
+
+    function storageProbeWorks() {
+      try {
+        const key = '__sandooq_storage_probe__';
+        localStorage.setItem(key, '1');
+        const ok = localStorage.getItem(key) === '1';
+        localStorage.removeItem(key);
+        return ok;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function indexedDbProbe() {
+      return new Promise(resolve => {
+        try {
+          if (!window.indexedDB) {
+            resolve(true);
+            return;
+          }
+
+          const dbName = '__sandooq_private_probe__' + Date.now();
+          const request = indexedDB.open(dbName, 1);
+          let done = false;
+          const finish = value => {
+            if (done) return;
+            done = true;
+            try { indexedDB.deleteDatabase(dbName); } catch (e) {}
+            resolve(value);
+          };
+
+          request.onerror = () => finish(true);
+          request.onblocked = () => finish(true);
+          request.onsuccess = () => {
+            try { request.result.close(); } catch (e) {}
+            finish(false);
+          };
+
+          window.setTimeout(() => finish(false), 900);
+        } catch (e) {
+          resolve(true);
+        }
+      });
+    }
+
+    async function detectPrivateMode() {
+      if (privateModePromise) return privateModePromise;
+
+      privateModePromise = (async () => {
+        let detected = false;
+
+        if (!storageProbeWorks()) detected = true;
+
+        try {
+          if (!detected && navigator.storage && navigator.storage.estimate) {
+            const estimate = await navigator.storage.estimate();
+            const quota = Number(estimate && estimate.quota ? estimate.quota : 0);
+            if (isSafariBrowser() && quota > 0 && quota < 150 * 1024 * 1024) {
+              detected = true;
+            }
+          }
+        } catch (e) {}
+
+        try {
+          if (!detected) detected = await indexedDbProbe();
+        } catch (e) {}
+
+        privateModeDetected = !!detected;
+        privateModeReady = true;
+        return privateModeDetected;
+      })();
+
+      return privateModePromise;
+    }
+
 
     function readLinkedGameIds() {
       const ids = new Set();
@@ -2313,78 +2431,10 @@
       return GAME_PLAY_URLS[gameId] || GAME_DETAILS_URLS[gameId] || '#';
     }
 
-    function hasExplicitTemporaryHint() {
-      return [
-        'sandooq_private_mode_v1',
-        'sandooq_temporary_session_v1',
-        'sandooq_is_temporary_v1',
-        'sandooq_site_temporary_v1'
-      ].some(key => {
-        const value = (readLocalValue(key) || readSessionValue(key)).trim().toLowerCase();
-        return value === '1' || value === 'true' || value === 'yes';
-      });
-    }
-
-    async function detectPrivateMode() {
-      if (privateModeChecked) return privateModeDetected;
-      if (privateModePromise) return privateModePromise;
-
-      privateModePromise = (async () => {
-        if (hasExplicitTemporaryHint()) {
-          privateModeDetected = true;
-          privateModeChecked = true;
-          return true;
-        }
-
-        let detected = false;
-        const ua = navigator.userAgent || '';
-        const isIOS = /iPad|iPhone|iPod/.test(ua);
-        const isSafari = /^((?!chrome|android).)*safari/i.test(ua) || isIOS;
-
-        try {
-          if (window.indexedDB) {
-            const dbName = 'sandooq_private_test_' + Date.now();
-            await new Promise((resolve, reject) => {
-              const req = indexedDB.open(dbName, 1);
-              let settled = false;
-              const finish = (ok) => {
-                if (settled) return;
-                settled = true;
-                ok ? resolve(true) : reject(new Error('indexeddb_blocked'));
-              };
-              req.onerror = () => finish(false);
-              req.onblocked = () => finish(false);
-              req.onsuccess = () => {
-                try { req.result.close(); } catch (e) {}
-                try { indexedDB.deleteDatabase(dbName); } catch (e) {}
-                finish(true);
-              };
-              req.onupgradeneeded = () => {};
-              setTimeout(() => finish(true), 700);
-            });
-          }
-        } catch (e) {
-          detected = true;
-        }
-
-        try {
-          if (!detected && isSafari && navigator.storage && navigator.storage.estimate) {
-            const estimate = await navigator.storage.estimate();
-            const quota = Number(estimate && estimate.quota ? estimate.quota : 0);
-            if (quota > 0 && quota < 120 * 1024 * 1024) detected = true;
-          }
-        } catch (e) {}
-
-        privateModeDetected = detected;
-        privateModeChecked = true;
-        return detected;
-      })();
-
-      return privateModePromise;
-    }
-
-    function buildPlayUrlWithAccessSync(playUrl, gameId) {
+    function buildPlayUrlWithAccess(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
+
+      // فاميلي فيود فقط مفعّل الآن على الميدلوير الجديد.
       if (gameId !== 'family-feud') return playUrl;
 
       const token = readLocalValue(TOKEN_KEY).trim();
@@ -2394,7 +2444,7 @@
         const url = new URL(playUrl, window.location.href);
         url.searchParams.set('sg_token', token);
 
-        if (privateModeChecked && privateModeDetected) {
+        if (privateModeReady && privateModeDetected) {
           url.searchParams.set('sg_temp', '1');
           url.searchParams.delete('sg_device');
         } else {
@@ -2408,20 +2458,20 @@
       }
     }
 
-    async function buildPlayUrlWithAccess(playUrl, gameId) {
+    async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
       if (gameId !== 'family-feud') return playUrl;
 
       const token = readLocalValue(TOKEN_KEY).trim();
       if (!token) return playUrl;
 
-      const useTemporary = await detectPrivateMode();
+      const isPrivate = await detectPrivateMode();
 
       try {
         const url = new URL(playUrl, window.location.href);
         url.searchParams.set('sg_token', token);
 
-        if (useTemporary) {
+        if (isPrivate) {
           url.searchParams.set('sg_temp', '1');
           url.searchParams.delete('sg_device');
         } else {
@@ -2434,13 +2484,12 @@
         return playUrl;
       }
     }
+
 
     function resetAccessButton(link) {
       if (!link) return;
       prepareAccessButton(link);
       link.classList.remove('play-action');
-      link.removeAttribute('data-play-base-url');
-      link.removeAttribute('data-play-game-id');
       link.setAttribute('href', link.dataset.originalHref || '#');
       setButtonLabel(link, link.dataset.originalLabel || 'شراء اللعبة');
       restoreButtonIcon(link);
@@ -2450,10 +2499,10 @@
       if (!link) return;
       prepareAccessButton(link);
       const basePlayUrl = getPlayUrl(card, gameId, detailsMap);
+      link.dataset.basePlayUrl = basePlayUrl;
+      link.dataset.gameId = gameId;
       link.classList.add('play-action');
-      link.dataset.playBaseUrl = basePlayUrl;
-      link.dataset.playGameId = gameId;
-      link.setAttribute('href', buildPlayUrlWithAccessSync(basePlayUrl, gameId));
+      link.setAttribute('href', buildPlayUrlWithAccess(basePlayUrl, gameId));
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
     }
@@ -2486,29 +2535,39 @@
       prepareGameCardsForAccessStates();
     }
 
-    document.addEventListener('click', async event => {
-      const link = event.target && event.target.closest ? event.target.closest('.game-btn.play-action') : null;
-      if (!link) return;
-
-      const gameId = link.dataset.playGameId || (link.closest('.game-card') && link.closest('.game-card').dataset.gameId) || '';
-      if (gameId !== 'family-feud') return;
-
-      const basePlayUrl = link.dataset.playBaseUrl || link.getAttribute('href') || '';
-      event.preventDefault();
-
-      const finalUrl = await buildPlayUrlWithAccess(basePlayUrl, gameId);
-      window.location.href = finalUrl;
-    });
-
     refreshAccountUi();
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
       refreshAccountFromApi().then(refreshAccountUi);
-      detectPrivateMode().then(refreshAccountUi);
+
+    detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
+
+    document.addEventListener('click', async event => {
+      const link = event.target && event.target.closest ? event.target.closest('.game-btn.play-action') : null;
+      if (!link) return;
+
+      const gameId = String(link.dataset.gameId || (link.closest('.game-card') && link.closest('.game-card').dataset.gameId) || '');
+      if (gameId !== 'family-feud') return;
+
+      const basePlayUrl = link.dataset.basePlayUrl || link.getAttribute('href') || '#';
+      event.preventDefault();
+
+      if (link.dataset.opening === '1') return;
+      link.dataset.opening = '1';
+
+      try {
+        const finalUrl = await buildPlayUrlWithAccessAsync(basePlayUrl, gameId);
+        window.location.href = finalUrl;
+      } catch (e) {
+        window.location.href = basePlayUrl;
+      } finally {
+        window.setTimeout(() => { link.dataset.opening = '0'; }, 1200);
+      }
+    }, { passive:false });
+
     });
     window.addEventListener('storage', refreshAccountUi);
     refreshAccountFromApi().then(refreshAccountUi);
-    detectPrivateMode().then(refreshAccountUi);
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
@@ -2534,7 +2593,9 @@
     document.querySelectorAll('.review-card').forEach(card => {
       const name = card.querySelector('.review-name');
       const text = card.querySelector('.review-text');
+
       if (name && name.textContent.trim().length > 18) card.classList.add('name-long');
+
       if (text) {
         const length = text.textContent.trim().length;
         if (length > 92) card.classList.add('text-long');
@@ -2568,6 +2629,7 @@
       const viewportCenter = reviewViewport.scrollLeft + (reviewViewport.clientWidth / 2);
       let nearestIndex = 0;
       let nearestDistance = Infinity;
+
       reviewSlides.forEach((slide, index) => {
         const slideCenter = slide.offsetLeft + (slide.clientWidth / 2);
         const distance = Math.abs(slideCenter - viewportCenter);
@@ -2576,6 +2638,7 @@
           nearestIndex = index;
         }
       });
+
       currentReview = nearestIndex;
     }
 
@@ -2588,11 +2651,14 @@
       reviewViewport.addEventListener('touchend', event => {
         const touchEndX = event.changedTouches[0].clientX;
         const diff = touchEndX - touchStartX;
-        if (Math.abs(diff) > 40) scrollToReview(diff < 0 ? currentReview + 1 : currentReview - 1);
-        else {
+
+        if (Math.abs(diff) > 40) {
+          scrollToReview(diff < 0 ? currentReview + 1 : currentReview - 1);
+        } else {
           updateReviewFromScroll();
           scrollToReview(currentReview);
         }
+
         restartReviewTimer();
       }, { passive:true });
 
@@ -2604,26 +2670,46 @@
       restartReviewTimer();
     }
 
+    function getKeyboardOffset() {
+      const vv = window.visualViewport;
+      const active = document.activeElement;
+      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
+      if (!vv || !isTyping) return 0;
+
+      const layoutHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      const offset = Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
+      return offset > 80 ? offset : 0;
+    }
+
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
+      const navInner = document.querySelector('.bottom-nav-inner');
       if (!nav) return;
 
-      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
-      if (navHeight > 0) document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
-
-      document.documentElement.style.setProperty('--nav-keyboard-y', '0px');
+      const keyboardOffset = getKeyboardOffset();
+      document.documentElement.style.setProperty('--keyboard-offset', `${keyboardOffset}px`);
+      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
+      document.body.classList.toggle('keyboard-open', keyboardOffset > 0);
 
       nav.style.position = 'fixed';
       nav.style.left = '0px';
       nav.style.right = '0px';
       nav.style.top = 'auto';
       nav.style.bottom = '0px';
-      nav.style.zIndex = '9999';
-      nav.style.transform = 'translate3d(0,0,0)';
-      nav.style.webkitTransform = 'translate3d(0,0,0)';
+      nav.style.width = '100%';
+      nav.style.transform = 'none';
+      nav.style.webkitTransform = 'none';
+      nav.style.zIndex = '2147483000';
+
+      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
+      if (navHeight > 0) {
+        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+        const app = document.querySelector('.app');
+        if (app) app.style.paddingBottom = `${navHeight + 26}px`;
+      }
 
       const activeItem = document.querySelector('.bottom-nav .nav-item.active');
-      moveBottomNavIndicator(activeItem);
+      if (navInner && activeItem) moveBottomNavIndicator(activeItem);
     }
 
     function scheduleBottomNavStabilize(delay = 0) {
@@ -2637,6 +2723,7 @@
       window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
       scrollToReview(0, 'auto');
       scheduleBottomNavStabilize();
+      scheduleBottomNavStabilize(250);
     });
 
     window.addEventListener('resize', () => {
@@ -2646,11 +2733,24 @@
     });
 
     window.addEventListener('orientationchange', () => {
-      scheduleBottomNavStabilize(120);
-      scheduleBottomNavStabilize(360);
+      scheduleBottomNavStabilize(80);
+      scheduleBottomNavStabilize(240);
+      scheduleBottomNavStabilize(520);
     }, { passive:true });
 
+    window.addEventListener('focusin', () => scheduleBottomNavStabilize(60), { passive:true });
+    window.addEventListener('focusout', () => {
+      scheduleBottomNavStabilize(60);
+      scheduleBottomNavStabilize(260);
+    }, { passive:true });
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', () => scheduleBottomNavStabilize(), { passive:true });
+      window.visualViewport.addEventListener('scroll', () => scheduleBottomNavStabilize(), { passive:true });
+    }
+
     stabilizeBottomNav();
+
   </script>
 </body>
 </html>
