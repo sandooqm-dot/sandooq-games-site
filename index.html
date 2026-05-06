@@ -1522,6 +1522,34 @@
       -webkit-transform:translate3d(0,0,0) !important;
     }
 
+
+    /* ضبط نهائي للشريط السفلي: يبقى فوق شريط Safari في الآيفون، وفي أسفل الشاشة على الكمبيوتر */
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:var(--visual-viewport-bottom, 0px) !important;
+      width:100% !important;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
+      z-index:2147483000 !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      margin:0 !important;
+      touch-action:manipulation;
+    }
+
+    body.sandooq-ios-browser .bottom-nav{
+      box-shadow:0 -5px 18px rgba(0,0,0,.18);
+    }
+
+    .app{
+      padding-bottom:calc(var(--bottom-nav-space, calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))) + 26px) !important;
+      overflow:visible !important;
+    }
+
   </style>
 </head>
 
@@ -2067,7 +2095,7 @@
       'horof-edu': 'https://horof.sandooq-games.com',
       'bdon-kalam': 'https://bdon-kalam.sandooq-games.com',
       'bra-alsalfah': 'https://bra-alsalfah.sandooq-games.com',
-      'family-feud': 'https://family.sandooq-games.com',
+      'family-feud': 'https://family-feud.sandooq-games.com',
       'sandooq': 'sandooq.html'
     };
 
@@ -2293,7 +2321,66 @@
       return GAME_PLAY_URLS[gameId] || GAME_DETAILS_URLS[gameId] || '#';
     }
 
-    function buildPlayUrlWithAccess(playUrl, gameId) {
+    let temporaryBrowserCheckPromise = null;
+    let temporaryBrowserCheckResult = null;
+
+    function hasSavedDeviceToken() {
+      return !!readLocalValue(DEVICE_KEY).trim();
+    }
+
+    function canUseIndexedDbQuickTest() {
+      return new Promise(resolve => {
+        try {
+          if (!('indexedDB' in window)) {
+            resolve(false);
+            return;
+          }
+
+          const dbName = 'sandooq_private_check_' + Date.now();
+          const request = indexedDB.open(dbName, 1);
+          let finished = false;
+
+          const finish = value => {
+            if (finished) return;
+            finished = true;
+            resolve(value);
+          };
+
+          request.onerror = () => finish(false);
+          request.onblocked = () => finish(false);
+          request.onsuccess = () => {
+            try { request.result.close(); } catch (e) {}
+            try { indexedDB.deleteDatabase(dbName); } catch (e) {}
+            finish(true);
+          };
+
+          window.setTimeout(() => finish(false), 450);
+        } catch (e) {
+          resolve(false);
+        }
+      });
+    }
+
+    async function shouldUseTemporaryGameSession() {
+      // إذا عندنا جهاز محفوظ، فهذا متصفح عادي ومعتمد ويُحسب من الجهازين.
+      if (hasSavedDeviceToken()) return false;
+
+      if (temporaryBrowserCheckResult !== null) return temporaryBrowserCheckResult;
+
+      if (!temporaryBrowserCheckPromise) {
+        temporaryBrowserCheckPromise = (async () => {
+          // في Safari الخاص غالبًا IndexedDB لا يعمل، وهذا مؤشر عملي على المتصفح الخفي.
+          const indexedDbWorks = await canUseIndexedDbQuickTest();
+          const temporary = !indexedDbWorks;
+          temporaryBrowserCheckResult = temporary;
+          return temporary;
+        })();
+      }
+
+      return temporaryBrowserCheckPromise;
+    }
+
+    function buildPlayUrlWithAccess(playUrl, gameId, forceTemporary = false) {
       if (!playUrl || playUrl === '#') return playUrl;
 
       // فاميلي فيود فقط مفعّل الآن على الميدلوير الجديد.
@@ -2302,16 +2389,29 @@
       const token = readLocalValue(TOKEN_KEY).trim();
       if (!token) return playUrl;
 
-      const deviceToken = getOrCreateDeviceToken();
-
       try {
         const url = new URL(playUrl, window.location.href);
         url.searchParams.set('sg_token', token);
-        url.searchParams.set('sg_device', deviceToken);
+
+        if (forceTemporary) {
+          url.searchParams.set('sg_temp', '1');
+          url.searchParams.delete('sg_device');
+        } else {
+          const deviceToken = getOrCreateDeviceToken();
+          url.searchParams.set('sg_device', deviceToken);
+          url.searchParams.delete('sg_temp');
+        }
+
         return url.toString();
       } catch (e) {
         return playUrl;
       }
+    }
+
+    async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
+      if (gameId !== 'family-feud') return buildPlayUrlWithAccess(playUrl, gameId, false);
+      const useTemporary = await shouldUseTemporaryGameSession();
+      return buildPlayUrlWithAccess(playUrl, gameId, useTemporary);
     }
 
     function resetAccessButton(link) {
@@ -2323,12 +2423,36 @@
       restoreButtonIcon(link);
     }
 
+    function preparePlayButtonNavigation(link) {
+      if (!link || link.dataset.playNavigationPrepared === '1') return;
+      link.dataset.playNavigationPrepared = '1';
+
+      link.addEventListener('click', async event => {
+        const gameId = link.dataset.gameId || '';
+        const basePlayUrl = link.dataset.basePlayUrl || link.getAttribute('href') || '#';
+
+        if (gameId !== 'family-feud') return;
+
+        event.preventDefault();
+
+        try {
+          const finalUrl = await buildPlayUrlWithAccessAsync(basePlayUrl, gameId);
+          window.location.href = finalUrl;
+        } catch (e) {
+          window.location.href = basePlayUrl;
+        }
+      });
+    }
+
     function activateAccessButton(link, card, gameId, detailsMap) {
       if (!link) return;
       prepareAccessButton(link);
       const basePlayUrl = getPlayUrl(card, gameId, detailsMap);
+      link.dataset.gameId = gameId;
+      link.dataset.basePlayUrl = basePlayUrl;
       link.classList.add('play-action');
-      link.setAttribute('href', buildPlayUrlWithAccess(basePlayUrl, gameId));
+      link.setAttribute('href', buildPlayUrlWithAccess(basePlayUrl, gameId, false));
+      preparePlayButtonNavigation(link);
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
     }
@@ -2362,8 +2486,10 @@
     }
 
     refreshAccountUi();
+    shouldUseTemporaryGameSession().then(() => refreshAccountUi()).catch(() => {});
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
+      shouldUseTemporaryGameSession().then(() => refreshAccountUi()).catch(() => {});
       refreshAccountFromApi().then(refreshAccountUi);
     });
     window.addEventListener('storage', refreshAccountUi);
@@ -2470,6 +2596,12 @@
       restartReviewTimer();
     }
 
+    function isAppleMobileBrowser() {
+      const ua = navigator.userAgent || '';
+      const iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      return iOS;
+    }
+
     function getViewportBottomOffset() {
       const vv = window.visualViewport;
       if (!vv) return 0;
@@ -2479,13 +2611,29 @@
         window.innerHeight || 0
       );
 
-      return Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
+      const layoutOffset = Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
+      if (layoutOffset > 0) return layoutOffset;
+
+      // في بعض نسخ Safari على الآيفون يكون شريط المتصفح السفلي فوق الصفحة ولا يظهر في layoutHeight.
+      // نستخدم فرق screen/visualViewport كرفع احتياطي حتى يبقى شريط الموقع فوق شريط Safari مثل باقي الصفحات.
+      if (isAppleMobileBrowser()) {
+        const screenHeight = Math.max(window.screen?.height || 0, window.screen?.width || 0);
+        const viewportHeight = Math.round(vv.height || window.innerHeight || 0);
+        const estimatedBrowserChrome = Math.max(0, screenHeight - viewportHeight - Math.max(0, Math.round(vv.offsetTop || 0)));
+        if (estimatedBrowserChrome > 90) return 88;
+        if (estimatedBrowserChrome > 58) return 64;
+        if (estimatedBrowserChrome > 34) return 40;
+      }
+
+      return 0;
     }
 
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
       const navInner = document.querySelector('.bottom-nav-inner');
       if (!nav) return;
+
+      document.body.classList.toggle('sandooq-ios-browser', isAppleMobileBrowser());
 
       const bottomOffset = getViewportBottomOffset();
       document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
