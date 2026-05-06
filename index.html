@@ -1480,23 +1480,27 @@
     }
 
 
-
-    /* حل جذري لتثبيت الشريط السفلي ومنع الطفو على iOS والجوال */
+    /* ضبط نهائي محافظ للشريط السفلي: ثابت بدون رفع مع الكيبورد وبدون تحريك الصفحة يمين/يسار */
     :root{
       --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      --visual-viewport-bottom:0px;
+      --nav-keyboard-y:0px;
     }
 
     html,
     body{
-      min-height:100% !important;
+      width:100% !important;
+      max-width:100% !important;
       overflow-x:hidden !important;
+      background:var(--blue-soft) !important;
     }
 
     .app{
+      width:100% !important;
+      max-width:100% !important;
       min-height:100dvh !important;
-      overflow:visible !important;
+      overflow:hidden !important;
       padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
+      background:var(--blue-soft) !important;
     }
 
     .bottom-nav{
@@ -1504,16 +1508,16 @@
       left:0 !important;
       right:0 !important;
       top:auto !important;
-      bottom:var(--visual-viewport-bottom, 0px) !important;
+      bottom:0 !important;
       width:100% !important;
       height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      z-index:2147483000 !important;
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
+      z-index:9999 !important;
+      transform:translate3d(0,var(--nav-keyboard-y),0) !important;
+      -webkit-transform:translate3d(0,var(--nav-keyboard-y),0) !important;
       backface-visibility:hidden !important;
       -webkit-backface-visibility:hidden !important;
       contain:layout paint style !important;
-      will-change:transform, bottom !important;
+      will-change:auto !important;
       margin:0 !important;
     }
 
@@ -1522,32 +1526,12 @@
       -webkit-transform:translate3d(0,0,0) !important;
     }
 
-
-    /* ضبط نهائي للشريط السفلي: يبقى فوق شريط Safari في الآيفون، وفي أسفل الشاشة على الكمبيوتر */
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      top:auto !important;
-      bottom:var(--visual-viewport-bottom, 0px) !important;
-      width:100% !important;
-      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      z-index:2147483000 !important;
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
-      backface-visibility:hidden !important;
-      -webkit-backface-visibility:hidden !important;
-      margin:0 !important;
-      touch-action:manipulation;
-    }
-
-    body.sandooq-ios-browser .bottom-nav{
-      box-shadow:0 -5px 18px rgba(0,0,0,.18);
-    }
-
-    .app{
-      padding-bottom:calc(var(--bottom-nav-space, calc(var(--bottom-nav-height) + env(safe-area-inset-bottom))) + 26px) !important;
-      overflow:visible !important;
+    .games-area,
+    .site-footer,
+    .bundles-area,
+    .hero{
+      max-width:100% !important;
+      overflow-x:hidden !important;
     }
 
   </style>
@@ -2115,12 +2099,20 @@
       'sandooq_horof_active_v1'
     ];
 
+    let privateModeDetected = false;
+    let privateModeChecked = false;
+    let privateModePromise = null;
+
     function readLocalValue(key) {
       try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
     }
 
     function writeLocalValue(key, value) {
       try { localStorage.setItem(key, String(value || '')); } catch (e) {}
+    }
+
+    function readSessionValue(key) {
+      try { return sessionStorage.getItem(key) || ''; } catch (e) { return ''; }
     }
 
     function formatAccountName(name) {
@@ -2144,7 +2136,7 @@
       const playerName = formatAccountName(getConfirmedAccountName());
 
       if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
-      else if (phone) loginChip.textContent = 'تم الدخول';
+      else if (phone) loginChip.textContent = 'حسابي';
       else loginChip.textContent = 'تسجيل الدخول';
     }
 
@@ -2321,69 +2313,78 @@
       return GAME_PLAY_URLS[gameId] || GAME_DETAILS_URLS[gameId] || '#';
     }
 
-    let temporaryBrowserCheckPromise = null;
-    let temporaryBrowserCheckResult = null;
-
-    function hasSavedDeviceToken() {
-      return !!readLocalValue(DEVICE_KEY).trim();
-    }
-
-    function canUseIndexedDbQuickTest() {
-      return new Promise(resolve => {
-        try {
-          if (!('indexedDB' in window)) {
-            resolve(false);
-            return;
-          }
-
-          const dbName = 'sandooq_private_check_' + Date.now();
-          const request = indexedDB.open(dbName, 1);
-          let finished = false;
-
-          const finish = value => {
-            if (finished) return;
-            finished = true;
-            resolve(value);
-          };
-
-          request.onerror = () => finish(false);
-          request.onblocked = () => finish(false);
-          request.onsuccess = () => {
-            try { request.result.close(); } catch (e) {}
-            try { indexedDB.deleteDatabase(dbName); } catch (e) {}
-            finish(true);
-          };
-
-          window.setTimeout(() => finish(false), 450);
-        } catch (e) {
-          resolve(false);
-        }
+    function hasExplicitTemporaryHint() {
+      return [
+        'sandooq_private_mode_v1',
+        'sandooq_temporary_session_v1',
+        'sandooq_is_temporary_v1',
+        'sandooq_site_temporary_v1'
+      ].some(key => {
+        const value = (readLocalValue(key) || readSessionValue(key)).trim().toLowerCase();
+        return value === '1' || value === 'true' || value === 'yes';
       });
     }
 
-    async function shouldUseTemporaryGameSession() {
-      // إذا عندنا جهاز محفوظ، فهذا متصفح عادي ومعتمد ويُحسب من الجهازين.
-      if (hasSavedDeviceToken()) return false;
+    async function detectPrivateMode() {
+      if (privateModeChecked) return privateModeDetected;
+      if (privateModePromise) return privateModePromise;
 
-      if (temporaryBrowserCheckResult !== null) return temporaryBrowserCheckResult;
+      privateModePromise = (async () => {
+        if (hasExplicitTemporaryHint()) {
+          privateModeDetected = true;
+          privateModeChecked = true;
+          return true;
+        }
 
-      if (!temporaryBrowserCheckPromise) {
-        temporaryBrowserCheckPromise = (async () => {
-          // في Safari الخاص غالبًا IndexedDB لا يعمل، وهذا مؤشر عملي على المتصفح الخفي.
-          const indexedDbWorks = await canUseIndexedDbQuickTest();
-          const temporary = !indexedDbWorks;
-          temporaryBrowserCheckResult = temporary;
-          return temporary;
-        })();
-      }
+        let detected = false;
+        const ua = navigator.userAgent || '';
+        const isIOS = /iPad|iPhone|iPod/.test(ua);
+        const isSafari = /^((?!chrome|android).)*safari/i.test(ua) || isIOS;
 
-      return temporaryBrowserCheckPromise;
+        try {
+          if (window.indexedDB) {
+            const dbName = 'sandooq_private_test_' + Date.now();
+            await new Promise((resolve, reject) => {
+              const req = indexedDB.open(dbName, 1);
+              let settled = false;
+              const finish = (ok) => {
+                if (settled) return;
+                settled = true;
+                ok ? resolve(true) : reject(new Error('indexeddb_blocked'));
+              };
+              req.onerror = () => finish(false);
+              req.onblocked = () => finish(false);
+              req.onsuccess = () => {
+                try { req.result.close(); } catch (e) {}
+                try { indexedDB.deleteDatabase(dbName); } catch (e) {}
+                finish(true);
+              };
+              req.onupgradeneeded = () => {};
+              setTimeout(() => finish(true), 700);
+            });
+          }
+        } catch (e) {
+          detected = true;
+        }
+
+        try {
+          if (!detected && isSafari && navigator.storage && navigator.storage.estimate) {
+            const estimate = await navigator.storage.estimate();
+            const quota = Number(estimate && estimate.quota ? estimate.quota : 0);
+            if (quota > 0 && quota < 120 * 1024 * 1024) detected = true;
+          }
+        } catch (e) {}
+
+        privateModeDetected = detected;
+        privateModeChecked = true;
+        return detected;
+      })();
+
+      return privateModePromise;
     }
 
-    function buildPlayUrlWithAccess(playUrl, gameId, forceTemporary = false) {
+    function buildPlayUrlWithAccessSync(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
-
-      // فاميلي فيود فقط مفعّل الآن على الميدلوير الجديد.
       if (gameId !== 'family-feud') return playUrl;
 
       const token = readLocalValue(TOKEN_KEY).trim();
@@ -2393,12 +2394,11 @@
         const url = new URL(playUrl, window.location.href);
         url.searchParams.set('sg_token', token);
 
-        if (forceTemporary) {
+        if (privateModeChecked && privateModeDetected) {
           url.searchParams.set('sg_temp', '1');
           url.searchParams.delete('sg_device');
         } else {
-          const deviceToken = getOrCreateDeviceToken();
-          url.searchParams.set('sg_device', deviceToken);
+          url.searchParams.set('sg_device', getOrCreateDeviceToken());
           url.searchParams.delete('sg_temp');
         }
 
@@ -2408,51 +2408,52 @@
       }
     }
 
-    async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
-      if (gameId !== 'family-feud') return buildPlayUrlWithAccess(playUrl, gameId, false);
-      const useTemporary = await shouldUseTemporaryGameSession();
-      return buildPlayUrlWithAccess(playUrl, gameId, useTemporary);
+    async function buildPlayUrlWithAccess(playUrl, gameId) {
+      if (!playUrl || playUrl === '#') return playUrl;
+      if (gameId !== 'family-feud') return playUrl;
+
+      const token = readLocalValue(TOKEN_KEY).trim();
+      if (!token) return playUrl;
+
+      const useTemporary = await detectPrivateMode();
+
+      try {
+        const url = new URL(playUrl, window.location.href);
+        url.searchParams.set('sg_token', token);
+
+        if (useTemporary) {
+          url.searchParams.set('sg_temp', '1');
+          url.searchParams.delete('sg_device');
+        } else {
+          url.searchParams.set('sg_device', getOrCreateDeviceToken());
+          url.searchParams.delete('sg_temp');
+        }
+
+        return url.toString();
+      } catch (e) {
+        return playUrl;
+      }
     }
 
     function resetAccessButton(link) {
       if (!link) return;
       prepareAccessButton(link);
       link.classList.remove('play-action');
+      link.removeAttribute('data-play-base-url');
+      link.removeAttribute('data-play-game-id');
       link.setAttribute('href', link.dataset.originalHref || '#');
       setButtonLabel(link, link.dataset.originalLabel || 'شراء اللعبة');
       restoreButtonIcon(link);
-    }
-
-    function preparePlayButtonNavigation(link) {
-      if (!link || link.dataset.playNavigationPrepared === '1') return;
-      link.dataset.playNavigationPrepared = '1';
-
-      link.addEventListener('click', async event => {
-        const gameId = link.dataset.gameId || '';
-        const basePlayUrl = link.dataset.basePlayUrl || link.getAttribute('href') || '#';
-
-        if (gameId !== 'family-feud') return;
-
-        event.preventDefault();
-
-        try {
-          const finalUrl = await buildPlayUrlWithAccessAsync(basePlayUrl, gameId);
-          window.location.href = finalUrl;
-        } catch (e) {
-          window.location.href = basePlayUrl;
-        }
-      });
     }
 
     function activateAccessButton(link, card, gameId, detailsMap) {
       if (!link) return;
       prepareAccessButton(link);
       const basePlayUrl = getPlayUrl(card, gameId, detailsMap);
-      link.dataset.gameId = gameId;
-      link.dataset.basePlayUrl = basePlayUrl;
       link.classList.add('play-action');
-      link.setAttribute('href', buildPlayUrlWithAccess(basePlayUrl, gameId, false));
-      preparePlayButtonNavigation(link);
+      link.dataset.playBaseUrl = basePlayUrl;
+      link.dataset.playGameId = gameId;
+      link.setAttribute('href', buildPlayUrlWithAccessSync(basePlayUrl, gameId));
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
     }
@@ -2485,15 +2486,29 @@
       prepareGameCardsForAccessStates();
     }
 
+    document.addEventListener('click', async event => {
+      const link = event.target && event.target.closest ? event.target.closest('.game-btn.play-action') : null;
+      if (!link) return;
+
+      const gameId = link.dataset.playGameId || (link.closest('.game-card') && link.closest('.game-card').dataset.gameId) || '';
+      if (gameId !== 'family-feud') return;
+
+      const basePlayUrl = link.dataset.playBaseUrl || link.getAttribute('href') || '';
+      event.preventDefault();
+
+      const finalUrl = await buildPlayUrlWithAccess(basePlayUrl, gameId);
+      window.location.href = finalUrl;
+    });
+
     refreshAccountUi();
-    shouldUseTemporaryGameSession().then(() => refreshAccountUi()).catch(() => {});
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
-      shouldUseTemporaryGameSession().then(() => refreshAccountUi()).catch(() => {});
       refreshAccountFromApi().then(refreshAccountUi);
+      detectPrivateMode().then(refreshAccountUi);
     });
     window.addEventListener('storage', refreshAccountUi);
     refreshAccountFromApi().then(refreshAccountUi);
+    detectPrivateMode().then(refreshAccountUi);
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
@@ -2519,9 +2534,7 @@
     document.querySelectorAll('.review-card').forEach(card => {
       const name = card.querySelector('.review-name');
       const text = card.querySelector('.review-text');
-
       if (name && name.textContent.trim().length > 18) card.classList.add('name-long');
-
       if (text) {
         const length = text.textContent.trim().length;
         if (length > 92) card.classList.add('text-long');
@@ -2555,7 +2568,6 @@
       const viewportCenter = reviewViewport.scrollLeft + (reviewViewport.clientWidth / 2);
       let nearestIndex = 0;
       let nearestDistance = Infinity;
-
       reviewSlides.forEach((slide, index) => {
         const slideCenter = slide.offsetLeft + (slide.clientWidth / 2);
         const distance = Math.abs(slideCenter - viewportCenter);
@@ -2564,7 +2576,6 @@
           nearestIndex = index;
         }
       });
-
       currentReview = nearestIndex;
     }
 
@@ -2577,14 +2588,11 @@
       reviewViewport.addEventListener('touchend', event => {
         const touchEndX = event.changedTouches[0].clientX;
         const diff = touchEndX - touchStartX;
-
-        if (Math.abs(diff) > 40) {
-          scrollToReview(diff < 0 ? currentReview + 1 : currentReview - 1);
-        } else {
+        if (Math.abs(diff) > 40) scrollToReview(diff < 0 ? currentReview + 1 : currentReview - 1);
+        else {
           updateReviewFromScroll();
           scrollToReview(currentReview);
         }
-
         restartReviewTimer();
       }, { passive:true });
 
@@ -2596,66 +2604,26 @@
       restartReviewTimer();
     }
 
-    function isAppleMobileBrowser() {
-      const ua = navigator.userAgent || '';
-      const iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-      return iOS;
-    }
-
-    function getViewportBottomOffset() {
-      const vv = window.visualViewport;
-      if (!vv) return 0;
-
-      const layoutHeight = Math.max(
-        document.documentElement.clientHeight || 0,
-        window.innerHeight || 0
-      );
-
-      const layoutOffset = Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
-      if (layoutOffset > 0) return layoutOffset;
-
-      // في بعض نسخ Safari على الآيفون يكون شريط المتصفح السفلي فوق الصفحة ولا يظهر في layoutHeight.
-      // نستخدم فرق screen/visualViewport كرفع احتياطي حتى يبقى شريط الموقع فوق شريط Safari مثل باقي الصفحات.
-      if (isAppleMobileBrowser()) {
-        const screenHeight = Math.max(window.screen?.height || 0, window.screen?.width || 0);
-        const viewportHeight = Math.round(vv.height || window.innerHeight || 0);
-        const estimatedBrowserChrome = Math.max(0, screenHeight - viewportHeight - Math.max(0, Math.round(vv.offsetTop || 0)));
-        if (estimatedBrowserChrome > 90) return 88;
-        if (estimatedBrowserChrome > 58) return 64;
-        if (estimatedBrowserChrome > 34) return 40;
-      }
-
-      return 0;
-    }
-
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
-      const navInner = document.querySelector('.bottom-nav-inner');
       if (!nav) return;
 
-      document.body.classList.toggle('sandooq-ios-browser', isAppleMobileBrowser());
+      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
+      if (navHeight > 0) document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
 
-      const bottomOffset = getViewportBottomOffset();
-      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
+      document.documentElement.style.setProperty('--nav-keyboard-y', '0px');
 
       nav.style.position = 'fixed';
       nav.style.left = '0px';
       nav.style.right = '0px';
       nav.style.top = 'auto';
-      nav.style.bottom = `${bottomOffset}px`;
+      nav.style.bottom = '0px';
+      nav.style.zIndex = '9999';
       nav.style.transform = 'translate3d(0,0,0)';
       nav.style.webkitTransform = 'translate3d(0,0,0)';
-      nav.style.zIndex = '2147483000';
-
-      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
-      if (navHeight > 0) {
-        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight + bottomOffset}px`);
-        const app = document.querySelector('.app');
-        if (app) app.style.paddingBottom = `${navHeight + bottomOffset + 26}px`;
-      }
 
       const activeItem = document.querySelector('.bottom-nav .nav-item.active');
-      if (navInner && activeItem) moveBottomNavIndicator(activeItem);
+      moveBottomNavIndicator(activeItem);
     }
 
     function scheduleBottomNavStabilize(delay = 0) {
@@ -2669,7 +2637,6 @@
       window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
       scrollToReview(0, 'auto');
       scheduleBottomNavStabilize();
-      scheduleBottomNavStabilize(250);
     });
 
     window.addEventListener('resize', () => {
@@ -2679,21 +2646,11 @@
     });
 
     window.addEventListener('orientationchange', () => {
-      scheduleBottomNavStabilize(80);
-      scheduleBottomNavStabilize(240);
-      scheduleBottomNavStabilize(520);
+      scheduleBottomNavStabilize(120);
+      scheduleBottomNavStabilize(360);
     }, { passive:true });
 
-    window.addEventListener('scroll', () => scheduleBottomNavStabilize(), { passive:true });
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', () => scheduleBottomNavStabilize(), { passive:true });
-      window.visualViewport.addEventListener('scroll', () => scheduleBottomNavStabilize(), { passive:true });
-    }
-
     stabilizeBottomNav();
-    window.setInterval(stabilizeBottomNav, 900);
-
   </script>
 </body>
 </html>
