@@ -599,6 +599,30 @@
           </form>
         </section>
 
+        <section
+          class="section-card soft-yellow legacy-code-box"
+          id="legacyCodeBox"
+          data-hook="legacy-code-box"
+          data-success-message="تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك."
+          data-invalid-message="الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى."
+          data-used-message="هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم."
+          data-missing-phone-message="سجّل دخولك أو تحقق من رقم الجوال أولًا، ثم أدخل كود التفعيل السابق."
+          aria-label="ربط كود تفعيل سابق"
+          hidden
+        >
+          <div class="section-head" style="margin-bottom:10px">
+            <div>
+              <h2 class="section-heading">لديك كود تفعيل سابق؟</h2>
+              <p class="section-text">اربط كودك القديم بحسابك الحالي. بعد الربط ستظهر اللعبة ضمن ألعابك مباشرة.</p>
+            </div>
+            <span class="section-badge">كود سابق</span>
+          </div>
+          <input class="code-field" id="legacyCodeInput" data-hook="legacy-code-input" type="text" placeholder="أدخل كود التفعيل السابق" autocomplete="off">
+          <button class="legacy-btn" id="legacyCodeButton" data-hook="legacy-code-button" type="button">ربط الكود بحسابي</button>
+          <p class="small-note">يتم ربط الكود بالحساب الحالي مرة واحدة فقط.</p>
+          <div class="status-message" id="legacyCodeMessage" data-hook="legacy-code-message"></div>
+        </section>
+
         <section class="section-card" aria-label="الألعاب المتوفرة للشراء">
           <div class="section-head">
             <div>
@@ -833,6 +857,14 @@
       return /^05\d{8}$/.test(String(value || '').trim());
     }
 
+    function updateLegacyCodeBoxVisibility() {
+      if (!legacyCodeBox) return;
+      const typedPhone = phoneInput ? phoneInput.value.trim() : '';
+      const storedPhone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
+      const hasPhone = isValidSaudiPhone(typedPhone) || isValidSaudiPhone(storedPhone);
+      legacyCodeBox.hidden = !hasPhone;
+    }
+
     function cleanName(value) {
       return String(value || '').trim().replace(/\s+/g, ' ').slice(0, 40);
     }
@@ -866,6 +898,7 @@
     function savePhoneToAccount(phone) {
       setStoredAccountValue(ACCOUNT_PHONE_KEY, String(phone || '').trim());
       renderLoginStatusButton();
+      updateLegacyCodeBoxVisibility();
     }
 
     function saveLinkedGames(games) {
@@ -1177,14 +1210,16 @@
         } finally {
           legacyCodeButton.disabled = false;
           legacyCodeButton.style.cursor = 'pointer';
-          legacyCodeButton.textContent = 'ربط الكود برقم جوالي';
+          legacyCodeButton.textContent = 'ربط الكود بحسابي';
         }
       });
     }
 
     renderLoginStatusButton();
+    updateLegacyCodeBoxVisibility();
 
     if (phoneInput) {
+      phoneInput.addEventListener('input', updateLegacyCodeBoxVisibility);
       const storedPhone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
       if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
 
