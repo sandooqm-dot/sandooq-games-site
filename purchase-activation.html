@@ -512,6 +512,80 @@
     .nav-item.nav-featured .nav-icon{border-radius:16px;background:rgba(4,56,79,.12);box-shadow:inset 0 0 0 1px rgba(4,56,79,.18);}
     .nav-item.nav-featured.active .nav-icon{background:transparent;box-shadow:none;}
 
+
+    .code-field{
+      width:100%;
+      min-height:clamp(54px, 6vw, 66px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(14px, 1.4vw, 20px);
+      background:#fff;
+      color:var(--ink);
+      padding:0 clamp(14px, 2vw, 22px);
+      font-weight:900;
+      font-size:clamp(16px, 1.45vw, 21px);
+      direction:ltr;
+      text-align:left;
+      outline:none;
+      box-shadow:inset 0 2px 0 rgba(0,0,0,.08);
+      text-transform:uppercase;
+    }
+
+    .code-field:focus{background:#fff;border-color:var(--blue-dark);}
+    .code-field::placeholder{color:#a7b0bf;text-transform:none;}
+    .legacy-code-field[hidden]{display:none !important;}
+
+    .activation-mode-toggle{
+      width:100%;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(16px, 1.6vw, 24px);
+      background:#fff8ed;
+      color:var(--ink);
+      padding:clamp(13px, 2vw, 22px);
+      display:grid;
+      gap:6px;
+      text-align:center;
+      box-shadow:0 6px 0 rgba(0,0,0,.14);
+      cursor:pointer;
+      transition:transform .16s ease, filter .16s ease, background .16s ease;
+    }
+
+    .activation-mode-toggle:active{transform:translateY(1px);box-shadow:0 5px 0 rgba(0,0,0,.14);}
+    .activation-mode-toggle.is-code-mode{background:#eaf8ff;}
+
+    .mode-toggle-title{
+      font-weight:950;
+      font-size:clamp(17px, 1.7vw, 26px);
+      line-height:1.35;
+    }
+
+    .mode-toggle-subtitle{
+      color:var(--muted);
+      font-weight:800;
+      font-size:clamp(12px, 1.05vw, 16px);
+      line-height:1.65;
+    }
+
+    :root{--visual-viewport-bottom:0px !important;}
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:0 !important;
+      z-index:9999 !important;
+      width:100% !important;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      contain:layout paint style !important;
+      will-change:transform !important;
+    }
+
+    .app{padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + 26px) !important;}
+
     @media (max-width:560px){
       .section-head{display:grid;}
       .section-badge{justify-self:start;}
@@ -585,43 +659,37 @@
               aria-label="رقم الجوال المستخدم في الشراء"
             />
 
+            <input
+              class="code-field legacy-code-field"
+              id="legacyCodeInput"
+              data-hook="legacy-code-input"
+              type="text"
+              placeholder="اكتب كود التفعيل هنا"
+              autocomplete="off"
+              hidden
+            />
+
             <button class="lookup-btn" id="lookupButton" data-hook="lookup-button" type="submit">
               <span class="spinner" aria-hidden="true"></span>
-              <span class="button-label">التحقق من الرقم</span>
+              <span class="button-label">استرجاع الألعاب برقم الجوال</span>
             </button>
 
-            <p class="form-note">سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.</p>
+            <p class="form-note" id="formModeNote">سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.</p>
+
+            <button class="activation-mode-toggle" id="legacyModeToggle" type="button" aria-pressed="false">
+              <span class="mode-toggle-title">لديك كود قديم؟ اربطه برقم جوالك</span>
+              <span class="mode-toggle-subtitle">اضغط هنا إذا كان لديك كود تفعيل سابق وتريد إضافته لحسابك.</span>
+            </button>
 
             <div class="message-area" aria-live="polite">
               <div class="status-message" id="statusMessage" data-hook="status-message"></div>
+              <div class="status-message" id="legacyCodeMessage" data-hook="legacy-code-message"></div>
               <div class="empty-state" id="emptyState" data-hook="empty-state">لم نجد مشتريات على هذا الرقم.</div>
             </div>
           </form>
         </section>
 
-        <section
-          class="section-card soft-yellow legacy-code-box"
-          id="legacyCodeBox"
-          data-hook="legacy-code-box"
-          data-success-message="تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك."
-          data-invalid-message="الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى."
-          data-used-message="هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم."
-          data-missing-phone-message="سجّل دخولك أو تحقق من رقم الجوال أولًا، ثم أدخل كود التفعيل السابق."
-          aria-label="ربط كود تفعيل سابق"
-          hidden
-        >
-          <div class="section-head" style="margin-bottom:10px">
-            <div>
-              <h2 class="section-heading">لديك كود تفعيل سابق؟</h2>
-              <p class="section-text">اربط كودك القديم بحسابك الحالي. بعد الربط ستظهر اللعبة ضمن ألعابك مباشرة.</p>
-            </div>
-            <span class="section-badge">كود سابق</span>
-          </div>
-          <input class="code-field" id="legacyCodeInput" data-hook="legacy-code-input" type="text" placeholder="أدخل كود التفعيل السابق" autocomplete="off">
-          <button class="legacy-btn" id="legacyCodeButton" data-hook="legacy-code-button" type="button">ربط الكود بحسابي</button>
-          <p class="small-note">يتم ربط الكود بالحساب الحالي مرة واحدة فقط.</p>
-          <div class="status-message" id="legacyCodeMessage" data-hook="legacy-code-message"></div>
-        </section>
+        
 
         <section class="section-card" aria-label="الألعاب المتوفرة للشراء">
           <div class="section-head">
@@ -752,6 +820,15 @@
       sandooq:'صندوق المسابقات'
     };
 
+    const GAME_PLAY_URLS = {
+      horof:'https://horof.sandooq-games.com',
+      'horof-edu':'https://horof.sandooq-games.com',
+      'bdon-kalam':'https://bdon-kalam.sandooq-games.com',
+      'bra-alsalfah':'https://bra-alsalfah.sandooq-games.com',
+      'family-feud':'https://family.sandooq-games.com',
+      sandooq:''
+    };
+
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
@@ -773,59 +850,56 @@
 
     navItems.forEach(item => item.addEventListener('click', () => setActiveNavItem(item)));
 
+    function stabilizeBottomNav() {
+      const nav = document.querySelector('.bottom-nav');
+      if (!nav) return;
+      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
+      if (navHeight > 0) document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
+      nav.style.bottom = '0px';
+    }
+
     window.addEventListener('load', () => {
       const activeItem = document.querySelector('.bottom-nav .nav-item.active');
       moveBottomNavIndicator(activeItem);
       window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
+      stabilizeBottomNav();
     });
 
     window.addEventListener('resize', () => {
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+      stabilizeBottomNav();
     });
-
-    function stabilizeBottomNav() {
-      const nav = document.querySelector('.bottom-nav');
-      if (!nav) return;
-
-      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
-      if (navHeight > 0) {
-        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
-      }
-
-      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
-    }
-
-    stabilizeBottomNav();
-    window.addEventListener('load', stabilizeBottomNav);
-    window.addEventListener('resize', stabilizeBottomNav);
     window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
+      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
+    }
+    stabilizeBottomNav();
 
     const form = document.getElementById('purchaseLookupForm');
     const phoneInput = document.getElementById('phoneInput');
+    const codeInput = document.getElementById('legacyCodeInput');
     const button = document.getElementById('lookupButton');
     const label = button ? button.querySelector('.button-label') : null;
+    const formModeNote = document.getElementById('formModeNote');
+    const modeToggle = document.getElementById('legacyModeToggle');
+    const modeToggleTitle = modeToggle ? modeToggle.querySelector('.mode-toggle-title') : null;
+    const modeToggleSubtitle = modeToggle ? modeToggle.querySelector('.mode-toggle-subtitle') : null;
     const statusMessage = document.getElementById('statusMessage');
+    const legacyCodeMessage = document.getElementById('legacyCodeMessage');
     const emptyState = document.getElementById('emptyState');
     const loginStatusButton = document.getElementById('loginStatusButton');
-    const lookupResultPanel = document.getElementById('lookupResultPanel');
-    const resultTitle = document.getElementById('resultTitle');
-    const resultPhonePill = document.getElementById('resultPhonePill');
-    const ownedGamesPills = document.getElementById('ownedGamesPills');
-    const syncAccountButton = document.getElementById('syncAccountButton');
-    const availableGamesTitle = document.getElementById('availableGamesTitle');
-    const availableGamesLead = document.getElementById('availableGamesLead');
-    const allOwnedNotice = document.getElementById('allOwnedNotice');
-    const legacyToggle = document.getElementById('legacyToggle');
-    const legacyCodeBox = document.getElementById('legacyCodeBox');
-    const legacyCodeInput = document.getElementById('legacyCodeInput');
-    const legacyCodeButton = document.getElementById('legacyCodeButton');
-    const legacyCodeMessage = document.getElementById('legacyCodeMessage');
+
+    let codeMode = false;
 
     const messages = {
       found: 'تم العثور على ألعابك وربطها بحسابك.',
       empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.',
       invalidPhone: 'أدخل رقم جوال صحيح يبدأ بـ 05.',
-      loading: 'جاري التحقق من الرقم…',
+      invalidCode: 'اكتب كود التفعيل السابق أولًا.',
+      loadingLookup: 'جاري استرجاع الألعاب…',
+      loadingCode: 'جاري ربط الكود…',
       network: 'تعذر الاتصال بالخدمة. حاول مرة أخرى.'
     };
 
@@ -845,26 +919,6 @@
       return isAccountNameConfirmed() ? getStoredAccountValue(ACCOUNT_NAME_KEY) : '';
     }
 
-    function nowText() {
-      try {
-        return new Date().toLocaleString('ar-SA', { hour12:true });
-      } catch (e) {
-        return new Date().toISOString();
-      }
-    }
-
-    function isValidSaudiPhone(value) {
-      return /^05\d{8}$/.test(String(value || '').trim());
-    }
-
-    function updateLegacyCodeBoxVisibility() {
-      if (!legacyCodeBox) return;
-      const typedPhone = phoneInput ? phoneInput.value.trim() : '';
-      const storedPhone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
-      const hasPhone = isValidSaudiPhone(typedPhone) || isValidSaudiPhone(storedPhone);
-      legacyCodeBox.hidden = !hasPhone;
-    }
-
     function cleanName(value) {
       return String(value || '').trim().replace(/\s+/g, ' ').slice(0, 40);
     }
@@ -875,14 +929,18 @@
       return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
     }
 
-    function gameLabel(id) {
-      return GAME_NAMES[id] || String(id || 'لعبة');
+    function isValidSaudiPhone(value) {
+      return /^05\d{8}$/.test(String(value || '').trim());
+    }
+
+    function nowText() {
+      try { return new Date().toLocaleString('ar-SA', { hour12:true }); }
+      catch (e) { return new Date().toISOString(); }
     }
 
     function getDeviceToken() {
       let token = getStoredAccountValue(DEVICE_KEY);
       if (token) return token;
-
       try {
         const bytes = new Uint8Array(16);
         crypto.getRandomValues(bytes);
@@ -890,15 +948,24 @@
       } catch (e) {
         token = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
       }
-
       setStoredAccountValue(DEVICE_KEY, token);
       return token;
+    }
+
+    function gameLabel(id) {
+      return GAME_NAMES[id] || String(id || 'لعبة');
+    }
+
+    function readLinkedGameDetails() {
+      try {
+        const parsed = JSON.parse(getStoredAccountValue(LINKED_GAMES_DETAILS_KEY) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) { return []; }
     }
 
     function savePhoneToAccount(phone) {
       setStoredAccountValue(ACCOUNT_PHONE_KEY, String(phone || '').trim());
       renderLoginStatusButton();
-      updateLegacyCodeBoxVisibility();
     }
 
     function saveLinkedGames(games) {
@@ -909,51 +976,25 @@
       setStoredAccountValue(LAST_SYNC_KEY, nowText());
     }
 
-    function readLinkedGameDetails() {
-      try {
-        const parsed = JSON.parse(getStoredAccountValue(LINKED_GAMES_DETAILS_KEY) || '[]');
-        return Array.isArray(parsed) ? parsed : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
     function renderLoginStatusButton() {
       if (!loginStatusButton) return;
       const phone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
       const name = formatAccountName(getConfirmedAccountName());
-
-      if (name) {
-        loginStatusButton.textContent = `مرحبًا ${name}`;
-      } else if (phone) {
-        loginStatusButton.textContent = 'تم الدخول';
-      } else {
-        loginStatusButton.textContent = 'تسجيل الدخول';
-      }
+      if (name) loginStatusButton.textContent = `مرحبًا ${name}`;
+      else if (phone) loginStatusButton.textContent = 'تم الدخول';
+      else loginStatusButton.textContent = 'تسجيل الدخول';
     }
 
-    function resetMainMessages() {
-      if (statusMessage) {
-        statusMessage.className = 'status-message';
-        statusMessage.textContent = '';
-      }
-
-      if (emptyState) {
-        emptyState.classList.remove('is-visible');
-        emptyState.textContent = messages.empty;
-      }
+    function resetMessages() {
+      if (statusMessage) { statusMessage.className = 'status-message'; statusMessage.textContent = ''; }
+      if (legacyCodeMessage) { legacyCodeMessage.className = 'status-message'; legacyCodeMessage.textContent = ''; }
+      if (emptyState) { emptyState.classList.remove('is-visible'); emptyState.textContent = messages.empty; }
     }
 
-    function showMainStatus(type, text) {
+    function showStatus(type, text) {
       if (!statusMessage) return;
       statusMessage.className = `status-message ${type}`;
       statusMessage.textContent = text;
-    }
-
-    function showEmptyState(text) {
-      if (!emptyState) return;
-      emptyState.textContent = text || messages.empty;
-      emptyState.classList.add('is-visible');
     }
 
     function showCodeStatus(type, text) {
@@ -962,56 +1003,78 @@
       legacyCodeMessage.textContent = text;
     }
 
-    function setLookupLoading(isLoading, text) {
+    function showEmptyState(text) {
+      if (!emptyState) return;
+      emptyState.textContent = text || messages.empty;
+      emptyState.classList.add('is-visible');
+    }
+
+    function setButtonLoading(isLoading, text) {
       if (!button) return;
       button.classList.toggle('is-loading', !!isLoading);
       button.disabled = !!isLoading;
-      if (label) label.textContent = isLoading ? (text || messages.loading) : 'التحقق من الرقم';
+      if (label) label.textContent = isLoading ? text : (codeMode ? 'ربط الكود برقم الجوال' : 'استرجاع الألعاب برقم الجوال');
     }
 
-    function setSyncLoading(isLoading) {
-      if (!syncAccountButton) return;
-      const syncLabel = syncAccountButton.querySelector('.sync-label');
-      syncAccountButton.classList.toggle('is-loading', !!isLoading);
-      syncAccountButton.disabled = !!isLoading;
-      if (syncLabel) syncLabel.textContent = isLoading ? 'جاري تحديث الألعاب...' : 'تحديث ربط الألعاب';
+    function setMode(nextMode) {
+      codeMode = !!nextMode;
+      if (codeInput) codeInput.hidden = !codeMode;
+      if (button) button.classList.toggle('code-mode', codeMode);
+      if (modeToggle) {
+        modeToggle.classList.toggle('is-code-mode', codeMode);
+        modeToggle.setAttribute('aria-pressed', codeMode ? 'true' : 'false');
+      }
+      if (label) label.textContent = codeMode ? 'ربط الكود برقم الجوال' : 'استرجاع الألعاب برقم الجوال';
+      if (formModeNote) {
+        formModeNote.textContent = codeMode
+          ? 'اكتب رقم الجوال ثم كود التفعيل السابق لربطه بحسابك.'
+          : 'سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.';
+      }
+      if (modeToggleTitle) {
+        modeToggleTitle.textContent = codeMode
+          ? 'استرجاع الألعاب برقم الجوال فقط'
+          : 'لديك كود قديم؟ اربطه برقم جوالك';
+      }
+      if (modeToggleSubtitle) {
+        modeToggleSubtitle.textContent = codeMode
+          ? 'اضغط هنا للعودة إلى الاسترجاع بدون كود تفعيل.'
+          : 'اضغط هنا إذا كان لديك كود تفعيل سابق وتريد إضافته لحسابك.';
+      }
+      resetMessages();
+      if (codeMode && codeInput) window.setTimeout(() => codeInput.focus(), 120);
     }
+
+    if (modeToggle) modeToggle.addEventListener('click', () => setMode(!codeMode));
+    if (codeInput) codeInput.addEventListener('input', () => { codeInput.value = codeInput.value.toUpperCase().replace(/\s+/g, ''); });
 
     async function api(path, options = {}) {
       const response = await fetch(API_BASE + path, {
         method: options.method || 'GET',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          ...(options.headers || {})
-        },
+        headers: { 'Content-Type': 'application/json; charset=utf-8', ...(options.headers || {}) },
         body: options.body ? JSON.stringify(options.body) : undefined
       });
-
       let data = {};
       try { data = await response.json(); } catch (e) {}
-
       if (!response.ok || data.ok === false) {
         const error = new Error(data.message || messages.network);
         error.data = data;
         error.status = response.status;
         throw error;
       }
-
       return data;
     }
 
-    async function loginSilently(phone, displayName) {
+    async function loginSilently(phone) {
       try {
         const data = await api('/api/auth/login', {
           method: 'POST',
           body: {
             phone,
-            display_name: displayName || getConfirmedAccountName() || '',
+            display_name: getConfirmedAccountName() || '',
             device_token: getDeviceToken(),
             is_temporary: false
           }
         });
-
         if (data.token) setStoredAccountValue(TOKEN_KEY, data.token);
         if (data.customer && data.customer.phone) setStoredAccountValue(ACCOUNT_PHONE_KEY, data.customer.phone);
         if (Array.isArray(data.games)) saveLinkedGames(data.games);
@@ -1023,238 +1086,111 @@
       return Array.from(document.querySelectorAll('.game-row[data-game-id]'));
     }
 
-    function formatFoundTitle(count) {
-      if (count === 1) return 'وجدنا لعبة واحدة على هذا الرقم';
-      if (count === 2) return 'وجدنا لعبتين على هذا الرقم';
-      if (count === 0) return 'لم نجد ألعابًا على هذا الرقم';
-      return `وجدنا ${count} ألعاب على هذا الرقم`;
-    }
-
-    function renderOwnedPills(games) {
-      if (!ownedGamesPills) return;
-      ownedGamesPills.innerHTML = '';
-
-      const safeGames = Array.isArray(games) ? games : [];
-      if (!safeGames.length) {
-        const pill = document.createElement('span');
-        pill.className = 'owned-pill';
-        pill.textContent = 'لا توجد ألعاب مرتبطة بعد';
-        ownedGamesPills.appendChild(pill);
-        return;
-      }
-
-      safeGames.forEach(game => {
-        const pill = document.createElement('span');
-        pill.className = 'owned-pill';
-        pill.textContent = game.name || gameLabel(game.id || game.slug);
-        ownedGamesPills.appendChild(pill);
-      });
-    }
-
     function updateAvailableGames(ownedGames) {
       const ownedIds = new Set((ownedGames || []).map(game => String(game.id || game.slug || '')).filter(Boolean));
-      const rows = getStaticGameRows();
-      let visibleUnowned = 0;
-
-      rows.forEach(row => {
+      getStaticGameRows().forEach(row => {
         const id = row.dataset.gameId;
-
+        const action = row.querySelector('.game-action');
         if (id === 'bundle') {
           row.hidden = false;
           return;
         }
-
         if (ownedIds.has(id)) {
           row.hidden = true;
           row.classList.add('is-owned');
+          if (action) {
+            action.textContent = 'العب';
+            const ownedGame = (ownedGames || []).find(game => String(game.id || game.slug) === id);
+            const playUrl = (ownedGame && ownedGame.play_url) || GAME_PLAY_URLS[id] || action.href;
+            if (playUrl) action.href = playUrl;
+          }
         } else {
           row.hidden = false;
           row.classList.remove('is-owned');
-          visibleUnowned += 1;
         }
       });
-
-      if (availableGamesTitle) availableGamesTitle.textContent = ownedIds.size ? 'الألعاب التي ما زالت متاحة للشراء' : 'الألعاب المتوفرة للشراء';
-      if (availableGamesLead) {
-        availableGamesLead.textContent = ownedIds.size
-          ? 'استبعدنا لك الألعاب التي ظهرت على الرقم الحالي حتى يبقى المتجر واضحًا لك وينقصك فقط.'
-          : 'هذه هي الألعاب المتاحة الآن في متجر صندوق المسابقات، ويمكنك شراء ما يناسبك والعودة لتفعيله من هنا.';
-      }
-
-      if (allOwnedNotice) allOwnedNotice.hidden = visibleUnowned > 0;
     }
 
     function applyLookupData(data, phone, options = {}) {
       const games = Array.isArray(data.games) ? data.games : [];
       const ownedCount = Number(data.owned_count ?? games.length ?? 0);
       const resolvedPhone = data.phone || phone;
-
       savePhoneToAccount(resolvedPhone);
       saveLinkedGames(games);
-      renderLoginStatusButton();
-
-      if (lookupResultPanel) lookupResultPanel.hidden = ownedCount === 0;
-      if (resultTitle) resultTitle.textContent = formatFoundTitle(ownedCount);
-      if (resultPhonePill) resultPhonePill.textContent = resolvedPhone;
-      renderOwnedPills(games);
       updateAvailableGames(games);
-
-      if (ownedCount > 0) {
-        showMainStatus('success', options.successMessage || data.message || messages.found);
-      } else {
-        if (lookupResultPanel) lookupResultPanel.hidden = true;
-        showEmptyState(data.message || messages.empty);
-      }
-
-      if (data.customer_exists || ownedCount > 0 || data.customer) {
-        loginSilently(resolvedPhone, getConfirmedAccountName());
-      }
+      renderLoginStatusButton();
+      if (ownedCount > 0) showStatus('success', options.successMessage || data.message || messages.found);
+      else showEmptyState(data.message || messages.empty);
+      if (data.customer_exists || ownedCount > 0 || data.customer) loginSilently(resolvedPhone);
     }
 
-    async function lookupPurchases(phone, mode = 'lookup') {
-      const endpoint = mode === 'sync' ? '/api/purchases/sync' : '/api/purchases/lookup';
-      const data = await api(endpoint, {
+    async function lookupPurchases(phone) {
+      const data = await api('/api/purchases/lookup', { method: 'POST', body: { phone } });
+      applyLookupData(data, phone);
+    }
+
+    async function linkLegacyCode(phone, code) {
+      const data = await api('/api/legacy/link', {
         method: 'POST',
-        body: { phone }
+        body: { phone, code, display_name: getConfirmedAccountName() || '' }
       });
-      applyLookupData(data, phone, {
-        successMessage: mode === 'sync'
-          ? 'تم تحديث ربط الألعاب وإضافة أي مشتريات ظهرت على الرقم.'
-          : undefined
-      });
-      return data;
-    }
-
-    if (syncAccountButton) {
-      syncAccountButton.addEventListener('click', async () => {
-        const phone = phoneInput ? phoneInput.value.trim() : '';
-
-        resetMainMessages();
-
-        if (!isValidSaudiPhone(phone)) {
-          showMainStatus('error', messages.invalidPhone);
-          return;
-        }
-
-        try {
-          setSyncLoading(true);
-          await lookupPurchases(phone, 'sync');
-        } catch (error) {
-          showMainStatus('error', error.message || messages.network);
-        } finally {
-          setSyncLoading(false);
-        }
-      });
-    }
-
-    if (legacyToggle && legacyCodeBox) {
-      legacyToggle.addEventListener('click', () => {
-        legacyCodeBox.hidden = !legacyCodeBox.hidden;
-      });
-    }
-
-    if (legacyCodeButton) {
-      legacyCodeButton.addEventListener('click', async () => {
-        const phone = phoneInput ? phoneInput.value.trim() : '';
-        const code = legacyCodeInput ? legacyCodeInput.value.trim() : '';
-
-        if (!isValidSaudiPhone(phone)) {
-          showCodeStatus('error', legacyCodeBox.dataset.missingPhoneMessage || 'اكتب رقم الجوال أولًا، ثم أدخل كود التفعيل السابق.');
-          return;
-        }
-
-        if (!code) {
-          showCodeStatus('error', legacyCodeBox.dataset.invalidMessage || 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
-          return;
-        }
-
-        legacyCodeButton.disabled = true;
-        legacyCodeButton.style.cursor = 'wait';
-        legacyCodeButton.textContent = 'جاري ربط الكود...';
-
-        try {
-          const data = await api('/api/legacy/link', {
-            method: 'POST',
-            body: {
-              phone,
-              code,
-              display_name: getConfirmedAccountName() || ''
-            }
-          });
-
-          savePhoneToAccount(phone);
-          if (Array.isArray(data.games)) saveLinkedGames(data.games);
-          renderLoginStatusButton();
-          applyLookupData({
-            ok: true,
-            phone,
-            customer_exists: true,
-            customer: data.customer,
-            owned_count: Array.isArray(data.games) ? data.games.length : 0,
-            games: data.games || [],
-            message: data.message || legacyCodeBox.dataset.successMessage
-          }, phone, { successMessage: data.message || legacyCodeBox.dataset.successMessage });
-
-          showCodeStatus('success', data.message || legacyCodeBox.dataset.successMessage || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.');
-          if (legacyCodeInput) legacyCodeInput.value = '';
-          loginSilently(phone, getConfirmedAccountName());
-        } catch (error) {
-          const err = error.data && error.data.error ? error.data.error : '';
-          if (err === 'CODE_ALREADY_USED') {
-            showCodeStatus('error', legacyCodeBox.dataset.usedMessage || error.message);
-          } else if (err === 'INVALID_CODE') {
-            showCodeStatus('error', legacyCodeBox.dataset.invalidMessage || error.message);
-          } else {
-            showCodeStatus('error', error.message || messages.network);
-          }
-        } finally {
-          legacyCodeButton.disabled = false;
-          legacyCodeButton.style.cursor = 'pointer';
-          legacyCodeButton.textContent = 'ربط الكود بحسابي';
-        }
-      });
+      savePhoneToAccount(phone);
+      if (Array.isArray(data.games)) saveLinkedGames(data.games);
+      applyLookupData({
+        ok: true,
+        phone,
+        customer_exists: true,
+        customer: data.customer,
+        owned_count: Array.isArray(data.games) ? data.games.length : 0,
+        games: data.games || [],
+        message: data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.'
+      }, phone, { successMessage: data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.' });
+      showCodeStatus('success', data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.');
+      if (codeInput) codeInput.value = '';
+      loginSilently(phone);
     }
 
     renderLoginStatusButton();
-    updateLegacyCodeBoxVisibility();
 
     if (phoneInput) {
-      phoneInput.addEventListener('input', updateLegacyCodeBoxVisibility);
       const storedPhone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
       if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
-
-      const details = readLinkedGameDetails();
-      if (storedPhone && details.length) {
-        applyLookupData({
-          ok: true,
-          phone: storedPhone,
-          customer_exists: true,
-          owned_count: details.length,
-          games: details,
-          message: 'هذه الألعاب محفوظة من آخر تحديث.'
-        }, storedPhone, { successMessage: 'هذه الألعاب محفوظة من آخر تحديث.' });
-      }
+      const cachedGames = readLinkedGameDetails();
+      if (cachedGames.length) updateAvailableGames(cachedGames);
     }
+
+    setMode(false);
 
     if (form && button) {
       form.addEventListener('submit', async event => {
         event.preventDefault();
-        resetMainMessages();
-
+        resetMessages();
         const phone = phoneInput ? phoneInput.value.trim() : '';
-
         if (!isValidSaudiPhone(phone)) {
-          showMainStatus('error', messages.invalidPhone);
+          showStatus('error', messages.invalidPhone);
           return;
         }
-
         try {
-          setLookupLoading(true, messages.loading);
-          await lookupPurchases(phone, 'lookup');
+          if (codeMode) {
+            const code = codeInput ? codeInput.value.trim() : '';
+            if (!code) {
+              showCodeStatus('error', messages.invalidCode);
+              return;
+            }
+            setButtonLoading(true, messages.loadingCode);
+            await linkLegacyCode(phone, code);
+          } else {
+            setButtonLoading(true, messages.loadingLookup);
+            await lookupPurchases(phone);
+          }
         } catch (error) {
-          showMainStatus('error', error.message || messages.network);
+          const err = error.data && error.data.error ? error.data.error : '';
+          if (codeMode && err === 'CODE_ALREADY_USED') showCodeStatus('error', 'هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم.');
+          else if (codeMode && err === 'INVALID_CODE') showCodeStatus('error', 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
+          else if (codeMode) showCodeStatus('error', error.message || messages.network);
+          else showStatus('error', error.message || messages.network);
         } finally {
-          setLookupLoading(false);
+          setButtonLoading(false);
         }
       });
     }
