@@ -615,6 +615,111 @@
         scroll-behavior:auto !important;
       }
     }
+  
+    /* ✅ v10: تثبيت جذري للشريط السفلي على iOS/Safari + تحسين زر ربط الكود */
+    :root{
+      --bottom-nav-real-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      --bottom-nav-visual-top:calc(100dvh - var(--bottom-nav-real-height));
+      --visual-viewport-bottom:0px !important;
+    }
+
+    html,
+    body{
+      width:100%;
+      min-height:100%;
+      overflow-x:hidden !important;
+    }
+
+    .app{
+      padding-bottom:calc(var(--bottom-nav-real-height) + 34px) !important;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:var(--bottom-nav-visual-top) !important;
+      bottom:auto !important;
+      width:100% !important;
+      height:var(--bottom-nav-real-height) !important;
+      z-index:2147483000 !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      contain:layout paint style !important;
+      will-change:top !important;
+      pointer-events:auto !important;
+    }
+
+    .content-inner{
+      gap:clamp(12px, 1.5vw, 20px) !important;
+    }
+
+    .lookup-form{
+      gap:clamp(10px, 1.3vw, 14px) !important;
+    }
+
+    .activation-mode-toggle{
+      width:100% !important;
+      min-height:clamp(56px, 6vw, 72px) !important;
+      border:clamp(3px, .35vw, 5px) solid var(--line) !important;
+      border-radius:clamp(16px, 1.6vw, 24px) !important;
+      background:linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%) !important;
+      color:#fff !important;
+      padding:clamp(10px, 1.6vw, 18px) clamp(14px, 2vw, 24px) !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      text-align:center !important;
+      box-shadow:0 7px 0 rgba(0,0,0,.20) !important;
+      cursor:pointer !important;
+      margin-top:2px !important;
+      transition:transform .16s ease, filter .16s ease, background .16s ease !important;
+    }
+
+    .activation-mode-toggle:active{
+      transform:translateY(1px) !important;
+      box-shadow:0 6px 0 rgba(0,0,0,.20) !important;
+    }
+
+    .activation-mode-toggle.is-code-mode{
+      background:linear-gradient(180deg, #0b5f87 0%, #04384f 100%) !important;
+    }
+
+    .mode-toggle-title{
+      color:#fff !important;
+      font-weight:950 !important;
+      font-size:clamp(17px, 1.65vw, 25px) !important;
+      line-height:1.35 !important;
+    }
+
+    .mode-toggle-subtitle{
+      margin:clamp(4px, .8vw, 8px) 0 0 !important;
+      padding:0 clamp(8px, 1.2vw, 14px) !important;
+      color:#3e4a5b !important;
+      font-weight:820 !important;
+      font-size:clamp(12px, 1.05vw, 16px) !important;
+      line-height:1.65 !important;
+      text-align:center !important;
+    }
+
+    .legacy-code-field{
+      margin-top:0 !important;
+    }
+
+    .message-area{
+      min-height:auto !important;
+      gap:8px !important;
+    }
+
+    @supports not (height:100dvh){
+      .bottom-nav{
+        top:auto !important;
+        bottom:0 !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -678,8 +783,8 @@
 
             <button class="activation-mode-toggle" id="legacyModeToggle" type="button" aria-pressed="false">
               <span class="mode-toggle-title">لديك كود قديم؟ اربطه برقم جوالك</span>
-              <span class="mode-toggle-subtitle">اضغط هنا إذا كان لديك كود تفعيل سابق وتريد إضافته لحسابك.</span>
             </button>
+            <p class="mode-toggle-subtitle" id="modeToggleSubtitle">اضغط هنا إذا كان لديك كود تفعيل سابق وتريد إضافته لحسابك.</p>
 
             <div class="message-area" aria-live="polite">
               <div class="status-message" id="statusMessage" data-hook="status-message"></div>
@@ -853,10 +958,29 @@
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
       if (!nav) return;
+
       const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
-      if (navHeight > 0) document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+      if (navHeight > 0) {
+        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+        document.documentElement.style.setProperty('--bottom-nav-real-height', `${navHeight}px`);
+      }
+
+      const viewport = window.visualViewport;
+      const viewportTop = viewport ? viewport.offsetTop : 0;
+      const viewportHeight = viewport ? viewport.height : window.innerHeight;
+      const top = Math.max(0, Math.round(viewportTop + viewportHeight - (navHeight || nav.offsetHeight || 0)));
+
+      document.documentElement.style.setProperty('--bottom-nav-visual-top', `${top}px`);
       document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
-      nav.style.bottom = '0px';
+
+      nav.style.position = 'fixed';
+      nav.style.left = '0px';
+      nav.style.right = '0px';
+      nav.style.top = `${top}px`;
+      nav.style.bottom = 'auto';
+      nav.style.transform = 'translate3d(0,0,0)';
+      nav.style.webkitTransform = 'translate3d(0,0,0)';
+      nav.style.zIndex = '2147483000';
     }
 
     window.addEventListener('load', () => {
@@ -875,6 +999,8 @@
       window.visualViewport.addEventListener('resize', stabilizeBottomNav);
       window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
     }
+    window.addEventListener('scroll', stabilizeBottomNav, { passive:true });
+    window.setInterval(stabilizeBottomNav, 1200);
     stabilizeBottomNav();
 
     const form = document.getElementById('purchaseLookupForm');
@@ -885,7 +1011,7 @@
     const formModeNote = document.getElementById('formModeNote');
     const modeToggle = document.getElementById('legacyModeToggle');
     const modeToggleTitle = modeToggle ? modeToggle.querySelector('.mode-toggle-title') : null;
-    const modeToggleSubtitle = modeToggle ? modeToggle.querySelector('.mode-toggle-subtitle') : null;
+    const modeToggleSubtitle = document.getElementById('modeToggleSubtitle');
     const statusMessage = document.getElementById('statusMessage');
     const legacyCodeMessage = document.getElementById('legacyCodeMessage');
     const emptyState = document.getElementById('emptyState');
