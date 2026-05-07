@@ -1702,9 +1702,6 @@
         <article
           class="game-card"
           data-game-id="bra-alsalfah"
-          data-details-url="bra-alsalfah.html"
-          data-buy-url="https://sandooq-m.com/YzZqAlO"
-          data-play-url="https://bara.sandooq-games.com/single.html"
         >
           <div class="cover cover-photo">
             <picture>
@@ -1757,6 +1754,9 @@
         <article
           class="game-card"
           data-game-id="sandooq"
+          data-details-url="sandooq.html"
+          data-buy-url="https://sandooq-m.com/bwdZAqe"
+          data-play-url="https://game2.sandooq-games.com/start.html?v=1774023618302"
         >
           <div class="cover cover-photo">
             <picture>
@@ -2121,9 +2121,9 @@
       'horof': 'https://horof.sandooq-games.com',
       'horof-edu': 'https://horof.sandooq-games.com',
       'bdon-kalam': 'https://bdon-kalam.sandooq-games.com',
-      'bra-alsalfah': 'https://bara.sandooq-games.com/single.html',
+      'bra-alsalfah': 'https://bra-alsalfah.sandooq-games.com',
       'family-feud': 'https://family-feud.sandooq-games.com',
-      'sandooq': 'sandooq.html'
+      'sandooq': 'https://game2.sandooq-games.com/start.html?v=1774023618302'
     };
 
     const GAME_DETAILS_URLS = {
@@ -2132,7 +2132,7 @@
       'bdon-kalam': 'bdon-kalam.html',
       'bra-alsalfah': 'bra-alsalfah.html',
       'family-feud': 'family-feud.html',
-      'sandooq': 'sandooq.html'
+      'sandooq': 'https://game2.sandooq-games.com/start.html?v=1774023618302'
     };
 
     const horofActivationKeys = [
@@ -2472,32 +2472,29 @@
     }
 
     function getPlayUrl(card, gameId, detailsMap) {
-      // روابط التشغيل النهائية نثبتها من ملف الموقع نفسه،
-      // ولا نأخذ play_url من API أولًا حتى لا يرجع رابط قديم من قاعدة البيانات.
-      // مثال مهم: برا السالفة رابطها الصحيح https://bara.sandooq-games.com/single.html
-      const cardPlay = String(card.dataset.playUrl || '').trim();
-      if (cardPlay) return cardPlay;
-
-      const fixedPlay = String(GAME_PLAY_URLS[gameId] || '').trim();
-      if (fixedPlay) return fixedPlay;
-
       const apiGame = detailsMap.get(gameId);
       const apiPlay = apiGame && String(apiGame.play_url || '').trim();
       if (apiPlay) return apiPlay;
 
-      return GAME_DETAILS_URLS[gameId] || '#';
+      const cardPlay = String(card.dataset.playUrl || '').trim();
+      if (cardPlay) return cardPlay;
+
+      return GAME_PLAY_URLS[gameId] || GAME_DETAILS_URLS[gameId] || '#';
     }
 
     function buildPlayUrlWithAccess(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
 
       // لا نضع بيانات الدخول داخل href مباشرة.
-      // الضغط الحقيقي يتم اعتراضه بالأسفل ويبني الرابط النهائي بـ sg_token + sg_temp=1 + sg_game.
+      // الضغط الحقيقي يتم اعتراضه بالأسفل ويبني رابطًا موثقًا بـ sg_token + sg_temp=1 + sg_game.
       return playUrl;
     }
 
     async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
+
+      // لعبة صندوق المسابقات رابط شرح/تحميل فقط، ولا تحتاج تمرير توكن أو بيانات دخول داخل الرابط.
+      if (gameId === 'sandooq') return playUrl;
 
       const token = readLocalValue(TOKEN_KEY).trim();
       if (!token) return playUrl;
@@ -2574,15 +2571,13 @@
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
       refreshAccountFromApi().then(refreshAccountUi);
-      detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
     });
 
     document.addEventListener('click', async event => {
       const link = event.target && event.target.closest ? event.target.closest('.game-btn.play-action') : null;
       if (!link) return;
 
-      const card = link.closest('.game-card');
-      const gameId = String(link.dataset.gameId || (card && card.dataset.gameId) || '').trim();
+      const gameId = String(link.dataset.gameId || (link.closest('.game-card') && link.closest('.game-card').dataset.gameId) || '');
       if (!gameId) return;
 
       const basePlayUrl = link.dataset.basePlayUrl || link.getAttribute('href') || '#';
