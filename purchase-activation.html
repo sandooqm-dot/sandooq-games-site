@@ -626,15 +626,6 @@
         scroll-behavior:auto !important;
       }
     }
-
-    /* ✅ إصلاح الشريط السفلي فقط: لا يظهر فوق لوحة المفاتيح أثناء الكتابة */
-    body.keyboard-open .bottom-nav{
-      transform:translate3d(0, 125%, 0) !important;
-      -webkit-transform:translate3d(0, 125%, 0) !important;
-      opacity:0 !important;
-      pointer-events:none !important;
-    }
-
   </style>
 </head>
 
@@ -860,24 +851,21 @@
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
       }
 
-      const active = document.activeElement;
-      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
-      document.body.classList.toggle('keyboard-open', !!isTyping);
+      let bottomOffset = 0;
+      if (window.visualViewport) {
+        bottomOffset = Math.max(
+          0,
+          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
+        );
+      }
 
-      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
-      nav.style.bottom = '0px';
-      nav.style.top = 'auto';
+      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
     }
 
     stabilizeBottomNav();
     window.addEventListener('load', stabilizeBottomNav);
     window.addEventListener('resize', stabilizeBottomNav);
     window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
-    window.addEventListener('focusin', () => window.setTimeout(stabilizeBottomNav, 60), { passive:true });
-    window.addEventListener('focusout', () => {
-      window.setTimeout(stabilizeBottomNav, 80);
-      window.setTimeout(stabilizeBottomNav, 260);
-    }, { passive:true });
 
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', stabilizeBottomNav);
@@ -1146,6 +1134,28 @@
       writeLocalValue(LAST_SYNC_KEY, nowText());
     }
 
+    function readSavedLinkedGames() {
+      try {
+        const savedDetails = JSON.parse(readLocalValue(LINKED_GAMES_DETAILS_KEY) || '[]');
+        if (Array.isArray(savedDetails) && savedDetails.length) return savedDetails;
+      } catch (e) {}
+
+      try {
+        const savedIds = JSON.parse(readLocalValue(LINKED_GAMES_KEY) || '[]');
+        if (Array.isArray(savedIds) && savedIds.length) {
+          return savedIds.filter(Boolean).map(id => ({ id:String(id) }));
+        }
+      } catch (e) {}
+
+      return [];
+    }
+
+    function applySavedLookupState() {
+      const savedGames = readSavedLinkedGames();
+      if (!savedGames.length) return;
+      updateAvailableGames(savedGames);
+    }
+
     async function api(path, options = {}) {
       const response = await fetch(API_BASE + path, {
         method: options.method || 'GET',
@@ -1287,6 +1297,8 @@
       const storedPhone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
       if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
     }
+
+    applySavedLookupState();
 
     if (form && button) {
       form.addEventListener('submit', async event => {
