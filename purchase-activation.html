@@ -512,6 +512,107 @@
     .nav-item.nav-featured .nav-icon{border-radius:16px;background:rgba(4,56,79,.12);box-shadow:inset 0 0 0 1px rgba(4,56,79,.18);}
     .nav-item.nav-featured.active .nav-icon{background:transparent;box-shadow:none;}
 
+
+    .code-field{
+      width:100%;
+      min-height:clamp(54px, 6vw, 66px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(14px, 1.4vw, 20px);
+      background:#fff;
+      color:var(--ink);
+      padding:0 clamp(14px, 2vw, 22px);
+      font-weight:900;
+      font-size:clamp(16px, 1.45vw, 21px);
+      direction:ltr;
+      text-align:left;
+      outline:none;
+      box-shadow:inset 0 2px 0 rgba(0,0,0,.08);
+      text-transform:uppercase;
+    }
+
+    .code-field:focus{background:#fff;border-color:var(--blue-dark);}
+    .code-field::placeholder{color:#a7b0bf;text-transform:none;}
+    .legacy-code-field[hidden]{display:none !important;}
+
+
+    .legacy-code-panel{
+      display:grid;
+      gap:10px;
+      margin-top:0;
+    }
+
+    .legacy-code-panel[hidden]{display:none !important;}
+
+    .legacy-code-submit{
+      min-height:clamp(54px, 6vw, 66px);
+      border:3px solid var(--line);
+      border-radius:999px;
+      background:var(--green);
+      color:#fff;
+      box-shadow:0 6px 0 rgba(0,0,0,.22);
+      font-weight:950;
+      font-size:clamp(16px, 1.4vw, 21px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+    }
+
+    .legacy-code-submit[disabled]{cursor:wait;opacity:.78;}
+
+    .activation-mode-toggle{
+      width:100%;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(16px, 1.6vw, 24px);
+      background:#fff8ed;
+      color:var(--ink);
+      padding:clamp(13px, 2vw, 22px);
+      display:grid;
+      gap:6px;
+      text-align:center;
+      box-shadow:0 6px 0 rgba(0,0,0,.14);
+      cursor:pointer;
+      transition:transform .16s ease, filter .16s ease, background .16s ease;
+    }
+
+    .activation-mode-toggle:active{transform:translateY(1px);box-shadow:0 5px 0 rgba(0,0,0,.14);}
+    .activation-mode-toggle.is-code-mode{background:#eaf8ff;}
+
+    .mode-toggle-title{
+      font-weight:950;
+      font-size:clamp(17px, 1.7vw, 26px);
+      line-height:1.35;
+    }
+
+    .mode-toggle-subtitle{
+      color:var(--muted);
+      font-weight:800;
+      font-size:clamp(12px, 1.05vw, 16px);
+      line-height:1.65;
+    }
+
+    :root{--visual-viewport-bottom:0px !important;}
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:0 !important;
+      z-index:9999 !important;
+      width:100% !important;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      contain:layout paint style !important;
+      will-change:transform !important;
+    }
+
+    .app{padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + 26px) !important;}
+
     @media (max-width:560px){
       .section-head{display:grid;}
       .section-badge{justify-self:start;}
@@ -541,12 +642,117 @@
         scroll-behavior:auto !important;
       }
     }
+  
+    /* ✅ v10: تثبيت جذري للشريط السفلي على iOS/Safari + تحسين زر ربط الكود */
+    :root{
+      --bottom-nav-real-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      --bottom-nav-visual-top:calc(100dvh - var(--bottom-nav-real-height));
+      --visual-viewport-bottom:0px !important;
+    }
 
+    html,
+    body{
+      width:100%;
+      min-height:100%;
+      overflow-x:hidden !important;
+    }
 
-    /* ✅ طريقة الشريط السفلي المعتمدة من صفحة index: ثابت + زوايا علوية ناعمة + بدون طفو */
+    .app{
+      padding-bottom:calc(var(--bottom-nav-real-height) + 34px) !important;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:var(--bottom-nav-visual-top) !important;
+      bottom:auto !important;
+      width:100% !important;
+      height:var(--bottom-nav-real-height) !important;
+      z-index:2147483000 !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      contain:layout paint style !important;
+      will-change:top !important;
+      pointer-events:auto !important;
+    }
+
+    .content-inner{
+      gap:clamp(12px, 1.5vw, 20px) !important;
+    }
+
+    .lookup-form{
+      gap:clamp(10px, 1.3vw, 14px) !important;
+    }
+
+    .activation-mode-toggle{
+      width:100% !important;
+      min-height:clamp(56px, 6vw, 72px) !important;
+      border:clamp(3px, .35vw, 5px) solid var(--line) !important;
+      border-radius:clamp(16px, 1.6vw, 24px) !important;
+      background:linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%) !important;
+      color:#fff !important;
+      padding:clamp(10px, 1.6vw, 18px) clamp(14px, 2vw, 24px) !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      text-align:center !important;
+      box-shadow:0 7px 0 rgba(0,0,0,.20) !important;
+      cursor:pointer !important;
+      margin-top:2px !important;
+      transition:transform .16s ease, filter .16s ease, background .16s ease !important;
+    }
+
+    .activation-mode-toggle:active{
+      transform:translateY(1px) !important;
+      box-shadow:0 6px 0 rgba(0,0,0,.20) !important;
+    }
+
+    .activation-mode-toggle.is-code-mode{
+      background:linear-gradient(180deg, #0b5f87 0%, #04384f 100%) !important;
+    }
+
+    .mode-toggle-title{
+      color:#fff !important;
+      font-weight:950 !important;
+      font-size:clamp(17px, 1.65vw, 25px) !important;
+      line-height:1.35 !important;
+    }
+
+    .mode-toggle-subtitle{
+      margin:clamp(4px, .8vw, 8px) 0 0 !important;
+      padding:0 clamp(8px, 1.2vw, 14px) !important;
+      color:#3e4a5b !important;
+      font-weight:820 !important;
+      font-size:clamp(12px, 1.05vw, 16px) !important;
+      line-height:1.65 !important;
+      text-align:center !important;
+    }
+
+    .legacy-code-field{
+      margin-top:0 !important;
+    }
+
+    .message-area{
+      min-height:auto !important;
+      gap:8px !important;
+    }
+
+    @supports not (height:100dvh){
+      .bottom-nav{
+        top:auto !important;
+        bottom:0 !important;
+      }
+    }
+
+  
+
+    /* ✅ تثبيت نهائي للشريط السفلي: لا يرتفع مع الكيبورد ولا يسبب حركة أفقية */
     :root{
       --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      --keyboard-offset:0px !important;
+      --bottom-nav-real-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
       --visual-viewport-bottom:0px !important;
       --bottom-nav-visual-top:auto !important;
     }
@@ -562,7 +768,6 @@
       width:100% !important;
       max-width:100% !important;
       overflow-x:hidden !important;
-      overflow-y:visible !important;
       padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
     }
 
@@ -583,9 +788,6 @@
       contain:none !important;
       will-change:auto !important;
       margin:0 !important;
-      border-top-left-radius:clamp(22px, 5vw, 36px) !important;
-      border-top-right-radius:clamp(22px, 5vw, 36px) !important;
-      overflow:hidden !important;
     }
 
     .bottom-nav-inner{
@@ -594,20 +796,8 @@
     }
 
     body.keyboard-open .bottom-nav{
-      bottom:calc(var(--keyboard-offset, 0px) * -1) !important;
+      bottom:0 !important;
       top:auto !important;
-      transform:none !important;
-      -webkit-transform:none !important;
-      opacity:1 !important;
-      pointer-events:auto !important;
-    }
-
-    body.keyboard-open .app{
-      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
-    }
-
-    .bottom-nav .nav-item{
-      -webkit-tap-highlight-color:transparent;
     }
 
   </style>
@@ -656,17 +846,39 @@
 
             <button class="lookup-btn" id="lookupButton" data-hook="lookup-button" type="submit">
               <span class="spinner" aria-hidden="true"></span>
-              <span class="button-label">التحقق من الرقم</span>
+              <span class="button-label">استرجاع الألعاب برقم الجوال</span>
             </button>
 
-            <p class="form-note">سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.</p>
+            <p class="form-note" id="formModeNote">سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.</p>
 
+            <button class="activation-mode-toggle" id="legacyModeToggle" type="button" aria-expanded="false" aria-controls="legacyCodePanel">
+              <span class="mode-toggle-title">لديك كود قديم؟ اربطه برقم جوالك</span>
+            </button>
+
+            <div class="legacy-code-panel" id="legacyCodePanel" hidden>
+              <input
+                class="code-field legacy-code-field"
+                id="legacyCodeInput"
+                data-hook="legacy-code-input"
+                type="text"
+                placeholder="اكتب كود التفعيل هنا"
+                autocomplete="off"
+                aria-label="كود التفعيل السابق"
+              />
+
+              <button class="legacy-code-submit" id="legacyCodeSubmit" type="button">
+                <span class="button-label">ربط الكود برقم الجوال</span>
+              </button>
+            </div>
             <div class="message-area" aria-live="polite">
               <div class="status-message" id="statusMessage" data-hook="status-message"></div>
+              <div class="status-message" id="legacyCodeMessage" data-hook="legacy-code-message"></div>
               <div class="empty-state" id="emptyState" data-hook="empty-state">لم نجد مشتريات على هذا الرقم.</div>
             </div>
           </form>
         </section>
+
+        
 
         <section class="section-card" aria-label="الألعاب المتوفرة للشراء">
           <div class="section-head">
@@ -777,6 +989,35 @@
   </nav>
 
   <script>
+    const API_BASE = 'https://sandooq-games-api.sandooq-m.workers.dev';
+    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
+    const TOKEN_KEY = 'sandooq_auth_token_v1';
+    const DEVICE_KEY = 'sandooq_device_token_v1';
+    const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
+    const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
+    const LAST_SYNC_KEY = 'sandooq_last_sync_v1';
+
+    const GAME_NAMES = {
+      bundle:'بكج ألعاب صندوق المسابقات',
+      horof:'سباق الحروف',
+      'horof-edu':'سباق الحروف التعليمية',
+      'bdon-kalam':'بدون كلام',
+      'bra-alsalfah':'برا السالفة',
+      'family-feud':'فاميلي فيود',
+      sandooq:'صندوق المسابقات'
+    };
+
+    const GAME_PLAY_URLS = {
+      horof:'https://horof.sandooq-games.com',
+      'horof-edu':'https://horof.sandooq-games.com',
+      'bdon-kalam':'https://bdon-kalam.sandooq-games.com',
+      'bra-alsalfah':'https://bra-alsalfah.sandooq-games.com',
+      'family-feud':'https://family-feud.sandooq-games.com',
+      sandooq:''
+    };
+
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
@@ -798,16 +1039,6 @@
 
     navItems.forEach(item => item.addEventListener('click', () => setActiveNavItem(item)));
 
-    window.addEventListener('load', () => {
-      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
-      moveBottomNavIndicator(activeItem);
-      window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
-    });
-
-    window.addEventListener('resize', () => {
-      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
-    });
-
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
       if (!nav) return;
@@ -815,57 +1046,11 @@
       const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
       if (navHeight > 0) {
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+        document.documentElement.style.setProperty('--bottom-nav-real-height', `${navHeight}px`);
       }
 
-      let bottomOffset = 0;
-      if (window.visualViewport) {
-        bottomOffset = Math.max(
-          0,
-          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
-        );
-      }
-
-      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
-    }
-
-    stabilizeBottomNav();
-    window.addEventListener('load', stabilizeBottomNav);
-    window.addEventListener('resize', stabilizeBottomNav);
-    window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
-      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
-    }
-
-
-
-    /* ✅ نفس منطق تثبيت الشريط السفلي المعتمد في index */
-    function getKeyboardOffset() {
-      const vv = window.visualViewport;
-      const active = document.activeElement;
-      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
-      if (!vv || !isTyping) return 0;
-
-      const layoutHeight = Math.max(
-        document.documentElement.clientHeight || 0,
-        window.innerHeight || 0
-      );
-
-      const offset = Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
-      return offset > 80 ? offset : 0;
-    }
-
-    function stabilizeBottomNav() {
-      const nav = document.querySelector('.bottom-nav');
-      const navInner = document.querySelector('.bottom-nav-inner');
-      if (!nav) return;
-
-      const keyboardOffset = getKeyboardOffset();
-      document.documentElement.style.setProperty('--keyboard-offset', `${keyboardOffset}px`);
       document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
       document.documentElement.style.setProperty('--bottom-nav-visual-top', 'auto');
-      document.body.classList.toggle('keyboard-open', keyboardOffset > 0);
 
       nav.style.position = 'fixed';
       nav.style.left = '0px';
@@ -877,78 +1062,381 @@
       nav.style.webkitTransform = 'none';
       nav.style.zIndex = '2147483000';
 
-      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
-      if (navHeight > 0) {
-        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
-        const app = document.querySelector('.app');
-        if (app) app.style.paddingBottom = `${navHeight + 26}px`;
-      }
-
       const activeItem = document.querySelector('.bottom-nav .nav-item.active');
-      if (navInner && activeItem) moveBottomNavIndicator(activeItem);
+      moveBottomNavIndicator(activeItem);
     }
 
-    function scheduleBottomNavStabilize(delay = 0) {
-      window.setTimeout(stabilizeBottomNav, delay);
-      window.requestAnimationFrame(stabilizeBottomNav);
+    function markKeyboardState() {
+      const active = document.activeElement;
+      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
+      document.body.classList.toggle('keyboard-open', !!isTyping);
+      stabilizeBottomNav();
     }
 
     window.addEventListener('load', () => {
-      scheduleBottomNavStabilize();
-      scheduleBottomNavStabilize(250);
+      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
+      moveBottomNavIndicator(activeItem);
+      window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
+      stabilizeBottomNav();
     });
 
-    window.addEventListener('resize', () => scheduleBottomNavStabilize(), { passive:true });
-    window.addEventListener('orientationchange', () => {
-      scheduleBottomNavStabilize(80);
-      scheduleBottomNavStabilize(240);
-      scheduleBottomNavStabilize(520);
-    }, { passive:true });
-    window.addEventListener('focusin', () => scheduleBottomNavStabilize(60), { passive:true });
+    window.addEventListener('resize', () => {
+      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+      stabilizeBottomNav();
+    });
+
+    window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
+    window.addEventListener('scroll', stabilizeBottomNav, { passive:true });
+    window.addEventListener('focusin', () => window.setTimeout(markKeyboardState, 60), { passive:true });
     window.addEventListener('focusout', () => {
-      scheduleBottomNavStabilize(60);
-      scheduleBottomNavStabilize(260);
+      window.setTimeout(markKeyboardState, 80);
+      window.setTimeout(stabilizeBottomNav, 260);
     }, { passive:true });
+
     if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', () => scheduleBottomNavStabilize(), { passive:true });
-      window.visualViewport.addEventListener('scroll', () => scheduleBottomNavStabilize(), { passive:true });
+      window.visualViewport.addEventListener('resize', stabilizeBottomNav, { passive:true });
+      window.visualViewport.addEventListener('scroll', stabilizeBottomNav, { passive:true });
     }
-    scheduleBottomNavStabilize();
+
+    stabilizeBottomNav();
 
     const form = document.getElementById('purchaseLookupForm');
+    const phoneInput = document.getElementById('phoneInput');
+    const codeInput = document.getElementById('legacyCodeInput');
+    const codePanel = document.getElementById('legacyCodePanel');
+    const codeSubmitButton = document.getElementById('legacyCodeSubmit');
     const button = document.getElementById('lookupButton');
     const label = button ? button.querySelector('.button-label') : null;
+    const formModeNote = document.getElementById('formModeNote');
+    const modeToggle = document.getElementById('legacyModeToggle');
+    const modeToggleTitle = modeToggle ? modeToggle.querySelector('.mode-toggle-title') : null;
+    const modeToggleSubtitle = document.getElementById('modeToggleSubtitle');
     const statusMessage = document.getElementById('statusMessage');
+    const legacyCodeMessage = document.getElementById('legacyCodeMessage');
     const emptyState = document.getElementById('emptyState');
+    const loginStatusButton = document.getElementById('loginStatusButton');
+
+    let codeMode = false;
+
+    const messages = {
+      found: 'تم العثور على ألعابك وربطها بحسابك.',
+      empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.',
+      invalidPhone: 'أدخل رقم جوال صحيح يبدأ بـ 05.',
+      invalidCode: 'اكتب كود التفعيل السابق أولًا.',
+      loadingLookup: 'جاري استرجاع الألعاب…',
+      loadingCode: 'جاري ربط الكود…',
+      network: 'تعذر الاتصال بالخدمة. حاول مرة أخرى.'
+    };
+
+    function getStoredAccountValue(key) {
+      try { return String(localStorage.getItem(key) || '').trim(); } catch (e) { return ''; }
+    }
+
+    function setStoredAccountValue(key, value) {
+      try { localStorage.setItem(key, String(value || '')); } catch (e) {}
+    }
+
+    function isAccountNameConfirmed() {
+      return getStoredAccountValue(ACCOUNT_NAME_CONFIRMED_KEY) === '1';
+    }
+
+    function getConfirmedAccountName() {
+      return isAccountNameConfirmed() ? getStoredAccountValue(ACCOUNT_NAME_KEY) : '';
+    }
+
+    function cleanName(value) {
+      return String(value || '').trim().replace(/\s+/g, ' ').slice(0, 40);
+    }
+
+    function formatAccountName(name) {
+      const clean = cleanName(name);
+      if (!clean) return '';
+      return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
+    }
+
+    function isValidSaudiPhone(value) {
+      return /^05\d{8}$/.test(String(value || '').trim());
+    }
+
+    function nowText() {
+      try { return new Date().toLocaleString('ar-SA', { hour12:true }); }
+      catch (e) { return new Date().toISOString(); }
+    }
+
+    function getDeviceToken() {
+      let token = getStoredAccountValue(DEVICE_KEY);
+      if (token) return token;
+      try {
+        const bytes = new Uint8Array(16);
+        crypto.getRandomValues(bytes);
+        token = Array.from(bytes).map(byte => byte.toString(16).padStart(2, '0')).join('');
+      } catch (e) {
+        token = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      }
+      setStoredAccountValue(DEVICE_KEY, token);
+      return token;
+    }
+
+    function gameLabel(id) {
+      return GAME_NAMES[id] || String(id || 'لعبة');
+    }
+
+    function readLinkedGameDetails() {
+      try {
+        const parsed = JSON.parse(getStoredAccountValue(LINKED_GAMES_DETAILS_KEY) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) { return []; }
+    }
+
+    function savePhoneToAccount(phone) {
+      setStoredAccountValue(ACCOUNT_PHONE_KEY, String(phone || '').trim());
+      renderLoginStatusButton();
+    }
+
+    function saveLinkedGames(games) {
+      const safeGames = Array.isArray(games) ? games : [];
+      const ids = safeGames.map(game => String(game.id || game.slug || '')).filter(Boolean);
+      setStoredAccountValue(LINKED_GAMES_KEY, JSON.stringify(ids));
+      setStoredAccountValue(LINKED_GAMES_DETAILS_KEY, JSON.stringify(safeGames));
+      setStoredAccountValue(LAST_SYNC_KEY, nowText());
+    }
+
+    function renderLoginStatusButton() {
+      if (!loginStatusButton) return;
+      const phone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
+      const name = formatAccountName(getConfirmedAccountName());
+      if (name) loginStatusButton.textContent = `مرحبًا ${name}`;
+      else if (phone) loginStatusButton.textContent = 'تم الدخول';
+      else loginStatusButton.textContent = 'تسجيل الدخول';
+    }
+
+    function resetMessages() {
+      if (statusMessage) { statusMessage.className = 'status-message'; statusMessage.textContent = ''; }
+      if (legacyCodeMessage) { legacyCodeMessage.className = 'status-message'; legacyCodeMessage.textContent = ''; }
+      if (emptyState) { emptyState.classList.remove('is-visible'); emptyState.textContent = messages.empty; }
+    }
+
+    function showStatus(type, text) {
+      if (!statusMessage) return;
+      statusMessage.className = `status-message ${type}`;
+      statusMessage.textContent = text;
+    }
+
+    function showCodeStatus(type, text) {
+      if (!legacyCodeMessage) return;
+      legacyCodeMessage.className = `status-message ${type}`;
+      legacyCodeMessage.textContent = text;
+    }
+
+    function showEmptyState(text) {
+      if (!emptyState) return;
+      emptyState.textContent = text || messages.empty;
+      emptyState.classList.add('is-visible');
+    }
+
+    function setButtonLoading(isLoading, text) {
+      if (!button) return;
+      button.classList.toggle('is-loading', !!isLoading);
+      button.disabled = !!isLoading;
+      if (label) label.textContent = isLoading ? text : 'استرجاع الألعاب برقم الجوال';
+    }
+
+    function setMode(nextMode) {
+      codeMode = !!nextMode;
+      if (codePanel) codePanel.hidden = !codeMode;
+      if (modeToggle) {
+        modeToggle.classList.toggle('is-code-mode', codeMode);
+        modeToggle.setAttribute('aria-expanded', codeMode ? 'true' : 'false');
+      }
+      if (modeToggleTitle) modeToggleTitle.textContent = 'لديك كود قديم؟ اربطه برقم جوالك';
+      resetMessages();
+      if (codeMode && codeInput) window.setTimeout(() => codeInput.focus(), 120);
+    }
+
+    if (modeToggle) modeToggle.addEventListener('click', () => setMode(!codeMode));
+
+    if (codeInput) {
+      codeInput.addEventListener('input', () => { codeInput.value = codeInput.value.toUpperCase().replace(/\s+/g, ''); });
+      codeInput.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          submitLegacyCode();
+        }
+      });
+    }
+
+    function setCodeSubmitLoading(isLoading) {
+      if (!codeSubmitButton) return;
+      codeSubmitButton.disabled = !!isLoading;
+      const codeLabel = codeSubmitButton.querySelector('.button-label');
+      if (codeLabel) codeLabel.textContent = isLoading ? 'جاري ربط الكود…' : 'ربط الكود برقم الجوال';
+    }
+
+    async function submitLegacyCode() {
+      resetMessages();
+      const phone = phoneInput ? phoneInput.value.trim() : '';
+      const code = codeInput ? codeInput.value.trim() : '';
+
+      if (!isValidSaudiPhone(phone)) {
+        showCodeStatus('error', messages.invalidPhone);
+        return;
+      }
+
+      if (!code) {
+        showCodeStatus('error', messages.invalidCode);
+        return;
+      }
+
+      try {
+        setCodeSubmitLoading(true);
+        await linkLegacyCode(phone, code);
+      } catch (error) {
+        const err = error.data && error.data.error ? error.data.error : '';
+        if (err === 'CODE_ALREADY_USED') showCodeStatus('error', 'هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم.');
+        else if (err === 'INVALID_CODE') showCodeStatus('error', 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
+        else showCodeStatus('error', error.message || messages.network);
+      } finally {
+        setCodeSubmitLoading(false);
+      }
+    }
+
+    if (codeSubmitButton) codeSubmitButton.addEventListener('click', submitLegacyCode);
+
+    async function api(path, options = {}) {
+      const response = await fetch(API_BASE + path, {
+        method: options.method || 'GET',
+        headers: { 'Content-Type': 'application/json; charset=utf-8', ...(options.headers || {}) },
+        body: options.body ? JSON.stringify(options.body) : undefined
+      });
+      let data = {};
+      try { data = await response.json(); } catch (e) {}
+      if (!response.ok || data.ok === false) {
+        const error = new Error(data.message || messages.network);
+        error.data = data;
+        error.status = response.status;
+        throw error;
+      }
+      return data;
+    }
+
+    async function loginSilently(phone) {
+      try {
+        const data = await api('/api/auth/login', {
+          method: 'POST',
+          body: {
+            phone,
+            display_name: getConfirmedAccountName() || '',
+            device_token: getDeviceToken(),
+            is_temporary: false
+          }
+        });
+        if (data.token) setStoredAccountValue(TOKEN_KEY, data.token);
+        if (data.customer && data.customer.phone) setStoredAccountValue(ACCOUNT_PHONE_KEY, data.customer.phone);
+        if (Array.isArray(data.games)) saveLinkedGames(data.games);
+        renderLoginStatusButton();
+      } catch (e) {}
+    }
+
+    function getStaticGameRows() {
+      return Array.from(document.querySelectorAll('.game-row[data-game-id]'));
+    }
+
+    function updateAvailableGames(ownedGames) {
+      const ownedIds = new Set((ownedGames || []).map(game => String(game.id || game.slug || '')).filter(Boolean));
+      getStaticGameRows().forEach(row => {
+        const id = row.dataset.gameId;
+        const action = row.querySelector('.game-action');
+        if (id === 'bundle') {
+          row.hidden = false;
+          return;
+        }
+        if (ownedIds.has(id)) {
+          row.hidden = true;
+          row.classList.add('is-owned');
+          if (action) {
+            action.textContent = 'العب';
+            const ownedGame = (ownedGames || []).find(game => String(game.id || game.slug) === id);
+            const playUrl = (ownedGame && ownedGame.play_url) || GAME_PLAY_URLS[id] || action.href;
+            if (playUrl) action.href = playUrl;
+          }
+        } else {
+          row.hidden = false;
+          row.classList.remove('is-owned');
+        }
+      });
+    }
+
+    function applyLookupData(data, phone, options = {}) {
+      const games = Array.isArray(data.games) ? data.games : [];
+      const ownedCount = Number(data.owned_count ?? games.length ?? 0);
+      const resolvedPhone = data.phone || phone;
+      savePhoneToAccount(resolvedPhone);
+      saveLinkedGames(games);
+      updateAvailableGames(games);
+      renderLoginStatusButton();
+      if (ownedCount > 0) showStatus('success', options.successMessage || data.message || messages.found);
+      else showEmptyState(data.message || messages.empty);
+      if (data.customer_exists || ownedCount > 0 || data.customer) loginSilently(resolvedPhone);
+    }
+
+    async function lookupPurchases(phone) {
+      const data = await api('/api/purchases/lookup', { method: 'POST', body: { phone } });
+      applyLookupData(data, phone);
+    }
+
+    async function linkLegacyCode(phone, code) {
+      const data = await api('/api/legacy/link', {
+        method: 'POST',
+        body: { phone, code, display_name: getConfirmedAccountName() || '' }
+      });
+      savePhoneToAccount(phone);
+      if (Array.isArray(data.games)) saveLinkedGames(data.games);
+      applyLookupData({
+        ok: true,
+        phone,
+        customer_exists: true,
+        customer: data.customer,
+        owned_count: Array.isArray(data.games) ? data.games.length : 0,
+        games: data.games || [],
+        message: data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.'
+      }, phone, { successMessage: data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.' });
+      showCodeStatus('success', data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.');
+      if (codeInput) codeInput.value = '';
+      loginSilently(phone);
+    }
+
+    renderLoginStatusButton();
+
+    if (phoneInput) {
+      const storedPhone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
+      if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
+      const cachedGames = readLinkedGameDetails();
+      if (cachedGames.length) updateAvailableGames(cachedGames);
+    }
+
+    setMode(false);
 
     if (form && button) {
-      form.addEventListener('submit', event => {
+      form.addEventListener('submit', async event => {
         event.preventDefault();
-
-        button.classList.add('is-loading');
-        button.setAttribute('disabled', 'disabled');
-        if (label) label.textContent = 'جاري التحقق...';
-
-        if (statusMessage) {
-          statusMessage.className = 'status-message';
-          statusMessage.textContent = '';
+        resetMessages();
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        if (!isValidSaudiPhone(phone)) {
+          showStatus('error', messages.invalidPhone);
+          return;
         }
-
-        if (emptyState) {
-          emptyState.classList.remove('is-visible');
+        try {
+          setButtonLoading(true, messages.loadingLookup);
+          await lookupPurchases(phone);
+        } catch (error) {
+          const err = error.data && error.data.error ? error.data.error : '';
+          showStatus('error', error.message || messages.network);
+        } finally {
+          setButtonLoading(false);
         }
-
-        window.setTimeout(() => {
-          button.classList.remove('is-loading');
-          button.removeAttribute('disabled');
-          if (label) label.textContent = 'التحقق من الرقم';
-
-          if (emptyState) {
-            emptyState.classList.add('is-visible');
-          }
-        }, 900);
       });
     }
   </script>
+
 </body>
 </html>
