@@ -2108,6 +2108,8 @@
     const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
     const TOKEN_KEY = 'sandooq_auth_token_v1';
     const DEVICE_KEY = 'sandooq_device_token_v1';
+    const TEMP_GAME_SESSION_KEY = 'sandooq_temp_game_access_session_v1';
+    const DEVICE_TOKEN_AT_PAGE_LOAD = readLocalValue(DEVICE_KEY).trim();
     const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
     const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
     const LAST_SYNC_KEY = 'sandooq_last_sync_v1';
@@ -2205,6 +2207,52 @@
 
     function hasSavedDeviceToken() {
       return !!readLocalValue(DEVICE_KEY).trim();
+    }
+
+    function readSessionValue(key) {
+      try { return sessionStorage.getItem(key) || ''; } catch (e) { return ''; }
+    }
+
+    function writeSessionValue(key, value) {
+      try { sessionStorage.setItem(key, String(value || '')); } catch (e) {}
+    }
+
+    function markTemporaryGameSession() {
+      writeSessionValue(TEMP_GAME_SESSION_KEY, '1');
+    }
+
+    function hasTemporaryGameSession() {
+      return readSessionValue(TEMP_GAME_SESSION_KEY).trim() === '1';
+    }
+
+    function isTrustedSavedDeviceToken(token) {
+      return /^site_[a-z0-9_-]+/i.test(String(token || '').trim());
+    }
+
+    function shouldUseTemporaryGameAccess(isPrivate) {
+      if (isPrivate || hasTemporaryGameSession()) {
+        markTemporaryGameSession();
+        return true;
+      }
+
+      const currentDevice = readLocalValue(DEVICE_KEY).trim();
+
+      // إذا وجدنا جهازًا قديمًا/غير موثوق بدون بادئة site_ فهذا غالبًا قادم من جلسة خفية أو نسخة سابقة؛
+      // نعامله كجلسة مؤقتة حتى لا يتحول إلى جهاز ثالث بالخطأ.
+      if (currentDevice && !isTrustedSavedDeviceToken(currentDevice)) {
+        markTemporaryGameSession();
+        return true;
+      }
+
+      // على Safari خصوصًا، اكتشاف الخاص قد يفشل. إذا لم يكن هناك جهاز محفوظ قبل فتح الصفحة،
+      // نسمح بأول دخول كجلسة مؤقتة وننشئ جهازًا محفوظًا للاستخدامات العادية اللاحقة.
+      if (!DEVICE_TOKEN_AT_PAGE_LOAD && !currentDevice && isSafariBrowser()) {
+        getOrCreateDeviceToken();
+        markTemporaryGameSession();
+        return true;
+      }
+
+      return false;
     }
 
     let privateModePromise = null;
@@ -2434,28 +2482,11 @@
     function buildPlayUrlWithAccess(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
 
-      // فاميلي فيود فقط مفعّل الآن على الميدلوير الجديد.
-      if (gameId !== 'family-feud') return playUrl;
+      // لا نضع sg_device داخل href مباشرة حتى لا يستخدم Safari الرابط القديم قبل اكتمال فحص المتصفح الخاص.
+      // الضغط الحقيقي يتم اعتراضه بالأسفل ويبني الرابط النهائي لحظتها.
+      if (gameId === 'family-feud') return playUrl;
 
-      const token = readLocalValue(TOKEN_KEY).trim();
-      if (!token) return playUrl;
-
-      try {
-        const url = new URL(playUrl, window.location.href);
-        url.searchParams.set('sg_token', token);
-
-        if (privateModeReady && privateModeDetected) {
-          url.searchParams.set('sg_temp', '1');
-          url.searchParams.delete('sg_device');
-        } else {
-          url.searchParams.set('sg_device', getOrCreateDeviceToken());
-          url.searchParams.delete('sg_temp');
-        }
-
-        return url.toString();
-      } catch (e) {
-        return playUrl;
-      }
+      return playUrl;
     }
 
     async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
@@ -2466,12 +2497,13 @@
       if (!token) return playUrl;
 
       const isPrivate = await detectPrivateMode();
+      const useTemporary = shouldUseTemporaryGameAccess(isPrivate);
 
       try {
         const url = new URL(playUrl, window.location.href);
         url.searchParams.set('sg_token', token);
 
-        if (isPrivate) {
+        if (useTemporary) {
           url.searchParams.set('sg_temp', '1');
           url.searchParams.delete('sg_device');
         } else {
@@ -2484,6 +2516,7 @@
         return playUrl;
       }
     }
+
 
 
     function resetAccessButton(link) {
@@ -2539,8 +2572,8 @@
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
       refreshAccountFromApi().then(refreshAccountUi);
-
-    detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
+      detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
+    });
 
     document.addEventListener('click', async event => {
       const link = event.target && event.target.closest ? event.target.closest('.game-btn.play-action') : null;
@@ -2551,23 +2584,24 @@
 
       const basePlayUrl = link.dataset.basePlayUrl || link.getAttribute('href') || '#';
       event.preventDefault();
+      event.stopPropagation();
 
       if (link.dataset.opening === '1') return;
       link.dataset.opening = '1';
 
       try {
         const finalUrl = await buildPlayUrlWithAccessAsync(basePlayUrl, gameId);
-        window.location.href = finalUrl;
+        window.location.assign(finalUrl);
       } catch (e) {
-        window.location.href = basePlayUrl;
+        window.location.assign(basePlayUrl);
       } finally {
         window.setTimeout(() => { link.dataset.opening = '0'; }, 1200);
       }
-    }, { passive:false });
+    }, { passive:false, capture:true });
 
-    });
     window.addEventListener('storage', refreshAccountUi);
     refreshAccountFromApi().then(refreshAccountUi);
+    detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
