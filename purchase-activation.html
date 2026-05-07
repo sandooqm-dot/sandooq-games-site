@@ -372,6 +372,11 @@
       box-shadow:0 5px 0 rgba(0,0,0,.10);
     }
 
+    .game-row[hidden],
+    .games-list.is-complete .game-row{
+      display:none !important;
+    }
+
     .game-row.bundle{background:#fff8ed;}
 
     .game-thumb{
@@ -1015,6 +1020,22 @@
       return Array.from(document.querySelectorAll('.game-row[data-game-id]'));
     }
 
+    function readLinkedGameDetails() {
+      try {
+        const parsed = JSON.parse(readLocalValue(LINKED_GAMES_DETAILS_KEY) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function setGameRowVisible(row, isVisible) {
+      if (!row) return;
+      row.hidden = !isVisible;
+      row.style.display = isVisible ? '' : 'none';
+      row.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
+    }
+
     function prepareGameAction(action) {
       if (!action || action.dataset.originalPrepared === '1') return;
       action.dataset.originalPrepared = '1';
@@ -1123,16 +1144,19 @@
       const games = Array.isArray(ownedGames) ? ownedGames : [];
       const ownedIds = collectOwnedGameIds(games);
       const hasLookupResult = games.length > 0;
-      const allGameIds = getStaticGameRows()
+      const rows = getStaticGameRows();
+      const allGameIds = rows
         .map(row => String(row.dataset.gameId || '').trim())
         .filter(id => id && id !== 'bundle');
       const ownsAllListedGames = allGameIds.length > 0 && allGameIds.every(id => ownedIds.has(id));
       const hasOwnedBundle = ownedIds.has('bundle') || Array.from(ownedIds).some(id => BUNDLE_PRODUCT_IDS.has(String(id || '').toLowerCase()));
+      const gamesList = document.getElementById('gamesList');
       let visibleRows = 0;
 
+      if (gamesList) gamesList.classList.remove('is-complete');
       if (completeState) completeState.classList.remove('is-visible');
 
-      getStaticGameRows().forEach(row => {
+      rows.forEach(row => {
         const id = String(row.dataset.gameId || '').trim();
         const action = row.querySelector('.game-action');
         if (action) prepareGameAction(action);
@@ -1141,22 +1165,27 @@
         const isOwnedDirectly = ownedIds.has(id);
         const isCoveredByBundle = hasOwnedBundle && BUNDLE_INCLUDED_GAME_IDS.has(id);
         const hideBundleBecauseComplete = isBundleRow && (hasOwnedBundle || ownsAllListedGames);
+        const shouldHide = hasLookupResult && (isOwnedDirectly || isCoveredByBundle || hideBundleBecauseComplete);
 
-        if (hasLookupResult && (isOwnedDirectly || isCoveredByBundle || hideBundleBecauseComplete)) {
-          row.hidden = true;
+        if (shouldHide) {
+          setGameRowVisible(row, false);
           row.classList.remove('is-owned');
           restoreGameAction(action);
           return;
         }
 
-        row.hidden = false;
+        setGameRowVisible(row, true);
         row.classList.remove('is-owned');
         restoreGameAction(action);
         visibleRows += 1;
       });
 
       if (hasLookupResult && visibleRows === 0) {
+        rows.forEach(row => setGameRowVisible(row, false));
+        if (gamesList) gamesList.classList.add('is-complete');
         showCompleteState('كل الألعاب الحالية مرتبطة بهذا الرقم. إذا أضفنا ألعابًا جديدة للمتجر ستظهر لك هنا مباشرة.');
+      } else if (completeState) {
+        completeState.classList.remove('is-visible');
       }
     }
 
@@ -1189,6 +1218,9 @@
       const storedPhone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
       if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
     }
+
+    const cachedLinkedGames = readLinkedGameDetails();
+    if (cachedLinkedGames.length) updateAvailableGames(cachedLinkedGames);
 
     if (form && button) {
       form.addEventListener('submit', async event => {
