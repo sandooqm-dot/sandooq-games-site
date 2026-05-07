@@ -1702,6 +1702,9 @@
         <article
           class="game-card"
           data-game-id="bra-alsalfah"
+          data-details-url="bra-alsalfah.html"
+          data-buy-url="https://sandooq-m.com/YzZqAlO"
+          data-play-url="https://bara.sandooq-games.com/single.html"
         >
           <div class="cover cover-photo">
             <picture>
@@ -1754,9 +1757,6 @@
         <article
           class="game-card"
           data-game-id="sandooq"
-          data-details-url="sandooq.html"
-          data-buy-url="https://sandooq-m.com/bwdZAqe"
-          data-play-url="https://game2.sandooq-games.com/start.html?v=1774023618302"
         >
           <div class="cover cover-photo">
             <picture>
@@ -2059,7 +2059,7 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v8H4v-8"></path><path d="M2 7h20v5H2Z"></path><path d="M12 7v13"></path><path d="M12 7H7.5A2.5 2.5 0 1 1 10 4.5C10 6 12 7 12 7Z"></path><path d="M12 7h4.5A2.5 2.5 0 1 0 14 4.5C14 6 12 7 12 7Z"></path></svg>
             الباقات والعروض
           </a>
-          <a class="quick-link muted" href="#" aria-disabled="true">
+          <a class="quick-link" href="blog.html">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Z"></path><path d="M8 8h8"></path><path d="M8 12h8"></path><path d="M8 16h5"></path></svg>
             المدونة
           </a>
@@ -2121,9 +2121,9 @@
       'horof': 'https://horof.sandooq-games.com',
       'horof-edu': 'https://horof.sandooq-games.com',
       'bdon-kalam': 'https://bdon-kalam.sandooq-games.com',
-      'bra-alsalfah': 'https://bra-alsalfah.sandooq-games.com',
+      'bra-alsalfah': 'https://bara.sandooq-games.com/single.html',
       'family-feud': 'https://family-feud.sandooq-games.com',
-      'sandooq': 'https://game2.sandooq-games.com/start.html?v=1774023618302'
+      'sandooq': 'sandooq.html'
     };
 
     const GAME_DETAILS_URLS = {
@@ -2132,7 +2132,7 @@
       'bdon-kalam': 'bdon-kalam.html',
       'bra-alsalfah': 'bra-alsalfah.html',
       'family-feud': 'family-feud.html',
-      'sandooq': 'https://game2.sandooq-games.com/start.html?v=1774023618302'
+      'sandooq': 'sandooq.html'
     };
 
     const horofActivationKeys = [
@@ -2485,30 +2485,34 @@
     function buildPlayUrlWithAccess(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
 
-      // لا نضع بيانات الدخول داخل href مباشرة.
-      // الضغط الحقيقي يتم اعتراضه بالأسفل ويبني رابطًا موثقًا بـ sg_token + sg_temp=1 + sg_game.
+      // لا نضع sg_device داخل href مباشرة حتى لا يستخدم Safari الرابط القديم قبل اكتمال فحص المتصفح الخاص.
+      // الضغط الحقيقي يتم اعتراضه بالأسفل ويبني الرابط النهائي لحظتها.
+      if (gameId === 'family-feud') return playUrl;
+
       return playUrl;
     }
 
     async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
-
-      // لعبة صندوق المسابقات رابط شرح/تحميل فقط، ولا تحتاج تمرير توكن أو بيانات دخول داخل الرابط.
-      if (gameId === 'sandooq') return playUrl;
+      if (gameId !== 'family-feud') return playUrl;
 
       const token = readLocalValue(TOKEN_KEY).trim();
       if (!token) return playUrl;
+
+      const isPrivate = await detectPrivateMode();
+      const useTemporary = shouldUseTemporaryGameAccess(isPrivate);
 
       try {
         const url = new URL(playUrl, window.location.href);
         url.searchParams.set('sg_token', token);
 
-        // القرار المعتمد الآن:
-        // زر "العب" في الصفحة الرئيسية يفتح اللعبة مباشرة،
-        // مع توثيق الدخول من موقع صندوق المسابقات دون حد أجهزة.
-        url.searchParams.set('sg_temp', '1');
-        url.searchParams.set('sg_game', gameId);
-        url.searchParams.delete('sg_device');
+        if (useTemporary) {
+          url.searchParams.set('sg_temp', '1');
+          url.searchParams.delete('sg_device');
+        } else {
+          url.searchParams.set('sg_device', getOrCreateDeviceToken());
+          url.searchParams.delete('sg_temp');
+        }
 
         return url.toString();
       } catch (e) {
@@ -2530,11 +2534,16 @@
     function activateAccessButton(link, card, gameId, detailsMap) {
       if (!link) return;
       prepareAccessButton(link);
-      const basePlayUrl = getPlayUrl(card, gameId, detailsMap);
-      link.dataset.basePlayUrl = basePlayUrl;
+
+      // القرار المعتمد:
+      // زر "العب" في الصفحة الرئيسية لا يفتح الدومين المباشر للعبة.
+      // ينقل العميل أولًا إلى صفحة تفاصيل اللعبة، ومن هناك يضغط "العب" للدخول.
+      const detailsUrl = GAME_DETAILS_URLS[gameId] || link.dataset.originalHref || '#';
+
+      link.dataset.basePlayUrl = detailsUrl;
       link.dataset.gameId = gameId;
       link.classList.add('play-action');
-      link.setAttribute('href', buildPlayUrlWithAccess(basePlayUrl, gameId));
+      link.setAttribute('href', detailsUrl);
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
     }
@@ -2571,34 +2580,14 @@
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
       refreshAccountFromApi().then(refreshAccountUi);
+      detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
     });
 
-    document.addEventListener('click', async event => {
-      const link = event.target && event.target.closest ? event.target.closest('.game-btn.play-action') : null;
-      if (!link) return;
-
-      const gameId = String(link.dataset.gameId || (link.closest('.game-card') && link.closest('.game-card').dataset.gameId) || '');
-      if (!gameId) return;
-
-      const basePlayUrl = link.dataset.basePlayUrl || link.getAttribute('href') || '#';
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (link.dataset.opening === '1') return;
-      link.dataset.opening = '1';
-
-      try {
-        const finalUrl = await buildPlayUrlWithAccessAsync(basePlayUrl, gameId);
-        window.location.assign(finalUrl);
-      } catch (e) {
-        window.location.assign(basePlayUrl);
-      } finally {
-        window.setTimeout(() => { link.dataset.opening = '0'; }, 1200);
-      }
-    }, { passive:false, capture:true });
-
+    // لا نعترض زر "العب" في الصفحة الرئيسية.
+    // الزر يذهب إلى صفحة تفاصيل اللعبة، وصفحة التفاصيل هي التي تبني رابط الدخول النهائي.
     window.addEventListener('storage', refreshAccountUi);
     refreshAccountFromApi().then(refreshAccountUi);
+    detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
