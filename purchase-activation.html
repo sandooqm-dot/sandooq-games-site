@@ -720,6 +720,59 @@
       }
     }
 
+  
+
+    /* ✅ تثبيت نهائي للشريط السفلي: لا يرتفع مع الكيبورد ولا يسبب حركة أفقية */
+    :root{
+      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
+      --bottom-nav-real-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
+      --visual-viewport-bottom:0px !important;
+      --bottom-nav-visual-top:auto !important;
+    }
+
+    html,
+    body{
+      width:100% !important;
+      max-width:100% !important;
+      overflow-x:hidden !important;
+    }
+
+    .app{
+      width:100% !important;
+      max-width:100% !important;
+      overflow-x:hidden !important;
+      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:0 !important;
+      width:100% !important;
+      height:var(--bottom-nav-space) !important;
+      padding:0 var(--page-pad) env(safe-area-inset-bottom) !important;
+      z-index:2147483000 !important;
+      transform:none !important;
+      -webkit-transform:none !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      contain:none !important;
+      will-change:auto !important;
+      margin:0 !important;
+    }
+
+    .bottom-nav-inner{
+      transform:none !important;
+      -webkit-transform:none !important;
+    }
+
+    body.keyboard-open .bottom-nav{
+      bottom:0 !important;
+      top:auto !important;
+    }
+
   </style>
 </head>
 
@@ -930,7 +983,7 @@
       'horof-edu':'https://horof.sandooq-games.com',
       'bdon-kalam':'https://bdon-kalam.sandooq-games.com',
       'bra-alsalfah':'https://bra-alsalfah.sandooq-games.com',
-      'family-feud':'https://family.sandooq-games.com',
+      'family-feud':'https://family-feud.sandooq-games.com',
       sandooq:''
     };
 
@@ -965,22 +1018,28 @@
         document.documentElement.style.setProperty('--bottom-nav-real-height', `${navHeight}px`);
       }
 
-      const viewport = window.visualViewport;
-      const viewportTop = viewport ? viewport.offsetTop : 0;
-      const viewportHeight = viewport ? viewport.height : window.innerHeight;
-      const top = Math.max(0, Math.round(viewportTop + viewportHeight - (navHeight || nav.offsetHeight || 0)));
-
-      document.documentElement.style.setProperty('--bottom-nav-visual-top', `${top}px`);
       document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
+      document.documentElement.style.setProperty('--bottom-nav-visual-top', 'auto');
 
       nav.style.position = 'fixed';
       nav.style.left = '0px';
       nav.style.right = '0px';
-      nav.style.top = `${top}px`;
-      nav.style.bottom = 'auto';
-      nav.style.transform = 'translate3d(0,0,0)';
-      nav.style.webkitTransform = 'translate3d(0,0,0)';
+      nav.style.top = 'auto';
+      nav.style.bottom = '0px';
+      nav.style.width = '100%';
+      nav.style.transform = 'none';
+      nav.style.webkitTransform = 'none';
       nav.style.zIndex = '2147483000';
+
+      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
+      moveBottomNavIndicator(activeItem);
+    }
+
+    function markKeyboardState() {
+      const active = document.activeElement;
+      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
+      document.body.classList.toggle('keyboard-open', !!isTyping);
+      stabilizeBottomNav();
     }
 
     window.addEventListener('load', () => {
@@ -994,13 +1053,20 @@
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
       stabilizeBottomNav();
     });
+
     window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
-      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
-    }
     window.addEventListener('scroll', stabilizeBottomNav, { passive:true });
-    window.setInterval(stabilizeBottomNav, 1200);
+    window.addEventListener('focusin', () => window.setTimeout(markKeyboardState, 60), { passive:true });
+    window.addEventListener('focusout', () => {
+      window.setTimeout(markKeyboardState, 80);
+      window.setTimeout(stabilizeBottomNav, 260);
+    }, { passive:true });
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', stabilizeBottomNav, { passive:true });
+      window.visualViewport.addEventListener('scroll', stabilizeBottomNav, { passive:true });
+    }
+
     stabilizeBottomNav();
 
     const form = document.getElementById('purchaseLookupForm');
