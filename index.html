@@ -2482,34 +2482,27 @@
     function buildPlayUrlWithAccess(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
 
-      // لا نضع sg_device داخل href مباشرة حتى لا يستخدم Safari الرابط القديم قبل اكتمال فحص المتصفح الخاص.
-      // الضغط الحقيقي يتم اعتراضه بالأسفل ويبني الرابط النهائي لحظتها.
-      if (gameId === 'family-feud') return playUrl;
-
+      // لا نضع بيانات الدخول داخل href مباشرة.
+      // الضغط الحقيقي يتم اعتراضه بالأسفل ويبني رابطًا موثقًا بـ sg_token + sg_temp=1 + sg_game.
       return playUrl;
     }
 
     async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
-      if (gameId !== 'family-feud') return playUrl;
 
       const token = readLocalValue(TOKEN_KEY).trim();
       if (!token) return playUrl;
-
-      const isPrivate = await detectPrivateMode();
-      const useTemporary = shouldUseTemporaryGameAccess(isPrivate);
 
       try {
         const url = new URL(playUrl, window.location.href);
         url.searchParams.set('sg_token', token);
 
-        if (useTemporary) {
-          url.searchParams.set('sg_temp', '1');
-          url.searchParams.delete('sg_device');
-        } else {
-          url.searchParams.set('sg_device', getOrCreateDeviceToken());
-          url.searchParams.delete('sg_temp');
-        }
+        // القرار المعتمد الآن:
+        // زر "العب" في الصفحة الرئيسية يفتح اللعبة مباشرة،
+        // مع توثيق الدخول من موقع صندوق المسابقات دون حد أجهزة.
+        url.searchParams.set('sg_temp', '1');
+        url.searchParams.set('sg_game', gameId);
+        url.searchParams.delete('sg_device');
 
         return url.toString();
       } catch (e) {
@@ -2531,16 +2524,11 @@
     function activateAccessButton(link, card, gameId, detailsMap) {
       if (!link) return;
       prepareAccessButton(link);
-
-      // القرار المعتمد:
-      // زر "العب" في الصفحة الرئيسية لا يفتح الدومين المباشر للعبة.
-      // ينقل العميل أولًا إلى صفحة تفاصيل اللعبة، ومن هناك يضغط "العب" للدخول.
-      const detailsUrl = GAME_DETAILS_URLS[gameId] || link.dataset.originalHref || '#';
-
-      link.dataset.basePlayUrl = detailsUrl;
+      const basePlayUrl = getPlayUrl(card, gameId, detailsMap);
+      link.dataset.basePlayUrl = basePlayUrl;
       link.dataset.gameId = gameId;
       link.classList.add('play-action');
-      link.setAttribute('href', detailsUrl);
+      link.setAttribute('href', buildPlayUrlWithAccess(basePlayUrl, gameId));
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
     }
@@ -2577,14 +2565,34 @@
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
       refreshAccountFromApi().then(refreshAccountUi);
-      detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
     });
 
-    // لا نعترض زر "العب" في الصفحة الرئيسية.
-    // الزر يذهب إلى صفحة تفاصيل اللعبة، وصفحة التفاصيل هي التي تبني رابط الدخول النهائي.
+    document.addEventListener('click', async event => {
+      const link = event.target && event.target.closest ? event.target.closest('.game-btn.play-action') : null;
+      if (!link) return;
+
+      const gameId = String(link.dataset.gameId || (link.closest('.game-card') && link.closest('.game-card').dataset.gameId) || '');
+      if (!gameId) return;
+
+      const basePlayUrl = link.dataset.basePlayUrl || link.getAttribute('href') || '#';
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (link.dataset.opening === '1') return;
+      link.dataset.opening = '1';
+
+      try {
+        const finalUrl = await buildPlayUrlWithAccessAsync(basePlayUrl, gameId);
+        window.location.assign(finalUrl);
+      } catch (e) {
+        window.location.assign(basePlayUrl);
+      } finally {
+        window.setTimeout(() => { link.dataset.opening = '0'; }, 1200);
+      }
+    }, { passive:false, capture:true });
+
     window.addEventListener('storage', refreshAccountUi);
     refreshAccountFromApi().then(refreshAccountUi);
-    detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
