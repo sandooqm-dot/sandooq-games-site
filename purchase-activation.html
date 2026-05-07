@@ -728,7 +728,6 @@
       --bottom-nav-real-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
       --visual-viewport-bottom:0px !important;
       --bottom-nav-visual-top:auto !important;
-      --keyboard-offset:0px !important;
     }
 
     html,
@@ -770,8 +769,30 @@
     }
 
     body.keyboard-open .bottom-nav{
-      bottom:calc(var(--keyboard-offset, 0px) * -1) !important;
+      bottom:0 !important;
       top:auto !important;
+    }
+
+
+    /* ✅ طريقة الشريط السفلي المعتمدة مثل صفحة الألعاب */
+    .bottom-nav{
+      border-top-left-radius:clamp(22px, 5vw, 36px) !important;
+      border-top-right-radius:clamp(22px, 5vw, 36px) !important;
+      overflow:hidden !important;
+      transition:transform .18s ease, opacity .18s ease !important;
+    }
+
+    .bottom-nav .nav-item{
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    body.keyboard-open .bottom-nav{
+      top:auto !important;
+      bottom:0 !important;
+      transform:translate3d(0, 125%, 0) !important;
+      -webkit-transform:translate3d(0, 125%, 0) !important;
+      opacity:0 !important;
+      pointer-events:none !important;
     }
 
   </style>
@@ -789,7 +810,7 @@
         <span class="title-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24"><rect x="7" y="2.8" width="10" height="18.4" rx="2"></rect><path d="M10 6h4"></path><path d="M11.5 18h1"></path></svg>
         </span>
-        <h1 class="page-title">تفعيل الشراء</h1>
+        <h1 class="page-title">تفعيل الألعاب</h1>
         <p class="page-lead">تحقق برقم الجوال أولًا، ثم اربط مشترياتك بحسابك وادخل عالم اللعب.</p>
       </div>
     </header>
@@ -802,7 +823,6 @@
               <h2 class="section-heading">ابحث عن ألعابك برقم الجوال</h2>
               <p class="section-text">سجّل دخولك أو أنشئ حسابًا أولًا، ثم تحقق من رقم الجوال لعرض ألعابك وربطها بحسابك.</p>
             </div>
-            <span class="section-badge">استرجاع المشتريات</span>
           </div>
 
           <form class="lookup-form" id="purchaseLookupForm" data-hook="purchase-lookup-form">
@@ -833,12 +853,9 @@
               <span class="button-label">استرجاع الألعاب برقم الجوال</span>
             </button>
 
-            <p class="form-note" id="formModeNote">سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.</p>
-
             <button class="activation-mode-toggle" id="legacyModeToggle" type="button" aria-pressed="false">
               <span class="mode-toggle-title">لديك كود قديم؟ اربطه برقم جوالك</span>
             </button>
-            <p class="mode-toggle-subtitle" id="modeToggleSubtitle">اضغط هنا إذا كان لديك كود تفعيل سابق وتريد إضافته لحسابك.</p>
 
             <div class="message-area" aria-live="polite">
               <div class="status-message" id="statusMessage" data-hook="status-message"></div>
@@ -850,11 +867,11 @@
 
         
 
-        <section class="section-card" aria-label="الألعاب المتوفرة للشراء">
+        <section class="section-card" aria-label="الألعاب التي مازالت متاحة للشراء">
           <div class="section-head">
             <div>
-              <h2 class="section-heading">الألعاب المتوفرة للشراء</h2>
-              <p class="section-text">هذه هي الألعاب المتاحة الآن في متجر صندوق المسابقات، ويمكنك شراؤها أو تفعيلها من هنا.</p>
+              <h2 class="section-heading">الألعاب التي مازالت متاحة للشراء</h2>
+              <p class="section-text">استبعدنا لك الألعاب التي ظهرت على الرقم الحالي حتى يبقى المتجر واضحًا لما ينقصك فقط.</p>
             </div>
           </div>
 
@@ -979,6 +996,81 @@
       sandooq:'صندوق المسابقات'
     };
 
+
+
+    const BUNDLE_PRODUCT_IDS = new Set([
+      'bundle',
+      'full-bundle',
+      'bundle-full',
+      'sandooq-bundle',
+      'sandooq-full-bundle',
+      'sandooq-games-bundle',
+      'sandooq-package',
+      'all-games-bundle',
+      'package'
+    ]);
+
+    const BUNDLE_INCLUDED_GAME_IDS = new Set([
+      'horof',
+      'horof-edu',
+      'bdon-kalam',
+      'bra-alsalfah',
+      'family-feud',
+      'sandooq'
+    ]);
+
+    function addGameIdToSet(set, value) {
+      const id = String(value || '').trim();
+      if (id) set.add(id);
+    }
+
+    function isBundleRecord(game) {
+      if (!game || typeof game !== 'object') return false;
+      const id = String(game.id || game.slug || game.game_id || '').trim().toLowerCase();
+      const name = String(game.name || game.title || game.product_name || '').trim();
+      return BUNDLE_PRODUCT_IDS.has(id) || /bundle/i.test(id) || /بكج|البكج|باقة/.test(name);
+    }
+
+    function collectOwnedGameIds(games) {
+      const ids = new Set();
+      const safeGames = Array.isArray(games) ? games : [];
+
+      safeGames.forEach(game => {
+        if (typeof game === 'string') {
+          addGameIdToSet(ids, game);
+          return;
+        }
+
+        if (!game || typeof game !== 'object') return;
+
+        addGameIdToSet(ids, game.id || game.slug || game.game_id);
+
+        if (isBundleRecord(game)) {
+          addGameIdToSet(ids, 'bundle');
+          BUNDLE_INCLUDED_GAME_IDS.forEach(id => ids.add(id));
+        }
+
+        const nestedLists = [
+          game.games,
+          game.items,
+          game.products,
+          game.included_games,
+          game.included_game_ids,
+          game.bundle_games
+        ];
+
+        nestedLists.forEach(list => {
+          if (!Array.isArray(list)) return;
+          list.forEach(item => {
+            if (typeof item === 'string') addGameIdToSet(ids, item);
+            else if (item && typeof item === 'object') addGameIdToSet(ids, item.id || item.slug || item.game_id);
+          });
+        });
+      });
+
+      return ids;
+    }
+
     const GAME_PLAY_URLS = {
       horof:'https://horof.sandooq-games.com',
       'horof-edu':'https://horof.sandooq-games.com',
@@ -986,15 +1078,6 @@
       'bra-alsalfah':'https://bra-alsalfah.sandooq-games.com',
       'family-feud':'https://family-feud.sandooq-games.com',
       sandooq:''
-    };
-
-    const GAME_DETAILS_URLS = {
-      horof:'horof.html',
-      'horof-edu':'horof-edu.html',
-      'bdon-kalam':'bdon-kalam.html',
-      'bra-alsalfah':'bra-alsalfah.html',
-      'family-feud':'family-feud.html',
-      sandooq:'sandooq.html'
     };
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
@@ -1016,45 +1099,26 @@
       moveBottomNavIndicator(item);
     }
 
-    navItems.forEach(item => item.addEventListener('click', () => setActiveNavItem(item)));
-
-    function getKeyboardOffset() {
-      const vv = window.visualViewport;
-      const active = document.activeElement;
-      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
-      if (!vv || !isTyping) return 0;
-
-      const layoutHeight = Math.max(
-        document.documentElement.clientHeight || 0,
-        window.innerHeight || 0
-      );
-
-      const offset = Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
-      return offset > 80 ? offset : 0;
-    }
+    // لا نغير تمييز الشريط السفلي فور الضغط؛ يبقى التمييز الحالي حتى تفتح الصفحة الجديدة بسلاسة.
 
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
       if (!nav) return;
 
       const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
-      const keyboardOffset = getKeyboardOffset();
-
       if (navHeight > 0) {
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
         document.documentElement.style.setProperty('--bottom-nav-real-height', `${navHeight}px`);
       }
 
-      document.documentElement.style.setProperty('--keyboard-offset', `${keyboardOffset}px`);
       document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
       document.documentElement.style.setProperty('--bottom-nav-visual-top', 'auto');
-      document.body.classList.toggle('keyboard-open', keyboardOffset > 0);
 
       nav.style.position = 'fixed';
       nav.style.left = '0px';
       nav.style.right = '0px';
       nav.style.top = 'auto';
-      nav.style.bottom = keyboardOffset > 0 ? `-${keyboardOffset}px` : '0px';
+      nav.style.bottom = '0px';
       nav.style.width = '100%';
       nav.style.transform = 'none';
       nav.style.webkitTransform = 'none';
@@ -1065,6 +1129,9 @@
     }
 
     function markKeyboardState() {
+      const active = document.activeElement;
+      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
+      document.body.classList.toggle('keyboard-open', !!isTyping);
       stabilizeBottomNav();
     }
 
@@ -1244,9 +1311,7 @@
       }
       if (label) label.textContent = codeMode ? 'ربط الكود برقم الجوال' : 'استرجاع الألعاب برقم الجوال';
       if (formModeNote) {
-        formModeNote.textContent = codeMode
-          ? 'اكتب رقم الجوال ثم كود التفعيل السابق لربطه بحسابك.'
-          : 'سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.';
+        formModeNote.textContent = '';
       }
       if (modeToggleTitle) {
         modeToggleTitle.textContent = codeMode
@@ -1254,9 +1319,7 @@
           : 'لديك كود قديم؟ اربطه برقم جوالك';
       }
       if (modeToggleSubtitle) {
-        modeToggleSubtitle.textContent = codeMode
-          ? 'اضغط هنا للعودة إلى الاسترجاع بدون كود تفعيل.'
-          : 'اضغط هنا إذا كان لديك كود تفعيل سابق وتريد إضافته لحسابك.';
+        modeToggleSubtitle.textContent = '';
       }
       resetMessages();
       if (codeMode && codeInput) window.setTimeout(() => codeInput.focus(), 120);
@@ -1304,60 +1367,36 @@
       return Array.from(document.querySelectorAll('.game-row[data-game-id]'));
     }
 
-    function prepareGameAction(action) {
-      if (!action || action.dataset.originalPrepared === '1') return;
-      action.dataset.originalPrepared = '1';
-      action.dataset.originalHref = action.getAttribute('href') || '';
-      action.dataset.originalText = (action.textContent || '').trim();
-      action.dataset.originalTarget = action.getAttribute('target') || '';
-      action.dataset.originalRel = action.getAttribute('rel') || '';
-    }
-
-    function restoreGameAction(action) {
-      if (!action) return;
-      prepareGameAction(action);
-      action.textContent = action.dataset.originalText || 'شراء';
-      if (action.dataset.originalHref) action.setAttribute('href', action.dataset.originalHref);
-      else action.removeAttribute('href');
-
-      if (action.dataset.originalTarget) action.setAttribute('target', action.dataset.originalTarget);
-      else action.removeAttribute('target');
-
-      if (action.dataset.originalRel) action.setAttribute('rel', action.dataset.originalRel);
-      else action.removeAttribute('rel');
-    }
-
-    function getGameDetailUrl(id) {
-      return GAME_DETAILS_URLS[id] || GAME_PLAY_URLS[id] || '#';
-    }
-
     function updateAvailableGames(ownedGames) {
-      const ownedIds = new Set((ownedGames || []).map(game => String(game.id || game.slug || '')).filter(Boolean));
+      const ownedIds = collectOwnedGameIds(ownedGames || []);
+      const hasOwnedBundle = Array.from(ownedIds).some(id => BUNDLE_PRODUCT_IDS.has(String(id || '').toLowerCase())) || ownedIds.has('bundle');
+      let visibleRows = 0;
+
       getStaticGameRows().forEach(row => {
-        const id = row.dataset.gameId;
+        const id = String(row.dataset.gameId || '').trim();
         const action = row.querySelector('.game-action');
         if (action) prepareGameAction(action);
 
-        if (id === 'bundle') {
-          row.hidden = false;
+        const isBundleRow = id === 'bundle';
+        const isOwnedDirectly = ownedIds.has(id);
+        const isCoveredByBundle = hasOwnedBundle && BUNDLE_INCLUDED_GAME_IDS.has(id);
+
+        if (isOwnedDirectly || isCoveredByBundle) {
+          row.hidden = true;
+          row.classList.remove('is-owned');
+          restoreGameAction(action);
           return;
         }
 
-        if (ownedIds.has(id)) {
-          row.hidden = false;
-          row.classList.add('is-owned');
-          if (action) {
-            action.textContent = 'العب';
-            action.href = getGameDetailUrl(id);
-            action.removeAttribute('target');
-            action.removeAttribute('rel');
-          }
-        } else {
-          row.hidden = false;
-          row.classList.remove('is-owned');
-          restoreGameAction(action);
-        }
+        row.hidden = false;
+        row.classList.remove('is-owned');
+        restoreGameAction(action);
+        visibleRows += 1;
       });
+
+      if (emptyState && (ownedGames || []).length && visibleRows === 0) {
+        showEmptyState('كل الألعاب المعروضة مرتبطة بهذا الرقم حاليًا. إذا ظهرت ألعاب جديدة سنعرضها لك هنا.');
+      }
     }
 
     function applyLookupData(data, phone, options = {}) {
