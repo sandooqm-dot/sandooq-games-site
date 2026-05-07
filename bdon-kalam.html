@@ -666,6 +666,7 @@
     const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
+    const TOKEN_KEY = 'sandooq_auth_token_v1';
     const OWNED_GAMES_KEY = 'sandooq_owned_games_v1';
     const CURRENT_GAME_ID = 'bdon-kalam';
 
@@ -698,6 +699,24 @@
       return '<span class="cta-play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></span>';
     }
 
+    function buildPlayUrlWithAccess(playUrl) {
+      if (!playUrl || playUrl === '#') return playUrl;
+
+      const token = readLocalValue(TOKEN_KEY).trim();
+      if (!token) return playUrl;
+
+      try {
+        const url = new URL(playUrl, window.location.href);
+        url.searchParams.set('sg_token', token);
+        url.searchParams.set('sg_temp', '1');
+        url.searchParams.set('sg_game', CURRENT_GAME_ID);
+        url.searchParams.delete('sg_device');
+        return url.toString();
+      } catch (e) {
+        return playUrl;
+      }
+    }
+
     function setMainCtaState() {
       const cta = document.querySelector('.js-game-cta[data-game-id="bdon-kalam"]');
       if (!cta) return;
@@ -711,7 +730,8 @@
       if (isOwned) {
         cta.dataset.state = 'play';
         cta.classList.add('btn-play');
-        cta.setAttribute('href', playUrl);
+        cta.dataset.basePlayUrl = playUrl;
+        cta.setAttribute('href', buildPlayUrlWithAccess(playUrl));
         cta.innerHTML = `${playIconMarkup()}<span class="cta-label">${playLabel}</span>`;
       } else {
         cta.dataset.state = 'buy';
@@ -731,6 +751,15 @@
       refreshLoginChip();
       setMainCtaState();
     });
+
+    document.addEventListener('click', event => {
+      const link = event.target && event.target.closest ? event.target.closest('.js-game-cta[data-game-id="bdon-kalam"]') : null;
+      if (!link || link.dataset.state !== 'play') return;
+
+      const basePlayUrl = link.dataset.basePlayUrl || link.dataset.playUrl || link.getAttribute('href') || '#';
+      event.preventDefault();
+      window.location.assign(buildPlayUrlWithAccess(basePlayUrl));
+    }, { passive:false });
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
