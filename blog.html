@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>مدونة صندوق المسابقات | ألعاب تفاعلية وتعليمية للجمعات والفعاليات</title>
+  <meta name="description" content="مدونة صندوق المسابقات تقدم أفكار ألعاب تفاعلية جاهزة للجمعات، رمضان، العيد، الفعاليات، والمدارس، مع نصائح للمعلمين لاستخدام الألعاب التعليمية في المراجعة والدرس." />
+  <meta name="keywords" content="ألعاب تفاعلية, العاب جماعية, لعبة رمضان, لعبة عيد, مسابقات عائلية, ألعاب تعليمية, ألعاب للمدرسة, لعبة مراجعة درس, مسابقات مدرسية, ألعاب للفعاليات, ألعاب جاهزة, صندوق المسابقات" />
+  <meta name="theme-color" content="#075c82" />
+  <link rel="preload" href="NotoIKEAArabic-Bold.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" as="image" href="logo.PNG" />
+
+  <style>
+    @font-face{
+      font-family:"NotoIKEAArabic";
+      src:url("NotoIKEAArabic-Bold.ttf") format("truetype");
+      font-weight:700 950;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    :root{
+      --blue:#087ca8;
+      --blue-dark:#075c82;
+      --blue-deep:#066FAE;
+      --blue-soft:#55bdf2;
+      --yellow:#f7b638;
+      --yellow-light:#ffd76b;
+      --white:#ffffff;
+      --ink:#111827;
+      --muted:#3f4a5a;
+      --green:#2faf72;
+      --orange:#ff6b1a;
+      --line:#151515;
+      --nav-ink:#04384f;
+      --nav-active:#064f73;
+      --cream:#fff8ed;
+      --layout-max:1180px;
+      --nav-max:860px;
+      --page-pad:clamp(14px, 4vw, 72px);
+      --bottom-nav-height:clamp(88px, 7vw, 96px);
+      --radius:clamp(18px, 2vw, 30px);
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html{width:100%;min-height:100%;scroll-behavior:smooth;background:var(--blue-soft);}
+    body{
+      width:100%;
+      min-height:100dvh;
+      margin:0;
+      color:var(--ink);
+      font-family:"NotoIKEAArabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      background:var(--blue-soft);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    button,a{font:inherit;}
+    img,svg{max-width:100%;}
+
+    .app{
+      width:100%;
+      min-height:100dvh;
+      background:var(--blue-soft);
+      padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      overflow:hidden;
+    }
+
+    .blog-hero{
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      background:linear-gradient(135deg, var(--blue-dark), var(--blue-deep));
+      color:#fff;
+      padding:clamp(12px, 2vw, 22px) var(--page-pad) clamp(34px, 6vw, 78px);
+      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
+    }
+
+    .blog-hero::before{
+      content:"";
+      position:absolute;
+      inset:-18px;
+      z-index:-2;
+      opacity:.18;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.9) 0 2px, transparent 2.4px),
+        radial-gradient(circle, rgba(255,255,255,.5) 0 1.4px, transparent 1.9px);
+      background-size:24px 24px, 38px 38px;
+      background-position:0 0, 10px 12px;
+      animation:dotsMove 18s linear infinite;
+    }
+
+    .blog-hero::after{
+      content:"";
+      position:absolute;
+      width:clamp(260px, 34vw, 540px);
+      height:clamp(260px, 34vw, 540px);
+      left:clamp(-220px, -12vw, -80px);
+      bottom:clamp(-240px, -12vw, -100px);
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+      z-index:-1;
+    }
+
+    @keyframes dotsMove{
+      from{transform:translate3d(0,0,0)}
+      to{transform:translate3d(24px,24px,0)}
+    }
+
+    .top-row{
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      min-height:clamp(34px, 4vw, 52px);
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:clamp(32px, 3.2vw, 44px);
+      padding:7px clamp(12px, 1.5vw, 18px);
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,.38);
+      font-weight:950;
+      font-size:clamp(13px, 1vw, 16px);
+      line-height:1.1;
+      box-shadow:0 3px 0 rgba(0,0,0,.18);
+      white-space:nowrap;
+    }
+
+    .home-chip{background:var(--yellow);color:var(--ink);border-color:rgba(21,21,21,.42);}
+    .login-chip{background:var(--green);color:#fff;}
+
+    .hero-inner{
+      width:100%;
+      max-width:var(--layout-max);
+      margin:clamp(28px, 5vw, 66px) auto 0;
+      display:grid;
+      justify-items:center;
+      text-align:center;
+      gap:clamp(16px, 2.8vw, 28px);
+    }
+
+    .logo-wrap{
+      width:clamp(168px, 18vw, 250px);
+      min-height:clamp(94px, 10vw, 142px);
+      display:grid;
+      place-items:center;
+      animation:floatLogo 4.8s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+    .logo-wrap img{
+      width:100%;
+      max-height:140px;
+      object-fit:contain;
+      filter:drop-shadow(0 7px 0 rgba(0,0,0,.14));
+    }
+
+    .blog-title{
+      margin:0;
+      font-weight:950;
+      font-size:clamp(34px, 7vw, 72px);
+      line-height:1.2;
+      text-shadow:0 4px 0 rgba(0,0,0,.14);
+    }
+
+    .blog-subtitle{
+      max-width:920px;
+      margin:0;
+      color:rgba(255,255,255,.96);
+      font-weight:850;
+      font-size:clamp(16px, 1.75vw, 24px);
+      line-height:1.9;
+      text-shadow:0 2px 0 rgba(0,0,0,.10);
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      margin-top:2px;
+    }
+
+    .btn{
+      min-height:clamp(44px, 4vw, 58px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px clamp(16px, 2vw, 28px);
+      border-radius:999px;
+      border:3px solid var(--line);
+      font-weight:950;
+      font-size:clamp(14px, 1.15vw, 18px);
+      line-height:1;
+      box-shadow:0 5px 0 rgba(0,0,0,.20);
+      transition:transform .16s ease, filter .16s ease;
+    }
+
+    .btn:hover{transform:translateY(-1px);filter:saturate(1.08);}
+    .btn-primary{background:var(--orange);color:#fff;}
+    .btn-secondary{background:#fff;color:var(--ink);}
+    .btn-green{background:var(--green);color:#fff;}
+
+    .content-area{
+      position:relative;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(85,189,242,.22), transparent 30%),
+        linear-gradient(180deg, #ffffff, #f7fbff 45%, #fff8ed);
+      padding:clamp(24px, 4vw, 56px) var(--page-pad) clamp(44px, 7vw, 100px);
+    }
+
+    .content-inner{
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      display:grid;
+      gap:clamp(18px, 3vw, 34px);
+    }
+
+    .intro-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.5vw, 32px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      text-align:center;
+    }
+
+    .intro-card h2{
+      margin:0 0 10px;
+      font-size:clamp(25px, 3vw, 42px);
+      font-weight:950;
+      color:var(--blue-dark);
+      line-height:1.35;
+    }
+
+    .intro-card p{
+      max-width:980px;
+      margin:0 auto;
+      color:var(--muted);
+      font-size:clamp(15px, 1.3vw, 20px);
+      font-weight:800;
+      line-height:1.9;
+    }
+
+    .keyword-cloud{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:8px;
+      margin-top:18px;
+    }
+
+    .keyword-cloud span{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:32px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(85,189,242,.18);
+      color:var(--blue-dark);
+      border:1px solid rgba(7,92,130,.16);
+      font-weight:900;
+      font-size:clamp(12px, 1vw, 15px);
+      white-space:nowrap;
+    }
+
+    .section-heading{
+      margin:clamp(10px, 2vw, 24px) 0 0;
+      text-align:center;
+      font-size:clamp(28px, 4.5vw, 52px);
+      font-weight:950;
+      color:var(--ink);
+      line-height:1.3;
+    }
+
+    .posts-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:clamp(14px, 2.2vw, 24px);
+    }
+
+    .post-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(16px, 2.3vw, 30px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13), 0 18px 34px rgba(7,92,130,.08);
+      display:grid;
+      gap:10px;
+      min-height:100%;
+    }
+
+    .post-card:nth-child(3n+1){background:#fff8ed;}
+    .post-card:nth-child(3n+2){background:#eaf8ff;}
+    .post-card:nth-child(3n){background:#ffffff;}
+
+    .post-meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color:#617083;
+      font-weight:850;
+      font-size:clamp(12px, 1vw, 15px);
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      min-height:30px;
+      padding:5px 12px;
+      background:rgba(47,175,114,.14);
+      color:#075c45;
+      border:1px solid rgba(47,175,114,.18);
+      font-weight:950;
+      white-space:nowrap;
+    }
+
+    .post-card h3{
+      margin:0;
+      color:var(--blue-dark);
+      font-size:clamp(20px, 2.1vw, 32px);
+      line-height:1.45;
+      font-weight:950;
+    }
+
+    .post-card p{
+      margin:0;
+      color:var(--muted);
+      font-weight:760;
+      font-size:clamp(14px, 1.15vw, 18px);
+      line-height:1.9;
+    }
+
+    .post-link{
+      margin-top:8px;
+      color:var(--orange);
+      font-weight:950;
+      font-size:clamp(15px, 1.2vw, 18px);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:fit-content;
+    }
+
+    .article-stack{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 26px);
+      margin-top:clamp(8px, 1vw, 14px);
+    }
+
+    .article-box{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.6vw, 34px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      scroll-margin-top:24px;
+    }
+
+    .article-box:nth-child(odd){background:#fff8ed;}
+    .article-box:nth-child(even){background:#eaf8ff;}
+
+    .article-box h2{
+      margin:0 0 10px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(24px, 3vw, 40px);
+      line-height:1.35;
+    }
+
+    .article-box p{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-weight:760;
+      font-size:clamp(15px, 1.25vw, 19px);
+      line-height:1.95;
+    }
+
+    .article-box ul{
+      margin:10px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:8px;
+      color:var(--muted);
+      font-weight:820;
+      font-size:clamp(14px, 1.15vw, 18px);
+      line-height:1.8;
+    }
+
+    .article-box li{
+      position:relative;
+      padding-right:22px;
+    }
+
+    .article-box li::before{
+      content:"";
+      position:absolute;
+      right:0;
+      top:.78em;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--orange);
+      box-shadow:0 0 0 3px rgba(255,107,26,.12);
+    }
+
+    .article-cta{
+      margin-top:16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+
+    .mid-cta{
+      background:linear-gradient(135deg, var(--blue-dark), var(--blue));
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(20px, 3vw, 38px);
+      color:#fff;
+      text-align:center;
+      box-shadow:0 8px 0 rgba(0,0,0,.18);
+      display:grid;
+      gap:12px;
+      justify-items:center;
+      overflow:hidden;
+      position:relative;
+      isolation:isolate;
+    }
+
+    .mid-cta::before{
+      content:"";
+      position:absolute;
+      inset:-16px;
+      z-index:-1;
+      opacity:.15;
+      background-image:radial-gradient(circle, rgba(255,255,255,.95) 0 2px, transparent 2.4px);
+      background-size:26px 26px;
+    }
+
+    .mid-cta h2{margin:0;font-size:clamp(25px, 3.5vw, 46px);font-weight:950;line-height:1.35;}
+    .mid-cta p{margin:0;max-width:820px;color:rgba(255,255,255,.94);font-size:clamp(15px, 1.25vw, 19px);font-weight:800;line-height:1.9;}
+
+    .site-footer{
+      position:relative;
+      background:linear-gradient(180deg, #3c83ad 0%, #2f6f96 32%, #205b7d 100%);
+      border-top:clamp(3px, .35vw, 5px) solid var(--line);
+      color:var(--white);
+      overflow:hidden;
+    }
+
+    .site-footer::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.12;
+      background-image:radial-gradient(circle, rgba(255,255,255,.92) 0 2px, transparent 2.4px);
+      background-size:28px 28px;
+      pointer-events:none;
+    }
+
+    .footer-inner{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      padding:clamp(34px, 5vw, 58px) var(--page-pad) clamp(26px, 5vw, 44px);
+      text-align:center;
+    }
+
+    .footer-inner h2{
+      margin:0;
+      font-size:clamp(26px, 3vw, 42px);
+      font-weight:950;
+      line-height:1.35;
+    }
+
+    .footer-inner p{
+      margin:clamp(12px, 1.5vw, 18px) auto 0;
+      max-width:760px;
+      color:rgba(255,255,255,.94);
+      font-size:clamp(14px, 1.2vw, 18px);
+      line-height:1.9;
+      font-weight:800;
+    }
+
+    .footer-links{
+      margin-top:clamp(18px, 2.5vw, 28px);
+      display:grid;
+      grid-template-columns:repeat(2, minmax(120px, 1fr));
+      gap:clamp(12px, 2vw, 20px);
+      max-width:520px;
+      margin-inline:auto;
+    }
+
+    .footer-link{
+      min-height:42px;
+      color:#fff;
+      font-weight:950;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.20);
+    }
+
+    .footer-legal{
+      position:relative;
+      z-index:1;
+      background:#17324b;
+      border-top:1px solid rgba(255,255,255,.16);
+    }
+
+    .footer-legal-inner{
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      padding:14px var(--page-pad) calc(14px + env(safe-area-inset-bottom));
+      text-align:center;
+      color:var(--white);
+      font-size:clamp(12px, 1vw, 15px);
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .footer-legal a{color:rgba(255,215,107,.96);text-decoration:underline;text-underline-offset:4px;}
+
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      width:100%;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      background:linear-gradient(180deg, #f7b638 0%, #e99f18 100%);
+      border-top:clamp(3px, .35vw, 5px) solid var(--line);
+      z-index:40;
+      display:flex;
+      align-items:stretch;
+      justify-content:center;
+      padding:0 var(--page-pad) env(safe-area-inset-bottom);
+      box-shadow:0 -5px 18px rgba(0,0,0,.16);
+    }
+
+    .bottom-nav-inner{
+      width:100%;
+      max-width:var(--nav-max);
+      height:100%;
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      align-items:center;
+      gap:clamp(3px, .8vw, 10px);
+      padding:8px 0;
+    }
+
+    .nav-item{
+      min-width:0;
+      height:clamp(68px, 6.5vw, 78px);
+      border-radius:22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      color:var(--nav-ink);
+      text-shadow:0 1px 0 rgba(255,255,255,.28);
+      font-weight:950;
+      font-size:clamp(11px, 1vw, 14px);
+      line-height:1.1;
+      text-align:center;
+      padding-inline:4px;
+    }
+
+    .nav-item.active{
+      color:#fff;
+      background:var(--nav-active);
+      border:2px solid rgba(255,255,255,.32);
+      box-shadow:0 5px 0 rgba(0,0,0,.2);
+      transform:translateY(-1px);
+    }
+
+    .nav-icon{
+      width:clamp(32px, 3vw, 40px);
+      height:clamp(32px, 3vw, 40px);
+      display:grid;
+      place-items:center;
+      color:currentColor;
+    }
+
+    .nav-icon svg{
+      width:90%;
+      height:90%;
+      display:block;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2.75;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .nav-item.active .nav-icon{color:var(--yellow-light);}
+
+    @media (min-width:720px){
+      .posts-grid{grid-template-columns:repeat(2, minmax(0,1fr));}
+    }
+
+    @media (min-width:1100px){
+      .posts-grid{grid-template-columns:repeat(3, minmax(0,1fr));}
+    }
+
+    @media (max-width:430px){
+      :root{--bottom-nav-height:88px;--page-pad:clamp(12px, 4vw, 18px);}
+      .blog-title{font-size:clamp(34px, 9vw, 46px);}
+      .blog-subtitle{font-size:15px;}
+      .btn{min-height:44px;padding:10px 16px;}
+      .footer-links{grid-template-columns:1fr;}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        transition-duration:.001ms !important;
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Blog",
+    "name":"مدونة صندوق المسابقات",
+    "description":"مقالات وأفكار عن الألعاب التفاعلية والجماعية والتعليمية للمدارس والجمعات ورمضان والعيد والفعاليات.",
+    "inLanguage":"ar-SA",
+    "publisher":{"@type":"Organization","name":"صندوق المسابقات"}
+  }
+  </script>
+</head>
+
+<body>
+  <div class="app">
+    <header class="blog-hero">
+      <div class="top-row">
+        <a class="chip home-chip" href="index.html">الرئيسية</a>
+        <a class="chip login-chip" href="account.html">الحساب</a>
+      </div>
+
+      <div class="hero-inner">
+        <div class="logo-wrap" aria-label="شعار صندوق المسابقات">
+          <img src="logo.PNG" alt="صندوق المسابقات" />
+        </div>
+        <h1 class="blog-title">مدونة صندوق المسابقات</h1>
+        <p class="blog-subtitle">أفكار ومقالات بحثية عن ألعاب تفاعلية جاهزة للجمعات، رمضان، العيد، المدارس، الدروس، المراجعة الصفية، والفعاليات العائلية والتعليمية.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="index.html#games">تصفح الألعاب الآن</a>
+          <a class="btn btn-secondary" href="purchase-activation.html">تفعيل ألعابك</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <div class="content-inner">
+        <section class="intro-card" aria-label="مقدمة المدونة">
+          <h2>مقالات تساعدك تختار لعبة مناسبة لكل مناسبة</h2>
+          <p>هذه المدونة مخصصة لكل من يبحث عن لعبة عيد، لعبة رمضان، مسابقات عائلية، ألعاب تفاعلية للمدرسة، أو لعبة مراجعة درس جاهزة. هدفنا نعطيك أفكارًا عملية وسريعة تساعدك تحول الجلسة أو الحصة أو الفعالية إلى تجربة حماسية ممتعة.</p>
+          <div class="keyword-cloud" aria-label="كلمات بحثية">
+            <span>لعبة رمضان</span>
+            <span>لعبة عيد</span>
+            <span>ألعاب تفاعلية</span>
+            <span>مسابقات عائلية</span>
+            <span>ألعاب تعليمية</span>
+            <span>مدرسة ودرس</span>
+            <span>لعبة مراجعة</span>
+            <span>فعاليات وجمعات</span>
+            <span>تغذية راجعة</span>
+            <span>أسئلة جاهزة</span>
+          </div>
+        </section>
+
+        <h2 class="section-heading">أحدث المقالات</h2>
+
+        <section class="posts-grid" aria-label="قائمة المقالات">
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">رمضان</span><span>5 دقائق قراءة</span></div>
+            <h3>أفكار ألعاب رمضان تفاعلية للعائلة والأصدقاء</h3>
+            <p>رمضان فرصة رائعة للجمعات، ومع لعبة تفاعلية جاهزة تقدر تضيف جو تحدي وضحك بعد الإفطار أو في السهرات.</p>
+            <a class="post-link" href="#article-ramadan-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">العيد</span><span>5 دقائق قراءة</span></div>
+            <h3>أفضل ألعاب عيد جاهزة للتجمعات والفعاليات</h3>
+            <p>إذا كنت تبحث عن لعبة عيد ممتعة وسهلة التشغيل، فالألعاب الرقمية التفاعلية تختصر عليك التحضير وتزيد الحماس.</p>
+            <a class="post-link" href="#article-eid-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">تعليم</span><span>6 دقائق قراءة</span></div>
+            <h3>ألعاب تعليمية تفاعلية للمعلمين داخل الفصل</h3>
+            <p>الألعاب التعليمية تساعد المعلم على تحويل الدرس والمراجعة إلى نشاط صفّي ممتع وسهل التفاعل.</p>
+            <a class="post-link" href="#article-educational-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">مراجعة</span><span>4 دقائق قراءة</span></div>
+            <h3>كيف تستخدم لعبة مراجعة درس بطريقة حماسية؟</h3>
+            <p>بدل الأسئلة التقليدية، يمكن استخدام لعبة تفاعلية لعرض الأسئلة وجمع النقاط وتحفيز الطلاب على المشاركة.</p>
+            <a class="post-link" href="#article-lesson-review">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">جمعات</span><span>5 دقائق قراءة</span></div>
+            <h3>أفضل ألعاب جماعية عربية للجلسات والاستراحات</h3>
+            <p>الألعاب الجماعية العربية المناسبة للجلسات لازم تكون سهلة، واضحة، وتناسب مختلف الأعمار.</p>
+            <a class="post-link" href="#article-family-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">فعاليات</span><span>5 دقائق قراءة</span></div>
+            <h3>أفكار مسابقات للفعاليات والرحلات المدرسية</h3>
+            <p>الفعاليات تحتاج ألعابًا سريعة التجهيز، واضحة للجمهور، وتخلق منافسة جميلة بين الفرق.</p>
+            <a class="post-link" href="#article-events-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">بدون تحميل</span><span>4 دقائق قراءة</span></div>
+            <h3>ألعاب تفاعلية بدون تحميل تعمل من المتصفح</h3>
+            <p>اللعب من المتصفح يختصر الوقت ويقلل المشاكل، خصوصًا للمدارس والجمعات التي تحتاج تشغيلًا سريعًا.</p>
+            <a class="post-link" href="#article-browser-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">مدرسة</span><span>5 دقائق قراءة</span></div>
+            <h3>مسابقات مدرسية جاهزة للأنشطة الصفية</h3>
+            <p>سواء في حصة انتظار أو نشاط مدرسي أو مراجعة نهائية، المسابقات الجاهزة تساعد على تنظيم التفاعل بسهولة.</p>
+            <a class="post-link" href="#article-school-competitions">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">تعديل الأسئلة</span><span>6 دقائق قراءة</span></div>
+            <h3>ألعاب قابلة للتعديل وإضافة الأسئلة الخاصة</h3>
+            <p>ميزة إضافة الأسئلة تجعل اللعبة مناسبة لأي مادة أو مناسبة أو فعالية خاصة.</p>
+            <a class="post-link" href="#article-editable-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">أصدقاء</span><span>4 دقائق قراءة</span></div>
+            <h3>كيف تختار لعبة مناسبة لجمعات الأصدقاء؟</h3>
+            <p>اللعبة المناسبة للجلسة هي التي تبدأ بسرعة، قواعدها بسيطة، وتناسب عدد اللاعبين الموجود.</p>
+            <a class="post-link" href="#article-friends-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">تغذية راجعة</span><span>5 دقائق قراءة</span></div>
+            <h3>التغذية الراجعة داخل الدرس باستخدام الألعاب</h3>
+            <p>يمكن للمعلم قياس الفهم بطريقة ممتعة من خلال سؤال، إجابة، نقاط، ومنافسة بسيطة بين الطلاب.</p>
+            <a class="post-link" href="#article-feedback-games">اقرأ المقال ←</a>
+          </article>
+
+          <article class="post-card">
+            <div class="post-meta"><span class="tag">مناسبات</span><span>5 دقائق قراءة</span></div>
+            <h3>ألعاب للعيد الوطني والمناسبات الخاصة</h3>
+            <p>المناسبات تحتاج ألعابًا مرنة يمكن تعديل أسئلتها لتناسب الموضوع والهوية والرسائل المطلوبة.</p>
+            <a class="post-link" href="#article-occasion-games">اقرأ المقال ←</a>
+          </article>
+        </section>
+
+        <section class="mid-cta" aria-label="دعوة لتصفح الألعاب">
+          <h2>جاهز تبدأ لعبة تفاعلية؟</h2>
+          <p>تصفح ألعاب صندوق المسابقات واختر لعبة تناسب جمعاتك أو مدرستك أو فعاليتك. ألعاب جاهزة، سهلة التشغيل، وتفتح مباشرة من الموقع بعد التفعيل.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="index.html#games">شاهد الألعاب</a>
+            <a class="btn btn-secondary" href="purchase-activation.html">استرجاع مشترياتك</a>
+          </div>
+        </section>
+
+        <h2 class="section-heading">مقالات المدونة</h2>
+
+        <section class="article-stack" aria-label="مقالات كاملة مختصرة">
+          <article class="article-box" id="article-ramadan-games">
+            <h2>أفكار ألعاب رمضان تفاعلية للعائلة والأصدقاء</h2>
+            <p>تجمعات رمضان تحتاج لعبة خفيفة وسريعة تجمع الأهل والأصدقاء بدون تجهيز طويل. الألعاب التفاعلية مناسبة جدًا بعد الإفطار أو في السهرات لأنها تعطي جو منافسة وتحدي وتناسب الكبار والصغار.</p>
+            <p>بدل البحث عن أسئلة عشوائية أو تجهيز ملفات كثيرة، يمكنك استخدام لعبة جاهزة تعمل من المتصفح وتعرض الأسئلة أو التحديات بطريقة مرتبة وواضحة.</p>
+            <ul>
+              <li>اختيار لعبة جماعية سهلة الشرح.</li>
+              <li>تقسيم اللاعبين إلى فرق لزيادة الحماس.</li>
+              <li>استخدام أسئلة عامة أو رمضانية أو عائلية.</li>
+              <li>عرض اللعبة على شاشة أو تلفاز ليشارك الجميع.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">تصفح ألعاب رمضان</a></div>
+          </article>
+
+          <article class="article-box" id="article-eid-games">
+            <h2>أفضل ألعاب عيد جاهزة للتجمعات والفعاليات</h2>
+            <p>العيد يجمع العائلة والأصدقاء، وغالبًا نحتاج نشاطًا سريعًا يغيّر جو الجلسة. لعبة عيد جاهزة توفر عليك وقت التحضير وتمنح الضيوف تجربة ممتعة بدون تعقيد.</p>
+            <p>الألعاب الرقمية التفاعلية مناسبة للعيد لأنها تعمل من الجوال أو الكمبيوتر ويمكن عرضها للجميع. كما أنها تعطي شعورًا احترافيًا أكثر من الأسئلة الورقية أو الملفات التقليدية.</p>
+            <ul>
+              <li>مناسبة لجلسات العائلة والزيارات.</li>
+              <li>تعمل مباشرة بدون تحميل معقد.</li>
+              <li>تدعم التنافس بين الفرق واللاعبين.</li>
+              <li>تجعل العيد أكثر حماسًا وتفاعلًا.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">اختر لعبة للعيد</a></div>
+          </article>
+
+          <article class="article-box" id="article-educational-games">
+            <h2>ألعاب تعليمية تفاعلية للمعلمين داخل الفصل</h2>
+            <p>الألعاب التعليمية أصبحت وسيلة ممتازة لجعل الطالب يشارك بدل أن يكتفي بالاستماع. عندما تتحول الأسئلة إلى لعبة، يزيد التركيز وتتحسن المشاركة داخل الفصل.</p>
+            <p>يمكن للمعلم استخدام الألعاب التفاعلية في التمهيد، المراجعة، قياس الفهم، أو ختام الدرس. والأفضل أن تكون اللعبة قابلة لإضافة الأسئلة الخاصة حتى تناسب أي مادة.</p>
+            <ul>
+              <li>مناسبة للمراجعة قبل الاختبار.</li>
+              <li>تساعد في كسر الروتين داخل الحصة.</li>
+              <li>تنفع للمواد العلمية واللغوية والاجتماعية.</li>
+              <li>تدعم التفاعل الفردي أو العمل الجماعي.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب تعليمية جاهزة</a></div>
+          </article>
+
+          <article class="article-box" id="article-lesson-review">
+            <h2>كيف تستخدم لعبة مراجعة درس بطريقة حماسية؟</h2>
+            <p>مراجعة الدرس لا يجب أن تكون مجموعة أسئلة عادية. باستخدام لعبة تفاعلية يمكن تحويل المراجعة إلى سباق نقاط وتحدي بين الطلاب، وهذا يجعل الطالب ينتبه ويتحمس للإجابة.</p>
+            <p>ابدأ بتحديد أهداف المراجعة، ثم ضع الأسئلة المهمة، وبعدها قسّم الطلاب إلى فرق أو اجعل المشاركة فردية. المهم أن تكون القواعد واضحة والزمن مناسبًا للحصة.</p>
+            <ul>
+              <li>جهّز 10 إلى 20 سؤالًا حسب وقت الحصة.</li>
+              <li>اجعل الأسئلة قصيرة وواضحة.</li>
+              <li>استخدم النقاط لتشجيع المشاركة.</li>
+              <li>اختم بتغذية راجعة سريعة لأكثر الأخطاء تكرارًا.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">جرّب لعبة مراجعة</a></div>
+          </article>
+
+          <article class="article-box" id="article-family-games">
+            <h2>أفضل ألعاب جماعية عربية للجلسات والاستراحات</h2>
+            <p>اللعبة الجماعية المناسبة للجلسات يجب أن تكون سهلة الفهم، سريعة التشغيل، وتناسب عدد لاعبين مختلف. الألعاب العربية التفاعلية تضيف ميزة مهمة: اللغة والجو قريبان من العائلة والأصدقاء.</p>
+            <p>في الاستراحات أو الرحلات أو تجمعات نهاية الأسبوع، تحتاج لعبة تبدأ بسرعة ولا تتطلب تجهيزات كثيرة. هنا تظهر قيمة الألعاب الجاهزة التي تعمل من المتصفح.</p>
+            <ul>
+              <li>اختر لعبة تناسب عدد اللاعبين.</li>
+              <li>اجعل المقدم يشرح القواعد في دقيقة واحدة.</li>
+              <li>استخدم شاشة عرض إذا كان العدد كبيرًا.</li>
+              <li>نوّع بين ألعاب أسئلة وتحديات وتمثيل.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للجمعات</a></div>
+          </article>
+
+          <article class="article-box" id="article-events-games">
+            <h2>أفكار مسابقات للفعاليات والرحلات المدرسية</h2>
+            <p>الفعاليات تحتاج برنامجًا واضحًا وممتعًا. المسابقات التفاعلية تساعد المنظم على إدارة الوقت وجذب انتباه المشاركين، سواء كانت فعالية مدرسية أو رحلة أو اجتماع عائلي كبير.</p>
+            <p>الأفضل اختيار لعبة بنظام فرق ونقاط، لأنها تجعل الجمهور يتابع النتيجة ويتحمس مع كل جولة.</p>
+            <ul>
+              <li>قسّم المشاركين إلى فريقين أو أكثر.</li>
+              <li>استخدم أسئلة متنوعة بين السهلة والمتوسطة.</li>
+              <li>اعرض النتيجة بوضوح أمام الجميع.</li>
+              <li>اختم بجائزة رمزية للفريق الفائز.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للفعاليات</a></div>
+          </article>
+
+          <article class="article-box" id="article-browser-games">
+            <h2>ألعاب تفاعلية بدون تحميل تعمل من المتصفح</h2>
+            <p>ميزة اللعب من المتصفح مهمة جدًا؛ لأنها تقلل مشاكل التثبيت والتوافق. كل ما يحتاجه العميل هو رابط اللعبة وحساب مفعّل، ثم يبدأ اللعب من الجوال أو اللابتوب أو التابلت.</p>
+            <p>هذا النوع من الألعاب مناسب للمعلمين، العائلات، والفعاليات، لأن التشغيل السريع يجعل التجربة أسهل وأقل تعقيدًا.</p>
+            <ul>
+              <li>لا تحتاج تثبيت برنامج.</li>
+              <li>تعمل على أكثر من جهاز.</li>
+              <li>سهلة العرض على شاشة أو بروجكتر.</li>
+              <li>مناسبة للشراء والاستخدام السريع.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">تصفح ألعاب بدون تحميل</a></div>
+          </article>
+
+          <article class="article-box" id="article-school-competitions">
+            <h2>مسابقات مدرسية جاهزة للأنشطة الصفية</h2>
+            <p>المسابقات المدرسية الجاهزة توفر على المعلم والمنظم وقت التحضير، خصوصًا في حصص الانتظار، الأسابيع التمهيدية، الأنشطة اللاصفية، أو مراجعات نهاية الوحدة.</p>
+            <p>عندما تكون اللعبة واضحة وقابلة للتعديل، يمكن استخدامها في أكثر من مادة وأكثر من صف.</p>
+            <ul>
+              <li>تنفع للرياضيات والعلوم واللغة العربية والإنجليزية.</li>
+              <li>يمكن تعديل الأسئلة حسب الدرس.</li>
+              <li>تزيد مشاركة الطلاب داخل الفصل.</li>
+              <li>تعطي المعلم طريقة ممتعة للتقييم السريع.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب مدرسية</a></div>
+          </article>
+
+          <article class="article-box" id="article-editable-games">
+            <h2>ألعاب قابلة للتعديل وإضافة الأسئلة الخاصة</h2>
+            <p>أقوى ميزة في الألعاب التعليمية والتفاعلية هي إمكانية إضافة الأسئلة الخاصة. بهذه الطريقة تتحول اللعبة إلى قالب جاهز لأي مادة أو مناسبة أو فعالية.</p>
+            <p>يمكن للمعلم وضع أسئلة الدرس، ويمكن للأسرة وضع أسئلة عن أفراد العائلة، ويمكن للمنظم وضع أسئلة تناسب الفعالية.</p>
+            <ul>
+              <li>تخصيص الأسئلة حسب الهدف.</li>
+              <li>إعادة استخدام اللعبة أكثر من مرة.</li>
+              <li>مناسبة للمراجعة والتدريب والتحدي.</li>
+              <li>تساعد على صنع تجربة مختلفة في كل مرة.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب قابلة للتعديل</a></div>
+          </article>
+
+          <article class="article-box" id="article-friends-games">
+            <h2>كيف تختار لعبة مناسبة لجمعات الأصدقاء؟</h2>
+            <p>اختيار لعبة للجلسة يعتمد على عدد اللاعبين، نوع الجو المطلوب، ووقت اللعب. إذا كان الهدف ضحك وتفاعل، اختر لعبة تعتمد على التصرف والسرعة. وإذا كان الهدف تحدي، اختر لعبة أسئلة ونقاط.</p>
+            <p>الأهم أن تكون اللعبة بسيطة في البداية، ثم يزيد الحماس مع الوقت.</p>
+            <ul>
+              <li>للجلسات السريعة اختر لعبة قصيرة.</li>
+              <li>للعدد الكبير اختر لعبة فرق.</li>
+              <li>للضحك اختر ألعاب التخمين والتمثيل.</li>
+              <li>للتحدي اختر ألعاب الأسئلة والجرس.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للأصدقاء</a></div>
+          </article>
+
+          <article class="article-box" id="article-feedback-games">
+            <h2>التغذية الراجعة داخل الدرس باستخدام الألعاب</h2>
+            <p>التغذية الراجعة لا تعني فقط تصحيح الإجابات. يمكن أن تكون نشاطًا سريعًا يكشف للمعلم مستوى فهم الطلاب بطريقة ممتعة. الألعاب التفاعلية تجعل الخطأ جزءًا من التعلم وليس نهاية المشاركة.</p>
+            <p>بعد كل جولة، يستطيع المعلم التوقف قليلًا وشرح سبب الإجابة الصحيحة، ثم يكمل اللعبة.</p>
+            <ul>
+              <li>اعرف الأسئلة التي أخطأ فيها الطلاب.</li>
+              <li>اشرح الإجابة الصحيحة مباشرة.</li>
+              <li>أعد السؤال بصيغة أخرى إذا احتاج الطلاب.</li>
+              <li>استخدم النقاط للتحفيز لا للتخويف.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للتغذية الراجعة</a></div>
+          </article>
+
+          <article class="article-box" id="article-occasion-games">
+            <h2>ألعاب للعيد الوطني والمناسبات الخاصة</h2>
+            <p>المناسبات الخاصة مثل العيد الوطني، حفلات المدرسة، أو فعاليات العائلة تحتاج محتوى مناسب للهوية والموضوع. الألعاب القابلة للتعديل تساعدك على تجهيز أسئلة ورسائل تناسب المناسبة.</p>
+            <p>يمكنك استخدام لعبة أسئلة، خريطة حروف، أو تحديات جماعية لإضافة طابع مميز على الفعالية.</p>
+            <ul>
+              <li>اكتب أسئلة مرتبطة بالمناسبة.</li>
+              <li>استخدم أسماء الفرق المناسبة للحدث.</li>
+              <li>اجعل مدة الجولة قصيرة للحفاظ على الحماس.</li>
+              <li>أضف جوائز بسيطة لزيادة المشاركة.</li>
+            </ul>
+            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للمناسبات</a></div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer" aria-label="ذيل الصفحة">
+      <div class="footer-inner">
+        <h2>صندوق المسابقات</h2>
+        <p>متجر ألعاب رقمية تفاعلية يجمع مسابقات جماعية وألعابًا تعليمية جاهزة للجمعات، المدارس، رمضان، العيد، والفعاليات.</p>
+        <div class="footer-links">
+          <a class="footer-link" href="index.html#games">ألعابنا</a>
+          <a class="footer-link" href="purchase-activation.html">تفعيل الألعاب</a>
+          <a class="footer-link" href="support.html">الدعم</a>
+          <a class="footer-link" href="index.html">الرئيسية</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <div class="footer-legal-inner">
+          جميع الحقوق محفوظة © 2025 صندوق المسابقات | <a href="about.html">من نحن</a> | <a href="privacy.html">الخصوصية</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <nav class="bottom-nav" aria-label="التنقل السفلي">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="index.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
+        <span>الألعاب</span>
+      </a>
+      <a class="nav-item nav-featured" href="purchase-activation.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
+        <span>تفعيل الألعاب</span>
+      </a>
+      <a class="nav-item" href="account.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+        <span>الحساب</span>
+      </a>
+      <a class="nav-item" href="support.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
+        <span>الدعم</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
+
+    function readLocalValue(key) {
+      try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
+    }
+
+    function formatAccountName(name) {
+      const clean = String(name || '').replace(/\s+/g, ' ').trim();
+      if (!clean) return '';
+      return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
+    }
+
+    function refreshLoginChip() {
+      const loginChip = document.querySelector('.login-chip');
+      if (!loginChip) return;
+      const phone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
+      const confirmed = readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1';
+      const playerName = confirmed ? formatAccountName(readLocalValue(ACCOUNT_NAME_KEY)) : '';
+
+      if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
+      else if (phone) loginChip.textContent = 'تم الدخول';
+      else loginChip.textContent = 'الحساب';
+    }
+
+    refreshLoginChip();
+    window.addEventListener('pageshow', refreshLoginChip);
+    window.addEventListener('storage', refreshLoginChip);
+  </script>
+</body>
+</html>
