@@ -727,6 +727,8 @@
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
     const OWNED_GAMES_KEY = 'sandooq_owned_games_v1';
+    const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
+    const TOKEN_KEY = 'sandooq_auth_token_v1';
     const CURRENT_GAME_ID = 'horof';
     const LEGACY_HOROF_KEYS = [
       'horof_access_ok_v1',
@@ -761,15 +763,47 @@
       });
     }
 
+    function addStoredGameIdsToSet(ids, key) {
+      try {
+        const raw = localStorage.getItem(key);
+        const parsed = raw ? JSON.parse(raw) : [];
+
+        if (Array.isArray(parsed)) {
+          parsed.forEach(id => id && ids.add(String(id)));
+        } else if (parsed && typeof parsed === 'object') {
+          Object.keys(parsed).forEach(id => parsed[id] && ids.add(String(id)));
+        }
+      } catch (e) {}
+    }
+
     function readOwnedGames() {
       const ids = new Set();
-      try {
-        const raw = localStorage.getItem(OWNED_GAMES_KEY);
-        const parsed = raw ? JSON.parse(raw) : [];
-        if (Array.isArray(parsed)) parsed.forEach(id => id && ids.add(String(id)));
-      } catch (e) {}
+
+      addStoredGameIdsToSet(ids, OWNED_GAMES_KEY);
+      addStoredGameIdsToSet(ids, LINKED_GAMES_KEY);
+
       if (hasLegacyHorofActivation()) ids.add('horof');
       return ids;
+    }
+
+    function buildGamePlayUrl(playUrl) {
+      if (!playUrl || playUrl === '#') return playUrl;
+
+      const token = readLocalValue(TOKEN_KEY).trim();
+
+      try {
+        const url = new URL(playUrl, window.location.href);
+
+        if (token) {
+          url.searchParams.set('sg_token', token);
+          url.searchParams.set('sg_temp', '1');
+          url.searchParams.set('sg_game', CURRENT_GAME_ID);
+        }
+
+        return url.toString();
+      } catch (e) {
+        return playUrl;
+      }
     }
 
     function playIconMarkup() {
@@ -788,7 +822,8 @@
 
       if (isOwned) {
         cta.dataset.state = 'play';
-        cta.setAttribute('href', playUrl);
+        cta.dataset.basePlayUrl = playUrl;
+        cta.setAttribute('href', buildGamePlayUrl(playUrl));
         cta.innerHTML = `${playIconMarkup()}<span>${playLabel}</span>`;
       } else {
         cta.dataset.state = 'buy';
@@ -807,6 +842,17 @@
       refreshLoginChip();
       setMainCtaState();
     });
+
+    document.addEventListener('click', event => {
+      const cta = event.target && event.target.closest
+        ? event.target.closest('.js-game-cta[data-game-id="horof"]')
+        : null;
+
+      if (!cta || cta.dataset.state !== 'play') return;
+
+      const playUrl = cta.dataset.basePlayUrl || cta.dataset.playUrl || cta.getAttribute('href') || '#';
+      cta.setAttribute('href', buildGamePlayUrl(playUrl));
+    }, true);
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
