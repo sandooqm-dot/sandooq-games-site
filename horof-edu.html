@@ -553,7 +553,7 @@
           <p class="page-lead">لعبة تعليمية تفاعلية قابلة للتعديل<br>أضف أسئلتك واجعل الحصة حماسية</p>
 
           <div class="hero-actions" data-game-id="horof-edu">
-            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/rRDZGeZ" data-game-id="horof-edu" data-state="buy" data-buy-url="https://sandooq-m.com/rRDZGeZ" data-play-url="https://horof.sandooq-games.com" data-buy-label="شراء اللعبة" data-play-label="العب">
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/bwvKNPe" data-game-id="horof-edu" data-state="buy" data-buy-url="https://sandooq-m.com/bwvKNPe" data-play-url="https://horof.sandooq-games.com" data-buy-label="شراء اللعبة" data-play-label="العب">
               <span class="cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></span>
               <span class="cta-label">شراء اللعبة</span>
             </a>
@@ -684,6 +684,12 @@
     const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
+    const TOKEN_KEY = 'sandooq_auth_token_v1';
+    const OWNED_GAMES_KEY = 'sandooq_owned_games_v1';
+    const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
+    const CURRENT_GAME_ID = 'horof-edu';
+    const CURRENT_GAME_PLAY_URL = 'https://horof.sandooq-games.com';
+    const CURRENT_GAME_BUY_URL = 'https://sandooq-m.com/bwvKNPe';
 
     function readLocalValue(key) {
       try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
@@ -700,18 +706,44 @@
       else loginChip.textContent = 'تسجيل الدخول';
     }
 
-    const GAME_PLAY_URLS = {
-      'horof-edu': 'https://horof.sandooq-games.com'
-    };
+    function readGameIdsFromStorage(key) {
+      const ids = [];
+      try {
+        const raw = localStorage.getItem(key);
+        const parsed = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(parsed)) {
+          parsed.forEach(id => { if (id) ids.push(String(id)); });
+        } else if (parsed && typeof parsed === 'object') {
+          Object.keys(parsed).forEach(id => { if (parsed[id]) ids.push(String(id)); });
+        }
+      } catch (e) {}
+      return ids;
+    }
 
     function readOwnedGames() {
       const ids = new Set();
-      try {
-        const raw = localStorage.getItem('sandooq_owned_games_v1');
-        const parsed = raw ? JSON.parse(raw) : [];
-        if (Array.isArray(parsed)) parsed.forEach(id => id && ids.add(String(id)));
-      } catch (e) {}
+      readGameIdsFromStorage(OWNED_GAMES_KEY).forEach(id => ids.add(id));
+      readGameIdsFromStorage(LINKED_GAMES_KEY).forEach(id => ids.add(id));
       return ids;
+    }
+
+    function buildPlayUrlWithAccess(playUrl) {
+      const token = readLocalValue(TOKEN_KEY).trim();
+      if (!playUrl || playUrl === '#') return playUrl;
+
+      try {
+        const url = new URL(playUrl, window.location.href);
+
+        if (token) {
+          url.searchParams.set('sg_token', token);
+          url.searchParams.set('sg_temp', '1');
+          url.searchParams.set('sg_game', CURRENT_GAME_ID);
+        }
+
+        return url.toString();
+      } catch (e) {
+        return playUrl;
+      }
     }
 
     function setCtaLabel(link, text) {
@@ -724,15 +756,16 @@
     function updateGameCtaState() {
       const cta = document.querySelector('.js-game-cta[data-game-id="horof-edu"]');
       if (!cta) return;
+
       const ownedIds = readOwnedGames();
-      const isOwned = ownedIds.has('horof-edu');
-      const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
-      const playUrl = cta.dataset.playUrl || GAME_PLAY_URLS['horof-edu'] || '#';
+      const isOwned = ownedIds.has(CURRENT_GAME_ID);
+      const buyUrl = cta.dataset.buyUrl || CURRENT_GAME_BUY_URL;
+      const playUrl = cta.dataset.playUrl || CURRENT_GAME_PLAY_URL;
 
       if (isOwned) {
         cta.dataset.state = 'play';
         cta.classList.add('btn-play');
-        cta.href = playUrl;
+        cta.href = buildPlayUrlWithAccess(playUrl);
         setCtaLabel(cta, cta.dataset.playLabel || 'العب');
       } else {
         cta.dataset.state = 'buy';
@@ -741,6 +774,14 @@
         setCtaLabel(cta, cta.dataset.buyLabel || 'شراء اللعبة');
       }
     }
+
+    document.addEventListener('click', event => {
+      const cta = event.target && event.target.closest ? event.target.closest('.js-game-cta[data-game-id="horof-edu"]') : null;
+      if (!cta || cta.dataset.state !== 'play') return;
+
+      const playUrl = cta.dataset.playUrl || CURRENT_GAME_PLAY_URL;
+      cta.href = buildPlayUrlWithAccess(playUrl);
+    }, { capture:true });
 
     refreshLoginChip();
     updateGameCtaState();
