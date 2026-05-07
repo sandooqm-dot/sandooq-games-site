@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>سياسة الخصوصية | صندوق المسابقات</title>
+  <meta name="description" content="سياسة الخصوصية في صندوق المسابقات: كيف نتعامل مع بياناتك عند استخدام الموقع، تفعيل الألعاب، تسجيل الدخول، وخدمة الدعم." />
+  <meta name="theme-color" content="#075c82" />
+  <link rel="preload" href="NotoIKEAArabic-Bold.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" as="image" href="logo.PNG" />
+
+  <style>
+    @font-face{
+      font-family:"NotoIKEAArabic";
+      src:url("NotoIKEAArabic-Bold.ttf") format("truetype");
+      font-weight:700 950;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    :root{
+      --blue:#087ca8;
+      --blue-dark:#075c82;
+      --blue-deep:#066FAE;
+      --blue-soft:#55bdf2;
+      --yellow:#f7b638;
+      --yellow-light:#ffd76b;
+      --white:#ffffff;
+      --ink:#111827;
+      --muted:#394354;
+      --green:#2faf72;
+      --orange:#ff6b1a;
+      --line:#151515;
+      --nav-ink:#04384f;
+      --nav-active:#064f73;
+      --cream:#fff8ed;
+      --layout-max:1180px;
+      --nav-max:860px;
+      --page-pad:clamp(14px, 4vw, 72px);
+      --bottom-nav-height:clamp(88px, 7vw, 96px);
+      --radius:clamp(18px, 2vw, 30px);
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html{width:100%;min-height:100%;scroll-behavior:smooth;background:var(--blue-soft);}
+    body{
+      width:100%;
+      min-height:100dvh;
+      margin:0;
+      color:var(--ink);
+      font-family:"NotoIKEAArabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      background:var(--blue-soft);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none;}
+    button,a{font:inherit;}
+    img,svg{max-width:100%;}
+
+    .app{
+      width:100%;
+      min-height:100dvh;
+      background:var(--blue-soft);
+      padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      overflow:hidden;
+    }
+
+    .privacy-hero{
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      background:linear-gradient(135deg, var(--blue-dark), var(--blue-deep));
+      color:#fff;
+      padding:clamp(12px, 2vw, 22px) var(--page-pad) clamp(34px, 6vw, 78px);
+      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
+    }
+
+    .privacy-hero::before{
+      content:"";
+      position:absolute;
+      inset:-18px;
+      z-index:-2;
+      opacity:.18;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.9) 0 2px, transparent 2.4px),
+        radial-gradient(circle, rgba(255,255,255,.5) 0 1.4px, transparent 1.9px);
+      background-size:24px 24px, 38px 38px;
+      background-position:0 0, 10px 12px;
+      animation:dotsMove 18s linear infinite;
+    }
+
+    .privacy-hero::after{
+      content:"";
+      position:absolute;
+      width:clamp(260px, 34vw, 540px);
+      height:clamp(260px, 34vw, 540px);
+      left:clamp(-220px, -12vw, -80px);
+      bottom:clamp(-240px, -12vw, -100px);
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+      z-index:-1;
+    }
+
+    @keyframes dotsMove{
+      from{transform:translate3d(0,0,0)}
+      to{transform:translate3d(24px,24px,0)}
+    }
+
+    .top-row{
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      min-height:clamp(34px, 4vw, 52px);
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:clamp(32px, 3.2vw, 44px);
+      padding:7px clamp(12px, 1.5vw, 18px);
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,.38);
+      font-weight:950;
+      font-size:clamp(13px, 1vw, 16px);
+      line-height:1.1;
+      box-shadow:0 3px 0 rgba(0,0,0,.18);
+      white-space:nowrap;
+    }
+
+    .home-chip{background:var(--yellow);color:var(--ink);border-color:rgba(21,21,21,.42);}
+    .login-chip{background:var(--green);color:#fff;}
+
+    .hero-inner{
+      width:100%;
+      max-width:var(--layout-max);
+      margin:clamp(28px, 5vw, 66px) auto 0;
+      display:grid;
+      justify-items:center;
+      text-align:center;
+      gap:clamp(16px, 2.8vw, 28px);
+    }
+
+    .logo-wrap{
+      width:clamp(168px, 18vw, 250px);
+      min-height:clamp(94px, 10vw, 142px);
+      display:grid;
+      place-items:center;
+      animation:floatLogo 4.8s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-5px)}
+    }
+
+    .logo-wrap img{
+      width:100%;
+      max-height:140px;
+      object-fit:contain;
+      filter:drop-shadow(0 7px 0 rgba(0,0,0,.14));
+    }
+
+    .privacy-title{
+      margin:0;
+      font-weight:950;
+      font-size:clamp(34px, 7vw, 72px);
+      line-height:1.2;
+      white-space:nowrap;
+      text-shadow:0 4px 0 rgba(0,0,0,.14);
+    }
+
+    .privacy-subtitle{
+      max-width:920px;
+      margin:0;
+      color:rgba(255,255,255,.96);
+      font-weight:850;
+      font-size:clamp(16px, 1.75vw, 24px);
+      line-height:1.9;
+      text-shadow:0 2px 0 rgba(0,0,0,.10);
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      margin-top:2px;
+    }
+
+    .btn{
+      min-height:clamp(44px, 4vw, 58px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px clamp(16px, 2vw, 28px);
+      border-radius:999px;
+      border:3px solid var(--line);
+      font-weight:950;
+      font-size:clamp(14px, 1.15vw, 18px);
+      line-height:1;
+      box-shadow:0 5px 0 rgba(0,0,0,.20);
+      transition:transform .16s ease, filter .16s ease;
+    }
+
+    .btn:hover{transform:translateY(-1px);filter:saturate(1.08);}
+    .btn-primary{background:var(--orange);color:#fff;}
+    .btn-secondary{background:#fff;color:var(--ink);}
+    .btn-green{background:var(--green);color:#fff;}
+
+    .content-area{
+      position:relative;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(85,189,242,.22), transparent 30%),
+        linear-gradient(180deg, #ffffff, #f7fbff 45%, #fff8ed);
+      padding:clamp(24px, 4vw, 56px) var(--page-pad) clamp(44px, 7vw, 100px);
+    }
+
+    .content-inner{
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      display:grid;
+      gap:clamp(18px, 3vw, 34px);
+    }
+
+    .summary-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.5vw, 32px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      text-align:center;
+    }
+
+    .summary-card h2{
+      margin:0 0 10px;
+      font-size:clamp(25px, 3vw, 42px);
+      font-weight:950;
+      color:var(--blue-dark);
+      line-height:1.35;
+    }
+
+    .summary-card p{
+      max-width:980px;
+      margin:0 auto;
+      color:var(--muted);
+      font-size:clamp(15px, 1.3vw, 20px);
+      font-weight:800;
+      line-height:1.9;
+    }
+
+    .trust-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:clamp(14px, 2vw, 22px);
+    }
+
+    .trust-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.4vw, 30px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      text-align:center;
+      min-height:100%;
+    }
+
+    .trust-card:nth-child(2){background:#eaf8ff;}
+    .trust-card:nth-child(3){background:#fff8ed;}
+
+    .trust-icon{
+      width:clamp(58px, 6vw, 78px);
+      height:clamp(58px, 6vw, 78px);
+      border-radius:50%;
+      margin:0 auto 12px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      background:var(--blue-dark);
+      border:3px solid var(--line);
+      box-shadow:0 5px 0 rgba(0,0,0,.18);
+    }
+
+    .trust-icon svg{
+      width:54%;
+      height:54%;
+      display:block;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2.7;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .trust-card h3{
+      margin:0 0 8px;
+      color:var(--ink);
+      font-size:clamp(20px, 2vw, 30px);
+      font-weight:950;
+      line-height:1.35;
+    }
+
+    .trust-card p{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(14px, 1.15vw, 18px);
+      line-height:1.8;
+    }
+
+    .policy-stack{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 26px);
+    }
+
+    .policy-box{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.6vw, 34px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      scroll-margin-top:24px;
+    }
+
+    .policy-box:nth-child(odd){background:#fff8ed;}
+    .policy-box:nth-child(even){background:#eaf8ff;}
+
+    .policy-heading{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .policy-icon{
+      width:clamp(46px, 4.5vw, 62px);
+      height:clamp(46px, 4.5vw, 62px);
+      border-radius:50%;
+      flex:0 0 auto;
+      display:grid;
+      place-items:center;
+      background:var(--blue-dark);
+      color:#fff;
+      border:3px solid var(--line);
+      box-shadow:0 4px 0 rgba(0,0,0,.16);
+    }
+
+    .policy-icon svg{
+      width:54%;
+      height:54%;
+      display:block;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2.7;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .policy-box h2{
+      margin:0;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(23px, 2.7vw, 38px);
+      line-height:1.35;
+    }
+
+    .policy-box p{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-weight:760;
+      font-size:clamp(15px, 1.25vw, 19px);
+      line-height:1.95;
+    }
+
+    .policy-box ul{
+      margin:10px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:9px;
+      color:var(--muted);
+      font-weight:820;
+      font-size:clamp(14px, 1.15vw, 18px);
+      line-height:1.8;
+    }
+
+    .policy-box li{
+      position:relative;
+      padding-right:24px;
+    }
+
+    .policy-box li::before{
+      content:"";
+      position:absolute;
+      right:0;
+      top:.78em;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--orange);
+      box-shadow:0 0 0 3px rgba(255,107,26,.12);
+    }
+
+    .note-box{
+      background:linear-gradient(135deg, var(--blue-dark), var(--blue));
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(20px, 3vw, 38px);
+      color:#fff;
+      text-align:center;
+      box-shadow:0 8px 0 rgba(0,0,0,.18);
+      display:grid;
+      gap:12px;
+      justify-items:center;
+      overflow:hidden;
+      position:relative;
+      isolation:isolate;
+    }
+
+    .note-box::before{
+      content:"";
+      position:absolute;
+      inset:-16px;
+      z-index:-1;
+      opacity:.15;
+      background-image:radial-gradient(circle, rgba(255,255,255,.95) 0 2px, transparent 2.4px);
+      background-size:26px 26px;
+    }
+
+    .note-box h2{
+      margin:0;
+      font-size:clamp(25px, 3.5vw, 46px);
+      font-weight:950;
+      line-height:1.35;
+    }
+
+    .note-box p{
+      margin:0;
+      max-width:850px;
+      color:rgba(255,255,255,.94);
+      font-size:clamp(15px, 1.25vw, 19px);
+      font-weight:800;
+      line-height:1.9;
+    }
+
+    .site-footer{
+      position:relative;
+      background:linear-gradient(180deg, #3c83ad 0%, #2f6f96 32%, #205b7d 100%);
+      border-top:clamp(3px, .35vw, 5px) solid var(--line);
+      color:var(--white);
+      overflow:hidden;
+    }
+
+    .site-footer::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.12;
+      background-image:radial-gradient(circle, rgba(255,255,255,.92) 0 2px, transparent 2.4px);
+      background-size:28px 28px;
+      pointer-events:none;
+    }
+
+    .footer-inner{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      padding:clamp(34px, 5vw, 58px) var(--page-pad) clamp(26px, 5vw, 44px);
+      text-align:center;
+    }
+
+    .footer-inner h2{
+      margin:0;
+      font-size:clamp(26px, 3vw, 42px);
+      font-weight:950;
+      line-height:1.35;
+    }
+
+    .footer-inner p{
+      margin:clamp(12px, 1.5vw, 18px) auto 0;
+      max-width:760px;
+      color:rgba(255,255,255,.94);
+      font-size:clamp(14px, 1.2vw, 18px);
+      line-height:1.9;
+      font-weight:800;
+    }
+
+    .footer-links{
+      margin-top:clamp(18px, 2.5vw, 28px);
+      display:grid;
+      grid-template-columns:repeat(2, minmax(120px, 1fr));
+      gap:clamp(12px, 2vw, 20px);
+      max-width:520px;
+      margin-inline:auto;
+    }
+
+    .footer-link{
+      min-height:42px;
+      color:#fff;
+      font-weight:950;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.20);
+    }
+
+    .footer-legal{
+      position:relative;
+      z-index:1;
+      background:#17324b;
+      border-top:1px solid rgba(255,255,255,.16);
+    }
+
+    .footer-legal-inner{
+      width:100%;
+      max-width:var(--layout-max);
+      margin-inline:auto;
+      padding:14px var(--page-pad) calc(14px + env(safe-area-inset-bottom));
+      text-align:center;
+      color:var(--white);
+      font-size:clamp(12px, 1vw, 15px);
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .footer-legal a{
+      color:rgba(255,215,107,.96);
+      text-decoration:underline;
+      text-underline-offset:4px;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      width:100%;
+      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      background:linear-gradient(180deg, #f7b638 0%, #e99f18 100%);
+      border-top:clamp(3px, .35vw, 5px) solid var(--line);
+      z-index:40;
+      display:flex;
+      align-items:stretch;
+      justify-content:center;
+      padding:0 var(--page-pad) env(safe-area-inset-bottom);
+      box-shadow:0 -5px 18px rgba(0,0,0,.16);
+    }
+
+    .bottom-nav-inner{
+      width:100%;
+      max-width:var(--nav-max);
+      height:100%;
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      align-items:center;
+      gap:clamp(3px, .8vw, 10px);
+      padding:8px 0;
+    }
+
+    .nav-item{
+      min-width:0;
+      height:clamp(68px, 6.5vw, 78px);
+      border-radius:22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      color:var(--nav-ink);
+      text-shadow:0 1px 0 rgba(255,255,255,.28);
+      font-weight:950;
+      font-size:clamp(11px, 1vw, 14px);
+      line-height:1.1;
+      text-align:center;
+      padding-inline:4px;
+    }
+
+    .nav-item.active{
+      color:#fff;
+      background:var(--nav-active);
+      border:2px solid rgba(255,255,255,.32);
+      box-shadow:0 5px 0 rgba(0,0,0,.2);
+      transform:translateY(-1px);
+    }
+
+    .nav-icon{
+      width:clamp(32px, 3vw, 40px);
+      height:clamp(32px, 3vw, 40px);
+      display:grid;
+      place-items:center;
+      color:currentColor;
+    }
+
+    .nav-icon svg{
+      width:90%;
+      height:90%;
+      display:block;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2.75;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .nav-item.active .nav-icon{color:var(--yellow-light);}
+
+    @media (min-width:760px){
+      .trust-grid{grid-template-columns:repeat(3, minmax(0,1fr));}
+    }
+
+    @media (max-width:430px){
+      :root{--bottom-nav-height:88px;--page-pad:clamp(12px, 4vw, 18px);}
+      .privacy-title{font-size:clamp(31px, 8.2vw, 43px);}
+      .privacy-subtitle{font-size:15px;}
+      .footer-links{grid-template-columns:1fr;}
+      .policy-heading{align-items:flex-start;}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        transition-duration:.001ms !important;
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"PrivacyPolicy",
+    "name":"سياسة الخصوصية - صندوق المسابقات",
+    "inLanguage":"ar-SA",
+    "publisher":{"@type":"Organization","name":"صندوق المسابقات"}
+  }
+  </script>
+</head>
+
+<body>
+  <div class="app">
+    <header class="privacy-hero">
+      <div class="top-row">
+        <a class="chip home-chip" href="index.html">الرئيسية</a>
+        <a class="chip login-chip" href="account.html">الحساب</a>
+      </div>
+
+      <div class="hero-inner">
+        <div class="logo-wrap" aria-label="شعار صندوق المسابقات">
+          <img src="logo.PNG" alt="صندوق المسابقات" />
+        </div>
+        <h1 class="privacy-title">سياسة الخصوصية</h1>
+        <p class="privacy-subtitle">خصوصيتك مهمة لنا. هذه الصفحة توضّح بشكل بسيط كيف نتعامل مع بياناتك عند استخدام موقع صندوق المسابقات وتفعيل الألعاب.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="index.html#games">تصفح الألعاب</a>
+          <a class="btn btn-secondary" href="support.html">التواصل مع الدعم</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <div class="content-inner">
+        <section class="summary-card" aria-label="ملخص سياسة الخصوصية">
+          <h2>الخصوصية ببساطة</h2>
+          <p>نستخدم البيانات الضرورية فقط لتشغيل الموقع، تفعيل ألعابك، تحسين التجربة، ومساعدتك عند التواصل معنا. لا نبيع بياناتك، ولا نستخدمها بطريقة تزعجك أو تخرج عن هدف تقديم الخدمة.</p>
+        </section>
+
+        <section class="trust-grid" aria-label="تعهدات الخصوصية">
+          <article class="trust-card">
+            <div class="trust-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 0 1 10 0v2"></path><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M12 14v2"></path></svg>
+            </div>
+            <h3>بياناتك محفوظة</h3>
+            <p>نستخدم وسائل حماية مناسبة ونحاول تقليل البيانات التي نحتاجها قدر الإمكان.</p>
+          </article>
+
+          <article class="trust-card">
+            <div class="trust-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.5-8 9-4.6-.5-8-4-8-9V7l8-4Z"></path><path d="M9 12l2 2 4-4"></path></svg>
+            </div>
+            <h3>لا نبيع بياناتك</h3>
+            <p>لا نبيع بيانات العملاء ولا نشاركها لأغراض تجارية خارجية مستقلة.</p>
+          </article>
+
+          <article class="trust-card">
+            <div class="trust-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 12s3.6-6 9-6 9 6 9 6-3.6 6-9 6-9-6-9-6Z"></path><path d="M4 4l16 16"></path></svg>
+            </div>
+            <h3>لا تتبع مزعج</h3>
+            <p>نجمع ما يساعد الموقع على العمل وتحسينه، بدون تتبع مزعج أو استخدام مبالغ فيه.</p>
+          </article>
+        </section>
+
+        <section class="policy-stack" aria-label="تفاصيل سياسة الخصوصية">
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+              <h2>ما البيانات التي قد نطلبها؟</h2>
+            </div>
+            <p>عند استخدام موقع صندوق المسابقات، قد نحتاج بعض المعلومات البسيطة حتى نربط مشترياتك بحسابك ونفتح لك الألعاب التي تملكها.</p>
+            <ul>
+              <li>رقم الجوال المستخدم في الشراء أو التفعيل.</li>
+              <li>اسم اللاعب أو الاسم الظاهر داخل الحساب إذا اخترت إضافته.</li>
+              <li>الألعاب المرتبطة بحسابك وحالة التفعيل.</li>
+              <li>معلومات تقنية بسيطة مثل نوع المتصفح، وقت الدخول، وحالة الجلسة.</li>
+              <li>محتوى رسائلك إذا تواصلت معنا عبر الدعم أو واتساب.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16"></path><path d="M6 7v13h12V7"></path><path d="M9 7V4h6v3"></path><path d="M9 11h6"></path><path d="M9 15h6"></path></svg></span>
+              <h2>لماذا نستخدم هذه البيانات؟</h2>
+            </div>
+            <p>نستخدم البيانات فقط لتقديم الخدمة بشكل صحيح، وتسهيل دخولك للألعاب، وتحسين تجربة الاستخدام.</p>
+            <ul>
+              <li>تسجيل الدخول واسترجاع الألعاب المرتبطة برقم الجوال.</li>
+              <li>تفعيل الألعاب التي تم شراؤها وإظهار زر اللعب.</li>
+              <li>تشغيل الجلسة وحماية الوصول من الاستخدام غير الصحيح.</li>
+              <li>مساعدتك عند وجود مشكلة في الدخول أو التفعيل.</li>
+              <li>تحسين الموقع ومعرفة الصفحات أو الألعاب التي تحتاج تطويرًا.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
+              <h2>الدعم وخدمة العملاء</h2>
+            </div>
+            <p>إذا تواصلت معنا لطلب مساعدة، سنستخدم المعلومات التي ترسلها لنا لفهم المشكلة وحلها، مثل رقم الجوال، اسم اللعبة، صورة الخطأ، أو وصف المشكلة.</p>
+            <ul>
+              <li>نستخدم معلومات الدعم للرد عليك وحل المشكلة فقط.</li>
+              <li>قد نحتاج مراجعة حالة تفعيل اللعبة أو الجلسة المرتبطة بحسابك.</li>
+              <li>لا نطلب معلومات حساسة لا نحتاجها لتقديم المساعدة.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0"></path><path d="M12 19a7 7 0 0 1-7-7"></path><path d="M19 12a7 7 0 0 1-7 7"></path><circle cx="12" cy="12" r="2"></circle></svg></span>
+              <h2>الكوكيز والتخزين داخل المتصفح</h2>
+            </div>
+            <p>نستخدم كوكيز أو تخزينًا محليًا داخل المتصفح لتسهيل تجربتك، مثل حفظ حالة الدخول أو تذكّر الجلسة حتى لا تضطر لتسجيل الدخول في كل مرة.</p>
+            <ul>
+              <li>حفظ تسجيل الدخول والجلسة.</li>
+              <li>تذكّر الألعاب المرتبطة بحسابك على نفس المتصفح.</li>
+              <li>تشغيل بعض خصائص الألعاب بطريقة أسرع وأسهل.</li>
+              <li>يمكن أن يؤدي حذف بيانات المتصفح إلى تسجيل الخروج أو فقدان بعض الإعدادات المحلية.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9h16l-1 10H5L4 9Z"></path><path d="M7 9V7a5 5 0 0 1 10 0v2"></path><path d="M8 13h8"></path></svg></span>
+              <h2>الشراء والدفع</h2>
+            </div>
+            <p>عمليات الشراء والدفع تتم عبر المتجر أو مزودي الدفع المعتمدين، ونحن لا نحتفظ ببيانات بطاقتك البنكية داخل موقع صندوق المسابقات.</p>
+            <ul>
+              <li>قد نستخدم بيانات الطلب للتحقق من أنك تملك اللعبة.</li>
+              <li>لا نطلب منك بيانات البطاقة داخل صفحات ألعابنا.</li>
+              <li>قد تخضع عملية الدفع لسياسات الخصوصية الخاصة بمنصة المتجر أو مزود الدفع.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 1 1-3.2-6.6"></path><path d="M21 4v6h-6"></path><path d="M12 7v5l3 2"></path></svg></span>
+              <h2>الخدمات الخارجية</h2>
+            </div>
+            <p>قد نستخدم خدمات تقنية تساعدنا في تشغيل الموقع، استضافة الألعاب، الحماية، قياس الأداء، أو استقبال رسائل الدعم.</p>
+            <ul>
+              <li>خدمات الاستضافة والحماية مثل Cloudflare أو GitHub Pages.</li>
+              <li>منصة المتجر وخدمات الدفع المرتبطة بعملية الشراء.</li>
+              <li>خدمة واتساب عند التواصل معنا من خلال رابط الدعم.</li>
+              <li>أدوات قياس عامة لتحسين أداء الموقع وتجربة المستخدم عند الحاجة.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path><path d="M9 12l2 2 4-4"></path></svg></span>
+              <h2>كيف نحمي بياناتك؟</h2>
+            </div>
+            <p>نحرص على استخدام إجراءات تقنية وتنظيمية مناسبة لحماية البيانات وتقليل الوصول غير المصرح به.</p>
+            <ul>
+              <li>استخدام اتصال آمن عند التعامل مع الموقع والخدمات.</li>
+              <li>تقليل البيانات المطلوبة إلى ما يخدم تشغيل الخدمة.</li>
+              <li>تقييد الوصول للبيانات على من يحتاجها لخدمة العميل أو تشغيل النظام.</li>
+              <li>مراجعة وتحسين النظام عند اكتشاف مشاكل أو ملاحظات.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 11V7a5 5 0 0 1 10 0v4"></path><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M12 15v2"></path></svg></span>
+              <h2>بيانات الأطفال والطلاب</h2>
+            </div>
+            <p>بعض ألعابنا تُستخدم في التعليم والأنشطة المدرسية، لكن الموقع لا يطلب بيانات حساسة عن الطلاب. إذا استخدم المعلم أو ولي الأمر أسماء لاعبين داخل اللعبة، فقد تُحفظ محليًا في المتصفح أو داخل الجلسة حسب طبيعة اللعبة.</p>
+            <ul>
+              <li>يفضل استخدام أسماء مختصرة أو أسماء فرق بدل الأسماء الكاملة عند الحاجة.</li>
+              <li>لا نستخدم أسماء اللاعبين لأغراض تسويقية.</li>
+              <li>حذف بيانات المتصفح قد يحذف بعض الأسماء أو الإعدادات المحلية داخل اللعبة.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span>
+              <h2>حقوقك على بياناتك</h2>
+            </div>
+            <p>يمكنك التواصل معنا إذا رغبت في معرفة البيانات المرتبطة بحسابك، تصحيحها، أو طلب حذف ما يمكن حذفه وفقًا لطبيعة الخدمة والالتزامات النظامية أو التشغيلية.</p>
+            <ul>
+              <li>طلب معرفة البيانات الأساسية المرتبطة بحسابك.</li>
+              <li>طلب تعديل رقم أو اسم ظاهر إذا كان غير صحيح.</li>
+              <li>طلب حذف بيانات غير ضرورية متى كان ذلك ممكنًا.</li>
+              <li>التواصل معنا عند وجود أي استفسار عن الخصوصية.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4Z"></path><path d="M8 9h8"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg></span>
+              <h2>مدة الاحتفاظ بالبيانات</h2>
+            </div>
+            <p>نحتفظ بالبيانات بالقدر اللازم لتشغيل حسابك، تفعيل ألعابك، تقديم الدعم، وتحسين الخدمة. وقد نحتفظ ببعض السجلات لمدة أطول إذا كان ذلك مطلوبًا لأسباب تشغيلية أو نظامية.</p>
+            <ul>
+              <li>تستمر بيانات التفعيل ما دام الحساب أو اللعبة بحاجة للتحقق.</li>
+              <li>قد تُحذف الجلسات المؤقتة أو تنتهي تلقائيًا بعد فترة.</li>
+              <li>قد تحتفظ منصة المتجر أو الدفع بسجلات الطلبات حسب سياساتها.</li>
+            </ul>
+          </article>
+
+          <article class="policy-box">
+            <div class="policy-heading">
+              <span class="policy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg></span>
+              <h2>التواصل معنا</h2>
+            </div>
+            <p>إذا كان لديك أي سؤال عن الخصوصية أو طريقة استخدام بياناتك، يسعدنا تواصلك معنا عبر صفحة الدعم أو واتساب خدمة العملاء.</p>
+            <ul>
+              <li>سنحاول الرد على طلبات الخصوصية والدعم في أقرب وقت ممكن.</li>
+              <li>قد نحتاج التحقق من هويتك أو رقمك قبل تنفيذ بعض الطلبات لحماية حسابك.</li>
+              <li>لا ترسل معلومات حساسة لا علاقة لها بالمشكلة.</li>
+            </ul>
+            <div class="hero-actions" style="justify-content:flex-start;margin-top:14px;">
+              <a class="btn btn-green" href="support.html">صفحة الدعم</a>
+              <a class="btn btn-secondary" href="https://wa.me/966550960290" target="_blank" rel="noopener">واتساب</a>
+            </div>
+          </article>
+        </section>
+
+        <section class="note-box" aria-label="ملاحظة حول تحديث سياسة الخصوصية">
+          <h2>قد نحدّث هذه الصفحة</h2>
+          <p>إذا تطورت خدمات صندوق المسابقات أو أضفنا ألعابًا أو مزايا جديدة، قد نحدّث سياسة الخصوصية لتوضيح طريقة التعامل مع البيانات بشكل أفضل. سنبقيها واضحة ومباشرة قدر الإمكان.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="index.html#games">تصفح الألعاب</a>
+            <a class="btn btn-secondary" href="blog.html">المدونة</a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer" aria-label="ذيل الصفحة">
+      <div class="footer-inner">
+        <h2>صندوق المسابقات</h2>
+        <p>متجر ألعاب رقمية تفاعلية يجمع مسابقات جماعية وألعابًا تعليمية جاهزة للجمعات، المدارس، رمضان، العيد، والفعاليات.</p>
+        <div class="footer-links">
+          <a class="footer-link" href="index.html#games">ألعابنا</a>
+          <a class="footer-link" href="purchase-activation.html">تفعيل الألعاب</a>
+          <a class="footer-link" href="support.html">الدعم</a>
+          <a class="footer-link" href="index.html">الرئيسية</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <div class="footer-legal-inner">
+          جميع الحقوق محفوظة © 2025 صندوق المسابقات | <a href="about.html">من نحن</a> | <a href="privacy.html">الخصوصية</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <nav class="bottom-nav" aria-label="التنقل السفلي">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="index.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
+        <span>الألعاب</span>
+      </a>
+      <a class="nav-item nav-featured" href="purchase-activation.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
+        <span>تفعيل الألعاب</span>
+      </a>
+      <a class="nav-item" href="account.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+        <span>الحساب</span>
+      </a>
+      <a class="nav-item" href="support.html">
+        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
+        <span>الدعم</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
+
+    function readLocalValue(key) {
+      try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
+    }
+
+    function formatAccountName(name) {
+      const clean = String(name || '').replace(/\s+/g, ' ').trim();
+      if (!clean) return '';
+      return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
+    }
+
+    function refreshLoginChip() {
+      const loginChip = document.querySelector('.login-chip');
+      if (!loginChip) return;
+      const phone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
+      const confirmed = readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1';
+      const playerName = confirmed ? formatAccountName(readLocalValue(ACCOUNT_NAME_KEY)) : '';
+
+      if (phone && playerName) loginChip.textContent = `مرحبًا ${playerName}`;
+      else if (phone) loginChip.textContent = 'تم الدخول';
+      else loginChip.textContent = 'الحساب';
+    }
+
+    refreshLoginChip();
+    window.addEventListener('pageshow', refreshLoginChip);
+    window.addEventListener('storage', refreshLoginChip);
+  </script>
+</body>
+</html>
