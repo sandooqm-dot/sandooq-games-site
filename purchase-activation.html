@@ -428,6 +428,91 @@
       white-space:nowrap;
     }
 
+
+
+    .code-field{
+      width:100%;
+      min-height:clamp(54px, 6vw, 66px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(14px, 1.4vw, 20px);
+      background:#fff;
+      color:var(--ink);
+      padding:0 clamp(14px, 2vw, 22px);
+      font-weight:900;
+      font-size:clamp(16px, 1.45vw, 21px);
+      direction:ltr;
+      text-align:left;
+      outline:none;
+      box-shadow:inset 0 2px 0 rgba(0,0,0,.08);
+      text-transform:uppercase;
+    }
+
+    .code-field:focus{background:#fff;border-color:var(--blue-dark);}
+    .code-field::placeholder{color:#a7b0bf;text-transform:none;}
+    .legacy-code-field[hidden]{display:none !important;}
+
+    .activation-mode-toggle{
+      width:100%;
+      min-height:clamp(56px, 6vw, 72px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(16px, 1.6vw, 24px);
+      background:linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color:#fff;
+      padding:clamp(10px, 1.6vw, 18px) clamp(14px, 2vw, 24px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      box-shadow:0 7px 0 rgba(0,0,0,.20);
+      cursor:pointer;
+      margin-top:2px;
+      transition:transform .16s ease, filter .16s ease, background .16s ease;
+    }
+
+    .activation-mode-toggle:active{transform:translateY(1px);box-shadow:0 6px 0 rgba(0,0,0,.20);}
+    .activation-mode-toggle.is-code-mode{background:linear-gradient(180deg, #0b5f87 0%, #04384f 100%);}
+
+    .mode-toggle-title{
+      color:#fff;
+      font-weight:950;
+      font-size:clamp(17px, 1.65vw, 25px);
+      line-height:1.35;
+    }
+
+    .complete-state{
+      display:none;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.5vw, 30px);
+      background:linear-gradient(180deg, #e9fff3 0%, #ffffff 100%);
+      color:var(--ink);
+      text-align:center;
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+    }
+
+    .complete-state.is-visible{display:grid;gap:8px;}
+
+    .complete-state-title{
+      margin:0;
+      color:#075c45;
+      font-weight:950;
+      font-size:clamp(22px, 2.6vw, 36px);
+      line-height:1.35;
+    }
+
+    .complete-state-text{
+      margin:0 auto;
+      max-width:760px;
+      color:var(--muted);
+      font-weight:820;
+      font-size:clamp(14px, 1.25vw, 18px);
+      line-height:1.9;
+    }
+
+    .game-row[hidden],
+    .games-list.is-complete .game-row{
+      display:none !important;
+    }
     .bottom-nav{
       position:fixed;
       left:0;
@@ -512,107 +597,6 @@
     .nav-item.nav-featured .nav-icon{border-radius:16px;background:rgba(4,56,79,.12);box-shadow:inset 0 0 0 1px rgba(4,56,79,.18);}
     .nav-item.nav-featured.active .nav-icon{background:transparent;box-shadow:none;}
 
-
-    .code-field{
-      width:100%;
-      min-height:clamp(54px, 6vw, 66px);
-      border:clamp(3px, .35vw, 5px) solid var(--line);
-      border-radius:clamp(14px, 1.4vw, 20px);
-      background:#fff;
-      color:var(--ink);
-      padding:0 clamp(14px, 2vw, 22px);
-      font-weight:900;
-      font-size:clamp(16px, 1.45vw, 21px);
-      direction:ltr;
-      text-align:left;
-      outline:none;
-      box-shadow:inset 0 2px 0 rgba(0,0,0,.08);
-      text-transform:uppercase;
-    }
-
-    .code-field:focus{background:#fff;border-color:var(--blue-dark);}
-    .code-field::placeholder{color:#a7b0bf;text-transform:none;}
-    .legacy-code-field[hidden]{display:none !important;}
-
-
-    .legacy-code-panel{
-      display:grid;
-      gap:10px;
-      margin-top:0;
-    }
-
-    .legacy-code-panel[hidden]{display:none !important;}
-
-    .legacy-code-submit{
-      min-height:clamp(54px, 6vw, 66px);
-      border:3px solid var(--line);
-      border-radius:999px;
-      background:var(--green);
-      color:#fff;
-      box-shadow:0 6px 0 rgba(0,0,0,.22);
-      font-weight:950;
-      font-size:clamp(16px, 1.4vw, 21px);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      cursor:pointer;
-    }
-
-    .legacy-code-submit[disabled]{cursor:wait;opacity:.78;}
-
-    .activation-mode-toggle{
-      width:100%;
-      border:clamp(3px, .35vw, 5px) solid var(--line);
-      border-radius:clamp(16px, 1.6vw, 24px);
-      background:#fff8ed;
-      color:var(--ink);
-      padding:clamp(13px, 2vw, 22px);
-      display:grid;
-      gap:6px;
-      text-align:center;
-      box-shadow:0 6px 0 rgba(0,0,0,.14);
-      cursor:pointer;
-      transition:transform .16s ease, filter .16s ease, background .16s ease;
-    }
-
-    .activation-mode-toggle:active{transform:translateY(1px);box-shadow:0 5px 0 rgba(0,0,0,.14);}
-    .activation-mode-toggle.is-code-mode{background:#eaf8ff;}
-
-    .mode-toggle-title{
-      font-weight:950;
-      font-size:clamp(17px, 1.7vw, 26px);
-      line-height:1.35;
-    }
-
-    .mode-toggle-subtitle{
-      color:var(--muted);
-      font-weight:800;
-      font-size:clamp(12px, 1.05vw, 16px);
-      line-height:1.65;
-    }
-
-    :root{--visual-viewport-bottom:0px !important;}
-
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      top:auto !important;
-      bottom:0 !important;
-      z-index:9999 !important;
-      width:100% !important;
-      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
-      backface-visibility:hidden !important;
-      -webkit-backface-visibility:hidden !important;
-      contain:layout paint style !important;
-      will-change:transform !important;
-    }
-
-    .app{padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + 26px) !important;}
-
     @media (max-width:560px){
       .section-head{display:grid;}
       .section-badge{justify-self:start;}
@@ -642,164 +626,6 @@
         scroll-behavior:auto !important;
       }
     }
-  
-    /* ✅ v10: تثبيت جذري للشريط السفلي على iOS/Safari + تحسين زر ربط الكود */
-    :root{
-      --bottom-nav-real-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      --bottom-nav-visual-top:calc(100dvh - var(--bottom-nav-real-height));
-      --visual-viewport-bottom:0px !important;
-    }
-
-    html,
-    body{
-      width:100%;
-      min-height:100%;
-      overflow-x:hidden !important;
-    }
-
-    .app{
-      padding-bottom:calc(var(--bottom-nav-real-height) + 34px) !important;
-    }
-
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      top:var(--bottom-nav-visual-top) !important;
-      bottom:auto !important;
-      width:100% !important;
-      height:var(--bottom-nav-real-height) !important;
-      z-index:2147483000 !important;
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
-      backface-visibility:hidden !important;
-      -webkit-backface-visibility:hidden !important;
-      contain:layout paint style !important;
-      will-change:top !important;
-      pointer-events:auto !important;
-    }
-
-    .content-inner{
-      gap:clamp(12px, 1.5vw, 20px) !important;
-    }
-
-    .lookup-form{
-      gap:clamp(10px, 1.3vw, 14px) !important;
-    }
-
-    .activation-mode-toggle{
-      width:100% !important;
-      min-height:clamp(56px, 6vw, 72px) !important;
-      border:clamp(3px, .35vw, 5px) solid var(--line) !important;
-      border-radius:clamp(16px, 1.6vw, 24px) !important;
-      background:linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%) !important;
-      color:#fff !important;
-      padding:clamp(10px, 1.6vw, 18px) clamp(14px, 2vw, 24px) !important;
-      display:flex !important;
-      align-items:center !important;
-      justify-content:center !important;
-      text-align:center !important;
-      box-shadow:0 7px 0 rgba(0,0,0,.20) !important;
-      cursor:pointer !important;
-      margin-top:2px !important;
-      transition:transform .16s ease, filter .16s ease, background .16s ease !important;
-    }
-
-    .activation-mode-toggle:active{
-      transform:translateY(1px) !important;
-      box-shadow:0 6px 0 rgba(0,0,0,.20) !important;
-    }
-
-    .activation-mode-toggle.is-code-mode{
-      background:linear-gradient(180deg, #0b5f87 0%, #04384f 100%) !important;
-    }
-
-    .mode-toggle-title{
-      color:#fff !important;
-      font-weight:950 !important;
-      font-size:clamp(17px, 1.65vw, 25px) !important;
-      line-height:1.35 !important;
-    }
-
-    .mode-toggle-subtitle{
-      margin:clamp(4px, .8vw, 8px) 0 0 !important;
-      padding:0 clamp(8px, 1.2vw, 14px) !important;
-      color:#3e4a5b !important;
-      font-weight:820 !important;
-      font-size:clamp(12px, 1.05vw, 16px) !important;
-      line-height:1.65 !important;
-      text-align:center !important;
-    }
-
-    .legacy-code-field{
-      margin-top:0 !important;
-    }
-
-    .message-area{
-      min-height:auto !important;
-      gap:8px !important;
-    }
-
-    @supports not (height:100dvh){
-      .bottom-nav{
-        top:auto !important;
-        bottom:0 !important;
-      }
-    }
-
-  
-
-    /* ✅ تثبيت نهائي للشريط السفلي: لا يرتفع مع الكيبورد ولا يسبب حركة أفقية */
-    :root{
-      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      --bottom-nav-real-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      --visual-viewport-bottom:0px !important;
-      --bottom-nav-visual-top:auto !important;
-    }
-
-    html,
-    body{
-      width:100% !important;
-      max-width:100% !important;
-      overflow-x:hidden !important;
-    }
-
-    .app{
-      width:100% !important;
-      max-width:100% !important;
-      overflow-x:hidden !important;
-      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
-    }
-
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      top:auto !important;
-      bottom:0 !important;
-      width:100% !important;
-      height:var(--bottom-nav-space) !important;
-      padding:0 var(--page-pad) env(safe-area-inset-bottom) !important;
-      z-index:2147483000 !important;
-      transform:none !important;
-      -webkit-transform:none !important;
-      backface-visibility:hidden !important;
-      -webkit-backface-visibility:hidden !important;
-      contain:none !important;
-      will-change:auto !important;
-      margin:0 !important;
-    }
-
-    .bottom-nav-inner{
-      transform:none !important;
-      -webkit-transform:none !important;
-    }
-
-    body.keyboard-open .bottom-nav{
-      bottom:0 !important;
-      top:auto !important;
-    }
-
   </style>
 </head>
 
@@ -815,7 +641,7 @@
         <span class="title-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24"><rect x="7" y="2.8" width="10" height="18.4" rx="2"></rect><path d="M10 6h4"></path><path d="M11.5 18h1"></path></svg>
         </span>
-        <h1 class="page-title">تفعيل الشراء</h1>
+        <h1 class="page-title">تفعيل الألعاب</h1>
         <p class="page-lead">تحقق برقم الجوال أولًا، ثم اربط مشترياتك بحسابك وادخل عالم اللعب.</p>
       </div>
     </header>
@@ -844,32 +670,26 @@
               aria-label="رقم الجوال المستخدم في الشراء"
             />
 
+            <input
+              class="code-field legacy-code-field"
+              id="legacyCodeInput"
+              data-hook="legacy-code-input"
+              type="text"
+              placeholder="الصق كود التفعيل هنا"
+              autocomplete="off"
+              aria-label="كود التفعيل السابق"
+              hidden
+            />
+
             <button class="lookup-btn" id="lookupButton" data-hook="lookup-button" type="submit">
               <span class="spinner" aria-hidden="true"></span>
-              <span class="button-label">استرجاع الألعاب برقم الجوال</span>
+              <span class="button-label">التحقق من الرقم</span>
             </button>
 
-            <p class="form-note" id="formModeNote">سجّل دخولك أو قم بإنشاء حساب للتحقق من الرقم.</p>
-
-            <button class="activation-mode-toggle" id="legacyModeToggle" type="button" aria-expanded="false" aria-controls="legacyCodePanel">
+            <button class="activation-mode-toggle" id="legacyModeToggle" type="button" aria-expanded="false" aria-controls="legacyCodeInput">
               <span class="mode-toggle-title">لديك كود قديم؟ اربطه برقم جوالك</span>
             </button>
 
-            <div class="legacy-code-panel" id="legacyCodePanel" hidden>
-              <input
-                class="code-field legacy-code-field"
-                id="legacyCodeInput"
-                data-hook="legacy-code-input"
-                type="text"
-                placeholder="اكتب كود التفعيل هنا"
-                autocomplete="off"
-                aria-label="كود التفعيل السابق"
-              />
-
-              <button class="legacy-code-submit" id="legacyCodeSubmit" type="button">
-                <span class="button-label">ربط الكود برقم الجوال</span>
-              </button>
-            </div>
             <div class="message-area" aria-live="polite">
               <div class="status-message" id="statusMessage" data-hook="status-message"></div>
               <div class="status-message" id="legacyCodeMessage" data-hook="legacy-code-message"></div>
@@ -878,17 +698,19 @@
           </form>
         </section>
 
-        
-
-        <section class="section-card" aria-label="الألعاب المتوفرة للشراء">
+        <section class="section-card" aria-label="الألعاب التي ما زالت متاحة للشراء">
           <div class="section-head">
             <div>
-              <h2 class="section-heading">الألعاب المتوفرة للشراء</h2>
-              <p class="section-text">هذه هي الألعاب المتاحة الآن في متجر صندوق المسابقات، ويمكنك شراؤها أو تفعيلها من هنا.</p>
+              <h2 class="section-heading">الألعاب التي ما زالت متاحة للشراء</h2>
+              <p class="section-text">استبعدنا لك الألعاب التي ظهرت على الرقم الحالي حتى يبقى المتجر واضحًا لما ينقصك فقط.</p>
             </div>
           </div>
 
           <div class="games-list" id="gamesList" data-hook="games-cards">
+            <div class="complete-state" id="completeState" aria-live="polite">
+              <h3 class="complete-state-title">مكتبتك مكتملة 🥳</h3>
+              <p class="complete-state-text">كل الألعاب الحالية مرتبطة بهذا الرقم. إذا أضفنا ألعابًا جديدة للمتجر ستظهر لك هنا مباشرة</p>
+            </div>
             <article class="game-row bundle" data-game-id="bundle">
               <div class="game-thumb"><img src="sandooq-almusabaqat-cover-card.webp" alt="بكج ألعاب صندوق المسابقات" loading="lazy" decoding="async"></div>
               <div class="game-info">
@@ -989,35 +811,6 @@
   </nav>
 
   <script>
-    const API_BASE = 'https://sandooq-games-api.sandooq-m.workers.dev';
-    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
-    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
-    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
-    const TOKEN_KEY = 'sandooq_auth_token_v1';
-    const DEVICE_KEY = 'sandooq_device_token_v1';
-    const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
-    const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
-    const LAST_SYNC_KEY = 'sandooq_last_sync_v1';
-
-    const GAME_NAMES = {
-      bundle:'بكج ألعاب صندوق المسابقات',
-      horof:'سباق الحروف',
-      'horof-edu':'سباق الحروف التعليمية',
-      'bdon-kalam':'بدون كلام',
-      'bra-alsalfah':'برا السالفة',
-      'family-feud':'فاميلي فيود',
-      sandooq:'صندوق المسابقات'
-    };
-
-    const GAME_PLAY_URLS = {
-      horof:'https://horof.sandooq-games.com',
-      'horof-edu':'https://horof.sandooq-games.com',
-      'bdon-kalam':'https://bdon-kalam.sandooq-games.com',
-      'bra-alsalfah':'https://bra-alsalfah.sandooq-games.com',
-      'family-feud':'https://family-feud.sandooq-games.com',
-      sandooq:''
-    };
-
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
@@ -1039,6 +832,16 @@
 
     navItems.forEach(item => item.addEventListener('click', () => setActiveNavItem(item)));
 
+    window.addEventListener('load', () => {
+      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
+      moveBottomNavIndicator(activeItem);
+      window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
+    });
+
+    window.addEventListener('resize', () => {
+      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
+    });
+
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
       if (!nav) return;
@@ -1046,102 +849,89 @@
       const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
       if (navHeight > 0) {
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
-        document.documentElement.style.setProperty('--bottom-nav-real-height', `${navHeight}px`);
       }
 
-      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
-      document.documentElement.style.setProperty('--bottom-nav-visual-top', 'auto');
+      let bottomOffset = 0;
+      if (window.visualViewport) {
+        bottomOffset = Math.max(
+          0,
+          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
+        );
+      }
 
-      nav.style.position = 'fixed';
-      nav.style.left = '0px';
-      nav.style.right = '0px';
-      nav.style.top = 'auto';
-      nav.style.bottom = '0px';
-      nav.style.width = '100%';
-      nav.style.transform = 'none';
-      nav.style.webkitTransform = 'none';
-      nav.style.zIndex = '2147483000';
-
-      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
-      moveBottomNavIndicator(activeItem);
-    }
-
-    function markKeyboardState() {
-      const active = document.activeElement;
-      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
-      document.body.classList.toggle('keyboard-open', !!isTyping);
-      stabilizeBottomNav();
-    }
-
-    window.addEventListener('load', () => {
-      const activeItem = document.querySelector('.bottom-nav .nav-item.active');
-      moveBottomNavIndicator(activeItem);
-      window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
-      stabilizeBottomNav();
-    });
-
-    window.addEventListener('resize', () => {
-      moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
-      stabilizeBottomNav();
-    });
-
-    window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
-    window.addEventListener('scroll', stabilizeBottomNav, { passive:true });
-    window.addEventListener('focusin', () => window.setTimeout(markKeyboardState, 60), { passive:true });
-    window.addEventListener('focusout', () => {
-      window.setTimeout(markKeyboardState, 80);
-      window.setTimeout(stabilizeBottomNav, 260);
-    }, { passive:true });
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', stabilizeBottomNav, { passive:true });
-      window.visualViewport.addEventListener('scroll', stabilizeBottomNav, { passive:true });
+      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
     }
 
     stabilizeBottomNav();
+    window.addEventListener('load', stabilizeBottomNav);
+    window.addEventListener('resize', stabilizeBottomNav);
+    window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', stabilizeBottomNav);
+      window.visualViewport.addEventListener('scroll', stabilizeBottomNav);
+    }
+
+    const API_BASE = 'https://sandooq-games-api.sandooq-m.workers.dev';
+    const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
+    const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
+    const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
+    const TOKEN_KEY = 'sandooq_auth_token_v1';
+    const DEVICE_KEY = 'sandooq_device_token_v1';
+    const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
+    const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
+    const LAST_SYNC_KEY = 'sandooq_last_sync_v1';
+
+    const BUNDLE_PRODUCT_IDS = new Set([
+      'bundle', 'full-bundle', 'bundle-full', 'sandooq-bundle', 'sandooq-full-bundle',
+      'sandooq-games-bundle', 'sandooq-package', 'all-games-bundle', 'package', 'pack', 'bkj', 'bakaj'
+    ]);
+
+    const BUNDLE_INCLUDED_GAME_IDS = new Set([
+      'horof', 'horof-edu', 'bdon-kalam', 'bra-alsalfah', 'family-feud', 'sandooq'
+    ]);
+
+    const GAME_ID_ALIASES = {
+      'horof':'horof', 'horoof':'horof', 'huruf':'horof', 'letter-race':'horof', 'letters-race':'horof',
+      'سباق الحروف':'horof', 'لعبة سباق الحروف':'horof',
+      'horof-edu':'horof-edu', 'horoof-edu':'horof-edu', 'horof-education':'horof-edu', 'educational-horof':'horof-edu',
+      'سباق الحروف التعليمية':'horof-edu', 'لعبة سباق الحروف التعليمية':'horof-edu',
+      'bdon-kalam':'bdon-kalam', 'bedon-kalam':'bdon-kalam', 'without-words':'bdon-kalam', 'بدون كلام':'bdon-kalam', 'لعبة بدون كلام':'bdon-kalam',
+      'bra-alsalfah':'bra-alsalfah', 'bara-alsalfah':'bra-alsalfah', 'bara':'bra-alsalfah', 'برا السالفة':'bra-alsalfah', 'لعبة برا السالفة':'bra-alsalfah',
+      'family-feud':'family-feud', 'familyfeud':'family-feud', 'family_feud':'family-feud', 'فاميلي فيود':'family-feud', 'لعبة فاميلي فيود':'family-feud',
+      'sandooq':'sandooq', 'sandooq-game':'sandooq', 'sandooq-almusabaqat':'sandooq', 'لعبة صندوق المسابقات':'sandooq'
+    };
 
     const form = document.getElementById('purchaseLookupForm');
     const phoneInput = document.getElementById('phoneInput');
     const codeInput = document.getElementById('legacyCodeInput');
-    const codePanel = document.getElementById('legacyCodePanel');
-    const codeSubmitButton = document.getElementById('legacyCodeSubmit');
     const button = document.getElementById('lookupButton');
     const label = button ? button.querySelector('.button-label') : null;
-    const formModeNote = document.getElementById('formModeNote');
     const modeToggle = document.getElementById('legacyModeToggle');
     const modeToggleTitle = modeToggle ? modeToggle.querySelector('.mode-toggle-title') : null;
-    const modeToggleSubtitle = document.getElementById('modeToggleSubtitle');
     const statusMessage = document.getElementById('statusMessage');
     const legacyCodeMessage = document.getElementById('legacyCodeMessage');
     const emptyState = document.getElementById('emptyState');
+    const completeState = document.getElementById('completeState');
     const loginStatusButton = document.getElementById('loginStatusButton');
 
     let codeMode = false;
 
     const messages = {
       found: 'تم العثور على ألعابك وربطها بحسابك.',
-      empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء، أو اختر لعبة من القائمة للشراء.',
+      empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء.',
       invalidPhone: 'أدخل رقم جوال صحيح يبدأ بـ 05.',
-      invalidCode: 'اكتب كود التفعيل السابق أولًا.',
-      loadingLookup: 'جاري استرجاع الألعاب…',
-      loadingCode: 'جاري ربط الكود…',
+      invalidCode: 'الصق كود التفعيل أولًا.',
+      loading: 'جاري التحقق...',
       network: 'تعذر الاتصال بالخدمة. حاول مرة أخرى.'
     };
 
-    function getStoredAccountValue(key) {
-      try { return String(localStorage.getItem(key) || '').trim(); } catch (e) { return ''; }
+    function readLocalValue(key) {
+      try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
     }
 
-    function setStoredAccountValue(key, value) {
+    function writeLocalValue(key, value) {
       try { localStorage.setItem(key, String(value || '')); } catch (e) {}
-    }
-
-    function isAccountNameConfirmed() {
-      return getStoredAccountValue(ACCOUNT_NAME_CONFIRMED_KEY) === '1';
-    }
-
-    function getConfirmedAccountName() {
-      return isAccountNameConfirmed() ? getStoredAccountValue(ACCOUNT_NAME_KEY) : '';
     }
 
     function cleanName(value) {
@@ -1154,6 +944,16 @@
       return clean.length > 14 ? clean.slice(0, 14).trim() + '…' : clean;
     }
 
+    function renderLoginStatusButton() {
+      if (!loginStatusButton) return;
+      const phone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
+      const confirmed = readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1';
+      const name = confirmed ? formatAccountName(readLocalValue(ACCOUNT_NAME_KEY)) : '';
+      if (name) loginStatusButton.textContent = `مرحبًا ${name}`;
+      else if (phone) loginStatusButton.textContent = 'تم الدخول';
+      else loginStatusButton.textContent = 'تسجيل الدخول';
+    }
+
     function isValidSaudiPhone(value) {
       return /^05\d{8}$/.test(String(value || '').trim());
     }
@@ -1164,56 +964,127 @@
     }
 
     function getDeviceToken() {
-      let token = getStoredAccountValue(DEVICE_KEY);
+      let token = readLocalValue(DEVICE_KEY).trim();
       if (token) return token;
-      try {
-        const bytes = new Uint8Array(16);
-        crypto.getRandomValues(bytes);
-        token = Array.from(bytes).map(byte => byte.toString(16).padStart(2, '0')).join('');
-      } catch (e) {
-        token = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-      }
-      setStoredAccountValue(DEVICE_KEY, token);
+      try { if (crypto.randomUUID) token = 'site_' + crypto.randomUUID(); } catch (e) {}
+      if (!token) token = 'site_' + Date.now().toString(36) + Math.random().toString(36).slice(2);
+      writeLocalValue(DEVICE_KEY, token);
       return token;
     }
 
-    function gameLabel(id) {
-      return GAME_NAMES[id] || String(id || 'لعبة');
+    function normalizeKey(value) {
+      return String(value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[ًٌٍَُِّْـ]/g, '')
+        .replace(/[إأآا]/g, 'ا')
+        .replace(/ة/g, 'ه')
+        .replace(/ى/g, 'ي')
+        .replace(/[\s_]+/g, '-')
+        .replace(/[^؀-ۿa-z0-9-]+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
     }
 
-    function readLinkedGameDetails() {
-      try {
-        const parsed = JSON.parse(getStoredAccountValue(LINKED_GAMES_DETAILS_KEY) || '[]');
-        return Array.isArray(parsed) ? parsed : [];
-      } catch (e) { return []; }
+    function addGameIdToSet(set, value) {
+      const raw = String(value || '').trim();
+      if (!raw) return;
+      const normalized = normalizeKey(raw);
+      const direct = GAME_ID_ALIASES[raw] || GAME_ID_ALIASES[normalized];
+      if (direct) { set.add(direct); return; }
+      if (BUNDLE_PRODUCT_IDS.has(normalized)) set.add('bundle');
     }
 
-    function savePhoneToAccount(phone) {
-      setStoredAccountValue(ACCOUNT_PHONE_KEY, String(phone || '').trim());
-      renderLoginStatusButton();
+    function inferGameIdsFromText(text, ids) {
+      const raw = String(text || '').trim();
+      if (!raw) return;
+      const normalized = normalizeKey(raw);
+      if (BUNDLE_PRODUCT_IDS.has(normalized) || /بكج|البكج|باقة|باقه|package|bundle/i.test(raw)) {
+        ids.add('bundle');
+        return;
+      }
+      Object.keys(GAME_ID_ALIASES).forEach(alias => {
+        const normalizedAlias = normalizeKey(alias);
+        if (normalizedAlias && normalized.includes(normalizedAlias)) ids.add(GAME_ID_ALIASES[alias]);
+      });
+      if (/سباق\s*الحروف\s*التعليمية|الحروف\s*التعليمية/i.test(raw)) ids.add('horof-edu');
+      else if (/سباق\s*الحروف/i.test(raw)) ids.add('horof');
+      if (/بدون\s*كلام/i.test(raw)) ids.add('bdon-kalam');
+      if (/برا\s*السالفة|برا\s*السالفه/i.test(raw)) ids.add('bra-alsalfah');
+      if (/فاميلي\s*فيود/i.test(raw)) ids.add('family-feud');
+      if (/لعبة\s*صندوق\s*المسابقات/i.test(raw)) ids.add('sandooq');
     }
 
-    function saveLinkedGames(games) {
+    function getRecordText(game) {
+      if (!game || typeof game !== 'object') return String(game || '');
+      return [
+        game.id, game.slug, game.game_id, game.product_id, game.product_slug, game.sku, game.code,
+        game.name, game.title, game.product_name, game.label, game.url, game.buy_url, game.play_url
+      ].filter(Boolean).join(' ');
+    }
+
+    function isBundleRecord(game) {
+      if (!game || typeof game !== 'object') return false;
+      const text = getRecordText(game);
+      const normalized = normalizeKey(text);
+      return /بكج|البكج|باقة|باقه|package|bundle/i.test(text) || Array.from(BUNDLE_PRODUCT_IDS).some(id => normalized.includes(id));
+    }
+
+    function collectOwnedGameIds(games) {
+      const ids = new Set();
       const safeGames = Array.isArray(games) ? games : [];
-      const ids = safeGames.map(game => String(game.id || game.slug || '')).filter(Boolean);
-      setStoredAccountValue(LINKED_GAMES_KEY, JSON.stringify(ids));
-      setStoredAccountValue(LINKED_GAMES_DETAILS_KEY, JSON.stringify(safeGames));
-      setStoredAccountValue(LAST_SYNC_KEY, nowText());
+
+      safeGames.forEach(game => {
+        if (typeof game === 'string') {
+          addGameIdToSet(ids, game);
+          inferGameIdsFromText(game, ids);
+          return;
+        }
+        if (!game || typeof game !== 'object') return;
+
+        addGameIdToSet(ids, game.id || game.slug || game.game_id || game.product_slug || game.sku || game.product_id);
+        inferGameIdsFromText(getRecordText(game), ids);
+
+        let foundNestedGame = false;
+        [game.games, game.items, game.products, game.included_games, game.included_game_ids, game.bundle_games].forEach(list => {
+          if (!Array.isArray(list)) return;
+          list.forEach(item => {
+            foundNestedGame = true;
+            if (typeof item === 'string') {
+              addGameIdToSet(ids, item);
+              inferGameIdsFromText(item, ids);
+            } else if (item && typeof item === 'object') {
+              addGameIdToSet(ids, item.id || item.slug || item.game_id || item.product_slug || item.sku || item.product_id);
+              inferGameIdsFromText(getRecordText(item), ids);
+            }
+          });
+        });
+
+        if (isBundleRecord(game)) {
+          ids.add('bundle');
+          if (!foundNestedGame) BUNDLE_INCLUDED_GAME_IDS.forEach(id => ids.add(id));
+        }
+      });
+
+      return ids;
     }
 
-    function renderLoginStatusButton() {
-      if (!loginStatusButton) return;
-      const phone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
-      const name = formatAccountName(getConfirmedAccountName());
-      if (name) loginStatusButton.textContent = `مرحبًا ${name}`;
-      else if (phone) loginStatusButton.textContent = 'تم الدخول';
-      else loginStatusButton.textContent = 'تسجيل الدخول';
+    function getStaticGameRows() {
+      return Array.from(document.querySelectorAll('.game-row[data-game-id]'));
+    }
+
+    function setGameRowVisible(row, isVisible) {
+      if (!row) return;
+      row.hidden = !isVisible;
+      row.style.display = isVisible ? '' : 'none';
+      row.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
     }
 
     function resetMessages() {
       if (statusMessage) { statusMessage.className = 'status-message'; statusMessage.textContent = ''; }
       if (legacyCodeMessage) { legacyCodeMessage.className = 'status-message'; legacyCodeMessage.textContent = ''; }
       if (emptyState) { emptyState.classList.remove('is-visible'); emptyState.textContent = messages.empty; }
+      if (completeState) completeState.classList.remove('is-visible');
     }
 
     function showStatus(type, text) {
@@ -1234,79 +1105,41 @@
       emptyState.classList.add('is-visible');
     }
 
-    function setButtonLoading(isLoading, text) {
+    function showCompleteState(text) {
+      if (!completeState) return;
+      const title = completeState.querySelector('.complete-state-title');
+      const body = completeState.querySelector('.complete-state-text');
+      if (title) title.textContent = 'مكتبتك مكتملة 🥳';
+      if (body) body.textContent = text || 'كل الألعاب الحالية مرتبطة بهذا الرقم. إذا أضفنا ألعابًا جديدة للمتجر ستظهر لك هنا مباشرة';
+      completeState.classList.add('is-visible');
+    }
+
+    function setButtonLoading(isLoading) {
       if (!button) return;
       button.classList.toggle('is-loading', !!isLoading);
       button.disabled = !!isLoading;
-      if (label) label.textContent = isLoading ? text : 'استرجاع الألعاب برقم الجوال';
+      if (label) label.textContent = isLoading ? messages.loading : 'التحقق من الرقم';
     }
 
-    function setMode(nextMode) {
-      codeMode = !!nextMode;
-      if (codePanel) codePanel.hidden = !codeMode;
-      if (modeToggle) {
-        modeToggle.classList.toggle('is-code-mode', codeMode);
-        modeToggle.setAttribute('aria-expanded', codeMode ? 'true' : 'false');
-      }
-      if (modeToggleTitle) modeToggleTitle.textContent = 'لديك كود قديم؟ اربطه برقم جوالك';
-      resetMessages();
-      if (codeMode && codeInput) window.setTimeout(() => codeInput.focus(), 120);
+    function savePhoneToAccount(phone) {
+      writeLocalValue(ACCOUNT_PHONE_KEY, String(phone || '').trim());
+      renderLoginStatusButton();
     }
 
-    if (modeToggle) modeToggle.addEventListener('click', () => setMode(!codeMode));
-
-    if (codeInput) {
-      codeInput.addEventListener('input', () => { codeInput.value = codeInput.value.toUpperCase().replace(/\s+/g, ''); });
-      codeInput.addEventListener('keydown', event => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-          submitLegacyCode();
-        }
-      });
+    function saveLinkedGames(games) {
+      const safeGames = Array.isArray(games) ? games : [];
+      const ids = Array.from(collectOwnedGameIds(safeGames));
+      writeLocalValue(LINKED_GAMES_KEY, JSON.stringify(ids));
+      writeLocalValue(LINKED_GAMES_DETAILS_KEY, JSON.stringify(safeGames));
+      writeLocalValue(LAST_SYNC_KEY, nowText());
     }
-
-    function setCodeSubmitLoading(isLoading) {
-      if (!codeSubmitButton) return;
-      codeSubmitButton.disabled = !!isLoading;
-      const codeLabel = codeSubmitButton.querySelector('.button-label');
-      if (codeLabel) codeLabel.textContent = isLoading ? 'جاري ربط الكود…' : 'ربط الكود برقم الجوال';
-    }
-
-    async function submitLegacyCode() {
-      resetMessages();
-      const phone = phoneInput ? phoneInput.value.trim() : '';
-      const code = codeInput ? codeInput.value.trim() : '';
-
-      if (!isValidSaudiPhone(phone)) {
-        showCodeStatus('error', messages.invalidPhone);
-        return;
-      }
-
-      if (!code) {
-        showCodeStatus('error', messages.invalidCode);
-        return;
-      }
-
-      try {
-        setCodeSubmitLoading(true);
-        await linkLegacyCode(phone, code);
-      } catch (error) {
-        const err = error.data && error.data.error ? error.data.error : '';
-        if (err === 'CODE_ALREADY_USED') showCodeStatus('error', 'هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم.');
-        else if (err === 'INVALID_CODE') showCodeStatus('error', 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
-        else showCodeStatus('error', error.message || messages.network);
-      } finally {
-        setCodeSubmitLoading(false);
-      }
-    }
-
-    if (codeSubmitButton) codeSubmitButton.addEventListener('click', submitLegacyCode);
 
     async function api(path, options = {}) {
       const response = await fetch(API_BASE + path, {
         method: options.method || 'GET',
         headers: { 'Content-Type': 'application/json; charset=utf-8', ...(options.headers || {}) },
-        body: options.body ? JSON.stringify(options.body) : undefined
+        body: options.body ? JSON.stringify(options.body) : undefined,
+        cache: 'no-store'
       });
       let data = {};
       try { data = await response.json(); } catch (e) {}
@@ -1325,57 +1158,74 @@
           method: 'POST',
           body: {
             phone,
-            display_name: getConfirmedAccountName() || '',
+            display_name: readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1' ? readLocalValue(ACCOUNT_NAME_KEY) : '',
             device_token: getDeviceToken(),
             is_temporary: false
           }
         });
-        if (data.token) setStoredAccountValue(TOKEN_KEY, data.token);
-        if (data.customer && data.customer.phone) setStoredAccountValue(ACCOUNT_PHONE_KEY, data.customer.phone);
+        if (data.token) writeLocalValue(TOKEN_KEY, data.token);
+        if (data.customer && data.customer.phone) writeLocalValue(ACCOUNT_PHONE_KEY, data.customer.phone);
         if (Array.isArray(data.games)) saveLinkedGames(data.games);
         renderLoginStatusButton();
       } catch (e) {}
     }
 
-    function getStaticGameRows() {
-      return Array.from(document.querySelectorAll('.game-row[data-game-id]'));
-    }
-
     function updateAvailableGames(ownedGames) {
-      const ownedIds = new Set((ownedGames || []).map(game => String(game.id || game.slug || '')).filter(Boolean));
-      getStaticGameRows().forEach(row => {
-        const id = row.dataset.gameId;
-        const action = row.querySelector('.game-action');
-        if (id === 'bundle') {
-          row.hidden = false;
+      const games = Array.isArray(ownedGames) ? ownedGames : [];
+      const ownedIds = collectOwnedGameIds(games);
+      const hasLookupResult = games.length > 0;
+      const rows = getStaticGameRows();
+      const gamesList = document.getElementById('gamesList');
+      const allGameIds = rows
+        .map(row => String(row.dataset.gameId || '').trim())
+        .filter(id => id && id !== 'bundle');
+      const ownsAllListedGames = allGameIds.length > 0 && allGameIds.every(id => ownedIds.has(id));
+      const hasOwnedBundle = ownedIds.has('bundle') || Array.from(ownedIds).some(id => BUNDLE_PRODUCT_IDS.has(String(id || '').toLowerCase()));
+      let visibleRows = 0;
+
+      if (gamesList) gamesList.classList.remove('is-complete');
+      if (completeState) completeState.classList.remove('is-visible');
+
+      rows.forEach(row => {
+        const id = String(row.dataset.gameId || '').trim();
+        const isBundleRow = id === 'bundle';
+        const isOwnedDirectly = ownedIds.has(id);
+        const isCoveredByBundle = hasOwnedBundle && BUNDLE_INCLUDED_GAME_IDS.has(id);
+        const hideBundleBecauseComplete = isBundleRow && (hasOwnedBundle || ownsAllListedGames);
+        const shouldHide = hasLookupResult && (isOwnedDirectly || isCoveredByBundle || hideBundleBecauseComplete);
+
+        if (shouldHide) {
+          setGameRowVisible(row, false);
           return;
         }
-        if (ownedIds.has(id)) {
-          row.hidden = true;
-          row.classList.add('is-owned');
-          if (action) {
-            action.textContent = 'العب';
-            const ownedGame = (ownedGames || []).find(game => String(game.id || game.slug) === id);
-            const playUrl = (ownedGame && ownedGame.play_url) || GAME_PLAY_URLS[id] || action.href;
-            if (playUrl) action.href = playUrl;
-          }
-        } else {
-          row.hidden = false;
-          row.classList.remove('is-owned');
-        }
+
+        setGameRowVisible(row, true);
+        visibleRows += 1;
       });
+
+      if (hasLookupResult && visibleRows === 0) {
+        rows.forEach(row => setGameRowVisible(row, false));
+        if (gamesList) gamesList.classList.add('is-complete');
+        showCompleteState('كل الألعاب الحالية مرتبطة بهذا الرقم. إذا أضفنا ألعابًا جديدة للمتجر ستظهر لك هنا مباشرة');
+      }
     }
 
-    function applyLookupData(data, phone, options = {}) {
+    function applyLookupData(data, phone) {
       const games = Array.isArray(data.games) ? data.games : [];
       const ownedCount = Number(data.owned_count ?? games.length ?? 0);
       const resolvedPhone = data.phone || phone;
+
       savePhoneToAccount(resolvedPhone);
       saveLinkedGames(games);
       updateAvailableGames(games);
       renderLoginStatusButton();
-      if (ownedCount > 0) showStatus('success', options.successMessage || data.message || messages.found);
-      else showEmptyState(data.message || messages.empty);
+
+      if (ownedCount > 0 || games.length > 0) showStatus('success', data.message || messages.found);
+      else {
+        updateAvailableGames([]);
+        showEmptyState(data.message || messages.empty);
+      }
+
       if (data.customer_exists || ownedCount > 0 || data.customer) loginSilently(resolvedPhone);
     }
 
@@ -1387,10 +1237,8 @@
     async function linkLegacyCode(phone, code) {
       const data = await api('/api/legacy/link', {
         method: 'POST',
-        body: { phone, code, display_name: getConfirmedAccountName() || '' }
+        body: { phone, code, display_name: readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1' ? readLocalValue(ACCOUNT_NAME_KEY) : '' }
       });
-      savePhoneToAccount(phone);
-      if (Array.isArray(data.games)) saveLinkedGames(data.games);
       applyLookupData({
         ok: true,
         phone,
@@ -1399,44 +1247,70 @@
         owned_count: Array.isArray(data.games) ? data.games.length : 0,
         games: data.games || [],
         message: data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.'
-      }, phone, { successMessage: data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.' });
+      }, phone);
       showCodeStatus('success', data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.');
       if (codeInput) codeInput.value = '';
       loginSilently(phone);
     }
 
-    renderLoginStatusButton();
-
-    if (phoneInput) {
-      const storedPhone = getStoredAccountValue(ACCOUNT_PHONE_KEY);
-      if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
-      const cachedGames = readLinkedGameDetails();
-      if (cachedGames.length) updateAvailableGames(cachedGames);
+    function setCodeMode(nextMode) {
+      codeMode = !!nextMode;
+      if (codeInput) codeInput.hidden = !codeMode;
+      if (modeToggle) {
+        modeToggle.classList.toggle('is-code-mode', codeMode);
+        modeToggle.setAttribute('aria-expanded', codeMode ? 'true' : 'false');
+      }
+      if (modeToggleTitle) {
+        modeToggleTitle.textContent = codeMode ? 'التحقق برقم الجوال فقط' : 'لديك كود قديم؟ اربطه برقم جوالك';
+      }
+      resetMessages();
+      if (codeMode && codeInput) window.setTimeout(() => codeInput.focus(), 120);
     }
 
-    setMode(false);
+    if (modeToggle) modeToggle.addEventListener('click', () => setCodeMode(!codeMode));
+    if (codeInput) codeInput.addEventListener('input', () => { codeInput.value = codeInput.value.toUpperCase().replace(/\s+/g, ''); });
+
+    renderLoginStatusButton();
+    if (phoneInput) {
+      const storedPhone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
+      if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
+    }
 
     if (form && button) {
       form.addEventListener('submit', async event => {
         event.preventDefault();
         resetMessages();
         const phone = phoneInput ? phoneInput.value.trim() : '';
+        const code = codeInput ? codeInput.value.trim() : '';
+
         if (!isValidSaudiPhone(phone)) {
-          showStatus('error', messages.invalidPhone);
+          if (codeMode) showCodeStatus('error', messages.invalidPhone);
+          else showStatus('error', messages.invalidPhone);
           return;
         }
+
         try {
-          setButtonLoading(true, messages.loadingLookup);
-          await lookupPurchases(phone);
+          setButtonLoading(true);
+          if (codeMode) {
+            if (!code) {
+              showCodeStatus('error', messages.invalidCode);
+              return;
+            }
+            await linkLegacyCode(phone, code);
+          } else {
+            await lookupPurchases(phone);
+          }
         } catch (error) {
           const err = error.data && error.data.error ? error.data.error : '';
-          showStatus('error', error.message || messages.network);
+          if (codeMode && err === 'CODE_ALREADY_USED') showCodeStatus('error', 'هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم.');
+          else if (codeMode && err === 'INVALID_CODE') showCodeStatus('error', 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
+          else if (codeMode) showCodeStatus('error', error.message || messages.network);
+          else showStatus('error', error.message || messages.network);
         } finally {
           setButtonLoading(false);
         }
       });
     }
   </script>
-
 </body>
 </html>
