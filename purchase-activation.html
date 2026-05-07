@@ -728,6 +728,7 @@
       --bottom-nav-real-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
       --visual-viewport-bottom:0px !important;
       --bottom-nav-visual-top:auto !important;
+      --keyboard-offset:0px !important;
     }
 
     html,
@@ -769,7 +770,7 @@
     }
 
     body.keyboard-open .bottom-nav{
-      bottom:0 !important;
+      bottom:calc(var(--keyboard-offset, 0px) * -1) !important;
       top:auto !important;
     }
 
@@ -987,6 +988,15 @@
       sandooq:''
     };
 
+    const GAME_DETAILS_URLS = {
+      horof:'horof.html',
+      'horof-edu':'horof-edu.html',
+      'bdon-kalam':'bdon-kalam.html',
+      'bra-alsalfah':'bra-alsalfah.html',
+      'family-feud':'family-feud.html',
+      sandooq:'sandooq.html'
+    };
+
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
@@ -1008,24 +1018,43 @@
 
     navItems.forEach(item => item.addEventListener('click', () => setActiveNavItem(item)));
 
+    function getKeyboardOffset() {
+      const vv = window.visualViewport;
+      const active = document.activeElement;
+      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
+      if (!vv || !isTyping) return 0;
+
+      const layoutHeight = Math.max(
+        document.documentElement.clientHeight || 0,
+        window.innerHeight || 0
+      );
+
+      const offset = Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
+      return offset > 80 ? offset : 0;
+    }
+
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
       if (!nav) return;
 
       const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
+      const keyboardOffset = getKeyboardOffset();
+
       if (navHeight > 0) {
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
         document.documentElement.style.setProperty('--bottom-nav-real-height', `${navHeight}px`);
       }
 
+      document.documentElement.style.setProperty('--keyboard-offset', `${keyboardOffset}px`);
       document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
       document.documentElement.style.setProperty('--bottom-nav-visual-top', 'auto');
+      document.body.classList.toggle('keyboard-open', keyboardOffset > 0);
 
       nav.style.position = 'fixed';
       nav.style.left = '0px';
       nav.style.right = '0px';
       nav.style.top = 'auto';
-      nav.style.bottom = '0px';
+      nav.style.bottom = keyboardOffset > 0 ? `-${keyboardOffset}px` : '0px';
       nav.style.width = '100%';
       nav.style.transform = 'none';
       nav.style.webkitTransform = 'none';
@@ -1036,9 +1065,6 @@
     }
 
     function markKeyboardState() {
-      const active = document.activeElement;
-      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
-      document.body.classList.toggle('keyboard-open', !!isTyping);
       stabilizeBottomNav();
     }
 
@@ -1278,27 +1304,58 @@
       return Array.from(document.querySelectorAll('.game-row[data-game-id]'));
     }
 
+    function prepareGameAction(action) {
+      if (!action || action.dataset.originalPrepared === '1') return;
+      action.dataset.originalPrepared = '1';
+      action.dataset.originalHref = action.getAttribute('href') || '';
+      action.dataset.originalText = (action.textContent || '').trim();
+      action.dataset.originalTarget = action.getAttribute('target') || '';
+      action.dataset.originalRel = action.getAttribute('rel') || '';
+    }
+
+    function restoreGameAction(action) {
+      if (!action) return;
+      prepareGameAction(action);
+      action.textContent = action.dataset.originalText || 'شراء';
+      if (action.dataset.originalHref) action.setAttribute('href', action.dataset.originalHref);
+      else action.removeAttribute('href');
+
+      if (action.dataset.originalTarget) action.setAttribute('target', action.dataset.originalTarget);
+      else action.removeAttribute('target');
+
+      if (action.dataset.originalRel) action.setAttribute('rel', action.dataset.originalRel);
+      else action.removeAttribute('rel');
+    }
+
+    function getGameDetailUrl(id) {
+      return GAME_DETAILS_URLS[id] || GAME_PLAY_URLS[id] || '#';
+    }
+
     function updateAvailableGames(ownedGames) {
       const ownedIds = new Set((ownedGames || []).map(game => String(game.id || game.slug || '')).filter(Boolean));
       getStaticGameRows().forEach(row => {
         const id = row.dataset.gameId;
         const action = row.querySelector('.game-action');
+        if (action) prepareGameAction(action);
+
         if (id === 'bundle') {
           row.hidden = false;
           return;
         }
+
         if (ownedIds.has(id)) {
-          row.hidden = true;
+          row.hidden = false;
           row.classList.add('is-owned');
           if (action) {
             action.textContent = 'العب';
-            const ownedGame = (ownedGames || []).find(game => String(game.id || game.slug) === id);
-            const playUrl = (ownedGame && ownedGame.play_url) || GAME_PLAY_URLS[id] || action.href;
-            if (playUrl) action.href = playUrl;
+            action.href = getGameDetailUrl(id);
+            action.removeAttribute('target');
+            action.removeAttribute('rel');
           }
         } else {
           row.hidden = false;
           row.classList.remove('is-owned');
+          restoreGameAction(action);
         }
       });
     }
