@@ -626,6 +626,15 @@
         scroll-behavior:auto !important;
       }
     }
+
+    /* ✅ إصلاح الشريط السفلي فقط: لا يظهر فوق لوحة المفاتيح أثناء الكتابة */
+    body.keyboard-open .bottom-nav{
+      transform:translate3d(0, 125%, 0) !important;
+      -webkit-transform:translate3d(0, 125%, 0) !important;
+      opacity:0 !important;
+      pointer-events:none !important;
+    }
+
   </style>
 </head>
 
@@ -851,6 +860,10 @@
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
       }
 
+      const active = document.activeElement;
+      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
+      document.body.classList.toggle('keyboard-open', !!isTyping);
+
       document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
       nav.style.bottom = '0px';
       nav.style.top = 'auto';
@@ -860,6 +873,11 @@
     window.addEventListener('load', stabilizeBottomNav);
     window.addEventListener('resize', stabilizeBottomNav);
     window.addEventListener('orientationchange', () => window.setTimeout(stabilizeBottomNav, 120));
+    window.addEventListener('focusin', () => window.setTimeout(stabilizeBottomNav, 60), { passive:true });
+    window.addEventListener('focusout', () => {
+      window.setTimeout(stabilizeBottomNav, 80);
+      window.setTimeout(stabilizeBottomNav, 260);
+    }, { passive:true });
 
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', stabilizeBottomNav);
