@@ -2472,14 +2472,20 @@
     }
 
     function getPlayUrl(card, gameId, detailsMap) {
+      // روابط التشغيل النهائية نثبتها من ملف الموقع نفسه،
+      // ولا نأخذ play_url من API أولًا حتى لا يرجع رابط قديم من قاعدة البيانات.
+      // مثال مهم: برا السالفة رابطها الصحيح https://bara.sandooq-games.com/single.html
+      const cardPlay = String(card.dataset.playUrl || '').trim();
+      if (cardPlay) return cardPlay;
+
+      const fixedPlay = String(GAME_PLAY_URLS[gameId] || '').trim();
+      if (fixedPlay) return fixedPlay;
+
       const apiGame = detailsMap.get(gameId);
       const apiPlay = apiGame && String(apiGame.play_url || '').trim();
       if (apiPlay) return apiPlay;
 
-      const cardPlay = String(card.dataset.playUrl || '').trim();
-      if (cardPlay) return cardPlay;
-
-      return GAME_PLAY_URLS[gameId] || GAME_DETAILS_URLS[gameId] || '#';
+      return GAME_DETAILS_URLS[gameId] || '#';
     }
 
     function buildPlayUrlWithAccess(playUrl, gameId) {
