@@ -851,15 +851,9 @@
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
       }
 
-      let bottomOffset = 0;
-      if (window.visualViewport) {
-        bottomOffset = Math.max(
-          0,
-          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
-        );
-      }
-
-      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
+      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
+      nav.style.bottom = '0px';
+      nav.style.top = 'auto';
     }
 
     stabilizeBottomNav();
