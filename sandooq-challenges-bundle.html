@@ -32,11 +32,11 @@
       --green:#2faf72;
       --orange:#ff5b1a;
       --line:#171717;
-      --page-pad:clamp(14px, 4vw, 72px);
-      --layout-max:980px;
+      --page-pad:clamp(12px, 4vw, 56px);
+      --layout-max:880px;
       --bottom-nav-height:clamp(88px, 7vw, 96px);
       --nav-max:860px;
-      --card-radius:clamp(18px, 5vw, 30px);
+      --card-radius:clamp(14px, 4vw, 24px);
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -64,7 +64,7 @@
     .hero{
       position:relative;
       background:var(--blue-deep);
-      padding:clamp(12px, 2vw, 22px) var(--page-pad) clamp(24px, 5vw, 52px);
+      padding:clamp(9px, 1.8vw, 18px) var(--page-pad) clamp(18px, 3.6vw, 36px);
       border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
       overflow:hidden;
       isolation:isolate;
@@ -112,18 +112,18 @@
     }
 
     .top-chip{
-      min-height:clamp(34px, 7vw, 46px);
+      min-height:clamp(29px, 6vw, 38px);
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:6px clamp(12px, 3vw, 20px);
-      border-radius:clamp(12px, 3vw, 18px);
+      padding:4px clamp(10px, 2.4vw, 16px);
+      border-radius:clamp(10px, 2.4vw, 15px);
       border:2px solid rgba(255,255,255,.35);
       color:#fff;
       background:var(--green);
       box-shadow:0 3px 0 rgba(0,0,0,.20);
       font-weight:950;
-      font-size:clamp(14px, 3.5vw, 18px);
+      font-size:clamp(12px, 3vw, 16px);
       white-space:nowrap;
     }
 
@@ -136,20 +136,20 @@
     .hero-card{
       width:100%;
       max-width:var(--layout-max);
-      margin:clamp(22px, 5vw, 42px) auto 0;
+      margin:clamp(14px, 3.2vw, 28px) auto 0;
       text-align:center;
       color:#fff;
     }
 
     .bundle-cover{
-      width:100%;
-      max-width:760px;
+      width:min(92%, 660px);
+      max-width:660px;
       margin-inline:auto;
-      border:clamp(3px, .55vw, 5px) solid var(--line);
-      border-radius:clamp(18px, 4vw, 30px);
+      border:clamp(2px, .45vw, 4px) solid var(--line);
+      border-radius:clamp(15px, 3.4vw, 24px);
       background:#fffdf7;
-      padding:clamp(7px, 1.3vw, 12px);
-      box-shadow:0 clamp(6px, 1.4vw, 10px) 0 rgba(0,0,0,.22);
+      padding:clamp(5px, 1vw, 9px);
+      box-shadow:0 clamp(4px, 1vw, 7px) 0 rgba(0,0,0,.22);
       overflow:hidden;
     }
 
@@ -162,47 +162,54 @@
     }
 
     .bundle-title{
-      margin:clamp(22px, 5vw, 34px) 0 0;
+      margin:clamp(14px, 3vw, 22px) 0 0;
       color:#fff;
       font-weight:950;
-      font-size:clamp(34px, 8.5vw, 64px);
-      line-height:1.15;
-      text-shadow:0 4px 0 rgba(0,0,0,.22);
+      font-size:clamp(26px, 6.4vw, 44px);
+      line-height:1.18;
+      text-shadow:0 3px 0 rgba(0,0,0,.20);
     }
 
     .bundle-copy{
-      margin:clamp(12px, 3.5vw, 22px) auto 0;
-      max-width:850px;
+      margin:clamp(8px, 2.1vw, 14px) auto 0;
+      max-width:100%;
       color:#fff;
       font-weight:900;
-      font-size:clamp(18px, 4.2vw, 28px);
-      line-height:1.85;
+      font-size:clamp(12px, 3.25vw, 19px);
+      line-height:1.75;
       text-shadow:0 2px 0 rgba(0,0,0,.13);
-      text-wrap:balance;
+      text-wrap:normal;
+    }
+
+    .bundle-copy .line{
+      display:block;
+      white-space:nowrap;
+      letter-spacing:-.15px;
     }
 
     .hero-actions{
-      margin:clamp(18px, 4vw, 28px) auto 0;
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:clamp(10px, 3vw, 18px);
-      max-width:580px;
+      margin:clamp(12px, 3vw, 20px) auto 0;
+      display:flex;
+      justify-content:center;
+      max-width:280px;
     }
 
     .hero-btn{
-      min-height:clamp(48px, 11vw, 66px);
+      min-height:clamp(36px, 8.5vw, 48px);
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
-      border:clamp(2px, .55vw, 4px) solid var(--line);
-      border-radius:clamp(18px, 4vw, 26px);
+      gap:8px;
+      border:clamp(2px, .45vw, 3px) solid var(--line);
+      border-radius:clamp(14px, 3vw, 20px);
       background:var(--orange);
       color:#fff;
-      font-size:clamp(16px, 4vw, 22px);
+      font-size:clamp(14px, 3.5vw, 18px);
       font-weight:950;
-      box-shadow:0 5px 0 rgba(0,0,0,.20);
+      box-shadow:0 4px 0 rgba(0,0,0,.20);
       white-space:nowrap;
+      padding:4px clamp(16px, 4vw, 24px);
+      width:100%;
     }
 
     .hero-btn.secondary{
@@ -211,8 +218,8 @@
     }
 
     .hero-btn .mini-icon{
-      width:clamp(24px, 6vw, 34px);
-      height:clamp(24px, 6vw, 34px);
+      width:clamp(22px, 5.2vw, 28px);
+      height:clamp(22px, 5.2vw, 28px);
       border-radius:50%;
       display:grid;
       place-items:center;
@@ -234,13 +241,13 @@
     .section-title{
       background:var(--yellow);
       color:#111;
-      min-height:clamp(42px, 9vw, 56px);
-      border-top:clamp(3px, .35vw, 5px) solid var(--line);
-      border-bottom:clamp(3px, .35vw, 5px) solid var(--line);
+      min-height:clamp(32px, 7vw, 42px);
+      border-top:clamp(2px, .3vw, 4px) solid var(--line);
+      border-bottom:clamp(2px, .3vw, 4px) solid var(--line);
       display:grid;
       place-items:center;
-      padding:5px var(--page-pad);
-      font-size:clamp(20px, 5vw, 32px);
+      padding:3px var(--page-pad);
+      font-size:clamp(16px, 4vw, 24px);
       font-weight:950;
       text-align:center;
     }
@@ -248,7 +255,7 @@
     .bundle-games{
       position:relative;
       background:#f6f7fb;
-      padding:clamp(22px, 4.8vw, 42px) var(--page-pad) clamp(42px, 7vw, 86px);
+      padding:clamp(14px, 3.2vw, 28px) var(--page-pad) clamp(32px, 5.8vw, 64px);
       overflow:hidden;
     }
 
@@ -266,25 +273,27 @@
       position:relative;
       z-index:1;
       width:100%;
-      max-width:var(--layout-max);
+      max-width:640px;
       margin-inline:auto;
       display:grid;
-      gap:clamp(16px, 4vw, 24px);
+      gap:clamp(12px, 3vw, 18px);
+      justify-items:center;
     }
 
     .bundle-game{
+      width:min(92%, 520px);
       background:#fff;
-      border:clamp(3px, .55vw, 5px) solid var(--line);
+      border:clamp(2px, .45vw, 4px) solid var(--line);
       border-radius:var(--card-radius);
-      padding:clamp(8px, 2vw, 14px);
-      box-shadow:0 clamp(5px, 1.1vw, 8px) 0 rgba(0,0,0,.13);
+      padding:clamp(6px, 1.5vw, 10px);
+      box-shadow:0 clamp(3px, .8vw, 6px) 0 rgba(0,0,0,.13);
       overflow:hidden;
     }
 
     .bundle-game-cover{
       width:100%;
       aspect-ratio:1 / 1;
-      border:clamp(2px, .45vw, 4px) solid var(--line);
+      border:clamp(2px, .38vw, 3px) solid var(--line);
       border-radius:calc(var(--card-radius) - 8px);
       overflow:hidden;
       background:#eef4f8;
@@ -302,24 +311,24 @@
     }
 
     .bundle-game-text{
-      padding:clamp(12px, 3vw, 18px) clamp(6px, 2vw, 12px) clamp(6px, 2vw, 10px);
+      padding:clamp(8px, 2.1vw, 12px) clamp(5px, 1.6vw, 10px) clamp(4px, 1.4vw, 8px);
       text-align:right;
     }
 
     .bundle-game-title{
       margin:0;
       color:#111;
-      font-size:clamp(20px, 5.2vw, 30px);
+      font-size:clamp(17px, 4.3vw, 24px);
       font-weight:950;
       line-height:1.35;
     }
 
     .bundle-game-desc{
-      margin:clamp(8px, 2.2vw, 12px) 0 0;
+      margin:clamp(6px, 1.7vw, 9px) 0 0;
       color:#657082;
-      font-size:clamp(15px, 4vw, 22px);
+      font-size:clamp(13px, 3.35vw, 18px);
       font-weight:900;
-      line-height:1.65;
+      line-height:1.55;
     }
 
     .bottom-nav{
@@ -412,8 +421,9 @@
     }
 
     @media (max-width:430px){
-      :root{--page-pad:clamp(12px, 4vw, 18px);--bottom-nav-height:88px;}
-      .hero-actions{grid-template-columns:repeat(2, minmax(0, 1fr));}
+      :root{--page-pad:clamp(10px, 3.4vw, 16px);--bottom-nav-height:88px;}
+      .bundle-copy{font-size:clamp(12px, 3.25vw, 15px);}
+      .hero-actions{max-width:220px;}
     }
 
     @media (prefers-reduced-motion:reduce){
@@ -444,13 +454,9 @@
         </div>
 
         <h1 class="bundle-title">بكج صندوق التحديات</h1>
-        <p class="bundle-copy">صندوق واحد يجمع 5 ألعاب مختلفة<br>بتجارب أكثر تنوعًا وسعر أقل من شراء كل لعبة منفصلة</p>
+        <p class="bundle-copy"><span class="line">صندوق واحد يجمع 5 ألعاب مختلفة</span><span class="line">بتجارب أكثر تنوعًا وسعر أقل من شراء كل لعبة منفصلة</span></p>
 
         <div class="hero-actions">
-          <a class="hero-btn secondary" href="#bundle-games">
-            <span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle></svg></span>
-            محتويات البكج
-          </a>
           <a class="hero-btn" href="https://sandooq-m.com" target="_blank" rel="noopener">
             <span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span>
             شراء البكج
