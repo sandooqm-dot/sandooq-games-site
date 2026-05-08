@@ -1322,8 +1322,8 @@
       position:fixed !important;
       inset-inline:0 !important;
       top:auto !important;
-      bottom:var(--visual-viewport-bottom) !important;
-      width:100% !important;
+      bottom:0 !important;
+width:100% !important;
       height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
       transform:translate3d(0,0,0) !important;
       -webkit-transform:translate3d(0,0,0) !important;
@@ -1507,8 +1507,8 @@
       left:0 !important;
       right:0 !important;
       top:auto !important;
-      bottom:var(--visual-viewport-bottom, 0px) !important;
-      width:100% !important;
+      bottom:0 !important;
+width:100% !important;
       height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
       z-index:2147483000 !important;
       transform:translate3d(0,0,0) !important;
@@ -1920,8 +1920,8 @@
   
     /* ✅ تثبيت الشريط السفلي على iOS أثناء إظهار/إخفاء شريط المتصفح */
     .bottom-nav{
-      bottom:var(--visual-viewport-bottom, 0px) !important;
-    }
+      bottom:0 !important;
+}
 
 </style>
 </head>
@@ -3073,14 +3073,14 @@
       const keyboardOffset = getKeyboardOffset();
       document.documentElement.style.setProperty('--keyboard-offset', `${keyboardOffset}px`);
       const vvBottom = getVisualViewportBottomOffset();
-      document.documentElement.style.setProperty('--visual-viewport-bottom', `${vvBottom}px`);
+      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
       document.body.classList.toggle('keyboard-open', keyboardOffset > 0);
 
       nav.style.position = 'fixed';
       nav.style.left = '0px';
       nav.style.right = '0px';
       nav.style.top = 'auto';
-      nav.style.bottom = '';
+      nav.style.bottom = '0px';
       nav.style.width = '100%';
       nav.style.transform = 'none';
       nav.style.webkitTransform = 'none';
