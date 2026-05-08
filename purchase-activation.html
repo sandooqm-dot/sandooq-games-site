@@ -521,13 +521,16 @@
       width:100%;
       height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
       background:linear-gradient(180deg, #f7b638 0%, #e99f18 100%);
-      border-top:clamp(3px, .35vw, 5px) solid var(--line);
+      border-top:1px solid rgba(85,189,242,.38);
+      border-inline:1px solid rgba(85,189,242,.22);
+      border-bottom:0;
+      border-radius:clamp(20px, 3.5vw, 34px) clamp(20px, 3.5vw, 34px) 0 0;
       z-index:40;
       display:flex;
       align-items:stretch;
       justify-content:center;
       padding:0 var(--page-pad) env(safe-area-inset-bottom);
-      box-shadow:0 -5px 18px rgba(0,0,0,.16);
+      box-shadow:none;
       isolation:isolate;
       transform:translate3d(0,0,0);
       -webkit-transform:translate3d(0,0,0);
@@ -535,6 +538,7 @@
       -webkit-backface-visibility:hidden;
       contain:layout paint style;
       will-change:transform, bottom;
+      overflow:hidden;
     }
 
     .bottom-nav-inner{
@@ -628,12 +632,12 @@
     }
 
 
-    /* ضبط ألوان الشريط السفلي مثل ملف index: نفس لون رأس الصفحة + مربع نشط أصفر ونص أسود */
+    /* ضبط ألوان الشريط السفلي مثل ملف index */
     .bottom-nav{
       background:var(--blue-deep) !important;
       border:1px solid rgba(85,189,242,.38) !important;
       border-bottom:0 !important;
-      border-radius:clamp(18px, 5vw, 32px) clamp(18px, 5vw, 32px) 0 0 !important;
+      border-radius:clamp(20px, 3.5vw, 34px) clamp(20px, 3.5vw, 34px) 0 0 !important;
       box-shadow:none !important;
       overflow:hidden !important;
     }
@@ -654,7 +658,7 @@
 
     .bottom-nav .nav-indicator{
       background:var(--yellow) !important;
-      border:1px solid rgba(21,21,21,.22) !important;
+      border:1px solid rgba(255,255,255,.28) !important;
       box-shadow:none !important;
     }
 
@@ -667,7 +671,6 @@
       background:transparent !important;
       box-shadow:none !important;
     }
-
   </style>
 </head>
 
@@ -696,7 +699,6 @@
               <h2 class="section-heading">ابحث عن ألعابك برقم الجوال</h2>
               <p class="section-text">سجّل دخولك أو أنشئ حسابًا أولًا، ثم تحقق من رقم الجوال لعرض ألعابك وربطها بحسابك.</p>
             </div>
-            <span class="section-badge">استرجاع المشتريات</span>
           </div>
 
           <form class="lookup-form" id="purchaseLookupForm" data-hook="purchase-lookup-form">
