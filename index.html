@@ -1865,6 +1865,58 @@
       }
     }
 
+
+
+    /* إصلاح نهائي لتثبيت الشريط السفلي ومنع تحركه أثناء التمرير */
+    :root{
+      --bottom-nav-fixed-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+    }
+
+    html,
+    body{
+      width:100% !important;
+      max-width:100% !important;
+      overflow-x:hidden !important;
+    }
+
+    .app{
+      width:100% !important;
+      max-width:100% !important;
+      overflow-x:hidden !important;
+      padding-bottom:calc(var(--bottom-nav-fixed-height) + 26px) !important;
+    }
+
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:0 !important;
+      width:100vw !important;
+      height:var(--bottom-nav-fixed-height) !important;
+      min-height:var(--bottom-nav-fixed-height) !important;
+      max-height:var(--bottom-nav-fixed-height) !important;
+      padding:0 var(--page-pad) env(safe-area-inset-bottom) !important;
+      margin:0 !important;
+      z-index:2147483000 !important;
+      transform:translateZ(0) !important;
+      -webkit-transform:translateZ(0) !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      will-change:auto !important;
+      contain:paint !important;
+    }
+
+    body.keyboard-open .bottom-nav{
+      bottom:0 !important;
+    }
+
+    .bottom-nav-inner{
+      height:100% !important;
+      transform:translateZ(0) !important;
+      -webkit-transform:translateZ(0) !important;
+    }
+
   </style>
 </head>
 
@@ -3021,11 +3073,11 @@
       nav.style.webkitTransform = 'none';
       nav.style.zIndex = '2147483000';
 
-      const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
-      if (navHeight > 0) {
-        document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
+      const fixedNavHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
+      if (fixedNavHeight > 0) {
+        document.documentElement.style.setProperty('--bottom-nav-space', `${fixedNavHeight}px`);
         const app = document.querySelector('.app');
-        if (app) app.style.paddingBottom = `${navHeight + 26}px`;
+        if (app) app.style.paddingBottom = `${fixedNavHeight + 26}px`;
       }
 
       const activeItem = document.querySelector('.bottom-nav .nav-item.active');
@@ -3051,6 +3103,10 @@
       scrollToReview(currentReview, 'auto');
       scheduleBottomNavStabilize();
     });
+
+    window.addEventListener('scroll', () => {
+      scheduleBottomNavStabilize();
+    }, { passive:true });
 
     window.addEventListener('orientationchange', () => {
       scheduleBottomNavStabilize(80);
