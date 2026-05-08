@@ -1296,42 +1296,6 @@
       }
     }
 
-    /* تثبيت الشريط السفلي دائماً (حماية إضافية خصوصاً على iOS) */
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      bottom:0 !important;
-      transform:translateZ(0);
-      -webkit-transform:translateZ(0);
-      will-change:transform;
-    }
-
-
-    /* تثبيت جذري للشريط السفلي على الجوال و iOS */
-    :root{
-      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      --visual-viewport-bottom:0px;
-    }
-
-    .app{
-      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
-    }
-
-    .bottom-nav{
-      position:fixed !important;
-      inset-inline:0 !important;
-      top:auto !important;
-      bottom:var(--visual-viewport-bottom) !important;
-      width:100% !important;
-      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
-      backface-visibility:hidden;
-      -webkit-backface-visibility:hidden;
-      contain:layout paint style;
-      will-change:transform, bottom;
-    }
 
 
     /* ضبط نهائي لذيل الصفحة: تصغير أيقونات التواصل وترتيب الروابط السريعة 2×2 */
@@ -1482,108 +1446,6 @@
       text-underline-offset:4px;
     }
 
-
-
-    /* حل جذري لتثبيت الشريط السفلي ومنع الطفو على iOS والجوال */
-    :root{
-      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      --visual-viewport-bottom:0px;
-    }
-
-    html,
-    body{
-      min-height:100% !important;
-      overflow-x:hidden !important;
-    }
-
-    .app{
-      min-height:100dvh !important;
-      overflow:visible !important;
-      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
-    }
-
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      top:auto !important;
-      bottom:var(--visual-viewport-bottom, 0px) !important;
-      width:100% !important;
-      height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom)) !important;
-      z-index:2147483000 !important;
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
-      backface-visibility:hidden !important;
-      -webkit-backface-visibility:hidden !important;
-      contain:layout paint style !important;
-      will-change:transform, bottom !important;
-      margin:0 !important;
-    }
-
-    .bottom-nav-inner{
-      transform:translate3d(0,0,0) !important;
-      -webkit-transform:translate3d(0,0,0) !important;
-    }
-
-
-
-    /* ضبط نهائي ثابت للشريط السفلي بدون تحريك الصفحة يمين/يسار */
-    :root{
-      --bottom-nav-space:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      --keyboard-offset:0px;
-    }
-
-    html,
-    body{
-      width:100% !important;
-      max-width:100% !important;
-      overflow-x:hidden !important;
-    }
-
-    .app{
-      width:100% !important;
-      max-width:100% !important;
-      overflow-x:hidden !important;
-      overflow-y:visible !important;
-      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
-    }
-
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      top:auto !important;
-      bottom:0 !important;
-      width:100% !important;
-      height:var(--bottom-nav-space) !important;
-      padding:0 var(--page-pad) env(safe-area-inset-bottom) !important;
-      z-index:2147483000 !important;
-      transform:none !important;
-      -webkit-transform:none !important;
-      backface-visibility:hidden !important;
-      -webkit-backface-visibility:hidden !important;
-      contain:none !important;
-      will-change:auto !important;
-      border:1px solid rgba(85,189,242,.38) !important;
-      border-bottom:0 !important;
-      border-radius:clamp(18px, 5vw, 32px) clamp(18px, 5vw, 32px) 0 0 !important;
-      box-shadow:none !important;
-      overflow:hidden !important;
-      margin:0 !important;
-    }
-
-    .bottom-nav .nav-indicator{
-      box-shadow:none !important;
-      border-color:rgba(85,189,242,.28) !important;
-    }
-
-    body.keyboard-open .bottom-nav{
-      bottom:calc(var(--keyboard-offset, 0px) * -1) !important;
-    }
-
-    body.keyboard-open .app{
-      padding-bottom:calc(var(--bottom-nav-space) + 26px) !important;
-    }
 
 
     /* ضبط نهائي لألوان الشريط السفلي: المربع النشط مثل شريط العروض والألعاب والنص أسود */
@@ -1792,14 +1654,79 @@
       }
     }
 
-    /* تعديلات بطاقة بكج صندوق التحديات */
+
+    /* إصلاح نهائي للشريط السفلي - ثابت أسفل الشاشة فقط */
+    :root{
+      --bottom-nav-fixed-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      --bottom-nav-top:initial;
+    }
+
+    html,
+    body{
+      width:100% !important;
+      max-width:100% !important;
+      overflow-x:hidden !important;
+    }
+
+    .app{
+      width:100% !important;
+      max-width:100% !important;
+      overflow-x:hidden !important;
+      padding-bottom:calc(var(--bottom-nav-fixed-height) + 26px) !important;
+    }
+
+    body > .bottom-nav,
+    .bottom-nav{
+      position:fixed !important;
+      left:0 !important;
+      right:0 !important;
+      top:auto !important;
+      bottom:0 !important;
+      width:100% !important;
+      height:var(--bottom-nav-fixed-height) !important;
+      min-height:var(--bottom-nav-fixed-height) !important;
+      max-height:var(--bottom-nav-fixed-height) !important;
+      padding:0 var(--page-pad) env(safe-area-inset-bottom) !important;
+      margin:0 !important;
+      z-index:2147483647 !important;
+      transform:none !important;
+      -webkit-transform:none !important;
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+      contain:none !important;
+      will-change:auto !important;
+      box-shadow:none !important;
+      overflow:hidden !important;
+    }
+
+    body > .bottom-nav.visual-viewport-locked,
+    .bottom-nav.visual-viewport-locked{
+      right:auto !important;
+      bottom:auto !important;
+    }
+
+    .bottom-nav-inner{
+      height:100% !important;
+      transform:none !important;
+      -webkit-transform:none !important;
+      will-change:auto !important;
+    }
+
+    body.keyboard-open .bottom-nav{
+      top:auto !important;
+      bottom:0 !important;
+      left:0 !important;
+      right:0 !important;
+      width:100% !important;
+    }
+
+    /* تثبيت تنسيق بطاقة البكج بعد إزالة العناصر الزائدة */
     .bundle-card.bundle-game-card .bundle-title-row{
       width:100%;
       margin:clamp(14px, 2.5cqw, 18px) 0 0 !important;
       display:flex !important;
       align-items:center !important;
       justify-content:center !important;
-      gap:clamp(4px, .6vw, 8px) !important;
       min-width:0 !important;
       position:relative !important;
       z-index:1 !important;
@@ -1820,8 +1747,6 @@
     }
 
     .bundle-card.bundle-game-card .bundle-desc{
-      width:100% !important;
-      max-width:100% !important;
       margin:clamp(10px, 2cqw, 14px) 0 clamp(12px, 2.8cqw, 18px) !important;
       color:var(--muted) !important;
       font-weight:850 !important;
@@ -1838,83 +1763,6 @@
       gap:clamp(8px, 1cqw, 12px) !important;
       padding:0 clamp(3px, .5vw, 6px) !important;
       align-items:stretch !important;
-    }
-
-    .bundle-card.bundle-game-card .bundle-actions .game-btn{
-      min-height:clamp(30px, 3.2vw, 40px) !important;
-      font-size:clamp(10px, 1vw, 14px) !important;
-    }
-
-    @media (max-width:430px){
-      .bundle-card.bundle-game-card .bundle-title-row .bundle-name{
-        font-size:clamp(18px, 5.2vw, 23px) !important;
-      }
-
-      .bundle-card.bundle-game-card .bundle-desc{
-        font-size:clamp(13px, 3.8vw, 16px) !important;
-        line-height:1.7 !important;
-      }
-
-      .bundle-card.bundle-game-card .bundle-actions{
-        grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
-      }
-
-      .bundle-card.bundle-game-card .bundle-actions .game-btn{
-        min-height:30px !important;
-        font-size:clamp(9px, 2.65vw, 11px) !important;
-      }
-    }
-
-
-
-    /* إصلاح نهائي لتثبيت الشريط السفلي ومنع تحركه أثناء التمرير */
-    :root{
-      --bottom-nav-fixed-height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-    }
-
-    html,
-    body{
-      width:100% !important;
-      max-width:100% !important;
-      overflow-x:hidden !important;
-    }
-
-    .app{
-      width:100% !important;
-      max-width:100% !important;
-      overflow-x:hidden !important;
-      padding-bottom:calc(var(--bottom-nav-fixed-height) + 26px) !important;
-    }
-
-    .bottom-nav{
-      position:fixed !important;
-      left:0 !important;
-      right:0 !important;
-      top:auto !important;
-      bottom:0 !important;
-      width:100vw !important;
-      height:var(--bottom-nav-fixed-height) !important;
-      min-height:var(--bottom-nav-fixed-height) !important;
-      max-height:var(--bottom-nav-fixed-height) !important;
-      padding:0 var(--page-pad) env(safe-area-inset-bottom) !important;
-      margin:0 !important;
-      z-index:2147483000 !important;
-      transform:translateZ(0) !important;
-      -webkit-transform:translateZ(0) !important;
-      backface-visibility:hidden !important;
-      -webkit-backface-visibility:hidden !important;
-      will-change:auto !important;
-      contain:paint !important;
-    }
-
-    body.keyboard-open .bottom-nav{
-      bottom:0 !important;
-    }
-
-    .bottom-nav-inner{
-      height:100% !important;
-      transform:translateZ(0) !important;
-      -webkit-transform:translateZ(0) !important;
     }
 
   </style>
@@ -3058,27 +2906,47 @@
       const navInner = document.querySelector('.bottom-nav-inner');
       if (!nav) return;
 
-      const keyboardOffset = getKeyboardOffset();
-      document.documentElement.style.setProperty('--keyboard-offset', `${keyboardOffset}px`);
-      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
-      document.body.classList.toggle('keyboard-open', keyboardOffset > 0);
+      const active = document.activeElement;
+      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
+      const vv = window.visualViewport;
 
       nav.style.position = 'fixed';
-      nav.style.left = '0px';
-      nav.style.right = '0px';
-      nav.style.top = 'auto';
-      nav.style.bottom = '0px';
-      nav.style.width = '100%';
+      nav.style.margin = '0';
+      nav.style.zIndex = '2147483647';
       nav.style.transform = 'none';
       nav.style.webkitTransform = 'none';
-      nav.style.zIndex = '2147483000';
+      nav.style.willChange = 'auto';
 
-      const fixedNavHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
-      if (fixedNavHeight > 0) {
-        document.documentElement.style.setProperty('--bottom-nav-space', `${fixedNavHeight}px`);
+      const measuredHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
+      if (measuredHeight > 0) {
+        document.documentElement.style.setProperty('--bottom-nav-space', `${measuredHeight}px`);
+        document.documentElement.style.setProperty('--bottom-nav-fixed-height', `${measuredHeight}px`);
         const app = document.querySelector('.app');
-        if (app) app.style.paddingBottom = `${fixedNavHeight + 26}px`;
+        if (app) app.style.paddingBottom = `${measuredHeight + 26}px`;
       }
+
+      if (vv && !isTyping) {
+        const navHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || measuredHeight || 0);
+        const top = Math.max(0, Math.round(vv.offsetTop + vv.height - navHeight));
+        const left = Math.max(0, Math.round(vv.offsetLeft || 0));
+        const width = Math.max(0, Math.round(vv.width || window.innerWidth || document.documentElement.clientWidth || 0));
+
+        nav.classList.add('visual-viewport-locked');
+        nav.style.top = `${top}px`;
+        nav.style.bottom = 'auto';
+        nav.style.left = `${left}px`;
+        nav.style.right = 'auto';
+        nav.style.width = `${width}px`;
+      } else {
+        nav.classList.remove('visual-viewport-locked');
+        nav.style.top = 'auto';
+        nav.style.bottom = '0px';
+        nav.style.left = '0px';
+        nav.style.right = '0px';
+        nav.style.width = '100%';
+      }
+
+      document.body.classList.toggle('keyboard-open', !!isTyping);
 
       const activeItem = document.querySelector('.bottom-nav .nav-item.active');
       if (navInner && activeItem) moveBottomNavIndicator(activeItem);
@@ -3126,6 +2994,9 @@
     }
 
     stabilizeBottomNav();
+
+    /* مراقبة إضافية لتثبيت الشريط بعد تحميل الصور */
+    [0, 80, 180, 350, 700, 1200].forEach(delay => scheduleBottomNavStabilize(delay));
 
   </script>
 </body>
