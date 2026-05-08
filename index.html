@@ -1792,6 +1792,79 @@
       }
     }
 
+    /* تعديلات بطاقة بكج صندوق التحديات */
+    .bundle-card.bundle-game-card .bundle-title-row{
+      width:100%;
+      margin:clamp(14px, 2.5cqw, 18px) 0 0 !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      gap:clamp(4px, .6vw, 8px) !important;
+      min-width:0 !important;
+      position:relative !important;
+      z-index:1 !important;
+    }
+
+    .bundle-card.bundle-game-card .bundle-title-row .bundle-name{
+      margin:0 !important;
+      flex:0 1 auto !important;
+      min-width:0 !important;
+      text-align:center !important;
+      color:#111 !important;
+      font-weight:950 !important;
+      font-size:clamp(18px, 3.65cqw, 27px) !important;
+      line-height:1.35 !important;
+      white-space:nowrap !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+    }
+
+    .bundle-card.bundle-game-card .bundle-desc{
+      width:100% !important;
+      max-width:100% !important;
+      margin:clamp(10px, 2cqw, 14px) 0 clamp(12px, 2.8cqw, 18px) !important;
+      color:var(--muted) !important;
+      font-weight:850 !important;
+      font-size:clamp(14px, 2.95cqw, 18px) !important;
+      line-height:1.75 !important;
+      text-align:center !important;
+      text-wrap:balance !important;
+    }
+
+    .bundle-card.bundle-game-card .bundle-actions{
+      margin-top:auto !important;
+      display:grid !important;
+      grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+      gap:clamp(8px, 1cqw, 12px) !important;
+      padding:0 clamp(3px, .5vw, 6px) !important;
+      align-items:stretch !important;
+    }
+
+    .bundle-card.bundle-game-card .bundle-actions .game-btn{
+      min-height:clamp(30px, 3.2vw, 40px) !important;
+      font-size:clamp(10px, 1vw, 14px) !important;
+    }
+
+    @media (max-width:430px){
+      .bundle-card.bundle-game-card .bundle-title-row .bundle-name{
+        font-size:clamp(18px, 5.2vw, 23px) !important;
+      }
+
+      .bundle-card.bundle-game-card .bundle-desc{
+        font-size:clamp(13px, 3.8vw, 16px) !important;
+        line-height:1.7 !important;
+      }
+
+      .bundle-card.bundle-game-card .bundle-actions{
+        grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+      }
+
+      .bundle-card.bundle-game-card .bundle-actions .game-btn{
+        min-height:30px !important;
+        font-size:clamp(9px, 2.65vw, 11px) !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -1834,17 +1907,9 @@
 
             <div class="bundle-title-row">
               <h3 class="bundle-name">بكج صندوق التحديات</h3>
-              <span class="bundle-status">بكج</span>
             </div>
 
-            <p class="bundle-meta-text">5 ألعاب · باقة جماعية كاملة</p>
-            <p class="bundle-desc">خمس ألعاب متنوعة في بكج واحد؛ ضحك، سرعة، تمثيل، منافسة وتحديات جاهزة للجمعات والفعاليات بقيمة أوفر من شراء كل لعبة منفصلة.</p>
-
-            <div class="bundle-meta" aria-label="معلومات البكج">
-              <span>5 ألعاب</span>
-              <span>للجمعات والفعاليات</span>
-              <span>قيمة أوفر</span>
-            </div>
+            <p class="bundle-desc">صندوق واحد يجمع 5 ألعاب مختلفة<br>بتجارب أكثر تنوعًا وسعر أقل من شراء كل لعبة منفصلة</p>
 
             <div class="card-actions bundle-actions">
               <a class="game-btn" href="sandooq-challenges-bundle.html">
