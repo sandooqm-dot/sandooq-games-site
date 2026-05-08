@@ -22,6 +22,38 @@
 .actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:clamp(10px,1.4vw,18px);margin-top:clamp(14px,2vw,22px)}.steps{margin:clamp(10px,1.5vw,14px) 0 0;padding:0;list-style:none;display:grid;gap:10px;color:var(--muted);font-weight:820;font-size:clamp(14px,1.15vw,18px);line-height:1.9;counter-reset:s}.steps li{counter-increment:s}.steps li:before{content:counter(s) ". ";color:var(--ink);font-weight:950}[hidden]{display:none!important}
 .nav{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:100%;height:calc(var(--navh) + env(safe-area-inset-bottom));background:linear-gradient(180deg,#f7b638 0%,#e99f18 100%);border-top:clamp(3px,.35vw,5px) solid var(--line);z-index:40;display:flex;align-items:stretch;justify-content:center;padding:0 var(--pad) env(safe-area-inset-bottom);box-shadow:0 -5px 18px rgba(0,0,0,.16);transform:translate3d(0,0,0)!important;backface-visibility:hidden!important;contain:layout paint style}.navin{width:100%;max-width:860px;height:100%;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;gap:clamp(3px,.8vw,10px);padding:8px 0;--x:0px;--w:25%;--h:72px;--y:8px}.ind{position:absolute;top:0;left:0;width:var(--w);height:var(--h);border-radius:22px;background:var(--nav);border:2px solid rgba(255,255,255,.32);box-shadow:0 5px 0 rgba(0,0,0,.2);transform:translate3d(var(--x),var(--y),0);pointer-events:none;z-index:0;transition:transform .28s cubic-bezier(.22,1,.36,1),width .28s,height .28s}.navitem{min-width:0;height:clamp(68px,6.5vw,78px);border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#04384f;text-shadow:0 1px 0 rgba(255,255,255,.28);font-weight:950;font-size:clamp(11px,1vw,14px);line-height:1.1;text-align:center;position:relative;z-index:1;padding-inline:4px}.navitem.active{color:#fff;transform:translateY(-1px);text-shadow:none}.navicon{width:clamp(32px,3vw,40px);height:clamp(32px,3vw,40px);display:grid;place-items:center;color:currentColor}.navicon svg{width:90%;height:90%;stroke:currentColor;fill:none;stroke-width:2.75;stroke-linecap:round;stroke-linejoin:round}.navitem.active .navicon{color:var(--yl)}
 @media(max-width:560px){.head{display:grid}.status{justify-self:start}.tabs{justify-content:center}.tab{min-width:min(46%,180px)}.actions{display:grid;grid-template-columns:1fr}.btn.small{width:100%}}@media(max-width:430px){:root{--navh:88px;--pad:clamp(12px,4vw,18px)}.chip{min-height:30px;padding:6px 10px;font-size:12px}.hero h1{font-size:clamp(31px,8.5vw,42px)}.hero p{font-size:15px}.card,.info{border-width:4px}}
+
+
+/* ضبط ألوان الشريط السفلي ليتطابق مع ملف index */
+.nav{
+  background:var(--deep) !important;
+  border:1px solid rgba(85,189,242,.38) !important;
+  border-bottom:0 !important;
+  border-radius:clamp(18px,5vw,32px) clamp(18px,5vw,32px) 0 0 !important;
+  box-shadow:none !important;
+  overflow:hidden !important;
+}
+
+.ind{
+  background:var(--yellow) !important;
+  border:1px solid rgba(255,255,255,.28) !important;
+  box-shadow:none !important;
+}
+
+.navitem{
+  color:rgba(255,255,255,.92) !important;
+  text-shadow:none !important;
+}
+
+.navitem.active{
+  color:#111 !important;
+  text-shadow:none !important;
+}
+
+.navitem.active .navicon{
+  color:#111 !important;
+}
+
 </style>
 </head>
 <body>
