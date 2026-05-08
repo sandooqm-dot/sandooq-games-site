@@ -11,6 +11,7 @@
   <link rel="preload" as="image" href="horof-cover-card.webp" />
   <link rel="preload" as="image" href="sandooq-almusabaqat-cover-card.webp" />
   <link rel="preload" as="image" href="horof-edu-cover-card.webp" />
+  <link rel="preload" as="image" href="sandooq-challenges-bundle-cover-card.webp" />
 
   <style>
     @font-face{
@@ -1625,6 +1626,172 @@
       box-shadow:none !important;
     }
 
+
+
+    /* بطاقة بكج صندوق التحديات الجديدة */
+    #bundles .bundles-grid{
+      grid-template-columns:1fr !important;
+      justify-items:center;
+    }
+
+    .bundle-card.bundle-game-card{
+      width:100%;
+      max-width:min(100%, 860px);
+      margin-inline:auto;
+      container-type:inline-size;
+      min-height:auto;
+      border:clamp(2px, .25vw, 3px) solid var(--line);
+      border-radius:var(--card-radius);
+      background:var(--white);
+      padding:clamp(7px, 1vw, 14px) clamp(7px, 1vw, 14px) clamp(11px, 1.4vw, 18px);
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      gap:0;
+      box-shadow:0 clamp(4px, .7vw, 8px) 0 rgba(0,0,0,.18);
+      overflow:hidden;
+      position:relative;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+
+    .bundle-card.bundle-game-card:hover{
+      transform:translateY(-3px);
+      box-shadow:0 clamp(6px, .9vw, 10px) 0 rgba(0,0,0,.18);
+    }
+
+    .bundle-card.bundle-game-card .bundle-badge{
+      position:absolute;
+      top:clamp(11px, 2.3cqw, 18px);
+      right:clamp(11px, 2.3cqw, 18px);
+      z-index:3;
+      align-self:auto;
+      border:clamp(1.5px, .18vw, 2px) solid var(--line);
+      box-shadow:0 3px 0 rgba(0,0,0,.15);
+    }
+
+    .bundle-cover{
+      width:100%;
+      aspect-ratio:1672 / 941;
+      height:auto;
+      border-radius:calc(var(--card-radius) - 4px);
+      border:1.5px solid rgba(0,0,0,.18);
+      overflow:hidden;
+      position:relative;
+      background:#e9eef4;
+      display:block;
+    }
+
+    .bundle-cover picture,
+    .bundle-cover img{
+      display:block;
+      width:100%;
+      height:100%;
+    }
+
+    .bundle-cover img{
+      object-fit:cover;
+    }
+
+    .bundle-title-row{
+      width:100%;
+      margin:clamp(9px, 2.1cqw, 14px) 0 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:clamp(4px, .6vw, 8px);
+      min-width:0;
+    }
+
+    .bundle-title-row .bundle-name{
+      margin:0;
+      flex:1 1 auto;
+      min-width:0;
+      text-align:right;
+      color:#111;
+      font-weight:950;
+      font-size:clamp(14px, 3.2cqw, 23px);
+      line-height:1.35;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .bundle-status{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:clamp(16px, 1.65vw, 22px);
+      padding:clamp(2px, .35vw, 4px) clamp(6px, .75vw, 9px);
+      border-radius:999px;
+      border:clamp(1.5px, .18vw, 2px) solid var(--line);
+      background:#fff7d6;
+      color:#1d2633;
+      font-weight:950;
+      font-size:clamp(7.5px, 1.75vw, 10px);
+      line-height:1;
+      white-space:nowrap;
+      box-shadow:0 2px 0 rgba(0,0,0,.12);
+    }
+
+    .bundle-meta-text{
+      margin:clamp(6px, 1.65cqw, 10px) 0 0;
+      color:#607084;
+      font-weight:900;
+      font-size:clamp(10px, 2.35cqw, 15px);
+      line-height:1.35;
+      text-align:center;
+      white-space:normal;
+    }
+
+    .bundle-card.bundle-game-card .bundle-desc{
+      width:100%;
+      max-width:100%;
+      margin:clamp(7px, 1.8cqw, 11px) 0 clamp(10px, 2.5cqw, 16px);
+      color:var(--muted);
+      font-weight:850;
+      font-size:clamp(12px, 2.8cqw, 17px);
+      line-height:1.6;
+      text-align:center;
+      text-wrap:balance;
+    }
+
+    .bundle-card.bundle-game-card .bundle-meta{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:8px;
+      margin:0 0 clamp(10px, 2.2cqw, 15px);
+    }
+
+    .bundle-card.bundle-game-card .bundle-actions{
+      margin-top:auto;
+      display:grid;
+      gap:clamp(4px, .55vw, 7px);
+      padding:0 clamp(3px, .5vw, 6px);
+    }
+
+    .bundle-card.bundle-game-card .game-btn{
+      min-height:clamp(30px, 3.2vw, 40px);
+      font-size:clamp(10px, 1vw, 14px);
+    }
+
+    @media (max-width:430px){
+      .bundle-card.bundle-game-card .bundle-title-row .bundle-name{
+        font-size:clamp(15px, 4.6vw, 20px);
+      }
+
+      .bundle-card.bundle-game-card .bundle-desc{
+        font-size:clamp(12px, 3.6vw, 15px);
+        line-height:1.65;
+      }
+
+      .bundle-card.bundle-game-card .game-btn{
+        min-height:30px;
+        font-size:clamp(9px, 2.65vw, 11px);
+      }
+    }
+
   </style>
 </head>
 
@@ -1651,28 +1818,43 @@
       العروض
     </section>
 
+
     <section class="bundles-area" id="bundles" aria-label="قسم العروض والبكجات">
       <div class="bundles-inner">
         <div class="bundles-grid">
-          <article class="bundle-card">
-            <span class="bundle-badge">قريبًا</span>
-            <h3 class="bundle-name">بكج بداية التحدي</h3>
-            <p class="bundle-desc">بكج مبدئي يحتوي على 3 ألعاب مختارة للجمعات الخفيفة والتجارب الأولى.</p>
-            <div class="bundle-meta" aria-label="معلومات البكج">
-              <span>3 ألعاب</span>
-              <span>للجمعات</span>
-              <span>توفير أفضل</span>
-            </div>
-          </article>
+          <article class="bundle-card bundle-game-card" data-bundle-id="challenges-box">
+            <span class="bundle-badge">الأوفر</span>
 
-          <article class="bundle-card">
-            <span class="bundle-badge">قريبًا</span>
-            <h3 class="bundle-name">بكج صندوق المسابقات الكامل</h3>
-            <p class="bundle-desc">بكج أكبر يحتوي على 5 ألعاب لتجربة أطول ومناسب للعيد والفعاليات.</p>
+            <div class="bundle-cover cover-photo">
+              <picture>
+                <source type="image/webp" srcset="sandooq-challenges-bundle-cover-card.webp" />
+                <img src="sandooq-challenges-bundle-cover.PNG" alt="غلاف بكج صندوق التحديات" width="1672" height="941" loading="lazy" decoding="async" />
+              </picture>
+            </div>
+
+            <div class="bundle-title-row">
+              <h3 class="bundle-name">بكج صندوق التحديات</h3>
+              <span class="bundle-status">بكج</span>
+            </div>
+
+            <p class="bundle-meta-text">5 ألعاب · باقة جماعية كاملة</p>
+            <p class="bundle-desc">خمس ألعاب متنوعة في بكج واحد؛ ضحك، سرعة، تمثيل، منافسة وتحديات جاهزة للجمعات والفعاليات بقيمة أوفر من شراء كل لعبة منفصلة.</p>
+
             <div class="bundle-meta" aria-label="معلومات البكج">
               <span>5 ألعاب</span>
-              <span>للعيد والفعاليات</span>
-              <span>اختيار أوفر</span>
+              <span>للجمعات والفعاليات</span>
+              <span>قيمة أوفر</span>
+            </div>
+
+            <div class="card-actions bundle-actions">
+              <a class="game-btn" href="https://sandooq-m.com" target="_blank" rel="noopener">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span>
+                <span class="game-btn-text">عرض البكج</span>
+              </a>
+              <a class="game-btn" href="https://sandooq-m.com" target="_blank" rel="noopener">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span>
+                <span class="game-btn-text">شراء البكج</span>
+              </a>
             </div>
           </article>
         </div>
