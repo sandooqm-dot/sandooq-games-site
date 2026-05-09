@@ -57,11 +57,16 @@
 </style>
 </head>
 <body>
+<script>
+if (window.location.pathname === '/account') {
+  window.location.replace('/account/' + window.location.search + window.location.hash);
+}
+</script>
 <div class="app">
 <header class="top">
   <div class="top-row">
-    <a class="chip back" href="../">العودة للألعاب</a>
-    <a class="chip login" id="welcomeChip" href="../account/">تسجيل الدخول</a>
+    <a class="chip back" href="/">العودة للألعاب</a>
+    <a class="chip login" id="welcomeChip" href="/account/">تسجيل الدخول</a>
   </div>
   <div class="hero">
     <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
@@ -144,8 +149,8 @@
         </div>
       </div>
       <div class="actions">
-        <a class="btn small" href="../activate/">تحديث التفعيل</a>
-        <a class="btn small white" href="../support/">الدعم</a>
+        <a class="btn small" href="/activate/">تحديث التفعيل</a>
+        <a class="btn small white" href="/support/">الدعم</a>
         <button class="btn small black" id="logoutButton" type="button">تسجيل الخروج</button>
       </div>
     </section>
@@ -165,10 +170,10 @@
 <nav class="nav" aria-label="التنقل السفلي">
   <div class="navin">
     <span class="ind" aria-hidden="true"></span>
-    <a class="navitem" href="../"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span><span>الألعاب</span></a>
-    <a class="navitem" href="../activate/"><span class="navicon"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span><span>تفعيل الألعاب</span></a>
-    <a class="navitem active" href="../account/" aria-current="page"><span class="navicon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span><span>الحساب</span></a>
-    <a class="navitem" href="../support/"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span><span>الدعم</span></a>
+    <a class="navitem" href="/"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span><span>الألعاب</span></a>
+    <a class="navitem" href="/activate/"><span class="navicon"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span><span>تفعيل الألعاب</span></a>
+    <a class="navitem active" href="/account/" aria-current="page"><span class="navicon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span><span>الحساب</span></a>
+    <a class="navitem" href="/support/"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span><span>الدعم</span></a>
   </div>
 </nav>
 
