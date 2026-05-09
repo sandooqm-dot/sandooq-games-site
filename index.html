@@ -3048,44 +3048,41 @@ width:100% !important;
       restartReviewTimer();
     }
 
-    function getVisualViewportBottomOffset() {
-      const vv = window.visualViewport;
-      if (!vv) return 0;
-      const layoutHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-      return Math.max(0, Math.round(layoutHeight - vv.height - vv.offsetTop));
-    }
-
-    function getKeyboardOffset() {
-      const vv = window.visualViewport;
-      const active = document.activeElement;
-      const isTyping = active && /^(INPUT|TEXTAREA|SELECT)$/i.test(active.tagName || '');
-      if (!vv || !isTyping) return 0;
-
-      const offset = getVisualViewportBottomOffset();
-      return offset > 80 ? offset : 0;
-    }
-
+    
+    // ✅ تثبيت الشريط السفلي فعلياً على أسفل الجزء المرئي (خصوصاً على iOS Safari)
+    // iOS Safari يغيّر مساحة الجزء المرئي أثناء التمرير (إظهار/إخفاء شريط المتصفح)،
+    // وهذا يجعل position:fixed يبدو وكأنه "يرتفع". الحل: نحسب الإزاحة ونطبّق TranslateY.
     function stabilizeBottomNav() {
       const nav = document.querySelector('.bottom-nav');
       const navInner = document.querySelector('.bottom-nav-inner');
       if (!nav) return;
 
-      const keyboardOffset = getKeyboardOffset();
-      document.documentElement.style.setProperty('--keyboard-offset', `${keyboardOffset}px`);
-      const vvBottom = getVisualViewportBottomOffset();
-      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
-      document.body.classList.toggle('keyboard-open', keyboardOffset > 0);
+      // اجبر الشريط أن يكون Fixed على مستوى الـ viewport
+      nav.style.setProperty('position', 'fixed', 'important');
+      nav.style.setProperty('left', '0px', 'important');
+      nav.style.setProperty('right', '0px', 'important');
+      nav.style.setProperty('top', 'auto', 'important');
+      nav.style.setProperty('bottom', '0px', 'important');
+      nav.style.setProperty('width', '100%', 'important');
+      nav.style.setProperty('z-index', '2147483000', 'important');
+      nav.style.setProperty('will-change', 'transform', 'important');
 
-      nav.style.position = 'fixed';
-      nav.style.left = '0px';
-      nav.style.right = '0px';
-      nav.style.top = 'auto';
-      nav.style.bottom = '0px';
-      nav.style.width = '100%';
-      nav.style.transform = 'none';
-      nav.style.webkitTransform = 'none';
-      nav.style.zIndex = '2147483000';
+      // صفّر التحويل ثم قِس مكان الشريط بالنسبة للـ Visual Viewport
+      nav.style.setProperty('transform', 'translate3d(0, 0, 0)', 'important');
+      nav.style.setProperty('-webkit-transform', 'translate3d(0, 0, 0)', 'important');
 
+      const vv = window.visualViewport;
+      const viewportH = vv ? vv.height : window.innerHeight;
+      const rect = nav.getBoundingClientRect();
+
+      // إذا كان الشريط أعلى من الأسفل نُنزلُه، وإذا كان أسفل/مخفي نرفعُه
+      const shiftY = Math.round(viewportH - rect.bottom);
+
+      document.documentElement.style.setProperty('--bottom-nav-vv-shift', `${shiftY}px`);
+      nav.style.setProperty('transform', `translate3d(0, ${shiftY}px, 0)`, 'important');
+      nav.style.setProperty('-webkit-transform', `translate3d(0, ${shiftY}px, 0)`, 'important');
+
+      // حافظ على مساحة أسفل المحتوى حتى لا ينغطس تحت الشريط
       const fixedNavHeight = Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 0);
       if (fixedNavHeight > 0) {
         document.documentElement.style.setProperty('--bottom-nav-space', `${fixedNavHeight}px`);
@@ -3097,7 +3094,7 @@ width:100% !important;
       if (navInner && activeItem) moveBottomNavIndicator(activeItem);
     }
 
-    function scheduleBottomNavStabilize(delay = 0) {
+function scheduleBottomNavStabilize(delay = 0) {
       window.setTimeout(stabilizeBottomNav, delay);
       window.requestAnimationFrame(stabilizeBottomNav);
     }
