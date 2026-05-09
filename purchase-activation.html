@@ -517,7 +517,7 @@
       position:fixed;
       left:0;
       right:0;
-      bottom:var(--visual-viewport-bottom);
+      bottom:0 !important;
       width:100%;
       height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
       background:linear-gradient(180deg, #f7b638 0%, #e99f18 100%);
@@ -671,6 +671,15 @@
       background:transparent !important;
       box-shadow:none !important;
     }
+
+
+    /* تثبيت الشريط السفلي عند أسفل الشاشة حتى مع ظهور لوحة المفاتيح */
+    .bottom-nav{
+      bottom:0 !important;
+      transform:translate3d(0,0,0) !important;
+      -webkit-transform:translate3d(0,0,0) !important;
+    }
+
   </style>
 </head>
 
@@ -895,15 +904,7 @@
         document.documentElement.style.setProperty('--bottom-nav-space', `${navHeight}px`);
       }
 
-      let bottomOffset = 0;
-      if (window.visualViewport) {
-        bottomOffset = Math.max(
-          0,
-          Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)
-        );
-      }
-
-      document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomOffset}px`);
+      document.documentElement.style.setProperty('--visual-viewport-bottom', '0px');
     }
 
     stabilizeBottomNav();
