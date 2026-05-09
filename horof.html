@@ -571,6 +571,50 @@
         scroll-behavior:auto !important;
       }
     }
+  
+
+    /* توحيد الشريط السفلي مع تصميم الموقع الحالي */
+    .bottom-nav{
+      background:var(--blue-deep) !important;
+      border:1px solid rgba(85,189,242,.38) !important;
+      border-bottom:0 !important;
+      border-top:0 !important;
+      border-radius:clamp(18px, 5vw, 32px) clamp(18px, 5vw, 32px) 0 0 !important;
+      box-shadow:none !important;
+      overflow:hidden !important;
+    }
+
+    .bottom-nav .nav-item{
+      color:rgba(255,255,255,.92) !important;
+      text-shadow:none !important;
+    }
+
+    .bottom-nav .nav-item.active{
+      color:#111 !important;
+      text-shadow:none !important;
+    }
+
+    .bottom-nav .nav-item.active .nav-icon{
+      color:#111 !important;
+    }
+
+    .bottom-nav .nav-indicator{
+      background:var(--yellow) !important;
+      border:1px solid rgba(21,21,21,.22) !important;
+      box-shadow:none !important;
+    }
+
+    .bottom-nav .nav-item.nav-featured .nav-icon{
+      border-radius:16px;
+      background:rgba(255,255,255,.10) !important;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.12) !important;
+    }
+
+    .bottom-nav .nav-item.nav-featured.active .nav-icon{
+      background:transparent !important;
+      box-shadow:none !important;
+    }
+
   </style>
 </head>
 
