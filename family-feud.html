@@ -425,22 +425,15 @@
       bottom:0;
       width:100%;
       height:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-      background:var(--blue-deep);
-      border:1px solid rgba(85,189,242,.38);
-      border-bottom:0;
-      border-top:0;
-      border-radius:clamp(18px, 5vw, 32px) clamp(18px, 5vw, 32px) 0 0;
+      background:linear-gradient(180deg, #f7b638 0%, #e99f18 100%);
+      border-top:clamp(3px, .35vw, 5px) solid var(--line);
       z-index:40;
       display:flex;
       align-items:stretch;
       justify-content:center;
       padding:0 var(--page-pad) env(safe-area-inset-bottom);
-      box-shadow:none;
+      box-shadow:0 -5px 18px rgba(0,0,0,.16);
       isolation:isolate;
-      overflow:hidden;
-      transform:translateZ(0);
-      -webkit-backface-visibility:hidden;
-      backface-visibility:hidden;
     }
 
     .bottom-nav-inner{
@@ -466,9 +459,9 @@
       width:var(--indicator-w);
       height:var(--indicator-h);
       border-radius:22px;
-      background:var(--yellow);
-      border:1px solid rgba(21,21,21,.22);
-      box-shadow:none;
+      background:var(--nav-active);
+      border:2px solid rgba(255,255,255,.32);
+      box-shadow:0 5px 0 rgba(0,0,0,.2);
       transform:translate3d(var(--indicator-x), var(--indicator-y), 0);
       transition:transform .28s cubic-bezier(.22, 1, .36, 1), width .28s cubic-bezier(.22, 1, .36, 1), height .28s cubic-bezier(.22, 1, .36, 1);
       pointer-events:none;
@@ -484,8 +477,8 @@
       align-items:center;
       justify-content:center;
       gap:4px;
-      color:rgba(255,255,255,.92);
-      text-shadow:none;
+      color:var(--nav-ink);
+      text-shadow:0 1px 0 rgba(255,255,255,.28);
       font-weight:950;
       font-size:clamp(11px, 1vw, 14px);
       line-height:1.1;
@@ -496,19 +489,10 @@
       padding-inline:4px;
     }
 
-    .nav-item.active{color:#111;transform:translateY(-1px);text-shadow:none;}
+    .nav-item.active{color:#fff;transform:translateY(-1px);text-shadow:none;}
     .nav-icon{width:clamp(32px, 3vw, 40px);height:clamp(32px, 3vw, 40px);display:grid;place-items:center;color:currentColor;transition:color .2s ease, transform .2s ease;}
     .nav-icon svg{width:90%;height:90%;display:block;stroke:currentColor;fill:none;stroke-width:2.75;stroke-linecap:round;stroke-linejoin:round;}
-    .nav-item.active .nav-icon{color:#111;transform:scale(1.04);}
-    .nav-item.nav-featured .nav-icon{
-      border-radius:16px;
-      background:rgba(255,255,255,.10);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
-    }
-    .nav-item.nav-featured.active .nav-icon{
-      background:transparent;
-      box-shadow:none;
-    }
+    .nav-item.active .nav-icon{color:var(--yellow-light);transform:scale(1.04);}
 
     @media (min-width:800px){
       .hero-inner{grid-template-columns:1fr;}
@@ -539,6 +523,47 @@
       }
     }
 
+    /* توحيد الشريط السفلي مع تصميم الموقع الحالي */
+    .bottom-nav{
+      background:var(--blue-deep) !important;
+      border:1px solid rgba(85,189,242,.38) !important;
+      border-bottom:0 !important;
+      border-top:0 !important;
+      border-radius:clamp(18px, 5vw, 32px) clamp(18px, 5vw, 32px) 0 0 !important;
+      box-shadow:none !important;
+      overflow:hidden !important;
+    }
+
+    .bottom-nav .nav-item{
+      color:rgba(255,255,255,.92) !important;
+      text-shadow:none !important;
+    }
+
+    .bottom-nav .nav-item.active{
+      color:#111 !important;
+      text-shadow:none !important;
+    }
+
+    .bottom-nav .nav-item.active .nav-icon{
+      color:#111 !important;
+    }
+
+    .bottom-nav .nav-indicator{
+      background:var(--yellow) !important;
+      border:1px solid rgba(21,21,21,.22) !important;
+      box-shadow:none !important;
+    }
+
+    .bottom-nav .nav-item.nav-featured .nav-icon{
+      border-radius:16px;
+      background:rgba(255,255,255,.10) !important;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.12) !important;
+    }
+
+    .bottom-nav .nav-item.nav-featured.active .nav-icon{
+      background:transparent !important;
+      box-shadow:none !important;
+    }
 
   </style>
 </head>
@@ -566,7 +591,7 @@
 
           <div class="hero-actions" data-game-id="family-feud">
             <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/wAReOlN" data-game-id="family-feud" data-state="buy" data-buy-url="https://sandooq-m.com/wAReOlN" data-play-url="https://family-feud.sandooq-games.com" data-buy-label="شراء اللعبة" data-play-label="العب"><span class="cta-label">شراء اللعبة</span></a>
-            <a class="btn btn-secondary" href="#video">شرح اللعبة</a>
+            <a class="btn btn-secondary" href="#video" hidden aria-hidden="true" style="display:none !important;">شرح اللعبة</a>
           </div>
         </div>
       </div>
@@ -627,7 +652,7 @@
           </ul>
         </section>
 
-        <section class="section-card soft-blue" id="video">
+        <section class="section-card soft-blue" id="video" hidden aria-hidden="true" style="display:none !important;">
           <h2 class="section-heading">شرح اللعبة بالفيديو</h2>
           <p class="section-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
           <div class="video-box" role="img" aria-label="مكان فيديو شرح لعبة فاميلي فيود">
@@ -655,10 +680,10 @@
         <section class="section-card">
           <h2 class="section-heading">طريقة التفعيل</h2>
           <ul class="bullets">
-            <li>ادخل إلى sandooq-games.com ثم أنشئ حسابًا جديدًا أو سجل الدخول.</li>
+            <li>ادخل إلى sandooq-games.com ثم أنشئ حسابًا جديدًا أو سجّل الدخول.</li>
             <li>افتح صفحة تفعيل الألعاب من الشريط السفلي.</li>
             <li>أدخل رقم الجوال المستخدم في عملية الشراء لإظهار اللعبة على حسابك.</li>
-            <li>بعد التفعيل، ادخل اللعبة وابدأ التحدي بين الفريقين.</li>
+            <li>بعد التفعيل ادخل اللعبة وابدأ التحدي مع أصدقائك أو عائلتك.</li>
           </ul>
         </section>
       </div>
