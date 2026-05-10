@@ -2836,11 +2836,27 @@ width:100% !important;
     function buildPlayUrlWithAccess(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
 
-      // لا نضع sg_device داخل href مباشرة حتى لا يستخدم Safari الرابط القديم قبل اكتمال فحص المتصفح الخاص.
-      // الضغط الحقيقي يتم اعتراضه بالأسفل ويبني الرابط النهائي لحظتها.
-      if (gameId === 'family-feud') return playUrl;
+      const token = readLocalValue(TOKEN_KEY).trim();
 
-      return playUrl;
+      try {
+        const url = new URL(playUrl, window.location.href);
+
+        if (token) {
+          url.searchParams.set('sg_token', token);
+          url.searchParams.set('sg_temp', '1');
+          url.searchParams.delete('sg_device');
+
+          if (gameId && gameId !== 'family-feud') {
+            url.searchParams.set('sg_game', gameId);
+          } else {
+            url.searchParams.delete('sg_game');
+          }
+        }
+
+        return url.toString();
+      } catch (e) {
+        return playUrl;
+      }
     }
 
     async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
@@ -2886,15 +2902,13 @@ width:100% !important;
       if (!link) return;
       prepareAccessButton(link);
 
-      // القرار المعتمد:
-      // زر "العب" في الصفحة الرئيسية لا يفتح الدومين المباشر للعبة.
-      // ينقل العميل أولًا إلى صفحة تفاصيل اللعبة، ومن هناك يضغط "العب" للدخول.
-      const detailsUrl = GAME_DETAILS_URLS[gameId] || link.dataset.originalHref || '#';
+      const playUrl = getPlayUrl(card, gameId, detailsMap) || link.dataset.originalHref || '#';
+      const directPlayUrl = buildPlayUrlWithAccess(playUrl, gameId);
 
-      link.dataset.basePlayUrl = detailsUrl;
+      link.dataset.basePlayUrl = playUrl;
       link.dataset.gameId = gameId;
       link.classList.add('play-action');
-      link.setAttribute('href', detailsUrl);
+      link.setAttribute('href', directPlayUrl);
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
     }
@@ -2934,8 +2948,29 @@ width:100% !important;
       detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
     });
 
-    // لا نعترض زر "العب" في الصفحة الرئيسية.
-    // الزر يذهب إلى صفحة تفاصيل اللعبة، وصفحة التفاصيل هي التي تبني رابط الدخول النهائي.
+    document.addEventListener('click', async event => {
+      const playButton = event.target && event.target.closest
+        ? event.target.closest('.game-card .game-btn.play-action')
+        : null;
+
+      if (!playButton) return;
+
+      const gameId = String(playButton.dataset.gameId || '').trim();
+      const basePlayUrl = playButton.dataset.basePlayUrl || playButton.getAttribute('href') || '#';
+
+      if (!basePlayUrl || basePlayUrl === '#') return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const finalUrl = gameId === 'family-feud'
+        ? await buildPlayUrlWithAccessAsync(basePlayUrl, gameId)
+        : buildPlayUrlWithAccess(basePlayUrl, gameId);
+
+      playButton.setAttribute('href', finalUrl);
+      window.location.assign(finalUrl);
+    }, { passive:false, capture:true });
+
     window.addEventListener('storage', refreshAccountUi);
     refreshAccountFromApi().then(refreshAccountUi);
     detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
