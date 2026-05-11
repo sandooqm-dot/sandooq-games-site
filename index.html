@@ -2476,20 +2476,22 @@ width:100% !important;
     const AUTH_TOKEN_KEYS = [
       TOKEN_KEY,
       'sandooq_site_token_v1',
+      'sandooq_auth_token',
       'sandooq_access_token_v1',
+      'sandooq_access_token',
       'sandooq_token_v1',
+      'sandooq_token',
       'sandooq_session_v1',
+      'sandooq_session',
       'sandooq_session_token_v1',
+      'sandooq_session_token',
       'sandooq_customer_token_v1',
+      'sandooq_customer_token',
       'sandooq_login_token_v1',
+      'sandooq_login_token',
       'sandooq_account_token_v1',
-      'auth_token',
-      'access_token',
-      'token',
-      'sg_token',
-      'site_token',
-      'customer_token',
-      'jwt'
+      'sandooq_account_token',
+      'sg_token'
     ];
     const DEVICE_KEY = 'sandooq_device_token_v1';
     const TEMP_GAME_SESSION_KEY = 'sandooq_temp_game_access_session_v1';
@@ -2527,6 +2529,21 @@ width:100% !important;
       try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
     }
 
+    function readCookieValue(name) {
+      try {
+        const parts = String(document.cookie || '').split(';');
+        for (const part of parts) {
+          const idx = part.indexOf('=');
+          if (idx === -1) continue;
+          const key = part.slice(0, idx).trim();
+          if (key !== name) continue;
+          const raw = part.slice(idx + 1).trim();
+          try { return decodeURIComponent(raw); } catch (e) { return raw; }
+        }
+      } catch (e) {}
+      return '';
+    }
+
     function readStorageValue(key) {
       try {
         const localValue = localStorage.getItem(key);
@@ -2538,49 +2555,45 @@ width:100% !important;
         if (sessionValue && String(sessionValue).trim()) return String(sessionValue);
       } catch (e) {}
 
+      const cookieValue = readCookieValue(key);
+      if (cookieValue && String(cookieValue).trim()) return String(cookieValue);
+
       return '';
     }
 
-    function readCookieValue(key) {
-      try {
-        const cookie = document.cookie || '';
-        const parts = cookie.split(';');
-        for (const part of parts) {
-          const [name, ...rest] = part.trim().split('=');
-          if (name === key) {
-            const raw = rest.join('=') || '';
-            try { return decodeURIComponent(raw); } catch (e) { return raw; }
+    function looksLikeSiteToken(key, value) {
+      const k = String(key || '').toLowerCase();
+      const v = String(value || '').trim();
+      if (!v || v.length < 12) return false;
+      if (/device|theme|games|details|phone|name|email|last|category|team|score|opened|cart|utm/i.test(k)) return false;
+      return /sandooq|sg_|site|auth|access|token|session/i.test(k) && /token|session|auth|access|sg_/i.test(k);
+    }
+
+    function scanStorageForAuthToken() {
+      const stores = [];
+      try { stores.push(localStorage); } catch (e) {}
+      try { stores.push(sessionStorage); } catch (e) {}
+
+      for (const store of stores) {
+        try {
+          for (let i = 0; i < store.length; i++) {
+            const key = store.key(i);
+            const value = key ? store.getItem(key) : '';
+            if (looksLikeSiteToken(key, value)) return String(value).trim();
           }
-        }
-      } catch (e) {}
+        } catch (e) {}
+      }
 
       return '';
-    }
-
-    function rememberAuthToken(token) {
-      if (!token) return;
-      try { localStorage.setItem(TOKEN_KEY, token); } catch (e) {}
-      try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) {}
     }
 
     function readAuthToken() {
       for (const key of AUTH_TOKEN_KEYS) {
         const value = readStorageValue(key).trim();
-        if (value) {
-          rememberAuthToken(value);
-          return value;
-        }
+        if (value) return value;
       }
 
-      for (const key of AUTH_TOKEN_KEYS) {
-        const value = readCookieValue(key).trim();
-        if (value) {
-          rememberAuthToken(value);
-          return value;
-        }
-      }
-
-      return '';
+      return scanStorageForAuthToken();
     }
 
     function writeLocalValue(key, value) {
@@ -2924,13 +2937,15 @@ width:100% !important;
       if (gameId === 'family-feud' || gameId === 'sandooq') return playUrl;
 
       const token = readAuthToken();
-      if (!token) return playUrl;
 
       try {
         const url = new URL(playUrl, window.location.href);
-        url.searchParams.set('sg_token', token);
-        url.searchParams.set('sg_temp', '1');
-        url.searchParams.delete('sg_device');
+
+        if (token) {
+          url.searchParams.set('sg_token', token);
+          url.searchParams.set('sg_temp', '1');
+          url.searchParams.delete('sg_device');
+        }
 
         if (gameId) url.searchParams.set('sg_game', gameId);
         else url.searchParams.delete('sg_game');
@@ -2993,8 +3008,21 @@ width:100% !important;
       link.dataset.directIndexPlay = '1';
       link.classList.add('play-action');
       link.setAttribute('href', gameId === 'family-feud' ? basePlayUrl : buildPlayUrlWithAccess(basePlayUrl, gameId));
+      link.dataset.tokenAttached = readAuthToken() ? '1' : '0';
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
+    }
+
+    function forceTokenOnAllPlayButtons() {
+      document.querySelectorAll('.game-card .game-btn.play-action[data-direct-index-play="1"]').forEach(link => {
+        const gameId = String(link.dataset.gameId || '').trim();
+        const basePlayUrl = link.dataset.basePlayUrl || link.getAttribute('href') || '#';
+        if (!gameId || !basePlayUrl || basePlayUrl === '#') return;
+        if (gameId === 'family-feud' || gameId === 'sandooq') return;
+        const finalUrl = buildPlayUrlWithAccess(basePlayUrl, gameId);
+        link.setAttribute('href', finalUrl);
+        link.dataset.tokenAttached = readAuthToken() ? '1' : '0';
+      });
     }
 
     function prepareGameCardsForAccessStates() {
@@ -3023,6 +3051,7 @@ width:100% !important;
     function refreshAccountUi() {
       refreshLoginChip();
       prepareGameCardsForAccessStates();
+      forceTokenOnAllPlayButtons();
     }
 
     refreshAccountUi();
@@ -3249,6 +3278,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — site-access-all-games-token-fix-v3 -->
+  <!-- VERSION: index.html — force-token-on-play-buttons-v5 -->
 </body>
 </html>
