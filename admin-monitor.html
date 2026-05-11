@@ -328,6 +328,125 @@
       pointer-events:none;
     }
 
+    .support-panel{
+      padding:16px;
+      display:grid;
+      gap:14px;
+    }
+
+    .support-search{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .support-result{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .support-detail-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 8px 18px rgba(16,32,51,.05);
+      min-height:90px;
+    }
+
+    .support-detail-label{
+      color:var(--muted);
+      font-weight:850;
+      font-size:12px;
+      margin-bottom:7px;
+    }
+
+    .support-detail-value{
+      color:var(--ink);
+      font-weight:950;
+      font-size:20px;
+      line-height:1.25;
+      direction:ltr;
+      text-align:right;
+    }
+
+    .alerts-box{
+      display:grid;
+      gap:8px;
+      padding:16px;
+      border-top:1px solid var(--line);
+      background:#fff;
+    }
+
+    .alert-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#f8fbfd;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .alert-row.danger{
+      background:#fff6f5;
+      border-color:#fecdca;
+      color:#912018;
+    }
+
+    .alert-row.warn{
+      background:#fffaf0;
+      border-color:#fedf89;
+      color:#7a4d00;
+    }
+
+    .health-strip{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      padding:0 16px 16px;
+    }
+
+    .health-box{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .health-value{
+      font-size:28px;
+      font-weight:950;
+      direction:ltr;
+      text-align:right;
+    }
+
+    .placeholder-box{
+      padding:18px;
+      display:grid;
+      gap:12px;
+    }
+
+    .placeholder-card{
+      background:#fff;
+      border:1px dashed #98a2b3;
+      border-radius:18px;
+      padding:16px;
+      color:#344054;
+      line-height:1.8;
+      font-weight:760;
+    }
+
+
     @media (max-width:840px){
       .auth-box{grid-template-columns:1fr}
       .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -360,11 +479,13 @@
     <div class="toolbar">
       <div class="tabs" aria-label="أقسام المراقبة">
         <button class="tab active" data-tab="summary">الملخص</button>
+        <button class="tab" data-tab="support">بحث خدمة العملاء</button>
         <button class="tab" data-tab="events">الأحداث</button>
         <button class="tab" data-tab="errors">الأخطاء</button>
         <button class="tab" data-tab="phones">الأرقام</button>
         <button class="tab" data-tab="devices">الأجهزة</button>
         <button class="tab" data-tab="actions">سجل الإدارة</button>
+        <button class="tab" data-tab="metrics">Cloudflare / GA4</button>
       </div>
 
       <div class="filters">
@@ -379,6 +500,26 @@
         <span id="lastUpdated" class="metric-label"></span>
       </div>
       <div id="summaryCards" class="cards" style="padding:16px"></div>
+
+      <div class="health-strip">
+        <div class="health-box">
+          <div class="metric-label">مؤشر سلاسة التشغيل</div>
+          <div id="smoothnessScore" class="health-value">-</div>
+        </div>
+        <div class="health-box">
+          <div class="metric-label">حالة API</div>
+          <div id="apiHealthStatus" class="health-value">-</div>
+        </div>
+        <div class="health-box">
+          <div class="metric-label">أرقام تحتاج مراجعة</div>
+          <div id="reviewPhonesCount" class="health-value">-</div>
+        </div>
+      </div>
+      <div class="alerts-box">
+        <div class="mini-title" style="padding:0;border:0;background:transparent">تنبيهات مختصرة</div>
+        <div id="summaryAlerts"></div>
+      </div>
+
       <div class="grid-2">
         <div class="mini-list">
           <div class="mini-title">أكثر الألعاب فتحًا خلال 24 ساعة</div>
@@ -387,6 +528,54 @@
         <div class="mini-list">
           <div class="mini-title">أكثر الأخطاء خلال 24 ساعة</div>
           <div id="topErrors"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="support" class="section">
+      <div class="section-head">
+        <h2 class="section-title">بحث خدمة العملاء برقم الجوال</h2>
+        <span class="metric-label">يعرض الزبدة: الرقم، الألعاب، الأجهزة، آخر استخدام، والتنبيهات.</span>
+      </div>
+      <div class="support-panel">
+        <div class="support-search">
+          <input id="supportPhoneInput" class="filter-input" placeholder="05xxxxxxxx" inputmode="numeric" />
+          <button id="supportSearchBtn" class="btn secondary">بحث الرقم</button>
+        </div>
+
+        <div id="supportSummary" class="support-result">
+          <div class="support-detail-card">
+            <div class="support-detail-label">حالة الرقم</div>
+            <div class="support-detail-value">-</div>
+          </div>
+          <div class="support-detail-card">
+            <div class="support-detail-label">الألعاب المملوكة</div>
+            <div class="support-detail-value">-</div>
+          </div>
+          <div class="support-detail-card">
+            <div class="support-detail-label">الأجهزة النشطة</div>
+            <div class="support-detail-value">-</div>
+          </div>
+          <div class="support-detail-card">
+            <div class="support-detail-label">آخر استخدام</div>
+            <div class="support-detail-value">-</div>
+          </div>
+        </div>
+
+        <div class="mini-list">
+          <div class="mini-title">تنبيهات الرقم</div>
+          <div id="supportAlerts"><div class="empty">ابحث عن رقم أولًا.</div></div>
+        </div>
+
+        <div class="mini-list">
+          <div class="mini-title">أجهزة الرقم</div>
+          <div class="table-wrap"><table id="supportDevicesTable"></table></div>
+        </div>
+
+        <div class="mini-list">
+          <div class="mini-title">آخر أحداث الرقم</div>
+          <div class="table-wrap"><table id="supportEventsTable"></table></div>
         </div>
       </div>
     </section>
@@ -443,6 +632,28 @@
       </div>
       <div class="table-wrap"><table id="actionsTable"></table></div>
     </section>
+
+    <section id="metrics" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Cloudflare / GA4</h2>
+        <span class="metric-label">قسم جاهز للربط لاحقًا بدون رفع تكلفة D1.</span>
+      </div>
+      <div class="placeholder-box">
+        <div class="placeholder-card">
+          <b>Cloudflare Metrics</b><br>
+          نستخدمها لاحقًا لجلب Requests / Errors / CPU Time / D1 Reads & Writes من Worker نفسه، بدون وضع Cloudflare API Token في هذه الصفحة.
+        </div>
+        <div class="placeholder-card">
+          <b>Google Analytics 4</b><br>
+          هو الخيار الأفضل لقياس الزوار، مصادر الحملات، أوقات الذروة، متوسط التصفح، ونقرات شراء الألعاب والبكج والدعم والحساب، بدل تسجيل كل نقرة داخل D1.
+        </div>
+        <div class="placeholder-card">
+          <b>قرار التكلفة</b><br>
+          لا نضيف Heatmap ولا تتبع كل زيارة داخل D1 الآن. نكتفي في اللوحة الداخلية بالأخطاء، الأرقام، الأجهزة، صلاحيات الألعاب، وفشل/نجاح فتح الألعاب.
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <script>
@@ -457,7 +668,14 @@
       errors: [],
       phones: [],
       devices: [],
-      actions: []
+      actions: [],
+      support: {
+        phone: "",
+        row: null,
+        devices: [],
+        events: [],
+        errors: []
+      }
     };
 
     function getApiBase(){
@@ -546,8 +764,70 @@
         : '<span class="badge neutral">لا</span>';
     }
 
+    function calculateSmoothness(summary){
+      const events = Number(summary.events_24h || 0);
+      const errors = Number(summary.errors_24h || 0);
+      const gameFails = Number(summary.game_access_fail_24h || 0);
+      const total = Math.max(events, errors + gameFails, 1);
+      const penalty = errors + gameFails;
+      const score = Math.max(0, Math.min(100, Math.round(100 - ((penalty / total) * 100))));
+      return score;
+    }
+
+    function getReviewPhones(){
+      const byPhoneGame = new Map();
+      state.devices.forEach(d => {
+        if (!d.phone || Number(d.is_active) !== 1 || Number(d.is_temporary) === 1) return;
+        const key = `${d.phone}__${d.game_id || ""}`;
+        byPhoneGame.set(key, (byPhoneGame.get(key) || 0) + 1);
+      });
+
+      const flagged = new Set();
+
+      state.phones.forEach(p => {
+        if (Number(p.active_devices || 0) >= 7) flagged.add(p.phone);
+      });
+
+      byPhoneGame.forEach((count, key) => {
+        if (count > 2) flagged.add(key.split("__")[0]);
+      });
+
+      const failsByPhone = new Map();
+      state.events.forEach(e => {
+        if (e.phone && e.event_type === "game_access" && String(e.status || "").toLowerCase() !== "success") {
+          failsByPhone.set(e.phone, (failsByPhone.get(e.phone) || 0) + 1);
+        }
+      });
+      failsByPhone.forEach((count, phone) => {
+        if (count >= 3) flagged.add(phone);
+      });
+
+      return Array.from(flagged).filter(Boolean);
+    }
+
+    function renderSummaryAlerts(summary){
+      const alerts = [];
+      const errors = Number(summary.errors_24h || 0);
+      const failAccess = Number(summary.game_access_fail_24h || 0);
+      const reviewPhones = getReviewPhones();
+
+      if (errors > 0) alerts.push({type:"danger", text:`يوجد ${errors} خطأ خلال آخر 24 ساعة. راجع قسم الأخطاء.`});
+      if (failAccess > 0) alerts.push({type:"warn", text:`يوجد ${failAccess} فشل في فتح الألعاب خلال آخر 24 ساعة.`});
+      if (reviewPhones.length > 0) alerts.push({type:"warn", text:`يوجد ${reviewPhones.length} رقم يحتاج مراجعة بسبب أجهزة كثيرة أو فشل متكرر.`});
+      if (!alerts.length) alerts.push({type:"", text:"لا توجد تنبيهات مهمة حاليًا. الوضع مستقر."});
+
+      $("summaryAlerts").innerHTML = alerts.map(a => `
+        <div class="alert-row ${a.type}">
+          <span>${escapeHtml(a.text)}</span>
+        </div>
+      `).join("");
+    }
+
     function renderSummary(){
       const s = state.summary?.summary || {};
+      const smoothness = calculateSmoothness(s);
+      const reviewPhones = getReviewPhones();
+
       const items = [
         ["أحداث 24 ساعة", s.events_24h],
         ["أخطاء 24 ساعة", s.errors_24h],
@@ -567,7 +847,14 @@
         </div>
       `).join("");
 
+      $("smoothnessScore").textContent = smoothness + "%";
+      $("smoothnessScore").style.color = smoothness >= 95 ? "var(--green)" : smoothness >= 85 ? "var(--orange)" : "var(--red)";
+      $("apiHealthStatus").textContent = Number(s.errors_24h || 0) === 0 ? "مستقر" : "راجع";
+      $("apiHealthStatus").style.color = Number(s.errors_24h || 0) === 0 ? "var(--green)" : "var(--orange)";
+      $("reviewPhonesCount").textContent = reviewPhones.length.toLocaleString("en-US");
       $("lastUpdated").textContent = "آخر تحديث: " + new Date().toLocaleString("ar-SA");
+
+      renderSummaryAlerts(s);
 
       const topGames = state.summary?.top_games_24h || [];
       $("topGames").innerHTML = topGames.length
@@ -681,6 +968,134 @@
       );
     }
 
+
+    function normalizeSaudiPhone(value){
+      let phone = String(value || "").replace(/[^\d]/g, "");
+      if (phone.startsWith("9665") && phone.length === 12) phone = "0" + phone.slice(3);
+      if (phone.startsWith("5") && phone.length === 9) phone = "0" + phone;
+      return phone;
+    }
+
+    function renderSupportSummary(){
+      const data = state.support;
+      const row = data.row || {};
+      const devices = data.devices || [];
+      const events = data.events || [];
+      const errors = data.errors || [];
+      const activeDevices = devices.filter(d => Number(d.is_active) === 1).length;
+      const ownedGames = Number(row.owned_games || 0);
+      const lastDevice = devices
+        .map(d => d.last_seen_at || "")
+        .filter(Boolean)
+        .sort()
+        .pop() || row.last_device_seen_at || "";
+      const lastEvent = events
+        .map(e => e.created_at || "")
+        .filter(Boolean)
+        .sort()
+        .pop() || row.last_event_at || "";
+
+      const exists = !!row.phone || devices.length > 0 || events.length > 0;
+
+      $("supportSummary").innerHTML = `
+        <div class="support-detail-card">
+          <div class="support-detail-label">حالة الرقم</div>
+          <div class="support-detail-value">${exists ? "موجود" : "غير موجود"}</div>
+        </div>
+        <div class="support-detail-card">
+          <div class="support-detail-label">الألعاب المملوكة</div>
+          <div class="support-detail-value">${ownedGames || "-"}</div>
+        </div>
+        <div class="support-detail-card">
+          <div class="support-detail-label">الأجهزة النشطة</div>
+          <div class="support-detail-value">${activeDevices}</div>
+        </div>
+        <div class="support-detail-card">
+          <div class="support-detail-label">آخر استخدام</div>
+          <div class="support-detail-value" style="font-size:13px">${escapeHtml(lastDevice || lastEvent || "-")}</div>
+        </div>
+      `;
+
+      const failEvents = events.filter(e => String(e.status || "").toLowerCase() !== "success" && e.event_type === "game_access");
+      const alerts = [];
+
+      if (!exists) alerts.push({type:"warn", text:"لم يظهر هذا الرقم في بيانات العملاء أو الأجهزة أو الأحداث المحملة."});
+      if (activeDevices >= 7) alerts.push({type:"warn", text:`هذا الرقم لديه ${activeDevices} أجهزة نشطة إجمالًا. راجعه إذا وصلتك شكوى أو اشتباه.`});
+      if (failEvents.length >= 3) alerts.push({type:"danger", text:`يوجد ${failEvents.length} محاولات فشل فتح ألعاب لهذا الرقم في آخر الأحداث.`});
+      if (errors.length > 0) alerts.push({type:"danger", text:`يوجد ${errors.length} خطأ مرتبط بهذا الرقم في سجل الأخطاء المحمل.`});
+      if (!alerts.length) alerts.push({type:"", text:"لا توجد تنبيهات واضحة على هذا الرقم."});
+
+      $("supportAlerts").innerHTML = alerts.map(a => `
+        <div class="alert-row ${a.type}">
+          <span>${escapeHtml(a.text)}</span>
+        </div>
+      `).join("");
+
+      renderTable("supportDevicesTable",
+        ["ID","اللعبة","اسم الجهاز","نشط","مؤقت","آخر استخدام","إجراء"],
+        devices,
+        d => `<tr>
+          <td class="ltr">${d.id}</td>
+          <td>${escapeHtml(d.game_id || "")}<br><small>${escapeHtml(d.game_name || "")}</small></td>
+          <td>${escapeHtml(d.device_name || "")}<br><small class="ltr">${escapeHtml(short(d.device_token || "", 24))}</small></td>
+          <td>${Number(d.is_active) === 1 ? '<span class="badge success">نشط</span>' : '<span class="badge fail">معطل</span>'}</td>
+          <td>${yesNo(d.is_temporary)}</td>
+          <td class="ltr">${escapeHtml(d.last_seen_at || "")}</td>
+          <td>
+            ${Number(d.is_active) === 1
+              ? `<button class="btn danger small" onclick="deviceAction('deactivate_device','${String(d.id)}','${escapeHtml(data.phone)}')">تعطيل</button>`
+              : `<button class="btn ok small" onclick="deviceAction('reactivate_device','${String(d.id)}','${escapeHtml(data.phone)}')">تفعيل</button>`
+            }
+          </td>
+        </tr>`
+      );
+
+      renderTable("supportEventsTable",
+        ["ID","الوقت","الحدث","الحالة","اللعبة","المسار","تفاصيل"],
+        events,
+        e => `<tr>
+          <td class="ltr">${e.id}</td>
+          <td class="ltr">${escapeHtml(e.created_at || "")}</td>
+          <td>${escapeHtml(e.event_type || "")}</td>
+          <td>${badge(e.status)}</td>
+          <td>${escapeHtml(e.game_id || "")}</td>
+          <td class="ltr">${escapeHtml(short(e.path || "", 60))}</td>
+          <td class="ltr" title="${escapeHtml(e.metadata || "")}">${escapeHtml(short(e.metadata || "", 80))}</td>
+        </tr>`
+      );
+    }
+
+    async function searchSupportPhone(){
+      const phone = normalizeSaudiPhone($("supportPhoneInput").value);
+      if (!phone || !/^05\d{8}$/.test(phone)) {
+        setStatus("اكتب رقم جوال صحيح يبدأ بـ 05.", "error");
+        return;
+      }
+
+      setStatus("جاري البحث عن الرقم...");
+      state.support.phone = phone;
+
+      try {
+        if (!state.phones.length) await loadPhones();
+        if (!state.errors.length) await loadErrors();
+
+        const [devicesData, eventsData] = await Promise.all([
+          api("/api/admin/monitor/devices?limit=200&phone=" + encodeURIComponent(phone)),
+          api("/api/admin/monitor/events?limit=100&phone=" + encodeURIComponent(phone))
+        ]);
+
+        state.support.row = state.phones.find(p => String(p.phone || "") === phone) || null;
+        state.support.devices = devicesData.devices || [];
+        state.support.events = eventsData.events || [];
+        state.support.errors = state.errors.filter(e => String(e.phone || "") === phone);
+
+        renderSupportSummary();
+        setStatus("تم عرض بيانات الرقم.", "ok");
+      } catch (err) {
+        setStatus("فشل البحث عن الرقم: " + err.message, "error");
+      }
+    }
+
     async function loadSummary(){
       state.summary = await api("/api/admin/monitor/summary");
       state.events = state.summary.recent_events || [];
@@ -736,8 +1151,9 @@
       saveSession();
 
       try {
-        await loadSummary();
-        await Promise.all([loadErrors(), loadPhones(), loadDevices(), loadActions()]);
+        await Promise.all([loadSummary(), loadEvents(), loadErrors(), loadPhones(), loadDevices(), loadActions()]);
+        renderSummary();
+        if (state.support.phone) renderSupportSummary();
         setStatus("تم الاتصال بنجاح وقراءة البيانات.", "ok");
       } catch (err) {
         setStatus("فشل الاتصال: " + err.message, "error");
@@ -786,8 +1202,13 @@
       catch(err){ setStatus("فشل تحديث الأحداث: " + err.message, "error"); }
     });
     $("filterDevicesBtn").addEventListener("click", async () => {
-      try { await loadDevices(); setStatus("تم تحديث الأجهزة.", "ok"); }
+      try { await loadDevices(); renderSummary(); setStatus("تم تحديث الأجهزة.", "ok"); }
       catch(err){ setStatus("فشل تحديث الأجهزة: " + err.message, "error"); }
+    });
+
+    $("supportSearchBtn").addEventListener("click", searchSupportPhone);
+    $("supportPhoneInput").addEventListener("keydown", event => {
+      if (event.key === "Enter") searchSupportPhone();
     });
     $("clearSecretBtn").addEventListener("click", () => {
       try { sessionStorage.removeItem(SECRET_KEY); } catch (_) {}
