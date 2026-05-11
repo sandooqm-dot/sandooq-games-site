@@ -2473,6 +2473,17 @@ width:100% !important;
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
     const TOKEN_KEY = 'sandooq_auth_token_v1';
+    const AUTH_TOKEN_KEYS = [
+      TOKEN_KEY,
+      'sandooq_site_token_v1',
+      'sandooq_access_token_v1',
+      'sandooq_token_v1',
+      'sandooq_session_v1',
+      'sandooq_session_token_v1',
+      'sandooq_customer_token_v1',
+      'sandooq_login_token_v1',
+      'sandooq_account_token_v1'
+    ];
     const DEVICE_KEY = 'sandooq_device_token_v1';
     const TEMP_GAME_SESSION_KEY = 'sandooq_temp_game_access_session_v1';
     const DEVICE_TOKEN_AT_PAGE_LOAD = readLocalValue(DEVICE_KEY).trim();
@@ -2507,6 +2518,29 @@ width:100% !important;
 
     function readLocalValue(key) {
       try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
+    }
+
+    function readStorageValue(key) {
+      try {
+        const localValue = localStorage.getItem(key);
+        if (localValue && String(localValue).trim()) return String(localValue);
+      } catch (e) {}
+
+      try {
+        const sessionValue = sessionStorage.getItem(key);
+        if (sessionValue && String(sessionValue).trim()) return String(sessionValue);
+      } catch (e) {}
+
+      return '';
+    }
+
+    function readAuthToken() {
+      for (const key of AUTH_TOKEN_KEYS) {
+        const value = readStorageValue(key).trim();
+        if (value) return value;
+      }
+
+      return '';
     }
 
     function writeLocalValue(key, value) {
@@ -2775,7 +2809,7 @@ width:100% !important;
     }
 
     async function refreshAccountFromApi() {
-      const token = readLocalValue(TOKEN_KEY).trim();
+      const token = readAuthToken();
       if (!token) return null;
 
       try {
@@ -2849,7 +2883,7 @@ width:100% !important;
 
       if (gameId === 'family-feud' || gameId === 'sandooq') return playUrl;
 
-      const token = readLocalValue(TOKEN_KEY).trim();
+      const token = readAuthToken();
       if (!token) return playUrl;
 
       try {
@@ -2871,7 +2905,7 @@ width:100% !important;
       if (!playUrl || playUrl === '#') return playUrl;
       if (gameId !== 'family-feud') return playUrl;
 
-      const token = readLocalValue(TOKEN_KEY).trim();
+      const token = readAuthToken();
       if (!token) return playUrl;
 
       const isPrivate = await detectPrivateMode();
@@ -3175,5 +3209,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
+  <!-- VERSION: index.html — horof-app-direct-token-fix-v2 -->
 </body>
 </html>
