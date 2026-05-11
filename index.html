@@ -2557,7 +2557,48 @@ width:100% !important;
       return '';
     }
 
-    function rememberAuthToken(token) {
+    
+    function canSetSharedSandooqCookie() {
+      try {
+        const host = String(location.hostname || '').toLowerCase();
+        return host === 'sandooq-games.com' || host.endsWith('.sandooq-games.com');
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function writeSandooqCookie(name, value, maxAgeSeconds) {
+      try {
+        if (!name) return;
+        const v = String(value || '').trim();
+        if (!v) return;
+
+        const secure = location.protocol === 'https:' ? '; Secure' : '';
+        const maxAge = Number.isFinite(maxAgeSeconds) ? `; Max-Age=${Math.floor(maxAgeSeconds)}` : '';
+        const domain = canSetSharedSandooqCookie() ? '; Domain=.sandooq-games.com' : '';
+        document.cookie = `${name}=${encodeURIComponent(v)}; Path=/${maxAge}; SameSite=Lax${secure}${domain}`;
+      } catch (e) {}
+    }
+
+    function setSiteAccessCookies(token, gameId) {
+      const t = String(token || '').trim();
+      if (!t) return;
+
+      const gid = String(gameId || '').trim();
+      const maxAge = 60 * 60 * 24 * 30; // 30 days
+
+      // توكن الدخول للنظام الجديد (مشترك لكل ألعاب sandooq-games)
+      writeSandooqCookie('sandooq_site_token_v1', t, maxAge);
+      // احتياط: بعض النسخ/الميدلوير تقرأ هذا الاسم
+      writeSandooqCookie('sandooq_auth_token_v1', t, maxAge);
+
+      // اللعبة المقصودة (يتغير حسب زر اللعب)
+      if (gid) {
+        writeSandooqCookie('sandooq_site_game_v1', gid, maxAge);
+      }
+    }
+
+function rememberAuthToken(token) {
       if (!token) return;
       try { localStorage.setItem(TOKEN_KEY, token); } catch (e) {}
       try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) {}
@@ -3045,6 +3086,11 @@ width:100% !important;
 
       event.preventDefault();
       event.stopPropagation();
+
+      const tokenForPlay = readAuthToken();
+      if (tokenForPlay) {
+        setSiteAccessCookies(tokenForPlay, gameId);
+      }
 
       const finalUrl = gameId === 'family-feud'
         ? await buildPlayUrlWithAccessAsync(basePlayUrl, gameId)
