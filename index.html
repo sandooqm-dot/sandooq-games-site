@@ -2473,6 +2473,24 @@ width:100% !important;
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
     const TOKEN_KEY = 'sandooq_auth_token_v1';
+    const AUTH_TOKEN_KEYS = [
+      TOKEN_KEY,
+      'sandooq_site_token_v1',
+      'sandooq_access_token_v1',
+      'sandooq_token_v1',
+      'sandooq_session_v1',
+      'sandooq_session_token_v1',
+      'sandooq_customer_token_v1',
+      'sandooq_login_token_v1',
+      'sandooq_account_token_v1',
+      'auth_token',
+      'access_token',
+      'token',
+      'sg_token',
+      'site_token',
+      'customer_token',
+      'jwt'
+    ];
     const DEVICE_KEY = 'sandooq_device_token_v1';
     const TEMP_GAME_SESSION_KEY = 'sandooq_temp_game_access_session_v1';
     const DEVICE_TOKEN_AT_PAGE_LOAD = readLocalValue(DEVICE_KEY).trim();
@@ -2509,70 +2527,62 @@ width:100% !important;
       try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
     }
 
-
-    // ✅ توحيد قراءة التوكن (خصوصاً في المتصفح الخفي): نبحث في localStorage + sessionStorage + cookies
-    const AUTH_TOKEN_KEYS = [
-      TOKEN_KEY,
-      'sandooq_site_token_v1',
-      'sandooq_access_token_v1',
-      'sandooq_token_v1',
-      'sandooq_token',
-      'sandooq_session_v1',
-      'sandooq_session_token_v1',
-      'sandooq_customer_token_v1',
-      'sandooq_login_token_v1',
-      'sandooq_account_token_v1',
-      'auth_token',
-      'access_token',
-      'token',
-      'sg_token'
-    ];
-
     function readStorageValue(key) {
       try {
-        const v = localStorage.getItem(key);
-        if (v && String(v).trim()) return String(v);
+        const localValue = localStorage.getItem(key);
+        if (localValue && String(localValue).trim()) return String(localValue);
       } catch (e) {}
+
       try {
-        const v = sessionStorage.getItem(key);
-        if (v && String(v).trim()) return String(v);
+        const sessionValue = sessionStorage.getItem(key);
+        if (sessionValue && String(sessionValue).trim()) return String(sessionValue);
       } catch (e) {}
+
       return '';
     }
 
-    function readCookieValue(name) {
+    function readCookieValue(key) {
       try {
         const cookie = document.cookie || '';
         const parts = cookie.split(';');
+
         for (const part of parts) {
-          const [k, ...rest] = part.trim().split('=');
-          if (k === name) {
-            const raw = (rest.join('=') || '').trim();
-            if (!raw) return '';
+          const [name, ...rest] = part.trim().split('=');
+          if (name === key) {
+            const raw = rest.join('=') || '';
             try { return decodeURIComponent(raw); } catch (e) { return raw; }
           }
         }
       } catch (e) {}
+
       return '';
     }
 
     function rememberAuthToken(token) {
-      const t = String(token || '').trim();
-      if (!t) return '';
-      try { localStorage.setItem(TOKEN_KEY, t); } catch (e) {}
-      try { sessionStorage.setItem(TOKEN_KEY, t); } catch (e) {}
-      return t;
+      const clean = String(token || '').trim();
+      if (!clean) return;
+
+      try { localStorage.setItem(TOKEN_KEY, clean); } catch (e) {}
+      try { sessionStorage.setItem(TOKEN_KEY, clean); } catch (e) {}
+      try { localStorage.setItem('sandooq_site_token_v1', clean); } catch (e) {}
+      try { sessionStorage.setItem('sandooq_site_token_v1', clean); } catch (e) {}
     }
 
     function readAuthToken() {
       for (const key of AUTH_TOKEN_KEYS) {
-        const v = String(readStorageValue(key) || '').trim();
-        if (v) return rememberAuthToken(v);
+        const value = readStorageValue(key).trim();
+        if (value) {
+          rememberAuthToken(value);
+          return value;
+        }
       }
 
       for (const key of AUTH_TOKEN_KEYS) {
-        const v = String(readCookieValue(key) || '').trim();
-        if (v) return rememberAuthToken(v);
+        const value = readCookieValue(key).trim();
+        if (value) {
+          rememberAuthToken(value);
+          return value;
+        }
       }
 
       return '';
@@ -2916,8 +2926,6 @@ width:100% !important;
     function buildPlayUrlWithAccess(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
 
-      if (gameId === 'family-feud' || gameId === 'sandooq') return playUrl;
-
       const token = readAuthToken();
       if (!token) return playUrl;
 
@@ -2938,7 +2946,7 @@ width:100% !important;
 
     async function buildPlayUrlWithAccessAsync(playUrl, gameId) {
       if (!playUrl || playUrl === '#') return playUrl;
-      if (gameId !== 'family-feud') return playUrl;
+      if (gameId !== 'family-feud') return buildPlayUrlWithAccess(playUrl, gameId);
 
       const token = readAuthToken();
       if (!token) return playUrl;
@@ -2949,6 +2957,7 @@ width:100% !important;
       try {
         const url = new URL(playUrl, window.location.href);
         url.searchParams.set('sg_token', token);
+        url.searchParams.set('sg_game', gameId);
 
         if (useTemporary) {
           url.searchParams.set('sg_temp', '1');
@@ -2979,16 +2988,15 @@ width:100% !important;
       if (!link) return;
       prepareAccessButton(link);
 
-      const isDirectIndexPlay = gameId === 'bra-alsalfah' || gameId === 'sandooq';
-      const basePlayUrl = isDirectIndexPlay
-        ? (getPlayUrl(card, gameId, detailsMap) || link.dataset.originalHref || '#')
-        : (GAME_DETAILS_URLS[gameId] || link.dataset.originalHref || '#');
+      // زر "العب" في الصفحة الرئيسية يجب أن يفتح اللعبة مباشرة
+      // بنفس فكرة زر اللعب الموجود داخل صفحات عرض الألعاب، وليس صفحة التفاصيل.
+      const basePlayUrl = getPlayUrl(card, gameId, detailsMap) || link.dataset.originalHref || '#';
 
       link.dataset.basePlayUrl = basePlayUrl;
       link.dataset.gameId = gameId;
-      link.dataset.directIndexPlay = isDirectIndexPlay ? '1' : '0';
+      link.dataset.directIndexPlay = '1';
       link.classList.add('play-action');
-      link.setAttribute('href', isDirectIndexPlay ? buildPlayUrlWithAccess(basePlayUrl, gameId) : basePlayUrl);
+      link.setAttribute('href', gameId === 'family-feud' ? basePlayUrl : buildPlayUrlWithAccess(basePlayUrl, gameId));
       setButtonLabel(link, 'العب');
       setButtonIcon(link, PLAY_BUTTON_ICON);
     }
@@ -3028,7 +3036,7 @@ width:100% !important;
       detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
     });
 
-    document.addEventListener('click', event => {
+    document.addEventListener('click', async event => {
       const playButton = event.target && event.target.closest
         ? event.target.closest('.game-card .game-btn.play-action[data-direct-index-play="1"]')
         : null;
@@ -3042,7 +3050,16 @@ width:100% !important;
       event.preventDefault();
       event.stopPropagation();
 
-      const finalUrl = buildPlayUrlWithAccess(basePlayUrl, gameId);
+      const token = readAuthToken();
+      if (!token) {
+        window.location.assign('purchase-activation.html');
+        return;
+      }
+
+      const finalUrl = gameId === 'family-feud'
+        ? await buildPlayUrlWithAccessAsync(basePlayUrl, gameId)
+        : buildPlayUrlWithAccess(basePlayUrl, gameId);
+
       playButton.setAttribute('href', finalUrl);
       window.location.assign(finalUrl);
     }, { passive:false, capture:true });
@@ -3242,5 +3259,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
+  <!-- VERSION: index.html — site-play-token-router-all-games-v1 -->
 </body>
 </html>
