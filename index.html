@@ -2482,7 +2482,14 @@ width:100% !important;
       'sandooq_session_token_v1',
       'sandooq_customer_token_v1',
       'sandooq_login_token_v1',
-      'sandooq_account_token_v1'
+      'sandooq_account_token_v1',
+      'auth_token',
+      'access_token',
+      'token',
+      'sg_token',
+      'site_token',
+      'customer_token',
+      'jwt'
     ];
     const DEVICE_KEY = 'sandooq_device_token_v1';
     const TEMP_GAME_SESSION_KEY = 'sandooq_temp_game_access_session_v1';
@@ -2534,10 +2541,43 @@ width:100% !important;
       return '';
     }
 
+    function readCookieValue(key) {
+      try {
+        const cookie = document.cookie || '';
+        const parts = cookie.split(';');
+        for (const part of parts) {
+          const [name, ...rest] = part.trim().split('=');
+          if (name === key) {
+            const raw = rest.join('=') || '';
+            try { return decodeURIComponent(raw); } catch (e) { return raw; }
+          }
+        }
+      } catch (e) {}
+
+      return '';
+    }
+
+    function rememberAuthToken(token) {
+      if (!token) return;
+      try { localStorage.setItem(TOKEN_KEY, token); } catch (e) {}
+      try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) {}
+    }
+
     function readAuthToken() {
       for (const key of AUTH_TOKEN_KEYS) {
         const value = readStorageValue(key).trim();
-        if (value) return value;
+        if (value) {
+          rememberAuthToken(value);
+          return value;
+        }
+      }
+
+      for (const key of AUTH_TOKEN_KEYS) {
+        const value = readCookieValue(key).trim();
+        if (value) {
+          rememberAuthToken(value);
+          return value;
+        }
       }
 
       return '';
@@ -3209,6 +3249,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — horof-app-direct-token-fix-v2 -->
+  <!-- VERSION: index.html — site-access-all-games-token-fix-v3 -->
 </body>
 </html>
