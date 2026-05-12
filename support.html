@@ -6,6 +6,14 @@
 <title>الدعم | صندوق المسابقات</title>
 <meta name="description" content="صفحة دعم صندوق المسابقات للأسئلة الشائعة والمساعدة عبر واتساب.">
 <meta name="theme-color" content="#075c82">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-82VNBCY400"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-82VNBCY400');
+</script>
 <style>
 :root{--blue:#087ca8;--dark:#075c82;--deep:#066FAE;--yellow:#f7b638;--yl:#ffd76b;--green:#2faf72;--orange:#ff6b1a;--ink:#111827;--muted:#394354;--line:#151515;--nav:#064f73;--pad:clamp(14px,4vw,72px);--navh:clamp(88px,7vw,96px);--r:clamp(18px,2vw,30px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{background:#f7fbff;scroll-behavior:smooth}body{margin:0;background:#f7fbff;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;overflow-x:hidden}a{text-decoration:none;color:inherit}button,input{font:inherit}.app{min-height:100dvh;padding-bottom:calc(var(--navh) + env(safe-area-inset-bottom) + 26px);background:#f7fbff}
@@ -321,6 +329,151 @@
 </nav>
 
 <script>
+
+const GA_MEASUREMENT_ID='G-82VNBCY400';
+const GA_DEDUP_MS=1800;
+const gaTrackedLinks=new WeakMap();
+const gaTrackedFaqButtons=new WeakMap();
+let gaSearchTimer=null;
+let gaSearchSent=false;
+
+function gaCleanText(value,maxLength=90){
+  return String(value||'').replace(/\s+/g,' ').trim().slice(0,maxLength);
+}
+
+function gaCleanUrl(rawUrl){
+  try{
+    const url=new URL(rawUrl||'',window.location.href);
+    return url.origin+url.pathname;
+  }catch(e){
+    return String(rawUrl||'').split('?')[0].slice(0,180);
+  }
+}
+
+function gaSend(eventName,params={}){
+  try{
+    if(typeof window.gtag!=='function')return;
+    window.gtag('event',eventName,{
+      send_to:GA_MEASUREMENT_ID,
+      transport_type:'beacon',
+      page_location_clean:gaCleanUrl(window.location.href),
+      ...params
+    });
+  }catch(e){}
+}
+
+function gaInfoFromLink(link){
+  if(!link)return null;
+  const href=link.getAttribute('href')||'';
+  if(!href||href==='#')return null;
+
+  let eventName='site_link_click';
+  const params={
+    link_text:gaCleanText(link.textContent),
+    link_url_clean:gaCleanUrl(href)
+  };
+
+  if(/wa\.me/i.test(href)){
+    eventName='whatsapp_click';
+    params.contact_method='whatsapp';
+    params.source='support_page';
+  }else if(/index\.html/i.test(href)){
+    eventName='support_back_click';
+    params.nav_target='index';
+  }else if(/purchase-activation\.html/i.test(href)){
+    eventName='activation_page_click';
+    params.nav_target='purchase-activation';
+  }else if(/account\.html/i.test(href)){
+    eventName='account_page_click';
+    params.nav_target='account';
+  }else if(/support\.html/i.test(href)){
+    eventName='support_page_click';
+    params.nav_target='support';
+  }else if(/sandooq-m\.com/i.test(href)){
+    eventName='store_click';
+    params.source='support_page';
+  }else if(link.closest('.nav')){
+    eventName='bottom_nav_click';
+    params.nav_target=href.replace(/^.*\/([^\/?#]+).*$/,'$1').slice(0,70);
+  }
+
+  return {eventName,params};
+}
+
+function gaTrackLink(link){
+  if(!link)return;
+  const now=Date.now();
+  const last=Number(gaTrackedLinks.get(link)||0);
+  if(now-last<GA_DEDUP_MS)return;
+  gaTrackedLinks.set(link,now);
+
+  const info=gaInfoFromLink(link);
+  if(!info)return;
+  gaSend(info.eventName,info.params);
+}
+
+function gaTrackFaqButton(button){
+  if(!button)return;
+  const now=Date.now();
+  const last=Number(gaTrackedFaqButtons.get(button)||0);
+  if(now-last<GA_DEDUP_MS)return;
+  gaTrackedFaqButtons.set(button,now);
+
+  const faq=button.closest('.faq');
+  const question=gaCleanText(button.querySelector('span')?.textContent||button.textContent,100);
+  gaSend('faq_toggle_click',{
+    faq_category:gaCleanText(faq?.dataset?.cat||'unknown',40),
+    faq_question:question
+  });
+}
+
+function gaTrackFaqFilter(button){
+  if(!button)return;
+  gaSend('faq_filter_click',{
+    faq_category:gaCleanText(button.dataset.filter||'all',40)
+  });
+}
+
+function gaTrackFaqSearch(value){
+  const text=String(value||'').trim();
+  if(!text || gaSearchSent)return;
+  gaSearchSent=true;
+
+  gaSend('faq_search',{
+    search_length_bucket:text.length<=5?'1_5':text.length<=15?'6_15':'16_plus'
+  });
+}
+
+document.addEventListener('pointerdown',event=>{
+  const link=event.target&&event.target.closest?event.target.closest('a'):null;
+  if(!link)return;
+  gaTrackLink(link);
+},{passive:true,capture:true});
+
+document.addEventListener('click',event=>{
+  const link=event.target&&event.target.closest?event.target.closest('a'):null;
+  if(link)gaTrackLink(link);
+
+  const faqButton=event.target&&event.target.closest?event.target.closest('.faq .q'):null;
+  if(faqButton)gaTrackFaqButton(faqButton);
+
+  const filterButton=event.target&&event.target.closest?event.target.closest('.filter[data-filter]'):null;
+  if(filterButton)gaTrackFaqFilter(filterButton);
+},{passive:true,capture:true});
+
+window.addEventListener('load',()=>{
+  try{
+    const params=new URLSearchParams(window.location.search||'');
+    if(params.has('ga_test')||params.has('ga_debug')){
+      gaSend('support_ga_debug_loaded',{
+        test_mode:'1',
+        page_path_clean:gaCleanUrl(window.location.href)
+      });
+    }
+  }catch(e){}
+});
+
+
 const nav=document.querySelector('.navin'),navItems=document.querySelectorAll('.navitem');
 function move(item){if(!nav||!item)return;const n=nav.getBoundingClientRect(),r=item.getBoundingClientRect();nav.style.setProperty('--x',`${r.left-n.left}px`);nav.style.setProperty('--y',`${r.top-n.top}px`);nav.style.setProperty('--w',`${r.width}px`);nav.style.setProperty('--h',`${r.height}px`)}
 navItems.forEach(i=>i.addEventListener('click',()=>{navItems.forEach(n=>n.classList.remove('active'));i.classList.add('active');move(i)}));
@@ -357,7 +510,12 @@ function apply(){
   });
 }
 filters.forEach(btn=>btn.addEventListener('click',()=>{filters.forEach(b=>b.classList.remove('active'));btn.classList.add('active');current=btn.dataset.filter;apply()}));
-search.addEventListener('input',apply);
+search.addEventListener('input',()=>{
+  apply();
+  if(gaSearchTimer)clearTimeout(gaSearchTimer);
+  gaSearchTimer=setTimeout(()=>gaTrackFaqSearch(search.value),900);
+});
 </script>
+<!-- VERSION: support.html — GA4 support events v1 -->
 </body>
 </html>
