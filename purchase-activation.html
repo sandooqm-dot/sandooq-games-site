@@ -6,6 +6,14 @@
   <title>تفعيل الألعاب | صندوق المسابقات</title>
   <meta name="description" content="تفعيل ألعاب صندوق المسابقات برقم الجوال واسترجاع المشتريات وربط الألعاب بالحساب." />
   <meta name="theme-color" content="#075c82" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-82VNBCY400"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-82VNBCY400');
+  </script>
   <link rel="preload" as="image" href="logo.PNG" />
   <link rel="preload" as="image" href="horof-cover-card.webp" />
   <link rel="preload" as="image" href="sandooq-almusabaqat-cover-card.webp" />
@@ -864,6 +872,141 @@
   </nav>
 
   <script>
+
+    const GA_MEASUREMENT_ID = 'G-82VNBCY400';
+    const GA_DEDUP_MS = 1800;
+    const gaTrackedLinks = new WeakMap();
+
+    function gaCleanText(value, maxLength = 90) {
+      return String(value || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, maxLength);
+    }
+
+    function gaCleanUrl(rawUrl) {
+      try {
+        const url = new URL(rawUrl || '', window.location.href);
+        return url.origin + url.pathname;
+      } catch (e) {
+        return String(rawUrl || '').split('?')[0].slice(0, 180);
+      }
+    }
+
+    function gaSend(eventName, params = {}) {
+      try {
+        if (typeof window.gtag !== 'function') return;
+
+        window.gtag('event', eventName, {
+          send_to: GA_MEASUREMENT_ID,
+          transport_type: 'beacon',
+          page_location_clean: gaCleanUrl(window.location.href),
+          ...params
+        });
+      } catch (e) {}
+    }
+
+    function gaInfoFromLink(link) {
+      if (!link) return null;
+
+      const href = link.getAttribute('href') || '';
+      if (!href || href === '#') return null;
+
+      let eventName = 'site_link_click';
+      const params = {
+        link_text: gaCleanText(link.textContent),
+        link_url_clean: gaCleanUrl(href)
+      };
+
+      const gameRow = link.closest('.game-row[data-game-id]');
+      const gameId = gameRow ? String(gameRow.dataset.gameId || '').trim() : '';
+
+      if (gameRow && gameId) {
+        params.item_id = gameId;
+        params.item_name = gaCleanText(gameRow.querySelector('.game-name')?.textContent || gameId);
+
+        if (gameId === 'bundle') eventName = 'activation_bundle_click';
+        else eventName = 'activation_game_buy_click';
+      } else if (/index\.html/i.test(href)) {
+        eventName = 'activation_back_click';
+        params.nav_target = 'index';
+      } else if (/account\.html/i.test(href)) {
+        eventName = 'account_page_click';
+        params.nav_target = 'account';
+      } else if (/support\.html/i.test(href)) {
+        eventName = 'support_page_click';
+        params.nav_target = 'support';
+      } else if (/purchase-activation\.html/i.test(href)) {
+        eventName = 'activation_page_click';
+        params.nav_target = 'purchase-activation';
+      } else if (link.closest('.bottom-nav')) {
+        eventName = 'bottom_nav_click';
+        params.nav_target = href.replace(/^.*\/([^\/?#]+).*$/, '$1').slice(0, 70);
+      } else if (/sandooq-m\.com/i.test(href)) {
+        eventName = 'store_click';
+      }
+
+      return { eventName, params };
+    }
+
+    function gaTrackLink(link) {
+      if (!link) return;
+
+      const now = Date.now();
+      const last = Number(gaTrackedLinks.get(link) || 0);
+      if (now - last < GA_DEDUP_MS) return;
+      gaTrackedLinks.set(link, now);
+
+      const info = gaInfoFromLink(link);
+      if (!info) return;
+
+      gaSend(info.eventName, info.params);
+    }
+
+    function gaTrackLookupSubmit(mode) {
+      gaSend(mode === 'legacy_code' ? 'legacy_link_submit' : 'purchase_lookup_submit', {
+        lookup_mode: mode
+      });
+    }
+
+    function gaTrackLookupResult(source, status, data = {}) {
+      gaSend(source === 'legacy_link'
+        ? (status === 'success' ? 'legacy_link_success' : 'legacy_link_error')
+        : (status === 'success' ? 'purchase_lookup_success' : status === 'empty' ? 'purchase_lookup_empty' : 'purchase_lookup_error'), {
+        lookup_source: source,
+        result_status: status,
+        owned_count: Number(data.owned_count || 0),
+        returned_games_count: Number(data.games_count || 0),
+        error_code: gaCleanText(data.error_code || '', 60),
+        http_status: gaCleanText(data.http_status || '', 20)
+      });
+    }
+
+    document.addEventListener('pointerdown', event => {
+      const link = event.target && event.target.closest ? event.target.closest('a') : null;
+      if (!link) return;
+      gaTrackLink(link);
+    }, { passive:true, capture:true });
+
+    document.addEventListener('click', event => {
+      const link = event.target && event.target.closest ? event.target.closest('a') : null;
+      if (!link) return;
+      gaTrackLink(link);
+    }, { passive:true, capture:true });
+
+    window.addEventListener('load', () => {
+      try {
+        const params = new URLSearchParams(window.location.search || '');
+        if (params.has('ga_test') || params.has('ga_debug')) {
+          gaSend('purchase_activation_ga_debug_loaded', {
+            test_mode: '1',
+            page_path_clean: gaCleanUrl(window.location.href)
+          });
+        }
+      } catch (e) {}
+    });
+
+
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
@@ -1413,7 +1556,7 @@
       }
     }
 
-    async function applyLookupData(data, phone) {
+    async function applyLookupData(data, phone, source = 'purchase_lookup') {
       const games = Array.isArray(data.games) ? data.games : [];
       const ownedCount = Number(data.owned_count ?? games.length ?? 0);
       const resolvedPhone = data.phone || phone;
@@ -1429,8 +1572,17 @@
       updateAvailableGames(games);
       renderLoginStatusButton();
 
-      if (ownedCount > 0 || games.length > 0) showStatus('success', data.message || messages.found);
-      else {
+      if (ownedCount > 0 || games.length > 0) {
+        gaTrackLookupResult(source, 'success', {
+          owned_count: ownedCount,
+          games_count: games.length
+        });
+        showStatus('success', data.message || messages.found);
+      } else {
+        gaTrackLookupResult(source, 'empty', {
+          owned_count: 0,
+          games_count: 0
+        });
         updateAvailableGames([]);
         showEmptyState(data.message || messages.empty);
       }
@@ -1438,7 +1590,7 @@
 
     async function lookupPurchases(phone) {
       const data = await api('/api/purchases/lookup', { method: 'POST', body: { phone } });
-      await applyLookupData(data, phone);
+      await applyLookupData(data, phone, 'purchase_lookup');
     }
 
     async function linkLegacyCode(phone, code) {
@@ -1455,7 +1607,7 @@
         games: data.games || [],
         token: extractAuthToken(data),
         message: data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.'
-      }, phone);
+      }, phone, 'legacy_link');
       showCodeStatus('success', data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.');
       if (codeInput) codeInput.value = '';
     }
@@ -1471,6 +1623,9 @@
         modeToggleTitle.textContent = codeMode ? 'التحقق برقم الجوال فقط' : 'لديك كود قديم؟ اربطه برقم جوالك';
       }
       resetMessages();
+      gaSend('activation_mode_toggle', {
+        mode: codeMode ? 'legacy_code' : 'phone_lookup'
+      });
       if (codeMode && codeInput) window.setTimeout(() => codeInput.focus(), 120);
     }
 
@@ -1493,6 +1648,9 @@
         const code = codeInput ? codeInput.value.trim() : '';
 
         if (!isValidSaudiPhone(phone)) {
+          gaTrackLookupResult(codeMode ? 'legacy_link' : 'purchase_lookup', 'error', {
+            error_code: 'INVALID_PHONE'
+          });
           if (codeMode) showCodeStatus('error', messages.invalidPhone);
           else showStatus('error', messages.invalidPhone);
           return;
@@ -1500,8 +1658,13 @@
 
         try {
           setButtonLoading(true);
+          gaTrackLookupSubmit(codeMode ? 'legacy_code' : 'phone_lookup');
+
           if (codeMode) {
             if (!code) {
+              gaTrackLookupResult('legacy_link', 'error', {
+                error_code: 'CODE_REQUIRED'
+              });
               showCodeStatus('error', messages.invalidCode);
               return;
             }
@@ -1511,6 +1674,11 @@
           }
         } catch (error) {
           const err = error.data && error.data.error ? error.data.error : '';
+          gaTrackLookupResult(codeMode ? 'legacy_link' : 'purchase_lookup', 'error', {
+            error_code: err || 'REQUEST_FAILED',
+            http_status: error.status || ''
+          });
+
           if (codeMode && err === 'CODE_ALREADY_USED') showCodeStatus('error', 'هذا الكود تم ربطه مسبقًا. إذا كنت تعتقد أن هناك مشكلة، تواصل مع الدعم.');
           else if (codeMode && err === 'INVALID_CODE') showCodeStatus('error', 'الكود غير صحيح. تأكد من كتابته كما هو ثم حاول مرة أخرى.');
           else if (codeMode) showCodeStatus('error', error.message || messages.network);
@@ -1521,6 +1689,6 @@
       });
     }
   </script>
-  <!-- VERSION: purchase-activation.html — auth-token-persist-all-games-v1 -->
+  <!-- VERSION: purchase-activation.html — GA4 activation events v1 -->
 </body>
 </html>
