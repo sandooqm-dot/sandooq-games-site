@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>الحساب | صندوق المسابقات</title>
 <meta name="theme-color" content="#075c82">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-82VNBCY400"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-82VNBCY400');
+</script>
 <style>
 :root{--blue:#087ca8;--dark:#075c82;--deep:#066FAE;--yellow:#f7b638;--yl:#ffd76b;--green:#2faf72;--orange:#ff6b1a;--ink:#111827;--muted:#394354;--line:#151515;--nav:#064f73;--pad:clamp(14px,4vw,72px);--navh:clamp(88px,7vw,96px);--r:clamp(18px,2vw,30px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{background:#f7fbff;scroll-behavior:smooth}body{margin:0;background:#f7fbff;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;overflow-x:hidden}a{text-decoration:none;color:inherit}button,input{font:inherit}.app{min-height:100dvh;padding-bottom:calc(var(--navh) + env(safe-area-inset-bottom) + 26px);background:#f7fbff}
@@ -173,6 +181,122 @@
 </nav>
 
 <script>
+
+const GA_MEASUREMENT_ID='G-82VNBCY400';
+const GA_DEDUP_MS=1800;
+const gaTrackedLinks=new WeakMap();
+
+function gaCleanText(value,maxLength=90){
+  return String(value||'').replace(/\s+/g,' ').trim().slice(0,maxLength);
+}
+
+function gaCleanUrl(rawUrl){
+  try{
+    const url=new URL(rawUrl||'',window.location.href);
+    return url.origin+url.pathname;
+  }catch(e){
+    return String(rawUrl||'').split('?')[0].slice(0,180);
+  }
+}
+
+function gaSend(eventName,params={}){
+  try{
+    if(typeof window.gtag!=='function')return;
+    window.gtag('event',eventName,{
+      send_to:GA_MEASUREMENT_ID,
+      transport_type:'beacon',
+      page_location_clean:gaCleanUrl(window.location.href),
+      ...params
+    });
+  }catch(e){}
+}
+
+function gaInfoFromLink(link){
+  if(!link)return null;
+  const href=link.getAttribute('href')||'';
+  if(!href||href==='#')return null;
+
+  let eventName='site_link_click';
+  const params={
+    link_text:gaCleanText(link.textContent),
+    link_url_clean:gaCleanUrl(href)
+  };
+
+  if(/index\.html/i.test(href)){
+    eventName='account_back_click';
+    params.nav_target='index';
+  }else if(/purchase-activation\.html/i.test(href)){
+    eventName='activation_page_click';
+    params.nav_target='purchase-activation';
+  }else if(/support\.html/i.test(href)){
+    eventName='support_page_click';
+    params.nav_target='support';
+  }else if(/account\.html/i.test(href)){
+    eventName='account_page_click';
+    params.nav_target='account';
+  }else if(link.closest('.nav')){
+    eventName='bottom_nav_click';
+    params.nav_target=href.replace(/^.*\/([^\/?#]+).*$/,'$1').slice(0,70);
+  }
+
+  return {eventName,params};
+}
+
+function gaTrackLink(link){
+  if(!link)return;
+  const now=Date.now();
+  const last=Number(gaTrackedLinks.get(link)||0);
+  if(now-last<GA_DEDUP_MS)return;
+  gaTrackedLinks.set(link,now);
+
+  const info=gaInfoFromLink(link);
+  if(!info)return;
+  gaSend(info.eventName,info.params);
+}
+
+function gaTrackAuthSubmit(currentMode){
+  gaSend(currentMode==='create'?'account_create_submit':'account_login_submit',{
+    auth_mode:currentMode
+  });
+}
+
+function gaTrackAuthResult(currentMode,status,data={}){
+  gaSend(currentMode==='create'
+    ? (status==='success'?'account_create_success':'account_create_error')
+    : (status==='success'?'account_login_success':'account_login_error'),{
+      auth_mode:currentMode,
+      result_status:status,
+      games_count:Number(data.games_count||0),
+      error_code:gaCleanText(data.error_code||'',60),
+      http_status:gaCleanText(data.http_status||'',20)
+    });
+}
+
+document.addEventListener('pointerdown',event=>{
+  const link=event.target&&event.target.closest?event.target.closest('a'):null;
+  if(!link)return;
+  gaTrackLink(link);
+},{passive:true,capture:true});
+
+document.addEventListener('click',event=>{
+  const link=event.target&&event.target.closest?event.target.closest('a'):null;
+  if(!link)return;
+  gaTrackLink(link);
+},{passive:true,capture:true});
+
+window.addEventListener('load',()=>{
+  try{
+    const params=new URLSearchParams(window.location.search||'');
+    if(params.has('ga_test')||params.has('ga_debug')){
+      gaSend('account_ga_debug_loaded',{
+        test_mode:'1',
+        page_path_clean:gaCleanUrl(window.location.href)
+      });
+    }
+  }catch(e){}
+});
+
+
 const API_BASE='https://sandooq-games-api.sandooq-m.workers.dev';
 const PHONE_KEY='sandooq_account_phone_v1';
 const NAME_KEY='sandooq_player_name_v1';
@@ -325,6 +449,7 @@ function setMode(m){
   createBtn.classList.toggle('active',m==='create');
   label.textContent=m==='create'?'إنشاء الحساب':'تسجيل الدخول';
   setMessage('','');
+  gaSend('account_auth_mode_change',{auth_mode:m});
 }
 
 function renderLinkedGames(){
@@ -377,15 +502,25 @@ form.addEventListener('submit',async e=>{
   e.preventDefault();
   if(isLoading)return;
   const p=phoneInput.value.trim();
-  if(!valid(p)){setMessage('error','أدخل رقم جوال صحيح يبدأ بـ 05.');return}
+  if(!valid(p)){
+    gaTrackAuthResult(mode,'error',{error_code:'INVALID_PHONE'});
+    setMessage('error','أدخل رقم جوال صحيح يبدأ بـ 05.');
+    return;
+  }
   try{
     setLoading(true,mode==='create'?'جاري إنشاء الحساب...':'جاري تسجيل الدخول...');
+    gaTrackAuthSubmit(mode);
     const existingName=getConfirmedName();
     const data=await loginToApi(p,existingName);
+    gaTrackAuthResult(mode,'success',{games_count:Array.isArray(data.games)?data.games.length:0});
     setMessage('success',mode==='create'?'تم إنشاء الحساب بنجاح.':'تم تسجيل الدخول بنجاح.');
     render();
     scrollTo({top:0,behavior:'smooth'});
   }catch(error){
+    gaTrackAuthResult(mode,'error',{
+      error_code:(error.data&&error.data.error)||'REQUEST_FAILED',
+      http_status:error.status||''
+    });
     setMessage('error',error.message||'تعذر تسجيل الدخول. حاول مرة أخرى.');
   }finally{
     setLoading(false);
@@ -396,6 +531,7 @@ nameForm.addEventListener('submit',async e=>{
   e.preventDefault();
   const name=cleanName(nameInput.value);
   if(!name)return;
+  gaSend('account_name_save');
   set(NAME_KEY,name);
   set(NAME_CONFIRMED_KEY,'1');
   render();
@@ -406,6 +542,7 @@ nameForm.addEventListener('submit',async e=>{
 });
 
 logout.addEventListener('click',()=>{
+  gaSend('account_logout_click');
   del(PHONE_KEY);
   del(NAME_KEY);
   del(NAME_CONFIRMED_KEY);
@@ -425,10 +562,14 @@ render();
 (async()=>{
   const token=get(TOKEN_KEY);
   if(token){
-    await fetchMyAccount();
+    const data=await fetchMyAccount();
+    if(data){
+      gaSend('account_me_success',{games_count:Array.isArray(data.games)?data.games.length:0});
+    }
     render();
   }
 })();
 </script>
+<!-- VERSION: account.html — GA4 account events v1 -->
 </body>
 </html>
