@@ -53,6 +53,9 @@
     .form-grid{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center;padding:14px;border-bottom:1px solid var(--line)}.filters{display:grid;gap:9px;padding:14px;border-bottom:1px solid var(--line)}.input,.select{width:100%;min-height:46px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:0 13px;outline:none;color:var(--ink);font-weight:850}.input{direction:ltr;text-align:left}.btn{min-height:46px;border:0;border-radius:16px;background:#111;color:#fff;padding:0 15px;font-weight:950;white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.10)}.btn.secondary{background:#fff;color:var(--blue);border:1px solid var(--line)}.btn.danger{background:#fee4e2;color:var(--red);box-shadow:none;border:1px solid #fecdca}.btn.ok{background:#dcfae6;color:#067647;box-shadow:none;border:1px solid #abefc6}.btn.small{min-height:34px;border-radius:12px;padding:0 10px;font-size:12px}
     .detail-grid{display:grid;gap:10px;padding:14px}.detail-card{min-height:86px;border:1px solid var(--line);border-radius:18px;padding:13px;background:#fff;box-shadow:0 10px 24px rgba(16,24,40,.05)}.detail-label{color:var(--muted);font-size:12px;font-weight:900;margin-bottom:7px}.detail-value{font-size:21px;line-height:1.25;font-weight:950;direction:ltr;text-align:right}
     .analytics-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:14px}.analytics-card{min-height:116px;border:1px dashed #98a2b3;border-radius:20px;padding:14px;background:#fff;display:grid;align-content:space-between}.analytics-card strong{font-size:18px;font-weight:950}.analytics-card span{color:var(--muted);font-size:12px;line-height:1.6;font-weight:800}
+    .cf-alert-box{display:grid;gap:8px;padding:14px;border-top:1px solid var(--line)}
+    .cf-explain{color:var(--muted);font-size:12px;font-weight:850;line-height:1.7;margin-top:6px}
+    .cf-value{font-size:24px;font-weight:950;direction:ltr;text-align:right}
     .ga-block-title{margin:0 0 10px;color:var(--ink);font-size:14px;font-weight:950;line-height:1.4}
     .ga-section-body{padding:14px;border-top:1px solid var(--line)}
     .ga-value-ltr{direction:ltr;text-align:right;font-weight:950}
@@ -86,7 +89,7 @@
 
     <section id="screen-devices" class="screen"><section class="section-panel"><div class="panel-head"><h3 class="panel-title">الأجهزة المحفوظة</h3></div><div class="form-grid"><input id="devicePhoneFilter" class="input" placeholder="رقم الجوال" /><button id="filterDevicesBtn" class="btn secondary">تصفية</button></div><div class="panel-body"><div id="devicesList" class="simple-list"></div></div></section></section>
 
-    <section id="screen-analytics" class="screen"><section class="section-panel"><div class="panel-head"><h3 class="panel-title">Cloudflare Metrics</h3><span class="panel-sub">جاهز للربط</span></div><div class="analytics-grid"><div class="analytics-card"><strong>Requests</strong><span>يربط لاحقًا من Worker فقط.</span></div><div class="analytics-card"><strong>Errors</strong><span>نقرأها لاحقًا من Cloudflare Analytics.</span></div><div class="analytics-card"><strong>CPU Time</strong><span>مفيد لمراقبة تكلفة Worker.</span></div><div class="analytics-card"><strong>D1 Reads/Writes</strong><span>مفيد لمراقبة تكلفة قاعدة البيانات.</span></div></div></section><section class="section-panel"><div class="panel-head"><h3 class="panel-title">تحليلات Google</h3><span id="gaStatus" class="panel-sub">اضغط تحديث عند فتح التبويب</span></div><div class="analytics-grid" id="gaMetricCards"><div class="analytics-card"><strong>-</strong><span>المستخدمون النشطون الآن</span></div><div class="analytics-card"><strong>-</strong><span>زيارات آخر 7 أيام</span></div><div class="analytics-card"><strong>-</strong><span>مشاهدات الصفحات</span></div><div class="analytics-card"><strong>-</strong><span>الأحداث المسجلة</span></div></div><div id="gaReportErrors" class="ga-section-body" style="display:none"><h4 class="ga-block-title">أخطاء ربط Google Analytics</h4><div id="gaReportErrorsList" class="simple-list"></div></div><div class="ga-section-body"><h4 class="ga-block-title">الأحداث المهمة الآن</h4><div id="gaRealtimeImportant" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div><div class="ga-section-body"><h4 class="ga-block-title">أهم الصفحات آخر 7 أيام</h4><div id="gaTopPages" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div><div class="ga-section-body"><h4 class="ga-block-title">نقرات وأحداث مهمة آخر 7 أيام</h4><div id="gaImportantEvents" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div><div class="ga-section-body"><h4 class="ga-block-title">مصادر الزيارات</h4><div id="gaTrafficSources" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div></section></section>
+    <section id="screen-analytics" class="screen"><section class="section-panel"><div class="panel-head"><h3 class="panel-title">مؤشرات Cloudflare</h3><span id="cfStatus" class="panel-sub">اضغط تحديث عند فتح التبويب</span></div><div class="analytics-grid" id="cfMetricCards"><div class="analytics-card"><strong>-</strong><span>الطلبات</span><div class="cf-explain">هذا يوضح ضغط الزوار على Worker.</div></div><div class="analytics-card"><strong>-</strong><span>أخطاء Worker</span><div class="cf-explain">هذا يوضح مشاكل التشغيل أو الكود.</div></div><div class="analytics-card"><strong>-</strong><span>CPU Time</span><div class="cf-explain">هذا يوضح ثقل المعالجة والتكلفة.</div></div><div class="analytics-card"><strong>-</strong><span>طلبات داخلية</span><div class="cf-explain">هذا يوضح استدعاءات Worker للخدمات وقاعدة البيانات.</div></div></div><div class="cf-alert-box"><h4 class="ga-block-title">تنبيهات Cloudflare الفورية</h4><div id="cfAlerts" class="alert-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div><div class="ga-section-body"><h4 class="ga-block-title">شرح المؤشرات</h4><div id="cfMetricsExplain" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div><div id="cfReportErrors" class="ga-section-body" style="display:none"><h4 class="ga-block-title">أخطاء ربط Cloudflare Metrics</h4><div id="cfReportErrorsList" class="simple-list"></div></div></section><section class="section-panel"><div class="panel-head"><h3 class="panel-title">تحليلات Google</h3><span id="gaStatus" class="panel-sub">اضغط تحديث عند فتح التبويب</span></div><div class="analytics-grid" id="gaMetricCards"><div class="analytics-card"><strong>-</strong><span>المستخدمون النشطون الآن</span></div><div class="analytics-card"><strong>-</strong><span>زيارات آخر 7 أيام</span></div><div class="analytics-card"><strong>-</strong><span>مشاهدات الصفحات</span></div><div class="analytics-card"><strong>-</strong><span>الأحداث المسجلة</span></div></div><div id="gaReportErrors" class="ga-section-body" style="display:none"><h4 class="ga-block-title">أخطاء ربط Google Analytics</h4><div id="gaReportErrorsList" class="simple-list"></div></div><div class="ga-section-body"><h4 class="ga-block-title">الأحداث المهمة الآن</h4><div id="gaRealtimeImportant" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div><div class="ga-section-body"><h4 class="ga-block-title">أهم الصفحات آخر 7 أيام</h4><div id="gaTopPages" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div><div class="ga-section-body"><h4 class="ga-block-title">نقرات وأحداث مهمة آخر 7 أيام</h4><div id="gaImportantEvents" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div><div class="ga-section-body"><h4 class="ga-block-title">مصادر الزيارات</h4><div id="gaTrafficSources" class="simple-list"><div class="empty">لم يتم تحميل البيانات بعد</div></div></div></section></section>
   </main>
 
   <nav class="bottom-nav"><div class="bottom-inner"><button class="nav-btn active" data-screen="home"><b>⌂</b><span>رئيسية</span></button><button class="nav-btn" data-screen="errors"><b>!</b><span>مشاكل</span></button><button class="nav-btn" data-screen="customers"><b>⌕</b><span>الأرقام</span></button><button class="nav-btn" data-screen="devices"><b>▣</b><span>الأجهزة</span></button><button class="nav-btn" data-screen="analytics"><b>◌</b><span>تحليلات</span></button></div></nav>
@@ -94,7 +97,7 @@
 
   <script>
     const API_BASE_KEY="sandooq_admin_monitor_api_base_v5"; const SECRET_KEY="sandooq_admin_monitor_secret_session_v5"; const $=id=>document.getElementById(id);
-    const state={summary:null,events:[],errors:[],accessFails:[],phones:[],devices:[],actions:[],support:null,analytics:null};
+    const state={summary:null,events:[],errors:[],accessFails:[],phones:[],devices:[],actions:[],support:null,analytics:null,cloudflare:null};
     function getApiBase(){return ($("apiBaseInput").value||"https://sandooq-games-api.sandooq-m.workers.dev").replace(/\/+$/,"").trim()} function getSecret(){return ($("secretInput").value||"").trim()} function saveSession(){try{sessionStorage.setItem(API_BASE_KEY,getApiBase())}catch(_){} try{sessionStorage.setItem(SECRET_KEY,getSecret())}catch(_){}} function loadSession(){try{const v=sessionStorage.getItem(API_BASE_KEY);if(v)$("apiBaseInput").value=v}catch(_){} try{const v=sessionStorage.getItem(SECRET_KEY);if(v)$("secretInput").value=v}catch(_){}}
     function setStatus(text,type){const ls=$("loginStatus"); if(ls)ls.textContent=text||""; const p=$("apiStatusPill"); if(type==="ok"){p.className="status-pill good";p.textContent="متصل"}else if(type==="error"){p.className="status-pill bad";p.textContent="خطأ"}else{p.className="status-pill";p.textContent="جاري"}} function showLogin(){document.body.classList.add("needs-login")} function hideLogin(){document.body.classList.remove("needs-login")}
     async function api(path,opt={}){const res=await fetch(getApiBase()+path,{method:opt.method||"GET",headers:{"content-type":"application/json; charset=utf-8","x-sandooq-admin-secret":getSecret()},body:opt.body?JSON.stringify(opt.body):undefined,cache:"no-store"});let data={};try{data=await res.json()}catch(_){} if(!res.ok||data.ok===false)throw new Error(data.message||data.error||("HTTP "+res.status)); return data}
@@ -120,6 +123,70 @@
     function normalizeSaudiPhone(value){let phone=String(value||"").replace(/[^\d]/g,"");if(phone.startsWith("9665")&&phone.length===12)phone="0"+phone.slice(3);if(phone.startsWith("5")&&phone.length===9)phone="0"+phone;return phone}
     function renderSupport(){const d=state.support;if(!d){$("supportSummary").innerHTML="";return}const sum=d.summary||{},customer=d.customer||{},games=d.games||[],devices=d.devices||[],access=d.access_events||[],orders=d.orders||[],events=d.events||[],errors=d.errors||[];$("supportSummary").innerHTML=`<div class="detail-card"><div class="detail-label">حالة الرقم</div><div class="detail-value">${d.exists?"موجود":"غير موجود"}</div></div><div class="detail-card"><div class="detail-label">الألعاب</div><div class="detail-value">${num(sum.owned_games)}</div></div><div class="detail-card"><div class="detail-label">أجهزة محفوظة</div><div class="detail-value">${num(sum.active_saved_devices)}</div></div><div class="detail-card"><div class="detail-label">جلسات مؤقتة</div><div class="detail-value">${num(sum.temporary_accesses)}</div></div>`;$("supportAlerts").innerHTML=(d.alerts||[]).map(t=>`<div class="alert-row ${String(t).includes("خطأ")||String(t).includes("فشل")?"danger":String(t).includes("جهاز")||String(t).includes("مؤقت")?"warn":"good"}">${esc(t)}</div>`).join("")||'<div class="empty">لا توجد تنبيهات</div>';$("supportGamesList").innerHTML=games.length?games.map(gameRow).join(""):'<div class="empty">لا توجد ألعاب مرتبطة</div>';$("supportOrdersList").innerHTML=orders.length?orders.map(orderRow).join(""):'<div class="empty">لا توجد طلبات سلة ظاهرة لهذا الرقم</div>';const merged=[...devices.map(x=>({...x,_kind:"device"})),...access.slice(0,30).map(x=>({id:"access-"+x.id,phone:x.phone,game_id:x.game_id,device_name:Number(x.is_temporary)===1?"جلسة مؤقتة":"جلسة فتح",device_token:x.device_token,is_temporary:x.is_temporary,is_active:1,last_seen_at:x.created_at,_kind:"access"}))];$("supportDevicesList").innerHTML=merged.length?merged.map(deviceRow).join(""):'<div class="empty">لا توجد أجهزة أو جلسات فتح</div>';$("supportEventsList").innerHTML=events.length?events.map(eventRow).join(""):'<div class="empty">لا توجد أحداث</div>';bindDetailRows()}
 
+
+    function cfMetric(label,value,unit,explain){
+      return `<div class="analytics-card"><strong>${esc(value==="-"?"-":num(value))}${unit?` ${esc(unit)}`:""}</strong><span>${esc(label)}</span><div class="cf-explain">${esc(explain||"")}</div></div>`;
+    }
+    function cfAlertClass(level){
+      if(level==="danger")return "danger";
+      if(level==="warn")return "warn";
+      if(level==="good")return "good";
+      return "";
+    }
+    function renderCloudflareLoading(){
+      if($("cfStatus"))$("cfStatus").textContent="جاري جلب مؤشرات Cloudflare...";
+      if($("cfMetricCards"))$("cfMetricCards").innerHTML=[
+        cfMetric("الطلبات آخر ساعة","-","","هذا يوضح ضغط الزوار على Worker."),
+        cfMetric("أخطاء Worker","-","","هذا يوضح مشاكل التشغيل أو الكود."),
+        cfMetric("CPU Time","-","","هذا يوضح ثقل المعالجة والتكلفة."),
+        cfMetric("طلبات داخلية","-","","هذا يوضح استدعاءات Worker للخدمات وقاعدة البيانات.")
+      ].join("");
+    }
+    function renderCloudflareError(message){
+      if($("cfStatus"))$("cfStatus").textContent="فشل جلب مؤشرات Cloudflare";
+      if($("cfAlerts"))$("cfAlerts").innerHTML=`<div class="alert-row danger">${esc(message||"خطأ غير معروف")}</div>`;
+      if($("cfReportErrors"))$("cfReportErrors").style.display="block";
+      if($("cfReportErrorsList"))$("cfReportErrorsList").innerHTML=`<div class="alert-row danger">${esc(message||"خطأ غير معروف")}</div>`;
+    }
+    function renderCloudflare(){
+      const data=state.cloudflare;
+      if(!data||!data.ok){renderCloudflareError(data?.message||data?.error||"لا توجد بيانات");return}
+      const hour=(data.windows&&data.windows.last_hour)||{};
+      const day=(data.windows&&data.windows.last_24_hours)||{};
+      if($("cfStatus")){
+        $("cfStatus").textContent=`آخر تحديث: ${ksaTime(data.generated_at)}${data.cached?` · كاش ${num(data.cache_age_seconds)} ثانية`:""}`;
+      }
+      if($("cfMetricCards")){
+        $("cfMetricCards").innerHTML=[
+          cfMetric("الطلبات آخر ساعة",hour.requests||0,"","هذا حق ضغط الزوار والطلبات على Worker."),
+          cfMetric("أخطاء Worker آخر ساعة",hour.errors||0,"","هذا حق مشاكل التشغيل أو أخطاء الكود."),
+          cfMetric("أعلى CPU تقريبي",hour.cpu_time_p99_max||0,"ms","هذا حق ثقل المعالجة وتكلفة Worker."),
+          cfMetric("طلبات داخلية",hour.subrequests||0,"","هذا حق استدعاءات Worker للخدمات وقاعدة البيانات.")
+        ].join("");
+      }
+      const alerts=Array.isArray(data.alerts)?data.alerts:[];
+      if($("cfAlerts")){
+        $("cfAlerts").innerHTML=alerts.length?alerts.map(a=>`<div class="alert-row ${cfAlertClass(a.level)}"><span><b>${esc(a.title_ar||"تنبيه")}</b><br>${esc(a.message_ar||"")}</span></div>`).join(""):'<div class="empty">لا توجد تنبيهات</div>';
+      }
+      const metrics=Array.isArray(data.metrics)?data.metrics:[];
+      if($("cfMetricsExplain")){
+        $("cfMetricsExplain").innerHTML=metrics.length?metrics.map(m=>`<div class="list-row" style="cursor:default"><div class="list-top"><span>${esc(m.label_ar||m.key||"-")}</span><span class="badge neutral">${esc(num(m.value||0))}${m.unit_ar?` ${esc(m.unit_ar)}`:""}</span></div><div class="list-note">${esc(m.explain_ar||"")}</div></div>`).join(""):'<div class="empty">لا توجد مؤشرات</div>';
+      }
+      const errs=Array.isArray(data.report_errors)?data.report_errors:[];
+      if($("cfReportErrors"))$("cfReportErrors").style.display=errs.length?"block":"none";
+      if($("cfReportErrorsList"))$("cfReportErrorsList").innerHTML=errs.length?errs.map(e=>gaRow(e.report||"Cloudflare report",e.error||"ERROR",e.message||"", "خطأ")).join(""):"";
+    }
+    async function loadCloudflare(){
+      renderCloudflareLoading();
+      try{
+        state.cloudflare=await api("/api/admin/monitor/cloudflare");
+        renderCloudflare();
+      }catch(err){
+        state.cloudflare={ok:false,message:err.message};
+        renderCloudflareError(err.message);
+      }
+    }
+
     const GA_EVENT_LABELS={
       page_view:"زيارة صفحة",user_engagement:"تفاعل المستخدم",session_start:"بداية جلسة",first_visit:"أول زيارة",
       game_play_click:"ضغط زر العب",game_buy_click:"ضغط شراء لعبة",bundle_buy_click:"ضغط شراء البكج",bundle_details_click:"عرض البكج",game_details_click:"عرض لعبة",
@@ -142,10 +209,10 @@
     async function loadAll(){document.body.classList.add("loading");setStatus("جاري","loading");try{saveSession();await Promise.all([loadSummary(),loadErrors(),loadAccessFails(),loadPhones(),loadDevices(),loadActions()]);renderHome();renderErrors();hideLogin();setStatus("متصل","ok")}catch(err){setStatus("خطأ","error");$("loginStatus").textContent="فشل الاتصال: "+err.message;showLogin()}finally{document.body.classList.remove("loading")}}
     async function searchSupportPhone(){const phone=normalizeSaudiPhone($("supportPhoneInput").value);if(!/^05\d{8}$/.test(phone)){setStatus("خطأ","error");return}try{const data=await api("/api/admin/monitor/phone?phone="+encodeURIComponent(phone));state.support=data;renderSupport();setStatus("متصل","ok")}catch(err){setStatus("خطأ","error")}}
     async function deviceAction(action,id,phone){const reason=prompt((action==="deactivate_device"?"تعطيل الجهاز":"تفعيل الجهاز")+" رقم ID: "+id+"\nاكتب سبب الإجراء:");if(reason===null)return;try{await api("/api/admin/monitor/actions",{method:"POST",body:{action,target_type:"device",target_id:id,phone,reason:reason||action}});await Promise.all([loadDevices(),loadActions(),loadSummary(),loadAccessFails()]);renderHome();if(state.support?.phone)await searchSupportPhone();closeDrawer();setStatus("متصل","ok")}catch(err){setStatus("خطأ","error")}} window.deviceAction=deviceAction;
-    document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",async()=>{const s=btn.dataset.screen;document.querySelectorAll(".nav-btn").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));btn.classList.add("active");$("screen-"+s).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});try{if(s==="errors"){await Promise.all([loadAccessFails(),loadErrors()]);renderErrors()}if(s==="devices")await loadDevices();if(s==="customers"){await loadPhones();renderSupport()}if(s==="analytics"){await loadAnalytics()}}catch(_){}}));
-    $("connectBtn").addEventListener("click",loadAll);$("refreshBtn").addEventListener("click",async()=>{await loadAll();if($("screen-analytics").classList.contains("active"))await loadAnalytics()});$("settingsBtn").addEventListener("click",()=>$("settingsBox").classList.toggle("open"));$("clearSecretBtn").addEventListener("click",()=>{try{sessionStorage.removeItem(SECRET_KEY)}catch(_){}$("secretInput").value="";showLogin()});$("supportSearchBtn").addEventListener("click",searchSupportPhone);$("supportPhoneInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchSupportPhone()});$("filterDevicesBtn").addEventListener("click",loadDevices);$("drawerClose").addEventListener("click",closeDrawer);
+    document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",async()=>{const s=btn.dataset.screen;document.querySelectorAll(".nav-btn").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));btn.classList.add("active");$("screen-"+s).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});try{if(s==="errors"){await Promise.all([loadAccessFails(),loadErrors()]);renderErrors()}if(s==="devices")await loadDevices();if(s==="customers"){await loadPhones();renderSupport()}if(s==="analytics"){await Promise.all([loadCloudflare(),loadAnalytics()])}}catch(_){}}));
+    $("connectBtn").addEventListener("click",loadAll);$("refreshBtn").addEventListener("click",async()=>{await loadAll();if($("screen-analytics").classList.contains("active"))await Promise.all([loadCloudflare(),loadAnalytics()])});$("settingsBtn").addEventListener("click",()=>$("settingsBox").classList.toggle("open"));$("clearSecretBtn").addEventListener("click",()=>{try{sessionStorage.removeItem(SECRET_KEY)}catch(_){}$("secretInput").value="";showLogin()});$("supportSearchBtn").addEventListener("click",searchSupportPhone);$("supportPhoneInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchSupportPhone()});$("filterDevicesBtn").addEventListener("click",loadDevices);$("drawerClose").addEventListener("click",closeDrawer);
     loadSession(); if(getSecret())loadAll(); else showLogin();
   </script>
-  <!-- VERSION: admin-monitor.html — GA analytics dashboard v2 error details -->
+  <!-- VERSION: admin-monitor.html — cloudflare-metrics-v1 -->
 </body>
 </html>
