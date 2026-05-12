@@ -2490,155 +2490,160 @@ width:100% !important;
       'sandooq_session_token_v1',
       'sandooq_customer_token_v1',
       'sandooq_login_token_v1',
-      'sandooq_account_token_v1'
+      'sandooq_account_token_v1',
+      'auth_token',
+      'access_token',
+      'token',
+      'sg_token',
+      'site_token',
+      'customer_token',
+      'jwt'
     ];
+
+    const GA_MEASUREMENT_ID = 'G-82VNBCY400';
+    const GA_LINK_DEDUP_MS = 1800;
+    const gaTrackedLinks = new WeakMap();
+
+    function gaCleanText(value, maxLength = 90) {
+      return String(value || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, maxLength);
+    }
+
+    function gaCleanUrl(rawUrl) {
+      try {
+        const url = new URL(rawUrl || '', window.location.href);
+        return url.origin + url.pathname;
+      } catch (e) {
+        return String(rawUrl || '').split('?')[0].slice(0, 180);
+      }
+    }
+
+    function gaSend(eventName, params = {}) {
+      try {
+        if (typeof window.gtag !== 'function') return;
+
+        window.gtag('event', eventName, {
+          send_to: GA_MEASUREMENT_ID,
+          transport_type: 'beacon',
+          page_location_clean: gaCleanUrl(window.location.href),
+          ...params
+        });
+      } catch (e) {}
+    }
+
+    function gaInfoFromLink(link) {
+      if (!link) return null;
+
+      const href = link.getAttribute('href') || '';
+      if (!href || href === '#') return null;
+
+      const gameCard = link.closest('.game-card[data-game-id]');
+      const bundleCard = link.closest('[data-bundle-id]');
+      const isBottomNav = !!link.closest('.bottom-nav');
+
+      let eventName = 'site_link_click';
+      const params = {
+        link_text: gaCleanText(link.textContent),
+        link_url_clean: gaCleanUrl(href)
+      };
+
+      if (gameCard) {
+        params.item_id = String(gameCard.dataset.gameId || '');
+        params.item_name = gaCleanText(gameCard.querySelector('.game-name')?.textContent || params.item_id);
+
+        if (/sandooq-m\.com/i.test(href)) eventName = 'game_buy_click';
+        else eventName = 'game_details_click';
+      } else if (bundleCard) {
+        params.item_id = String(bundleCard.dataset.bundleId || 'challenges-box');
+        params.item_name = gaCleanText(bundleCard.querySelector('.bundle-name')?.textContent || 'بكج صندوق التحديات');
+
+        if (/sandooq-m\.com/i.test(href)) eventName = 'bundle_buy_click';
+        else eventName = 'bundle_details_click';
+      } else if (/purchase-activation\.html/i.test(href)) {
+        eventName = 'activation_page_click';
+        params.nav_target = 'purchase-activation';
+      } else if (/account\.html/i.test(href)) {
+        eventName = 'account_page_click';
+        params.nav_target = 'account';
+      } else if (/support\.html/i.test(href)) {
+        eventName = 'support_page_click';
+        params.nav_target = 'support';
+      } else if (/wa\.me/i.test(href)) {
+        eventName = 'whatsapp_click';
+      } else if (/tiktok\.com/i.test(href)) {
+        eventName = 'tiktok_click';
+      } else if (/instagram\.com/i.test(href)) {
+        eventName = 'instagram_click';
+      } else if (/sandooq-m\.com/i.test(href)) {
+        eventName = 'store_click';
+      } else if (isBottomNav) {
+        eventName = 'bottom_nav_click';
+        params.nav_target = href.replace(/^.*\/([^\/?#]+).*$/, '$1').slice(0, 70);
+      } else if (/^#/.test(href)) {
+        eventName = 'section_nav_click';
+        params.nav_target = href.slice(0, 70);
+      }
+
+      return { eventName, params };
+    }
+
+    function gaTrackLink(link) {
+      if (!link) return;
+
+      // زر العب له تتبع خاص داخل منطق فتح اللعبة حتى لا نرسل رابط يحتوي توكن.
+      if (link.classList.contains('play-action') || link.dataset.directIndexPlay === '1') return;
+
+      const now = Date.now();
+      const last = Number(gaTrackedLinks.get(link) || 0);
+      if (now - last < GA_LINK_DEDUP_MS) return;
+      gaTrackedLinks.set(link, now);
+
+      const info = gaInfoFromLink(link);
+      if (!info) return;
+
+      gaSend(info.eventName, info.params);
+    }
+
+    function gaTrackPlay(gameId, basePlayUrl, requiresLogin) {
+      gaSend(requiresLogin ? 'game_play_requires_login' : 'game_play_click', {
+        item_id: String(gameId || ''),
+        destination_url_clean: requiresLogin ? 'purchase-activation.html' : gaCleanUrl(basePlayUrl || '')
+      });
+    }
+
+    document.addEventListener('pointerdown', event => {
+      const link = event.target && event.target.closest ? event.target.closest('a') : null;
+      if (!link) return;
+      gaTrackLink(link);
+    }, { passive:true, capture:true });
+
+    document.addEventListener('click', event => {
+      const link = event.target && event.target.closest ? event.target.closest('a') : null;
+      if (!link) return;
+      gaTrackLink(link);
+    }, { passive:true, capture:true });
+
+    window.addEventListener('load', () => {
+      try {
+        const params = new URLSearchParams(window.location.search || '');
+        if (params.has('ga_test') || params.has('ga_debug')) {
+          gaSend('ga_debug_loaded', {
+            test_mode: '1',
+            page_path_clean: gaCleanUrl(window.location.href)
+          });
+        }
+      } catch (e) {}
+    });
+
+
     const DEVICE_KEY = 'sandooq_device_token_v1';
     const TEMP_GAME_SESSION_KEY = 'sandooq_temp_game_access_session_v1';
     const DEVICE_TOKEN_AT_PAGE_LOAD = readLocalValue(DEVICE_KEY).trim();
     const LINKED_GAMES_KEY = 'sandooq_linked_games_v1';
     const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
     const LAST_SYNC_KEY = 'sandooq_last_sync_v1';
-
-
-    const GA_CLICK_DELAY_MS = 260;
-
-    function gaSafeUrl(rawUrl) {
-      try {
-        const url = new URL(rawUrl || "", window.location.href);
-        return url.origin + url.pathname;
-      } catch (e) {
-        return String(rawUrl || "").split("?")[0].slice(0, 160);
-      }
-    }
-
-    function gaText(value, maxLength = 80) {
-      return String(value || "")
-        .replace(/\s+/g, " ")
-        .trim()
-        .slice(0, maxLength);
-    }
-
-    function sendGaEvent(eventName, params = {}, callback) {
-      let done = false;
-
-      function finish() {
-        if (done) return;
-        done = true;
-        if (typeof callback === "function") callback();
-      }
-
-      try {
-        if (typeof window.gtag !== "function") {
-          finish();
-          return;
-        }
-
-        window.gtag("event", eventName, {
-          transport_type: "beacon",
-          event_callback: finish,
-          event_timeout: GA_CLICK_DELAY_MS,
-          page_location_clean: gaSafeUrl(window.location.href),
-          ...params
-        });
-
-        window.setTimeout(finish, GA_CLICK_DELAY_MS);
-      } catch (e) {
-        finish();
-      }
-    }
-
-    function getGaTargetInfo(link) {
-      if (!link) return null;
-
-      const href = link.getAttribute("href") || "";
-      if (!href || href === "#") return null;
-
-      const linkText = gaText(link.textContent);
-      const gameCard = link.closest(".game-card[data-game-id]");
-      const bundleCard = link.closest("[data-bundle-id]");
-      const isBottomNav = !!link.closest(".bottom-nav");
-      const cleanUrl = gaSafeUrl(href);
-
-      let eventName = "site_link_click";
-      const params = {
-        link_text: linkText,
-        link_url_clean: cleanUrl
-      };
-
-      if (gameCard) {
-        params.item_id = String(gameCard.dataset.gameId || "");
-        params.item_name = gaText(gameCard.querySelector(".game-name")?.textContent || params.item_id);
-
-        if (/sandooq-m\.com/i.test(href)) eventName = "game_buy_click";
-        else eventName = "game_details_click";
-      } else if (bundleCard) {
-        params.item_id = String(bundleCard.dataset.bundleId || "challenges-box");
-        params.item_name = gaText(bundleCard.querySelector(".bundle-name")?.textContent || "بكج صندوق التحديات");
-
-        if (/sandooq-m\.com/i.test(href)) eventName = "bundle_buy_click";
-        else eventName = "bundle_details_click";
-      } else if (/purchase-activation\.html/i.test(href)) {
-        eventName = "activation_page_click";
-        params.nav_target = "purchase-activation";
-      } else if (/account\.html/i.test(href)) {
-        eventName = "account_page_click";
-        params.nav_target = "account";
-      } else if (/support\.html/i.test(href)) {
-        eventName = "support_page_click";
-        params.nav_target = "support";
-      } else if (/wa\.me/i.test(href)) {
-        eventName = "whatsapp_click";
-      } else if (/tiktok\.com/i.test(href)) {
-        eventName = "tiktok_click";
-      } else if (/instagram\.com/i.test(href)) {
-        eventName = "instagram_click";
-      } else if (/sandooq-m\.com/i.test(href)) {
-        eventName = "store_click";
-      } else if (isBottomNav) {
-        eventName = "bottom_nav_click";
-        params.nav_target = href.replace(/^.*\/([^\/?#]+).*$/, "$1").slice(0, 60);
-      } else if (/^#/.test(href)) {
-        eventName = "section_nav_click";
-        params.nav_target = href.slice(0, 60);
-      }
-
-      return { eventName, params, href };
-    }
-
-    function shouldDelayGaNavigation(link, href) {
-      if (!link || !href) return false;
-      if (link.target && link.target.toLowerCase() === "_blank") return false;
-      if (/^#/.test(href)) return false;
-      if (/^(mailto:|tel:|sms:)/i.test(href)) return false;
-      return true;
-    }
-
-    function trackGaLinkClick(link, nativeEvent) {
-      if (!link) return;
-      if (link.classList.contains("play-action") || link.dataset.directIndexPlay === "1") return;
-
-      const info = getGaTargetInfo(link);
-      if (!info) return;
-
-      if (!shouldDelayGaNavigation(link, info.href)) {
-        sendGaEvent(info.eventName, info.params);
-        return;
-      }
-
-      nativeEvent.preventDefault();
-      nativeEvent.stopPropagation();
-
-      sendGaEvent(info.eventName, info.params, () => {
-        window.location.assign(info.href);
-      });
-    }
-
-    function navigateAfterGa(eventName, params, destinationUrl) {
-      sendGaEvent(eventName, params, () => {
-        window.location.assign(destinationUrl);
-      });
-    }
-
 
     const GAME_PLAY_URLS = {
       'horof': 'https://horof.sandooq-games.com/app/',
@@ -2683,10 +2688,43 @@ width:100% !important;
       return '';
     }
 
+    function readCookieValue(key) {
+      try {
+        const cookie = document.cookie || '';
+        const parts = cookie.split(';');
+        for (const part of parts) {
+          const [name, ...rest] = part.trim().split('=');
+          if (name === key) {
+            const raw = rest.join('=') || '';
+            try { return decodeURIComponent(raw); } catch (e) { return raw; }
+          }
+        }
+      } catch (e) {}
+
+      return '';
+    }
+
+    function rememberAuthToken(token) {
+      if (!token) return;
+      try { localStorage.setItem(TOKEN_KEY, token); } catch (e) {}
+      try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) {}
+    }
+
     function readAuthToken() {
       for (const key of AUTH_TOKEN_KEYS) {
         const value = readStorageValue(key).trim();
-        if (value) return value;
+        if (value) {
+          rememberAuthToken(value);
+          return value;
+        }
+      }
+
+      for (const key of AUTH_TOKEN_KEYS) {
+        const value = readCookieValue(key).trim();
+        if (value) {
+          rememberAuthToken(value);
+          return value;
+        }
       }
 
       return '';
@@ -3141,16 +3179,6 @@ width:100% !important;
       detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
     });
 
-
-    document.addEventListener("click", event => {
-      const link = event.target && event.target.closest
-        ? event.target.closest("a")
-        : null;
-
-      if (!link) return;
-      trackGaLinkClick(link, event);
-    }, { passive:false, capture:true });
-
     document.addEventListener('click', async event => {
       const playButton = event.target && event.target.closest
         ? event.target.closest('.game-card .game-btn.play-action[data-direct-index-play="1"]')
@@ -3169,12 +3197,9 @@ width:100% !important;
         ? await buildPlayUrlWithAccessAsync(basePlayUrl, gameId)
         : buildPlayUrlWithAccess(basePlayUrl, gameId);
 
+      gaTrackPlay(gameId, basePlayUrl, false);
       playButton.setAttribute('href', finalUrl);
-
-      navigateAfterGa('game_play_click', {
-        item_id: gameId,
-        destination_url_clean: gaSafeUrl(basePlayUrl)
-      }, finalUrl);
+      window.location.assign(finalUrl);
     }, { passive:false, capture:true });
 
     window.addEventListener('storage', refreshAccountUi);
@@ -3372,6 +3397,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — GA4 events robust v3 -->
+  <!-- VERSION: index.html — GA4 pointer events v4 -->
 </body>
 </html>
