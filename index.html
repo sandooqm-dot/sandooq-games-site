@@ -2983,6 +2983,101 @@ width:100% !important;
 
 
 
+
+    function sanitizeGaUrl(rawUrl) {
+      try {
+        const url = new URL(rawUrl || "", window.location.href);
+        return url.origin + url.pathname;
+      } catch (e) {
+        return String(rawUrl || "").split("?")[0].slice(0, 160);
+      }
+    }
+
+    function trackGaEvent(eventName, params = {}) {
+      try {
+        if (typeof window.gtag !== "function") return;
+
+        window.gtag("event", eventName, {
+          transport_type: "beacon",
+          page_location_clean: sanitizeGaUrl(window.location.href),
+          ...params
+        });
+      } catch (e) {}
+    }
+
+    function getGaLinkText(link) {
+      return String(link?.textContent || "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 80);
+    }
+
+    function getGaGameIdFromLink(link) {
+      const gameCard = link.closest(".game-card[data-game-id]");
+      if (gameCard) return String(gameCard.dataset.gameId || "");
+
+      const bundleCard = link.closest("[data-bundle-id]");
+      if (bundleCard) return String(bundleCard.dataset.bundleId || "");
+
+      return "";
+    }
+
+    function trackSiteLinkClick(link) {
+      if (!link) return;
+
+      const href = link.getAttribute("href") || "";
+      const cleanHref = sanitizeGaUrl(href);
+      const linkText = getGaLinkText(link);
+      const gameId = getGaGameIdFromLink(link);
+
+      if (!href || href === "#") return;
+
+      // زر اللعب يتم تتبعه داخل منطق فتح اللعبة حتى لا نرسل التوكن أو الرابط الكامل.
+      if (link.classList.contains("play-action") || link.dataset.directIndexPlay === "1") return;
+
+      let eventName = "site_link_click";
+      const params = {
+        link_text: linkText,
+        link_url_clean: cleanHref
+      };
+
+      if (gameId) params.item_id = gameId;
+
+      if (link.closest(".bottom-nav")) {
+        eventName = "bottom_nav_click";
+        params.nav_target = href.replace(/^.*\/([^\/?#]+).*$/, "$1").slice(0, 60);
+      } else if (link.closest("[data-bundle-id]") && /sandooq-m\.com/i.test(href)) {
+        eventName = "bundle_buy_click";
+        params.item_id = gameId || "challenges-box";
+      } else if (link.closest("[data-bundle-id]")) {
+        eventName = "bundle_details_click";
+        params.item_id = gameId || "challenges-box";
+      } else if (link.closest(".game-card[data-game-id]") && /sandooq-m\.com/i.test(href)) {
+        eventName = "game_buy_click";
+      } else if (link.closest(".game-card[data-game-id]")) {
+        eventName = "game_details_click";
+      } else if (/purchase-activation\.html/i.test(href)) {
+        eventName = "activation_page_click";
+      } else if (/account\.html/i.test(href)) {
+        eventName = "account_page_click";
+      } else if (/support\.html/i.test(href)) {
+        eventName = "support_page_click";
+      } else if (/wa\.me/i.test(href)) {
+        eventName = "whatsapp_click";
+      } else if (/tiktok\.com/i.test(href)) {
+        eventName = "tiktok_click";
+      } else if (/instagram\.com/i.test(href)) {
+        eventName = "instagram_click";
+      } else if (/sandooq-m\.com/i.test(href)) {
+        eventName = "store_click";
+      } else if (/^#|#games|#bundles/i.test(href)) {
+        eventName = "section_nav_click";
+      }
+
+      trackGaEvent(eventName, params);
+    }
+
+
     function resetAccessButton(link) {
       if (!link) return;
       prepareAccessButton(link);
@@ -3044,6 +3139,16 @@ width:100% !important;
       detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
     });
 
+
+    document.addEventListener("click", event => {
+      const link = event.target && event.target.closest
+        ? event.target.closest("a")
+        : null;
+
+      if (!link) return;
+      trackSiteLinkClick(link);
+    }, { passive:true, capture:true });
+
     document.addEventListener('click', async event => {
       const playButton = event.target && event.target.closest
         ? event.target.closest('.game-card .game-btn.play-action[data-direct-index-play="1"]')
@@ -3060,6 +3165,10 @@ width:100% !important;
 
       const token = readAuthToken();
       if (!token) {
+        trackGaEvent('game_play_requires_login', {
+          item_id: gameId,
+          destination_url_clean: 'purchase-activation.html'
+        });
         window.location.assign('purchase-activation.html');
         return;
       }
@@ -3067,6 +3176,11 @@ width:100% !important;
       const finalUrl = gameId === 'family-feud'
         ? await buildPlayUrlWithAccessAsync(basePlayUrl, gameId)
         : buildPlayUrlWithAccess(basePlayUrl, gameId);
+
+      trackGaEvent('game_play_click', {
+        item_id: gameId,
+        destination_url_clean: sanitizeGaUrl(basePlayUrl)
+      });
 
       playButton.setAttribute('href', finalUrl);
       window.location.assign(finalUrl);
@@ -3267,6 +3381,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — site-play-token-router-all-games-v1 -->
+  <!-- VERSION: index.html — GA4 events v2 -->
 </body>
 </html>
