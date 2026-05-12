@@ -6,14 +6,6 @@
   <title>صندوق المسابقات | ألعاب ومسابقات رقمية</title>
   <meta name="description" content="صندوق المسابقات وجهتك للألعاب والمسابقات الرقمية؛ الحماس والتنافس والمتعة كلها في صندوق واحد للعائلة والمعلمين والفعاليات." />
   <meta name="theme-color" content="#075c82" />
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-82VNBCY400"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-82VNBCY400');
-  </script>
   <link rel="preload" href="NotoIKEAArabic-Bold.ttf" as="font" type="font/ttf" crossorigin />
   <link rel="preload" as="image" href="logo.PNG" />
   <link rel="preload" as="image" href="horof-cover-card.webp" />
@@ -2118,7 +2110,7 @@ width:100% !important;
             <h2 class="game-name">لعبة فاميلي فيود</h2>
             <span class="game-status">مقفلة</span>
           </div>
-          <p class="game-meta-text">+ لاعبين · 15–30 دقيقة</p>
+          <p class="game-meta-text">+2 لاعبين · 15–30 دقيقة</p>
           <p class="game-desc">تحدي الإجابات الأكثر شعبية بجرس وشاشة عرض وأصوات حماسية</p>
           <div class="card-actions">
             <a class="game-btn" href="family-feud.html"><span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span><span class="game-btn-text">عرض اللعبة</span></a>
@@ -2147,7 +2139,7 @@ width:100% !important;
             <h2 class="game-name">لعبة صندوق المسابقات</h2>
             <span class="game-status" data-status-for="sandooq">مقفلة</span>
           </div>
-          <p class="game-meta-text">+2 لاعبين · 20–40 دقيق</p>
+          <p class="game-meta-text">+2 لاعبين · 20–40 دقيقة</p>
           <p class="game-desc">صندوق واحد يجمع أكثر من نوع تحدي لتجربة مسابقات ممتعة في كل جَمعة</p>
           <div class="card-actions">
             <a class="game-btn" href="sandooq.html">
@@ -2490,154 +2482,8 @@ width:100% !important;
       'sandooq_session_token_v1',
       'sandooq_customer_token_v1',
       'sandooq_login_token_v1',
-      'sandooq_account_token_v1',
-      'auth_token',
-      'access_token',
-      'token',
-      'sg_token',
-      'site_token',
-      'customer_token',
-      'jwt'
+      'sandooq_account_token_v1'
     ];
-
-    const GA_MEASUREMENT_ID = 'G-82VNBCY400';
-    const GA_LINK_DEDUP_MS = 1800;
-    const gaTrackedLinks = new WeakMap();
-
-    function gaCleanText(value, maxLength = 90) {
-      return String(value || '')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .slice(0, maxLength);
-    }
-
-    function gaCleanUrl(rawUrl) {
-      try {
-        const url = new URL(rawUrl || '', window.location.href);
-        return url.origin + url.pathname;
-      } catch (e) {
-        return String(rawUrl || '').split('?')[0].slice(0, 180);
-      }
-    }
-
-    function gaSend(eventName, params = {}) {
-      try {
-        if (typeof window.gtag !== 'function') return;
-
-        window.gtag('event', eventName, {
-          send_to: GA_MEASUREMENT_ID,
-          transport_type: 'beacon',
-          page_location_clean: gaCleanUrl(window.location.href),
-          ...params
-        });
-      } catch (e) {}
-    }
-
-    function gaInfoFromLink(link) {
-      if (!link) return null;
-
-      const href = link.getAttribute('href') || '';
-      if (!href || href === '#') return null;
-
-      const gameCard = link.closest('.game-card[data-game-id]');
-      const bundleCard = link.closest('[data-bundle-id]');
-      const isBottomNav = !!link.closest('.bottom-nav');
-
-      let eventName = 'site_link_click';
-      const params = {
-        link_text: gaCleanText(link.textContent),
-        link_url_clean: gaCleanUrl(href)
-      };
-
-      if (gameCard) {
-        params.item_id = String(gameCard.dataset.gameId || '');
-        params.item_name = gaCleanText(gameCard.querySelector('.game-name')?.textContent || params.item_id);
-
-        if (/sandooq-m\.com/i.test(href)) eventName = 'game_buy_click';
-        else eventName = 'game_details_click';
-      } else if (bundleCard) {
-        params.item_id = String(bundleCard.dataset.bundleId || 'challenges-box');
-        params.item_name = gaCleanText(bundleCard.querySelector('.bundle-name')?.textContent || 'بكج صندوق التحديات');
-
-        if (/sandooq-m\.com/i.test(href)) eventName = 'bundle_buy_click';
-        else eventName = 'bundle_details_click';
-      } else if (/purchase-activation\.html/i.test(href)) {
-        eventName = 'activation_page_click';
-        params.nav_target = 'purchase-activation';
-      } else if (/account\.html/i.test(href)) {
-        eventName = 'account_page_click';
-        params.nav_target = 'account';
-      } else if (/support\.html/i.test(href)) {
-        eventName = 'support_page_click';
-        params.nav_target = 'support';
-      } else if (/wa\.me/i.test(href)) {
-        eventName = 'whatsapp_click';
-      } else if (/tiktok\.com/i.test(href)) {
-        eventName = 'tiktok_click';
-      } else if (/instagram\.com/i.test(href)) {
-        eventName = 'instagram_click';
-      } else if (/sandooq-m\.com/i.test(href)) {
-        eventName = 'store_click';
-      } else if (isBottomNav) {
-        eventName = 'bottom_nav_click';
-        params.nav_target = href.replace(/^.*\/([^\/?#]+).*$/, '$1').slice(0, 70);
-      } else if (/^#/.test(href)) {
-        eventName = 'section_nav_click';
-        params.nav_target = href.slice(0, 70);
-      }
-
-      return { eventName, params };
-    }
-
-    function gaTrackLink(link) {
-      if (!link) return;
-
-      // زر العب له تتبع خاص داخل منطق فتح اللعبة حتى لا نرسل رابط يحتوي توكن.
-      if (link.classList.contains('play-action') || link.dataset.directIndexPlay === '1') return;
-
-      const now = Date.now();
-      const last = Number(gaTrackedLinks.get(link) || 0);
-      if (now - last < GA_LINK_DEDUP_MS) return;
-      gaTrackedLinks.set(link, now);
-
-      const info = gaInfoFromLink(link);
-      if (!info) return;
-
-      gaSend(info.eventName, info.params);
-    }
-
-    function gaTrackPlay(gameId, basePlayUrl, requiresLogin) {
-      gaSend(requiresLogin ? 'game_play_requires_login' : 'game_play_click', {
-        item_id: String(gameId || ''),
-        destination_url_clean: requiresLogin ? 'purchase-activation.html' : gaCleanUrl(basePlayUrl || '')
-      });
-    }
-
-    document.addEventListener('pointerdown', event => {
-      const link = event.target && event.target.closest ? event.target.closest('a') : null;
-      if (!link) return;
-      gaTrackLink(link);
-    }, { passive:true, capture:true });
-
-    document.addEventListener('click', event => {
-      const link = event.target && event.target.closest ? event.target.closest('a') : null;
-      if (!link) return;
-      gaTrackLink(link);
-    }, { passive:true, capture:true });
-
-    window.addEventListener('load', () => {
-      try {
-        const params = new URLSearchParams(window.location.search || '');
-        if (params.has('ga_test') || params.has('ga_debug')) {
-          gaSend('ga_debug_loaded', {
-            test_mode: '1',
-            page_path_clean: gaCleanUrl(window.location.href)
-          });
-        }
-      } catch (e) {}
-    });
-
-
     const DEVICE_KEY = 'sandooq_device_token_v1';
     const TEMP_GAME_SESSION_KEY = 'sandooq_temp_game_access_session_v1';
     const DEVICE_TOKEN_AT_PAGE_LOAD = readLocalValue(DEVICE_KEY).trim();
@@ -2688,43 +2534,10 @@ width:100% !important;
       return '';
     }
 
-    function readCookieValue(key) {
-      try {
-        const cookie = document.cookie || '';
-        const parts = cookie.split(';');
-        for (const part of parts) {
-          const [name, ...rest] = part.trim().split('=');
-          if (name === key) {
-            const raw = rest.join('=') || '';
-            try { return decodeURIComponent(raw); } catch (e) { return raw; }
-          }
-        }
-      } catch (e) {}
-
-      return '';
-    }
-
-    function rememberAuthToken(token) {
-      if (!token) return;
-      try { localStorage.setItem(TOKEN_KEY, token); } catch (e) {}
-      try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) {}
-    }
-
     function readAuthToken() {
       for (const key of AUTH_TOKEN_KEYS) {
         const value = readStorageValue(key).trim();
-        if (value) {
-          rememberAuthToken(value);
-          return value;
-        }
-      }
-
-      for (const key of AUTH_TOKEN_KEYS) {
-        const value = readCookieValue(key).trim();
-        if (value) {
-          rememberAuthToken(value);
-          return value;
-        }
+        if (value) return value;
       }
 
       return '';
@@ -3197,7 +3010,6 @@ width:100% !important;
         ? await buildPlayUrlWithAccessAsync(basePlayUrl, gameId)
         : buildPlayUrlWithAccess(basePlayUrl, gameId);
 
-      gaTrackPlay(gameId, basePlayUrl, false);
       playButton.setAttribute('href', finalUrl);
       window.location.assign(finalUrl);
     }, { passive:false, capture:true });
@@ -3397,6 +3209,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — GA4 pointer events v4 -->
+  <!-- VERSION: index.html — horof-app-direct-token-fix-v2 -->
 </body>
 </html>
