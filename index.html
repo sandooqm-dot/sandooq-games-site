@@ -340,7 +340,6 @@
 
     .game-card{
       min-width:0;
-      scroll-margin-top:18px;
       container-type:inline-size;
       min-height:clamp(335px, 36vw, 470px);
       border:clamp(2px, .25vw, 3px) solid var(--line);
@@ -1992,7 +1991,6 @@ width:100% !important;
     <main class="games-area" id="games">
       <div class="games-grid">
         <article
-          id="game-horof"
           class="game-card"
           data-game-id="horof"
           data-details-url="horof.html"
@@ -2028,7 +2026,6 @@ width:100% !important;
         </article>
 
         <article
-          id="game-bdon-kalam"
           class="game-card"
           data-game-id="bdon-kalam"
           data-details-url="bdon-kalam.html"
@@ -2064,7 +2061,6 @@ width:100% !important;
         </article>
 
         <article
-          id="game-bra-alsalfah"
           class="game-card"
           data-game-id="bra-alsalfah"
           data-details-url="bra-alsalfah.html"
@@ -2094,7 +2090,6 @@ width:100% !important;
         </article>
 
         <article
-          id="game-family-feud"
           class="game-card"
           data-game-id="family-feud"
           data-details-url="family-feud.html"
@@ -2124,7 +2119,6 @@ width:100% !important;
         </article>
 
         <article
-          id="game-sandooq"
           class="game-card"
           data-game-id="sandooq"
           data-details-url="sandooq.html"
@@ -2160,7 +2154,6 @@ width:100% !important;
         </article>
 
         <article
-          id="game-horof-edu"
           class="game-card"
           data-game-id="horof-edu"
           data-details-url="horof-edu.html"
@@ -2991,11 +2984,106 @@ width:100% !important;
       refreshLoginChip();
       prepareGameCardsForAccessStates();
     }
+
+    const RETURN_FOCUS_KEY = 'sandooq_return_game_focus_v1';
+
+    function saveReturnGameFocus(gameId) {
+      const cleanGameId = String(gameId || '').trim();
+      if (!cleanGameId) return;
+
+      try {
+        sessionStorage.setItem(RETURN_FOCUS_KEY, JSON.stringify({
+          id: cleanGameId,
+          ts: Date.now()
+        }));
+      } catch (e) {}
+    }
+
+    function readSavedReturnGameFocus() {
+      try {
+        const raw = sessionStorage.getItem(RETURN_FOCUS_KEY) || '';
+        if (!raw) return '';
+
+        const data = JSON.parse(raw);
+        const id = String(data && data.id ? data.id : '').trim();
+        const ts = Number(data && data.ts ? data.ts : 0);
+
+        sessionStorage.removeItem(RETURN_FOCUS_KEY);
+
+        // استخدامه فقط إذا كان حديثًا، حتى لا يغيّر مكان الدخول الطبيعي لاحقًا.
+        if (!id || !ts || Date.now() - ts > 30 * 60 * 1000) return '';
+        return id;
+      } catch (e) {
+        try { sessionStorage.removeItem(RETURN_FOCUS_KEY); } catch (_) {}
+        return '';
+      }
+    }
+
+    function getReturnFocusIdFromUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search || '');
+        return String(params.get('focus') || params.get('game') || '').trim();
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function scrollToGameCard(gameId) {
+      const focusId = String(gameId || '').trim();
+      if (!focusId) return;
+
+      const card = Array.from(document.querySelectorAll('.game-card[data-game-id]')).find(item => {
+        return String(item.dataset.gameId || '') === focusId;
+      });
+
+      if (!card) return;
+
+      const doScroll = () => {
+        const rect = card.getBoundingClientRect();
+        const targetY = Math.max(0, window.pageYOffset + rect.top - 18);
+
+        window.scrollTo({
+          top: targetY,
+          behavior: 'smooth'
+        });
+
+        // إعادة ضبط بسيطة بعد تغيّر شريط المتصفح في iOS، بدون أي مؤثر بصري.
+        window.setTimeout(() => {
+          const nextRect = card.getBoundingClientRect();
+          const nextTargetY = Math.max(0, window.pageYOffset + nextRect.top - 18);
+          window.scrollTo({ top: nextTargetY, behavior: 'smooth' });
+          if (typeof stabilizeBottomNav === 'function') stabilizeBottomNav();
+        }, 650);
+      };
+
+      window.setTimeout(doScroll, 220);
+    }
+
+    function focusReturnedGameCard() {
+      const focusId = getReturnFocusIdFromUrl() || readSavedReturnGameFocus();
+      scrollToGameCard(focusId);
+    }
+
+    function setupDetailsReturnFocus() {
+      document.querySelectorAll('.game-card[data-game-id]').forEach(card => {
+        const gameId = String(card.dataset.gameId || '').trim();
+        if (!gameId) return;
+
+        card.querySelectorAll('.game-btn').forEach(link => {
+          const label = (link.textContent || '').trim();
+          const href = String(link.getAttribute('href') || '');
+
+          // حفظ موقع البطاقة فقط عند فتح صفحة "عرض اللعبة".
+          // لا نطبق ذلك على الشراء ولا زر العب.
+          if (label.includes('عرض') && !/sandooq-m\.com/i.test(href)) {
+            link.addEventListener('click', () => saveReturnGameFocus(gameId), { capture:true });
+          }
         });
       });
     }
 
     refreshAccountUi();
+    setupDetailsReturnFocus();
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
       refreshAccountFromApi().then(refreshAccountUi);
@@ -3185,6 +3273,7 @@ function scheduleBottomNavStabilize(delay = 0) {
       moveBottomNavIndicator(activeItem);
       window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
       scrollToReview(0, 'auto');
+      focusReturnedGameCard();
       scheduleBottomNavStabilize();
       scheduleBottomNavStabilize(250);
     });
@@ -3219,6 +3308,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — direct-hash-game-anchors-v3 -->
+  <!-- VERSION: index.html — return-to-source-card-no-effects-v2 -->
 </body>
 </html>
