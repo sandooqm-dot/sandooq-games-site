@@ -340,6 +340,7 @@
 
     .game-card{
       min-width:0;
+      scroll-margin-top:18px;
       container-type:inline-size;
       min-height:clamp(335px, 36vw, 470px);
       border:clamp(2px, .25vw, 3px) solid var(--line);
@@ -1991,6 +1992,7 @@ width:100% !important;
     <main class="games-area" id="games">
       <div class="games-grid">
         <article
+          id="game-horof"
           class="game-card"
           data-game-id="horof"
           data-details-url="horof.html"
@@ -2026,6 +2028,7 @@ width:100% !important;
         </article>
 
         <article
+          id="game-bdon-kalam"
           class="game-card"
           data-game-id="bdon-kalam"
           data-details-url="bdon-kalam.html"
@@ -2061,6 +2064,7 @@ width:100% !important;
         </article>
 
         <article
+          id="game-bra-alsalfah"
           class="game-card"
           data-game-id="bra-alsalfah"
           data-details-url="bra-alsalfah.html"
@@ -2090,6 +2094,7 @@ width:100% !important;
         </article>
 
         <article
+          id="game-family-feud"
           class="game-card"
           data-game-id="family-feud"
           data-details-url="family-feud.html"
@@ -2119,6 +2124,7 @@ width:100% !important;
         </article>
 
         <article
+          id="game-sandooq"
           class="game-card"
           data-game-id="sandooq"
           data-details-url="sandooq.html"
@@ -2154,6 +2160,7 @@ width:100% !important;
         </article>
 
         <article
+          id="game-horof-edu"
           class="game-card"
           data-game-id="horof-edu"
           data-details-url="horof-edu.html"
@@ -3083,7 +3090,6 @@ width:100% !important;
     }
 
     refreshAccountUi();
-    setupDetailsReturnFocus();
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
       refreshAccountFromApi().then(refreshAccountUi);
@@ -3273,7 +3279,6 @@ function scheduleBottomNavStabilize(delay = 0) {
       moveBottomNavIndicator(activeItem);
       window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
       scrollToReview(0, 'auto');
-      focusReturnedGameCard();
       scheduleBottomNavStabilize();
       scheduleBottomNavStabilize(250);
     });
@@ -3308,6 +3313,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — return-to-source-card-no-effects-v2 -->
+  <!-- VERSION: index.html — hash-anchors-only-safe-v1 -->
 </body>
 </html>
