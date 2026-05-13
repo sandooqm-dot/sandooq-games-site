@@ -356,18 +356,6 @@
 
     .game-card:hover{transform:translateY(-3px);box-shadow:0 clamp(6px, .9vw, 10px) 0 rgba(0,0,0,.18);}
 
-    .game-card.focus-highlight{
-      outline:4px solid var(--yellow);
-      outline-offset:5px;
-      box-shadow:0 clamp(6px, .9vw, 10px) 0 rgba(0,0,0,.18), 0 0 0 8px rgba(247,182,56,.30), 0 0 28px rgba(247,182,56,.55);
-      animation:focusCardPulse 1.15s ease-in-out 3;
-    }
-
-    @keyframes focusCardPulse{
-      0%,100%{transform:translateY(0) scale(1);}
-      50%{transform:translateY(-3px) scale(1.018);}
-    }
-
     .cover{
       width:100%;
       aspect-ratio:1 / 1;
@@ -2997,14 +2985,51 @@ width:100% !important;
       prepareGameCardsForAccessStates();
     }
 
-    function focusReturnedGameCard() {
-      let focusId = '';
+    const RETURN_FOCUS_KEY = 'sandooq_return_game_focus_v1';
+
+    function saveReturnGameFocus(gameId) {
+      const cleanGameId = String(gameId || '').trim();
+      if (!cleanGameId) return;
 
       try {
-        const params = new URLSearchParams(window.location.search || '');
-        focusId = String(params.get('focus') || params.get('game') || '').trim();
+        sessionStorage.setItem(RETURN_FOCUS_KEY, JSON.stringify({
+          id: cleanGameId,
+          ts: Date.now()
+        }));
       } catch (e) {}
+    }
 
+    function readSavedReturnGameFocus() {
+      try {
+        const raw = sessionStorage.getItem(RETURN_FOCUS_KEY) || '';
+        if (!raw) return '';
+
+        const data = JSON.parse(raw);
+        const id = String(data && data.id ? data.id : '').trim();
+        const ts = Number(data && data.ts ? data.ts : 0);
+
+        sessionStorage.removeItem(RETURN_FOCUS_KEY);
+
+        // استخدامه فقط إذا كان حديثًا، حتى لا يغيّر مكان الدخول الطبيعي لاحقًا.
+        if (!id || !ts || Date.now() - ts > 30 * 60 * 1000) return '';
+        return id;
+      } catch (e) {
+        try { sessionStorage.removeItem(RETURN_FOCUS_KEY); } catch (_) {}
+        return '';
+      }
+    }
+
+    function getReturnFocusIdFromUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search || '');
+        return String(params.get('focus') || params.get('game') || '').trim();
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function scrollToGameCard(gameId) {
+      const focusId = String(gameId || '').trim();
       if (!focusId) return;
 
       const card = Array.from(document.querySelectorAll('.game-card[data-game-id]')).find(item => {
@@ -3013,9 +3038,7 @@ width:100% !important;
 
       if (!card) return;
 
-      const scrollToCard = () => {
-        const nav = document.querySelector('.bottom-nav');
-        const navHeight = nav ? Math.ceil(nav.getBoundingClientRect().height || 0) : 0;
+      const doScroll = () => {
         const rect = card.getBoundingClientRect();
         const targetY = Math.max(0, window.pageYOffset + rect.top - 18);
 
@@ -3024,26 +3047,43 @@ width:100% !important;
           behavior: 'smooth'
         });
 
-        card.classList.add('focus-highlight');
-        window.setTimeout(() => card.classList.remove('focus-highlight'), 4200);
-
-        // إعادة ضبط بسيطة بعد ظهور/اختفاء شريط المتصفح في iOS.
+        // إعادة ضبط بسيطة بعد تغيّر شريط المتصفح في iOS، بدون أي مؤثر بصري.
         window.setTimeout(() => {
           const nextRect = card.getBoundingClientRect();
           const nextTargetY = Math.max(0, window.pageYOffset + nextRect.top - 18);
           window.scrollTo({ top: nextTargetY, behavior: 'smooth' });
           if (typeof stabilizeBottomNav === 'function') stabilizeBottomNav();
         }, 650);
-
-        if (navHeight && typeof stabilizeBottomNav === 'function') {
-          window.setTimeout(stabilizeBottomNav, 80);
-        }
       };
 
-      window.setTimeout(scrollToCard, 260);
+      window.setTimeout(doScroll, 220);
+    }
+
+    function focusReturnedGameCard() {
+      const focusId = getReturnFocusIdFromUrl() || readSavedReturnGameFocus();
+      scrollToGameCard(focusId);
+    }
+
+    function setupDetailsReturnFocus() {
+      document.querySelectorAll('.game-card[data-game-id]').forEach(card => {
+        const gameId = String(card.dataset.gameId || '').trim();
+        if (!gameId) return;
+
+        card.querySelectorAll('.game-btn').forEach(link => {
+          const label = (link.textContent || '').trim();
+          const href = String(link.getAttribute('href') || '');
+
+          // حفظ موقع البطاقة فقط عند فتح صفحة "عرض اللعبة".
+          // لا نطبق ذلك على الشراء ولا زر العب.
+          if (label.includes('عرض') && !/sandooq-m\.com/i.test(href)) {
+            link.addEventListener('click', () => saveReturnGameFocus(gameId), { capture:true });
+          }
+        });
+      });
     }
 
     refreshAccountUi();
+    setupDetailsReturnFocus();
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
       refreshAccountFromApi().then(refreshAccountUi);
@@ -3268,6 +3308,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — return-focus-game-card-v1 -->
+  <!-- VERSION: index.html — return-to-source-card-no-effects-v2 -->
 </body>
 </html>
