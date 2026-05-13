@@ -356,6 +356,18 @@
 
     .game-card:hover{transform:translateY(-3px);box-shadow:0 clamp(6px, .9vw, 10px) 0 rgba(0,0,0,.18);}
 
+    .game-card.focus-highlight{
+      outline:4px solid var(--yellow);
+      outline-offset:5px;
+      box-shadow:0 clamp(6px, .9vw, 10px) 0 rgba(0,0,0,.18), 0 0 0 8px rgba(247,182,56,.30), 0 0 28px rgba(247,182,56,.55);
+      animation:focusCardPulse 1.15s ease-in-out 3;
+    }
+
+    @keyframes focusCardPulse{
+      0%,100%{transform:translateY(0) scale(1);}
+      50%{transform:translateY(-3px) scale(1.018);}
+    }
+
     .cover{
       width:100%;
       aspect-ratio:1 / 1;
@@ -2985,6 +2997,52 @@ width:100% !important;
       prepareGameCardsForAccessStates();
     }
 
+    function focusReturnedGameCard() {
+      let focusId = '';
+
+      try {
+        const params = new URLSearchParams(window.location.search || '');
+        focusId = String(params.get('focus') || params.get('game') || '').trim();
+      } catch (e) {}
+
+      if (!focusId) return;
+
+      const card = Array.from(document.querySelectorAll('.game-card[data-game-id]')).find(item => {
+        return String(item.dataset.gameId || '') === focusId;
+      });
+
+      if (!card) return;
+
+      const scrollToCard = () => {
+        const nav = document.querySelector('.bottom-nav');
+        const navHeight = nav ? Math.ceil(nav.getBoundingClientRect().height || 0) : 0;
+        const rect = card.getBoundingClientRect();
+        const targetY = Math.max(0, window.pageYOffset + rect.top - 18);
+
+        window.scrollTo({
+          top: targetY,
+          behavior: 'smooth'
+        });
+
+        card.classList.add('focus-highlight');
+        window.setTimeout(() => card.classList.remove('focus-highlight'), 4200);
+
+        // إعادة ضبط بسيطة بعد ظهور/اختفاء شريط المتصفح في iOS.
+        window.setTimeout(() => {
+          const nextRect = card.getBoundingClientRect();
+          const nextTargetY = Math.max(0, window.pageYOffset + nextRect.top - 18);
+          window.scrollTo({ top: nextTargetY, behavior: 'smooth' });
+          if (typeof stabilizeBottomNav === 'function') stabilizeBottomNav();
+        }, 650);
+
+        if (navHeight && typeof stabilizeBottomNav === 'function') {
+          window.setTimeout(stabilizeBottomNav, 80);
+        }
+      };
+
+      window.setTimeout(scrollToCard, 260);
+    }
+
     refreshAccountUi();
     window.addEventListener('pageshow', () => {
       refreshAccountUi();
@@ -3175,6 +3233,7 @@ function scheduleBottomNavStabilize(delay = 0) {
       moveBottomNavIndicator(activeItem);
       window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
       scrollToReview(0, 'auto');
+      focusReturnedGameCard();
       scheduleBottomNavStabilize();
       scheduleBottomNavStabilize(250);
     });
@@ -3209,6 +3268,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — horof-app-direct-token-fix-v2 -->
+  <!-- VERSION: index.html — return-focus-game-card-v1 -->
 </body>
 </html>
