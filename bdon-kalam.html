@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>لعبة بدون كلام | صندوق المسابقات</title>
-  <meta name="description" content="لعبة بدون كلام من صندوق المسابقات: امسح الباركود واشرح لفريقك بدون أي كلام، أكثر من 210 تحدي جاهز، أقسام متنوعة، ومؤقت مدمج لرفع الحماس." />
+  <meta name="description" content="لعبة بدون كلام من صندوق المسابقات: امسح الباركود واشرح لفريقك بدون أي كلام، أكثر من 210 تحدّي متنوع، أقسام وجولات مختلفة، وتحديات تظهر للاعب المقصود على جواله." />
   <meta name="theme-color" content="#075c82" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-82VNBCY400"></script>
@@ -421,6 +421,184 @@
       box-shadow:0 0 0 3px rgba(255,107,26,.12);
     }
 
+
+
+    /* قسم المميزات المصورة */
+    .game-idea-card{
+      text-align:center;
+    }
+
+    .visual-features-section{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-features-list{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-feature-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.4vw, 30px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      display:grid;
+      gap:clamp(12px, 1.8vw, 20px);
+      overflow:hidden;
+    }
+
+    .visual-feature-card:nth-child(1){background:#fff8ed;}
+    .visual-feature-card:nth-child(2){background:#f4eaff;}
+    .visual-feature-card:nth-child(3){background:#eaf8ff;}
+    .visual-feature-card:nth-child(4){background:#ecfffb;}
+
+    .visual-feature-copy{
+      text-align:center;
+      max-width:880px;
+      margin-inline:auto;
+    }
+
+    .visual-feature-title{
+      margin:0 0 8px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(22px, 2.4vw, 36px);
+      line-height:1.35;
+    }
+
+    .visual-feature-desc{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(15px, 1.3vw, 20px);
+      line-height:1.9;
+    }
+
+    .feature-image-zoom{
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+      padding:0;
+      border:0;
+      background:transparent;
+      display:block;
+      cursor:zoom-in;
+      border-radius:calc(var(--radius) + 2px);
+    }
+
+    .feature-image-zoom:focus-visible{
+      outline:4px solid var(--blue-soft);
+      outline-offset:5px;
+    }
+
+    .feature-image-frame{
+      width:100%;
+      aspect-ratio:16 / 9;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:calc(var(--radius) + 2px);
+      box-shadow:0 8px 0 rgba(0,0,0,.16);
+      overflow:hidden;
+      background:#eaf3f8;
+      transform:translateZ(0);
+      display:block;
+    }
+
+    .feature-image-frame picture,
+    .feature-image-frame img{
+      display:block;
+      width:100%;
+      height:100%;
+    }
+
+    .feature-image-frame img{
+      object-fit:cover;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    .feature-image-zoom:hover img{
+      transform:scale(1.01);
+      filter:saturate(1.04);
+    }
+
+    .buy-strip{
+      text-align:center;
+      background:linear-gradient(180deg, #fff8ed, #ffffff);
+    }
+
+    .buy-strip .section-text{
+      margin-inline:auto;
+      max-width:760px;
+    }
+
+    .buy-strip .hero-actions,
+    .activation-actions{
+      margin-top:clamp(14px, 2vw, 22px);
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .activation-card{
+      text-align:center;
+    }
+
+    .activation-card .bullets{
+      text-align:right;
+      max-width:900px;
+      margin-inline:auto;
+    }
+
+    .image-lightbox[hidden]{display:none !important;}
+
+    .image-lightbox{
+      position:fixed;
+      inset:0;
+      z-index:120;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:calc(env(safe-area-inset-top) + 18px) clamp(12px, 4vw, 42px) calc(env(safe-area-inset-bottom) + 18px);
+      background:rgba(0,0,0,.82);
+      backdrop-filter:blur(6px);
+    }
+
+    .image-lightbox-img{
+      display:block;
+      width:min(1120px, 100%);
+      max-height:84dvh;
+      object-fit:contain;
+      border:clamp(3px, .35vw, 5px) solid rgba(255,255,255,.94);
+      border-radius:clamp(16px, 2vw, 28px);
+      background:#fff;
+      box-shadow:0 24px 70px rgba(0,0,0,.45);
+    }
+
+    .image-lightbox-close{
+      position:fixed;
+      inset-block-start:calc(14px + env(safe-area-inset-top));
+      inset-inline-start:clamp(14px, 3vw, 28px);
+      width:clamp(44px, 5vw, 58px);
+      height:clamp(44px, 5vw, 58px);
+      border-radius:50%;
+      border:3px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      font-size:clamp(26px, 3vw, 38px);
+      font-weight:950;
+      line-height:1;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      box-shadow:0 5px 0 rgba(0,0,0,.20);
+    }
+
+    body.lightbox-open{
+      overflow:hidden;
+    }
+
     .bottom-nav{
       position:fixed;
       left:0;
@@ -600,88 +778,92 @@
 
     <main class="content-area">
       <div class="content-inner">
-        <section class="features-grid" aria-label="مميزات لعبة بدون كلام">
-          <article class="feature-card">
-            <h2 class="feature-title">أكثر من 210 تحدي</h2>
-            <p class="feature-desc">محتوى كثير ومتنوّع حتى لا تكون الجولات مكررة، وتبقى اللعبة ممتعة في كل مرة تلعبونها.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">أقسام مختلفة ومتنوعة</h2>
-            <p class="feature-desc">تشمل أقسامًا مثل: حكم وأمثال، مسلسلات رمضانية، أماكن ومواقع، أغاني، أدوات المطبخ، وظائف ومهن، سبيستون، وجميع الأقسام عشوائي.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">باركود لكل تحدي</h2>
-            <p class="feature-desc">كل جولة فيها باركود واضح وسهل، يمسحه اللاعب المقصود ليشاهد التحدي على جواله فقط ثم يبدأ الشرح مباشرة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">مؤقت مدمج داخل اللعبة</h2>
-            <p class="feature-desc">مؤقت واضح يساعد على تنظيم الجولات ورفع الحماس أثناء اللعب حتى تكون التجربة أسرع وأمتع.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">مناسبة للجمعات والضحك</h2>
-            <p class="feature-desc">مناسبة جدًا للجمعات العائلية، الأصدقاء، السهرات، الاستراحات، الرحلات، والفعاليات الخفيفة الممتعة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">تعمل من المتصفح</h2>
-            <p class="feature-desc">لا تحتاج تحميل، ولا ملف PDF، ولا برامج إضافية. افتح اللعبة وابدأ التحدي خلال ثوانٍ فقط.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">تحديثات مستمرة</h2>
-            <p class="feature-desc">عند إضافة تحديات أو أقسام جديدة تصل للمشترين الحاليين أيضًا، فتظل اللعبة تتجدد مع الوقت.</p>
-          </article>
-        </section>
-
-        <section class="section-card soft-purple">
+        <section class="section-card soft-purple game-idea-card">
           <h2 class="section-heading">فكرة اللعبة</h2>
-          <p class="section-text">تُعرض اللعبة على الشاشة، ثم يمسح أحد اللاعبين الباركود من جواله ليظهر له المطلوب. بعدها يبدأ يشرحه لفريقه بالحركات والإشارات فقط بدون أي كلام، وفريقه يحاول يخمّن قبل انتهاء الوقت. وإذا لم يعرفوا، تنتقل الفرصة للفريق الثاني.</p>
           <ul class="bullets">
-            <li>عرض التحدي عبر الباركود على جوال اللاعب المقصود فقط.</li>
-            <li>الشرح بالحركات والإشارات بدون أي كلام.</li>
-            <li>محاولة التخمين قبل انتهاء المؤقت، ثم انتقال الفرصة للفريق الثاني إذا لزم.</li>
+            <li>تُعرض اللعبة على الشاشة ويمسح لاعب واحد الباركود.</li>
+            <li>يظهر التحدّي في جواله فقط ويشرحه لفريقه بالحركات والإشارات.</li>
+            <li>يحاول الفريق التخمين قبل انتهاء الوقت، وإذا لم يعرفوا تنتقل الفرصة للفريق الآخر.</li>
           </ul>
         </section>
 
-        <section class="section-card soft-blue" id="video" hidden aria-hidden="true" style="display:none;">
-          <h2 class="section-heading">شرح اللعبة بالفيديو</h2>
-          <p class="section-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
-          <div class="video-box" role="img" aria-label="مكان فيديو شرح لعبة بدون كلام">
-            <div>
-              <div class="play-circle" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+        <section class="visual-features-section" aria-label="مميزات لعبة بدون كلام">
+          <div class="visual-features-list">
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">أكثر من 210 تحدّي متنوع</h3>
+                <p class="visual-feature-desc">أقسام كثيرة وجولات مختلفة تخلي كل مرة تلعبونها تجربة جديدة.</p>
               </div>
-              <p class="video-title">فيديو الشرح قريبًا</p>
-              <p class="video-note">لن يتم تحميل أي فيديو الآن حتى تبقى الصفحة سريعة وخفيفة.</p>
-            </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة أكثر من 210 تحدي متنوع في لعبة بدون كلام">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="bdon-kalam-feature-categories.webp" type="image/webp">
+                    <img src="bdon-kalam-feature-categories.PNG" data-fallbacks="bdon-kalam-feature-categories.PNG|bdon-kalam-feature-categories.png|bdon-kalam-feature-categories.jpeg|bdon-kalam-feature-categories.jpg" alt="أكثر من 210 تحدي متنوع في لعبة بدون كلام" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">امسح الباركود واشرح بدون كلام</h3>
+                <p class="visual-feature-desc">كل جولة يظهر باركود للتحدّي؛ يمسحه اللاعب المقصود ويبدأ الشرح بالحركات والإشارات.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة الباركود والشرح بدون كلام">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="bdon-kalam-feature-qr-challenge.webp" type="image/webp">
+                    <img src="bdon-kalam-feature-qr-challenge.PNG" data-fallbacks="bdon-kalam-feature-qr-challenge.PNG|bdon-kalam-feature-qr-challenge.png|bdon-kalam-feature-qr-challenge.jpeg|bdon-kalam-feature-qr-challenge.jpg" alt="امسح الباركود واشرح بدون كلام في لعبة بدون كلام" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">كل لاعب يشوف تحدّيه بجواله</h3>
+                <p class="visual-feature-desc">التحدّي يظهر للاعب فقط، والفريق يحاول يخمّن من تمثيله قبل انتهاء الوقت.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة تحديات اللاعبين على الجوال">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="bdon-kalam-feature-player-devices.webp" type="image/webp">
+                    <img src="bdon-kalam-feature-player-devices.PNG" data-fallbacks="bdon-kalam-feature-player-devices.PNG|bdon-kalam-feature-player-devices.png|bdon-kalam-feature-player-devices.jpeg|bdon-kalam-feature-player-devices.jpg" alt="كل لاعب يشوف تحديه بجواله في لعبة بدون كلام" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
           </div>
         </section>
 
-        <section class="section-card soft-mint">
-          <h2 class="section-heading">لماذا تختار بدون كلام؟</h2>
-          <ul class="bullets">
-            <li>فكرتها مختلفة وممتعة جدًا وتفجّر الضحك في كل جولة.</li>
-            <li>مناسبة للعائلة، الأصدقاء، السهرات، والفعاليات الخفيفة.</li>
-            <li>تشغيلها سهل جدًا وكل شيء واضح ومرتب داخل اللعبة.</li>
-            <li>واجهة جميلة ومريحة وتعمل على الجوال والآيباد والكمبيوتر.</li>
-          </ul>
+        <section class="section-card buy-strip" aria-label="شراء لعبة بدون كلام">
+          <h2 class="section-heading">جاهز تبدأ الضحك؟</h2>
+          <p class="section-text">لعبة بدون كلام جاهزة للعب مباشرة من المتصفح بدون تحميل.</p>
+          <div class="hero-actions" data-game-id="bdon-kalam">
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p951305795" data-game-id="bdon-kalam" data-state="buy" data-buy-url="https://sandooq-m.com/-/p951305795" data-play-url="https://bdon-kalam.sandooq-games.com" data-buy-label="شراء لعبة بدون كلام" data-play-label="العب"><span class="cta-label">شراء لعبة بدون كلام</span></a>
+          </div>
         </section>
 
-        <section class="section-card">
-          <h2 class="section-heading">طريقة التفعيل</h2>
+        <section class="section-card activation-card">
+          <h2 class="section-heading">طريقة التفعيل بعد الشراء</h2>
+          <p class="section-text">بعد الشراء، فعّل اللعبة على حسابك خلال خطوات بسيطة.</p>
           <ul class="bullets">
-            <li>ادخل إلى <strong>sandooq-games.com</strong> ثم أنشئ حسابًا جديدًا أو سجّل الدخول.</li>
+            <li>ادخل إلى sandooq-games.com وأنشئ حسابًا جديدًا أو سجّل الدخول.</li>
             <li>افتح صفحة تفعيل الألعاب من الشريط السفلي.</li>
             <li>أدخل رقم الجوال المستخدم في عملية الشراء لإظهار اللعبة على حسابك.</li>
             <li>بعد التفعيل ادخل اللعبة وابدأ التحدي مع أصدقائك أو عائلتك.</li>
           </ul>
+          <div class="activation-actions">
+            <a class="btn btn-secondary" href="purchase-activation.html">الذهاب إلى تفعيل الألعاب</a>
+          </div>
         </section>
       </div>
     </main>
+  </div>
+
+  <div class="image-lightbox" id="imageLightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="تكبير صورة الميزة">
+    <button class="image-lightbox-close" type="button" id="imageLightboxClose" aria-label="إغلاق الصورة">×</button>
+    <img class="image-lightbox-img" id="imageLightboxImg" src="" alt="">
   </div>
 
   <nav class="bottom-nav" aria-label="التنقل السفلي">
@@ -893,27 +1075,30 @@
     }
 
     function setMainCtaState() {
-      const cta = document.querySelector('.js-game-cta[data-game-id="bdon-kalam"]');
-      if (!cta) return;
+      const ctas = document.querySelectorAll('.js-game-cta[data-game-id="bdon-kalam"]');
+      if (!ctas.length) return;
       const ownedGames = readOwnedGames();
       const isOwned = ownedGames.has(CURRENT_GAME_ID);
-      const buyLabel = cta.dataset.buyLabel || 'شراء اللعبة';
-      const playLabel = cta.dataset.playLabel || 'العب';
-      const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
-      const playUrl = cta.dataset.playUrl || '#';
 
-      if (isOwned) {
-        cta.dataset.state = 'play';
-        cta.classList.add('btn-play');
-        cta.dataset.basePlayUrl = playUrl;
-        cta.setAttribute('href', buildPlayUrlWithAccess(playUrl));
-        cta.innerHTML = `${playIconMarkup()}<span class="cta-label">${playLabel}</span>`;
-      } else {
-        cta.dataset.state = 'buy';
-        cta.classList.remove('btn-play');
-        cta.setAttribute('href', buyUrl);
-        cta.innerHTML = `<span class="cta-label">${buyLabel}</span>`;
-      }
+      ctas.forEach(cta => {
+        const buyLabel = cta.dataset.buyLabel || 'شراء اللعبة';
+        const playLabel = cta.dataset.playLabel || 'العب';
+        const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
+        const playUrl = cta.dataset.playUrl || '#';
+
+        if (isOwned) {
+          cta.dataset.state = 'play';
+          cta.classList.add('btn-play');
+          cta.dataset.basePlayUrl = playUrl;
+          cta.setAttribute('href', buildPlayUrlWithAccess(playUrl));
+          cta.innerHTML = `${playIconMarkup()}<span class="cta-label">${playLabel}</span>`;
+        } else {
+          cta.dataset.state = 'buy';
+          cta.classList.remove('btn-play');
+          cta.setAttribute('href', buyUrl);
+          cta.innerHTML = `<span class="cta-label">${buyLabel}</span>`;
+        }
+      });
     }
 
     refreshLoginChip();
@@ -935,6 +1120,67 @@
       event.preventDefault();
       window.location.assign(buildPlayUrlWithAccess(basePlayUrl));
     }, { passive:false });
+
+
+    document.querySelectorAll('.feature-image-frame img[data-fallbacks]').forEach(img => {
+      img.dataset.fallbackIndex = img.dataset.fallbackIndex || '0';
+      img.addEventListener('error', () => {
+        const fallbacks = String(img.dataset.fallbacks || '').split('|').filter(Boolean);
+        let index = Number(img.dataset.fallbackIndex || 0);
+        if (index >= fallbacks.length) return;
+        const picture = img.closest('picture');
+        if (picture) picture.querySelectorAll('source').forEach(source => source.remove());
+        img.dataset.fallbackIndex = String(index + 1);
+        img.src = fallbacks[index];
+      });
+    });
+
+    const imageLightbox = document.getElementById('imageLightbox');
+    const imageLightboxImg = document.getElementById('imageLightboxImg');
+    const imageLightboxClose = document.getElementById('imageLightboxClose');
+    let lastImageZoomButton = null;
+
+    function openImageLightbox(button) {
+      if (!imageLightbox || !imageLightboxImg || !button) return;
+      const img = button.querySelector('img');
+      if (!img) return;
+      lastImageZoomButton = button;
+      imageLightboxImg.src = img.currentSrc || img.src;
+      imageLightboxImg.alt = img.alt || '';
+      imageLightbox.hidden = false;
+      imageLightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      if (imageLightboxClose) imageLightboxClose.focus({ preventScroll:true });
+    }
+
+    function closeImageLightbox() {
+      if (!imageLightbox || !imageLightboxImg) return;
+      imageLightbox.hidden = true;
+      imageLightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      imageLightboxImg.src = '';
+      if (lastImageZoomButton) lastImageZoomButton.focus({ preventScroll:true });
+    }
+
+    document.querySelectorAll('.feature-image-zoom').forEach(button => {
+      button.addEventListener('click', () => openImageLightbox(button));
+    });
+
+    if (imageLightboxClose) {
+      imageLightboxClose.addEventListener('click', closeImageLightbox);
+    }
+
+    if (imageLightbox) {
+      imageLightbox.addEventListener('click', event => {
+        if (event.target === imageLightbox) closeImageLightbox();
+      });
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && imageLightbox && !imageLightbox.hidden) {
+        closeImageLightbox();
+      }
+    });
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
@@ -967,6 +1213,6 @@
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
     });
   </script>
-  <!-- VERSION: bdon-kalam.html — new-salla-buy-link-v1 -->
+  <!-- VERSION: bdon-kalam.html — visual-features-v1 -->
 </body>
 </html>
