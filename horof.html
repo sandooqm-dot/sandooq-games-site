@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>لعبة سباق الحروف | صندوق المسابقات</title>
-  <meta name="description" content="لعبة سباق الحروف من صندوق المسابقات: لعبة تفاعلية جماعية متعددة الأجهزة، أكثر من 4000 سؤال جاهز، زر جرس لكل لاعب، وأسئلة خاصة بك." />
+  <meta name="description" content="لعبة سباق الحروف من صندوق المسابقات: تحدي حروف تفاعلي، أكثر من 4,000 سؤال جاهز، جرس للاعبين، وإمكانية إضافة أسئلتك الخاصة." />
   <meta name="theme-color" content="#075c82" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-82VNBCY400"></script>
@@ -446,6 +446,197 @@
     }
 
 
+    /* قسم المميزات المصورة الجديد */
+    .game-idea-card{
+      text-align:center;
+    }
+
+    .visual-features-section{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-features-head{
+      text-align:center;
+      background:linear-gradient(180deg, #ffffff, #eef9ff);
+    }
+
+    .visual-features-head .section-heading{
+      margin-bottom:8px;
+    }
+
+    .visual-features-head .section-text{
+      max-width:850px;
+      margin-inline:auto;
+    }
+
+    .visual-features-list{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-feature-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.4vw, 30px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      display:grid;
+      gap:clamp(12px, 1.8vw, 20px);
+      overflow:hidden;
+    }
+
+    .visual-feature-card:nth-child(1){background:#fff8ed;}
+    .visual-feature-card:nth-child(2){background:#f4eaff;}
+    .visual-feature-card:nth-child(3){background:#eaf8ff;}
+    .visual-feature-card:nth-child(4){background:#ecfffb;}
+
+    .visual-feature-copy{
+      text-align:center;
+      max-width:880px;
+      margin-inline:auto;
+    }
+
+    .visual-feature-title{
+      margin:0 0 8px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(22px, 2.4vw, 36px);
+      line-height:1.35;
+    }
+
+    .visual-feature-desc{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(15px, 1.3vw, 20px);
+      line-height:1.9;
+    }
+
+    .feature-image-zoom{
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+      padding:0;
+      border:0;
+      background:transparent;
+      display:block;
+      cursor:zoom-in;
+      border-radius:calc(var(--radius) + 2px);
+    }
+
+    .feature-image-zoom:focus-visible{
+      outline:4px solid var(--blue-soft);
+      outline-offset:5px;
+    }
+
+    .feature-image-frame{
+      width:100%;
+      aspect-ratio:16 / 9;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:calc(var(--radius) + 2px);
+      box-shadow:0 8px 0 rgba(0,0,0,.16);
+      overflow:hidden;
+      background:#eaf3f8;
+      transform:translateZ(0);
+      display:block;
+    }
+
+    .feature-image-frame picture,
+    .feature-image-frame img{
+      display:block;
+      width:100%;
+      height:100%;
+    }
+
+    .feature-image-frame img{
+      object-fit:cover;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    .feature-image-zoom:hover img{
+      transform:scale(1.01);
+      filter:saturate(1.04);
+    }
+
+    .buy-strip{
+      text-align:center;
+      background:linear-gradient(180deg, #fff8ed, #ffffff);
+    }
+
+    .buy-strip .section-text{
+      margin-inline:auto;
+      max-width:760px;
+    }
+
+    .buy-strip .hero-actions,
+    .activation-actions{
+      margin-top:clamp(14px, 2vw, 22px);
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .activation-card{
+      text-align:center;
+    }
+
+    .activation-card .bullets{
+      text-align:right;
+      max-width:900px;
+      margin-inline:auto;
+    }
+
+    .image-lightbox[hidden]{display:none !important;}
+
+    .image-lightbox{
+      position:fixed;
+      inset:0;
+      z-index:120;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:calc(env(safe-area-inset-top) + 18px) clamp(12px, 4vw, 42px) calc(env(safe-area-inset-bottom) + 18px);
+      background:rgba(0,0,0,.82);
+      backdrop-filter:blur(6px);
+    }
+
+    .image-lightbox-img{
+      display:block;
+      width:min(1120px, 100%);
+      max-height:84dvh;
+      object-fit:contain;
+      border:clamp(3px, .35vw, 5px) solid rgba(255,255,255,.94);
+      border-radius:clamp(16px, 2vw, 28px);
+      background:#fff;
+      box-shadow:0 24px 70px rgba(0,0,0,.45);
+    }
+
+    .image-lightbox-close{
+      position:fixed;
+      inset-block-start:calc(14px + env(safe-area-inset-top));
+      inset-inline-start:clamp(14px, 3vw, 28px);
+      width:clamp(44px, 5vw, 58px);
+      height:clamp(44px, 5vw, 58px);
+      border-radius:50%;
+      border:3px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      font-size:clamp(26px, 3vw, 38px);
+      font-weight:950;
+      line-height:1;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      box-shadow:0 5px 0 rgba(0,0,0,.20);
+    }
+
+    body.lightbox-open{
+      overflow:hidden;
+    }
+
+
     .bottom-nav{
       position:fixed;
       left:0;
@@ -646,7 +837,7 @@
 
         <div class="hero-copy hero-copy-under">
           <h1 class="page-title">لعبة سباق الحروف</h1>
-          <p class="page-lead">تحدي الحروف التنافسي بخريطة تفاعلية وجرس للاعبين مع أكثر من 4000 سؤال جاهز وإمكانية ضافة أسئلة خاصة</p>
+          <p class="page-lead">تحدي الحروف التنافسي بخريطة تفاعلية وجرس للاعبين مع أكثر من 4,000 سؤال جاهز وإمكانية إضافة أسئلتك الخاصة</p>
 
           <div class="hero-actions" data-game-id="horof">
             <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p1829924564" data-game-id="horof" data-state="buy" data-buy-url="https://sandooq-m.com/-/p1829924564" data-play-url="https://horof.sandooq-games.com" data-buy-label="شراء اللعبة" data-play-label="العب">شراء اللعبة</a>
@@ -658,94 +849,109 @@
 
     <main class="content-area">
       <div class="content-inner">
-        <section class="features-grid" aria-label="مميزات لعبة سباق الحروف">
-          <article class="feature-card">
-            <h2 class="feature-title">أكثر من 4000 سؤال جاهز</h2>
-            <p class="feature-desc">كمية هائلة من الأسئلة الجاهزة حسب الحروف وتظهر مباشرة عند اختيار الحرف.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">نمط الأجهزة المتعددة</h2>
-            <p class="feature-desc">شارك اللاعبين برابط أو باركود، وكل لاعب يدخل من جهازه بينما يتحكم المقدم باللعبة من جهازه. وبإمكانك اللعب من جهاز واحد أيضًا.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">جرس لكل لاعب</h2>
-            <p class="feature-desc">كل لاعب يملك زر جرس خاص، وعند الضغط يظهر اسم اللاعب الأسرع ويبدأ المؤقت مباشرة لزيادة الحماس.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">أضف أسئلتك الخاصة</h2>
-            <p class="feature-desc">اكتب أسئلتك وإجاباتك ومحتوى الخلايا داخل اللعبة، وبدّل بسهولة بين الأسئلة الجاهزة وأسئلتك الخاصة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">شاشة عرض مستقلة</h2>
-            <p class="feature-desc">افتح شاشة مخصصة للعرض على التلفاز أو اللابتوب لعرض الخريطة والنتائج بشكل واضح للجميع.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">تعمل من المتصفح</h2>
-            <p class="feature-desc">لا تحتاج تحميل، ولا ملف PDF، ولا برامج إضافية. افتح اللعبة وابدأ اللعب مباشرة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">خريطة تفاعلية متزامنة</h2>
-            <p class="feature-desc">خريطة الحروف والجرس والنتائج والمؤقت تظهر عند جميع اللاعبين في أجهزتهم الخاصة.</p>
-          </article>
-        </section>
-
-        <section class="section-card soft-yellow">
-          <h2 class="section-heading">واجهة تفاعلية حديثة</h2>
-          <p class="section-text">تصميم واضح وسهل الاستخدام يعمل بشكل مريح على الجوال والتابلت والكمبيوتر، مع خريطة تفاعلية متزامنة بين أجهزة اللاعبين وشاشة المقدم.</p>
-        </section>
-
-        <section class="section-card soft-purple">
+        <section class="section-card soft-purple game-idea-card">
           <h2 class="section-heading">فكرة اللعبة</h2>
-          <p class="section-text">يختار الفريقان حرفًا من الخريطة، يظهر السؤال مباشرة، ثم يتسابق اللاعبون على الضغط على الجرس والإجابة قبل انتهاء المؤقت.</p>
-          <ul class="bullets">
-            <li>اختيار الحروف وبدء التحدي بين الفريقين.</li>
-            <li>ظهور السؤال مباشرة من جهاز المقدم.</li>
-            <li>الجرس يحدد اللاعب الأسرع للإجابة.</li>
-          </ul>
+          <p class="section-text">اختر حرفًا من الخريطة، يظهر لك سؤال جاهز، ويتسابق اللاعبون بالضغط على الجرس قبل انتهاء الوقت. الأسرع يجاوب ويكسب النقطة.</p>
         </section>
 
-        <section class="section-card soft-blue" id="video" hidden aria-hidden="true">
-          <h2 class="section-heading">شرح اللعبة بالفيديو</h2>
-          <p class="section-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
-          <div class="video-box" role="img" aria-label="مكان فيديو شرح لعبة سباق الحروف">
-            <div>
-              <div class="play-circle" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+        <section class="visual-features-section" aria-label="مميزات لعبة سباق الحروف">
+          <div class="section-card visual-features-head">
+            <h2 class="section-heading">كل شيء جاهز لتحدي حماسي</h2>
+            <p class="section-text">أسئلة جاهزة، لعب من جهازك أو مع أجهزة اللاعبين، جرس تفاعلي، وتخصيص كامل للتحدي.</p>
+          </div>
+
+          <div class="visual-features-list">
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">أكثر من 4,000 سؤال جاهز</h3>
+                <p class="visual-feature-desc">ابدأ اللعب فورًا، والأسئلة تظهر حسب الحرف المختار، وتقدر تغيّر السؤال بضغطة.</p>
               </div>
-              <p class="video-title">فيديو الشرح قريبًا</p>
-              <p class="video-note">لن يتم تحميل أي فيديو الآن حتى تبقى الصفحة سريعة وخفيفة.</p>
-            </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة أكثر من 4000 سؤال جاهز في لعبة سباق الحروف" data-full="horof-feature-ready-questions.PNG">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="horof-feature-ready-questions.webp" type="image/webp">
+                    <img src="horof-feature-ready-questions.PNG" alt="أكثر من 4000 سؤال جاهز في لعبة سباق الحروف" width="1536" height="864" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">العب مع أجهزة متعددة أو من جهازك فقط</h3>
+                <p class="visual-feature-desc">شغّل اللعبة من جهازك فقط، أو أضف اللاعبين من جوالاتهم عبر الرابط أو الباركود — بدون تحميل وبدون شاشة تلفزيون.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة اللعب مع أجهزة متعددة أو من جهازك فقط في لعبة سباق الحروف" data-full="horof-feature-multidevice.PNG">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="horof-feature-multidevice.webp" type="image/webp">
+                    <img src="horof-feature-multidevice.PNG" alt="اللعب مع أجهزة متعددة أو من جهازك فقط في لعبة سباق الحروف" width="1536" height="864" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">جرس يشعل المنافسة</h3>
+                <p class="visual-feature-desc">أول لاعب يضغط يظهر اسمه للجميع، وتبدأ لحظة التحدي والحماس.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة جرس يشعل المنافسة في لعبة سباق الحروف" data-full="horof-feature-buzzer.PNG">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="horof-feature-buzzer.webp" type="image/webp">
+                    <img src="horof-feature-buzzer.PNG" alt="جرس يشعل المنافسة في لعبة سباق الحروف" width="1536" height="864" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">أسئلتك أنت داخل اللعبة</h3>
+                <p class="visual-feature-desc">أضف أسئلتك وأجوبتك، وخلّ التحدي مناسبًا لأهلك، أصحابك أو مناسبتك.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة إضافة الأسئلة الخاصة في لعبة سباق الحروف" data-full="horof-feature-custom-questions.PNG">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="horof-feature-custom-questions.webp" type="image/webp">
+                    <img src="horof-feature-custom-questions.PNG" alt="إضافة الأسئلة الخاصة في لعبة سباق الحروف" width="1536" height="864" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
           </div>
         </section>
 
-        <section class="section-card soft-mint">
-          <h2 class="section-heading">لماذا تختار سباق الحروف؟</h2>
-          <ul class="bullets">
-            <li>مناسبة للتجمعات العائلية وجلسات الأصدقاء والفعاليات ومناسبات الأعياد.</li>
-            <li>تعمل أونلاين من المتصفح بدون تحميل أو تعقيد.</li>
-            <li>تجربة منظمة للمقدم واللاعبين عبر أجهزة منفصلة أو جهاز واحد.</li>
-            <li>أسئلة جاهزة مع إمكانية إضافة أسئلتك الخاصة.</li>
-          </ul>
+        <section class="section-card buy-strip" aria-label="شراء لعبة سباق الحروف">
+          <h2 class="section-heading">جاهز تبدأ التحدي؟</h2>
+          <p class="section-text">لعبة سباق الحروف جاهزة للعب مباشرة من المتصفح بدون تحميل.</p>
+          <div class="hero-actions" data-game-id="horof">
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p1829924564" data-game-id="horof" data-state="buy" data-buy-url="https://sandooq-m.com/-/p1829924564" data-play-url="https://horof.sandooq-games.com" data-buy-label="شراء لعبة سباق الحروف" data-play-label="العب">شراء لعبة سباق الحروف</a>
+          </div>
         </section>
 
-        <section class="section-card">
-          <h2 class="section-heading">طريقة التفعيل</h2>
+        <section class="section-card activation-card">
+          <h2 class="section-heading">طريقة التفعيل بعد الشراء</h2>
+          <p class="section-text">بعد الشراء، فعّل اللعبة على حسابك خلال خطوات بسيطة.</p>
           <ul class="bullets">
-            <li>ادخل إلى sandooq-games.com ثم أنشئ حسابًا جديدًا أو سجّل الدخول.</li>
+            <li>ادخل إلى sandooq-games.com وأنشئ حسابًا جديدًا أو سجّل الدخول.</li>
             <li>افتح صفحة تفعيل الألعاب من الشريط السفلي.</li>
             <li>أدخل رقم الجوال المستخدم في عملية الشراء لإظهار اللعبة على حسابك.</li>
             <li>بعد التفعيل ادخل اللعبة وابدأ التحدي مع أصدقائك أو عائلتك.</li>
           </ul>
+          <div class="activation-actions">
+            <a class="btn btn-secondary" href="purchase-activation.html">الذهاب إلى تفعيل الألعاب</a>
+          </div>
         </section>
-
       </div>
     </main>
+  </div>
+
+
+  <div class="image-lightbox" id="imageLightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="تكبير صورة الميزة">
+    <button class="image-lightbox-close" type="button" id="imageLightboxClose" aria-label="إغلاق الصورة">×</button>
+    <img class="image-lightbox-img" id="imageLightboxImg" src="" alt="">
   </div>
 
   <nav class="bottom-nav" aria-label="التنقل السفلي">
@@ -990,25 +1196,28 @@
     }
 
     function setMainCtaState() {
-      const cta = document.querySelector('.js-game-cta[data-game-id="horof"]');
-      if (!cta) return;
+      const ctas = document.querySelectorAll('.js-game-cta[data-game-id="horof"]');
+      if (!ctas.length) return;
       const ownedGames = readOwnedGames();
       const isOwned = ownedGames.has(CURRENT_GAME_ID);
-      const buyLabel = cta.dataset.buyLabel || 'شراء اللعبة';
-      const playLabel = cta.dataset.playLabel || 'العب';
-      const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
-      const playUrl = cta.dataset.playUrl || '#';
 
-      if (isOwned) {
-        cta.dataset.state = 'play';
-        cta.dataset.basePlayUrl = playUrl;
-        cta.setAttribute('href', buildGamePlayUrl(playUrl));
-        cta.innerHTML = `${playIconMarkup()}<span>${playLabel}</span>`;
-      } else {
-        cta.dataset.state = 'buy';
-        cta.setAttribute('href', buyUrl);
-        cta.textContent = buyLabel;
-      }
+      ctas.forEach(cta => {
+        const buyLabel = cta.dataset.buyLabel || 'شراء اللعبة';
+        const playLabel = cta.dataset.playLabel || 'العب';
+        const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
+        const playUrl = cta.dataset.playUrl || '#';
+
+        if (isOwned) {
+          cta.dataset.state = 'play';
+          cta.dataset.basePlayUrl = playUrl;
+          cta.setAttribute('href', buildGamePlayUrl(playUrl));
+          cta.innerHTML = `${playIconMarkup()}<span>${playLabel}</span>`;
+        } else {
+          cta.dataset.state = 'buy';
+          cta.setAttribute('href', buyUrl);
+          cta.textContent = buyLabel;
+        }
+      });
     }
 
     refreshLoginChip();
@@ -1032,6 +1241,54 @@
       const playUrl = cta.dataset.basePlayUrl || cta.dataset.playUrl || cta.getAttribute('href') || '#';
       cta.setAttribute('href', buildGamePlayUrl(playUrl));
     }, true);
+
+
+    const imageLightbox = document.getElementById('imageLightbox');
+    const imageLightboxImg = document.getElementById('imageLightboxImg');
+    const imageLightboxClose = document.getElementById('imageLightboxClose');
+    let lastImageZoomButton = null;
+
+    function openImageLightbox(button) {
+      if (!imageLightbox || !imageLightboxImg || !button) return;
+      const img = button.querySelector('img');
+      if (!img) return;
+      lastImageZoomButton = button;
+      imageLightboxImg.src = button.dataset.full || img.currentSrc || img.src;
+      imageLightboxImg.alt = img.alt || '';
+      imageLightbox.hidden = false;
+      imageLightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      if (imageLightboxClose) imageLightboxClose.focus({ preventScroll:true });
+    }
+
+    function closeImageLightbox() {
+      if (!imageLightbox || !imageLightboxImg) return;
+      imageLightbox.hidden = true;
+      imageLightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      imageLightboxImg.src = '';
+      if (lastImageZoomButton) lastImageZoomButton.focus({ preventScroll:true });
+    }
+
+    document.querySelectorAll('.feature-image-zoom').forEach(button => {
+      button.addEventListener('click', () => openImageLightbox(button));
+    });
+
+    if (imageLightboxClose) {
+      imageLightboxClose.addEventListener('click', closeImageLightbox);
+    }
+
+    if (imageLightbox) {
+      imageLightbox.addEventListener('click', event => {
+        if (event.target === imageLightbox) closeImageLightbox();
+      });
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && imageLightbox && !imageLightbox.hidden) {
+        closeImageLightbox();
+      }
+    });
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
@@ -1064,6 +1321,6 @@
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
     });
   </script>
-  <!-- VERSION: horof.html — new-salla-buy-link-v1 -->
+  <!-- VERSION: horof.html — visual-features-v2 -->
 </body>
 </html>
