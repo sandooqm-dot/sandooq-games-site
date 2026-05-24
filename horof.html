@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>لعبة سباق الحروف | صندوق المسابقات</title>
-  <meta name="description" content="لعبة سباق الحروف من صندوق المسابقات: تحدي حروف تفاعلي، أكثر من 4,000 سؤال جاهز، جرس للاعبين، وإمكانية إضافة أسئلتك الخاصة." />
+  <meta name="description" content="لعبة سباق الحروف من صندوق المسابقات: لعبة جماعية تفاعلية، أكثر من 4,000 سؤال جاهز، جرس للاعبين، وإمكانية إضافة أسئلتك الخاصة." />
   <meta name="theme-color" content="#075c82" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-82VNBCY400"></script>
@@ -451,6 +451,23 @@
       text-align:center;
     }
 
+    .game-idea-card .game-idea-bullets{
+      max-width:900px;
+      margin-inline:auto;
+      text-align:right;
+    }
+
+    .game-idea-card .game-idea-bullets li{
+      font-size:clamp(15px, 1.35vw, 20px);
+      font-weight:820;
+    }
+
+    .game-idea-card .idea-bullets{
+      max-width:900px;
+      margin:12px auto 0;
+      text-align:right;
+    }
+
     .visual-features-section{
       display:grid;
       gap:clamp(16px, 2.4vw, 28px);
@@ -841,7 +858,6 @@
 
           <div class="hero-actions" data-game-id="horof">
             <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p1829924564" data-game-id="horof" data-state="buy" data-buy-url="https://sandooq-m.com/-/p1829924564" data-play-url="https://horof.sandooq-games.com" data-buy-label="شراء اللعبة" data-play-label="العب">شراء اللعبة</a>
-            <a class="btn btn-secondary" href="#video" hidden aria-hidden="true" tabindex="-1" style="display:none !important;" data-video-button-hidden="1">شرح اللعبة</a>
           </div>
         </div>
       </div>
@@ -851,34 +867,26 @@
       <div class="content-inner">
         <section class="section-card soft-purple game-idea-card">
           <h2 class="section-heading">فكرة اللعبة</h2>
-          <p class="section-text">اختر حرفًا من الخريطة، يظهر لك سؤال جاهز، ويتسابق اللاعبون بالضغط على الجرس قبل انتهاء الوقت. الأسرع يجاوب ويكسب النقطة.</p>
+          <ul class="bullets idea-bullets">
+            <li>يختار الفريقان حرفًا من الخريطة.</li>
+            <li>يظهر السؤال مباشرة.</li>
+            <li>يتسابق اللاعبون بالضغط على الجرس والإجابة قبل الفريق الآخر وانتهاء المؤقت.</li>
+          </ul>
         </section>
 
         <section class="visual-features-section" aria-label="مميزات لعبة سباق الحروف">
-          <div class="section-card visual-features-head">
-            <h2 class="section-heading">كل شيء جاهز لتحدي حماسي</h2>
-            <p class="section-text">أسئلة جاهزة، لعب من جهازك أو مع أجهزة اللاعبين، جرس تفاعلي، وتخصيص كامل للتحدي.</p>
-          </div>
-
           <div class="visual-features-list">
             <article class="visual-feature-card">
               <div class="visual-feature-copy">
                 <h3 class="visual-feature-title">أكثر من 4,000 سؤال جاهز</h3>
                 <p class="visual-feature-desc">ابدأ اللعب فورًا، والأسئلة تظهر حسب الحرف المختار، وتقدر تغيّر السؤال بضغطة.</p>
               </div>
-              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة أكثر من 4000 سؤال جاهز في لعبة سباق الحروف" data-full-base="horof-feature-ready-questions">
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة أكثر من 4000 سؤال جاهز في لعبة سباق الحروف">
                 <span class="feature-image-frame">
-                  <img
-                    src="horof-feature-ready-questions.webp?v=5"
-                    data-fallbacks="horof-feature-ready-questions.PNG?v=5|horof-feature-ready-questions.png?v=5|horof-feature-ready-questions.jpeg?v=5|horof-feature-ready-questions.jpg?v=5|horof-feature-ready-questions.JPEG?v=5|horof-feature-ready-questions.JPG?v=5"
-                    data-full-base="horof-feature-ready-questions"
-                    alt="أكثر من 4000 سؤال جاهز في لعبة سباق الحروف"
-                    width="1536"
-                    height="864"
-                    loading="lazy"
-                    decoding="async"
-                    onerror="this.dataset.fallbackIndex=(+(this.dataset.fallbackIndex||0)+1);var f=(this.dataset.fallbacks||'').split('|');var i=+this.dataset.fallbackIndex-1;if(i<f.length){this.src=f[i];}else{this.onerror=null;}"
-                  >
+                  <picture>
+                    <source srcset="horof-feature-ready-questions.webp" type="image/webp">
+                    <img src="horof-feature-ready-questions.PNG" alt="أكثر من 4000 سؤال جاهز في لعبة سباق الحروف" width="1536" height="864" loading="lazy" decoding="async">
+                  </picture>
                 </span>
               </button>
             </article>
@@ -886,21 +894,14 @@
             <article class="visual-feature-card">
               <div class="visual-feature-copy">
                 <h3 class="visual-feature-title">العب مع أجهزة متعددة أو من جهازك فقط</h3>
-                <p class="visual-feature-desc">شغّل اللعبة من جهازك فقط، أو أضف اللاعبين من جوالاتهم عبر الرابط أو الباركود — بدون تحميل وبدون شاشة تلفزيون.</p>
+                <p class="visual-feature-desc">تشتغل من جهازك أو مع أجهزة اللاعبين، والتلفزيون اختياري للعرض إذا رغبت — بدون تحميل.</p>
               </div>
-              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة اللعب مع أجهزة متعددة أو من جهازك فقط في لعبة سباق الحروف" data-full-base="horof-feature-multidevice">
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة اللعب مع أجهزة متعددة أو من جهازك فقط في لعبة سباق الحروف">
                 <span class="feature-image-frame">
-                  <img
-                    src="horof-feature-multidevice.webp?v=5"
-                    data-fallbacks="horof-feature-multidevice.PNG?v=5|horof-feature-multidevice.png?v=5|horof-feature-multidevice.jpeg?v=5|horof-feature-multidevice.jpg?v=5|horof-feature-multidevice.JPEG?v=5|horof-feature-multidevice.JPG?v=5"
-                    data-full-base="horof-feature-multidevice"
-                    alt="اللعب مع أجهزة متعددة أو من جهازك فقط في لعبة سباق الحروف"
-                    width="1536"
-                    height="864"
-                    loading="lazy"
-                    decoding="async"
-                    onerror="this.dataset.fallbackIndex=(+(this.dataset.fallbackIndex||0)+1);var f=(this.dataset.fallbacks||'').split('|');var i=+this.dataset.fallbackIndex-1;if(i<f.length){this.src=f[i];}else{this.onerror=null;}"
-                  >
+                  <picture>
+                    <source srcset="horof-feature-multidevice.webp" type="image/webp">
+                    <img src="horof-feature-multidevice.PNG" alt="اللعب مع أجهزة متعددة أو من جهازك فقط في لعبة سباق الحروف" width="1536" height="864" loading="lazy" decoding="async">
+                  </picture>
                 </span>
               </button>
             </article>
@@ -908,21 +909,14 @@
             <article class="visual-feature-card">
               <div class="visual-feature-copy">
                 <h3 class="visual-feature-title">جرس يشعل المنافسة</h3>
-                <p class="visual-feature-desc">أول لاعب يضغط يظهر اسمه للجميع، وتبدأ لحظة التحدي والحماس.</p>
+                <p class="visual-feature-desc">أول ضغطة تطلق صوت الجرس وتُظهر اسم اللاعب الأسرع للجميع، وتبدأ لحظة التحدي.</p>
               </div>
-              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة جرس يشعل المنافسة في لعبة سباق الحروف" data-full-base="horof-feature-buzzer">
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة جرس يشعل المنافسة في لعبة سباق الحروف">
                 <span class="feature-image-frame">
-                  <img
-                    src="horof-feature-buzzer.webp?v=5"
-                    data-fallbacks="horof-feature-buzzer.PNG?v=5|horof-feature-buzzer.png?v=5|horof-feature-buzzer.jpeg?v=5|horof-feature-buzzer.jpg?v=5|horof-feature-buzzer.JPEG?v=5|horof-feature-buzzer.JPG?v=5"
-                    data-full-base="horof-feature-buzzer"
-                    alt="جرس يشعل المنافسة في لعبة سباق الحروف"
-                    width="1536"
-                    height="864"
-                    loading="lazy"
-                    decoding="async"
-                    onerror="this.dataset.fallbackIndex=(+(this.dataset.fallbackIndex||0)+1);var f=(this.dataset.fallbacks||'').split('|');var i=+this.dataset.fallbackIndex-1;if(i<f.length){this.src=f[i];}else{this.onerror=null;}"
-                  >
+                  <picture>
+                    <source srcset="horof-feature-buzzer.webp" type="image/webp">
+                    <img src="horof-feature-buzzer.PNG" alt="جرس يشعل المنافسة في لعبة سباق الحروف" width="1536" height="864" loading="lazy" decoding="async">
+                  </picture>
                 </span>
               </button>
             </article>
@@ -932,19 +926,12 @@
                 <h3 class="visual-feature-title">أسئلتك أنت داخل اللعبة</h3>
                 <p class="visual-feature-desc">أضف أسئلتك وأجوبتك، وخلّ التحدي مناسبًا لأهلك، أصحابك أو مناسبتك.</p>
               </div>
-              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة إضافة الأسئلة الخاصة في لعبة سباق الحروف" data-full-base="horof-feature-custom-questions">
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة إضافة الأسئلة الخاصة في لعبة سباق الحروف">
                 <span class="feature-image-frame">
-                  <img
-                    src="horof-feature-custom-questions.webp?v=5"
-                    data-fallbacks="horof-feature-custom-questions.PNG?v=5|horof-feature-custom-questions.png?v=5|horof-feature-custom-questions.jpeg?v=5|horof-feature-custom-questions.jpg?v=5|horof-feature-custom-questions.JPEG?v=5|horof-feature-custom-questions.JPG?v=5"
-                    data-full-base="horof-feature-custom-questions"
-                    alt="إضافة الأسئلة الخاصة في لعبة سباق الحروف"
-                    width="1536"
-                    height="864"
-                    loading="lazy"
-                    decoding="async"
-                    onerror="this.dataset.fallbackIndex=(+(this.dataset.fallbackIndex||0)+1);var f=(this.dataset.fallbacks||'').split('|');var i=+this.dataset.fallbackIndex-1;if(i<f.length){this.src=f[i];}else{this.onerror=null;}"
-                  >
+                  <picture>
+                    <source srcset="horof-feature-custom-questions.webp" type="image/webp">
+                    <img src="horof-feature-custom-questions.PNG" alt="إضافة الأسئلة الخاصة في لعبة سباق الحروف" width="1536" height="864" loading="lazy" decoding="async">
+                  </picture>
                 </span>
               </button>
             </article>
@@ -976,11 +963,11 @@
     </main>
   </div>
 
-
   <div class="image-lightbox" id="imageLightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="تكبير صورة الميزة">
     <button class="image-lightbox-close" type="button" id="imageLightboxClose" aria-label="إغلاق الصورة">×</button>
     <img class="image-lightbox-img" id="imageLightboxImg" src="" alt="">
   </div>
+
 
   <nav class="bottom-nav" aria-label="التنقل السفلي">
     <div class="bottom-nav-inner">
@@ -1276,91 +1263,13 @@
     const imageLightboxClose = document.getElementById('imageLightboxClose');
     let lastImageZoomButton = null;
 
-    function uniqueImageSources(list) {
-      const seen = new Set();
-      return list
-        .map(value => String(value || '').trim())
-        .filter(Boolean)
-        .filter(value => {
-          if (seen.has(value)) return false;
-          seen.add(value);
-          return true;
-        });
-    }
-
-    function getFeatureImageSources(img, preferredSrc) {
-      if (!img) return [];
-      const baseName = img.dataset.fullBase || img.closest('.feature-image-zoom')?.dataset.fullBase || '';
-      const fallbacks = String(img.dataset.fallbacks || '').split('|').filter(Boolean);
-      const generatedFallbacks = baseName
-        ? [
-            `${baseName}.webp?v=6`,
-            `${baseName}.WEBP?v=6`,
-            `${baseName}.PNG?v=6`,
-            `${baseName}.png?v=6`,
-            `${baseName}.jpeg?v=6`,
-            `${baseName}.jpg?v=6`,
-            `${baseName}.JPEG?v=6`,
-            `${baseName}.JPG?v=6`
-          ]
-        : [];
-
-      return uniqueImageSources([
-        preferredSrc,
-        img.currentSrc,
-        img.getAttribute('src'),
-        img.src,
-        ...fallbacks,
-        ...generatedFallbacks
-      ]);
-    }
-
-    function loadImageFromList(img, srcList) {
-      if (!img) return;
-      const sources = uniqueImageSources(srcList);
-      if (!sources.length) return;
-
-      img.dataset.sources = sources.join('|');
-      img.dataset.sourceIndex = '0';
-      img.onerror = function () {
-        const allSources = String(this.dataset.sources || '').split('|').filter(Boolean);
-        const nextIndex = Number(this.dataset.sourceIndex || '0') + 1;
-        if (nextIndex < allSources.length) {
-          this.dataset.sourceIndex = String(nextIndex);
-          this.src = allSources[nextIndex];
-        } else {
-          this.onerror = null;
-        }
-      };
-
-      if (img.getAttribute('src') !== sources[0]) {
-        img.src = sources[0];
-      }
-
-      if (img.complete && img.naturalWidth === 0) {
-        img.onerror();
-      }
-    }
-
-    document.querySelectorAll('.feature-image-zoom img').forEach(img => {
-      loadImageFromList(img, getFeatureImageSources(img));
-    });
-
     function openImageLightbox(button) {
       if (!imageLightbox || !imageLightboxImg || !button) return;
       const img = button.querySelector('img');
       if (!img) return;
-
-      const preferredSrc = img.naturalWidth > 0
-        ? (img.currentSrc || img.getAttribute('src') || img.src)
-        : (img.dataset.fullSrc || img.currentSrc || img.getAttribute('src') || img.src);
-
-      const sources = getFeatureImageSources(img, preferredSrc);
-      if (!sources.length) return;
-
       lastImageZoomButton = button;
+      imageLightboxImg.src = img.currentSrc || img.src;
       imageLightboxImg.alt = img.alt || '';
-      loadImageFromList(imageLightboxImg, sources);
       imageLightbox.hidden = false;
       imageLightbox.setAttribute('aria-hidden', 'false');
       document.body.classList.add('lightbox-open');
@@ -1372,10 +1281,7 @@
       imageLightbox.hidden = true;
       imageLightbox.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('lightbox-open');
-      imageLightboxImg.onerror = null;
-      imageLightboxImg.removeAttribute('src');
-      imageLightboxImg.removeAttribute('data-sources');
-      imageLightboxImg.removeAttribute('data-source-index');
+      imageLightboxImg.src = '';
       if (lastImageZoomButton) lastImageZoomButton.focus({ preventScroll:true });
     }
 
@@ -1430,6 +1336,6 @@
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
     });
   </script>
-  <!-- VERSION: horof.html — visual-features-v5-robust-image-fallbacks -->
+  <!-- VERSION: horof.html — visual-features-v6-copy-final -->
 </body>
 </html>
