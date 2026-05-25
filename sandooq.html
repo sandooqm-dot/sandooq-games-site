@@ -421,6 +421,206 @@
       box-shadow:0 0 0 3px rgba(255,107,26,.12);
     }
 
+
+
+    /* قسم المميزات المصورة */
+    .game-idea-card{
+      text-align:center;
+    }
+
+    .game-idea-card .bullets{
+      text-align:right;
+      max-width:900px;
+      margin-inline:auto;
+    }
+
+    .visual-features-section{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-features-list{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-feature-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.4vw, 30px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      display:grid;
+      gap:clamp(12px, 1.8vw, 20px);
+      overflow:hidden;
+    }
+
+    .visual-feature-card:nth-child(1){background:#fff8ed;}
+    .visual-feature-card:nth-child(2){background:#f4eaff;}
+    .visual-feature-card:nth-child(3){background:#eaf8ff;}
+
+    .visual-feature-copy{
+      text-align:center;
+      max-width:880px;
+      margin-inline:auto;
+    }
+
+    .visual-feature-title{
+      margin:0 0 8px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(22px, 2.4vw, 36px);
+      line-height:1.35;
+    }
+
+    .visual-feature-desc{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(15px, 1.3vw, 20px);
+      line-height:1.9;
+    }
+
+    .feature-image-zoom{
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+      padding:0;
+      border:0;
+      background:transparent;
+      display:block;
+      cursor:zoom-in;
+      border-radius:calc(var(--radius) + 2px);
+    }
+
+    .feature-image-zoom:focus-visible{
+      outline:4px solid var(--blue-soft);
+      outline-offset:5px;
+    }
+
+    .feature-image-frame{
+      width:100%;
+      aspect-ratio:16 / 9;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:calc(var(--radius) + 2px);
+      box-shadow:0 8px 0 rgba(0,0,0,.16);
+      overflow:hidden;
+      background:#eaf3f8;
+      transform:translateZ(0);
+      display:block;
+    }
+
+    .feature-image-frame picture,
+    .feature-image-frame img{
+      display:block;
+      width:100%;
+      height:100%;
+    }
+
+    .feature-image-frame img{
+      object-fit:cover;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    .feature-image-zoom:hover img{
+      transform:scale(1.01);
+      filter:saturate(1.04);
+    }
+
+    .buy-strip{
+      text-align:center;
+      background:linear-gradient(180deg, #fff8ed, #ffffff);
+    }
+
+    .buy-strip .section-text{
+      margin-inline:auto;
+      max-width:760px;
+    }
+
+    .buy-strip .hero-actions,
+    .activation-actions{
+      margin-top:clamp(14px, 2vw, 22px);
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .operation-card{
+      text-align:center;
+    }
+
+    .operation-kicker{
+      margin:0 0 8px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(17px, 1.55vw, 24px);
+      line-height:1.6;
+    }
+
+    .operation-card .section-text{
+      max-width:900px;
+      margin-inline:auto;
+    }
+
+    .activation-card{
+      text-align:center;
+    }
+
+    .activation-card .bullets{
+      text-align:right;
+      max-width:900px;
+      margin-inline:auto;
+    }
+
+    .image-lightbox[hidden]{display:none !important;}
+
+    .image-lightbox{
+      position:fixed;
+      inset:0;
+      z-index:120;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:calc(env(safe-area-inset-top) + 18px) clamp(12px, 4vw, 42px) calc(env(safe-area-inset-bottom) + 18px);
+      background:rgba(0,0,0,.82);
+      backdrop-filter:blur(6px);
+    }
+
+    .image-lightbox-img{
+      display:block;
+      width:min(1120px, 100%);
+      max-height:84dvh;
+      object-fit:contain;
+      border:clamp(3px, .35vw, 5px) solid rgba(255,255,255,.94);
+      border-radius:clamp(16px, 2vw, 28px);
+      background:#fff;
+      box-shadow:0 24px 70px rgba(0,0,0,.45);
+    }
+
+    .image-lightbox-close{
+      position:fixed;
+      inset-block-start:calc(14px + env(safe-area-inset-top));
+      inset-inline-start:clamp(14px, 3vw, 28px);
+      width:clamp(44px, 5vw, 58px);
+      height:clamp(44px, 5vw, 58px);
+      border-radius:50%;
+      border:3px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      font-size:clamp(26px, 3vw, 38px);
+      font-weight:950;
+      line-height:1;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      box-shadow:0 5px 0 rgba(0,0,0,.20);
+    }
+
+    body.lightbox-open{
+      overflow:hidden;
+    }
+
     .bottom-nav{
       position:fixed;
       left:0;
@@ -602,85 +802,100 @@
 
     <main class="content-area">
       <div class="content-inner">
-        <section class="features-grid" aria-label="مميزات لعبة صندوق المسابقات">
-          <article class="feature-card">
-            <h2 class="feature-title">طريقة التشغيل</h2>
-            <p class="feature-desc">تعمل عبر البوربوينت<br>افتح ملف اللعبة داخل PowerPoint، واضغط بدء العرض وابدأ المسابقة مباشرة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">أقسام متنوعة</h2>
-            <p class="feature-desc">تجمع اللعبة بين الأسئلة الثقافية والدينية والرياضية وأعلام الدول وخمن اسم الدولة وخمن الشعار الصحيح وخمن المَثل بدون كلام.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">120 سؤالًا جاهزاً</h2>
-            <p class="feature-desc">كمية مناسبة من الأسئلة والتحديات الجاهزة تجعل المسابقة سريعة التحضير ومتنوعة في كل جولة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">نظام فرق ونقاط</h2>
-            <p class="feature-desc">قسّم اللاعبين إلى فرقين واجمع النقاط مع كل إجابة صحيحة حتى نهاية التحدي.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">سهلة العرض للجميع</h2>
-            <p class="feature-desc">شغّل اللعبة من جهازك واعرضها على شاشة أو تلفاز ليستمتع الجميع بأجواء المسابقة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">تعمل على مختلف الأجهزة</h2>
-            <p class="feature-desc">يمكن تشغيلها من الجوال أو التابلت أو الكمبيوتر ثم عرضها بسهولة على الشاشة.</p>
-          </article>
-        </section>
-
-        <section class="section-card soft-purple">
+        <section class="section-card soft-purple game-idea-card">
           <h2 class="section-heading">فكرة اللعبة</h2>
-          <p class="section-text">يختار المقدم أحد أقسام صندوق المسابقات ثم تبدأ الفرق بالإجابة وجمع النقاط. كل قسم يعطي جواً مختلفاً، بين أسئلة مباشرة، أعلام، شعارات، أمثال، وتحديات جماعية.</p>
+          <p class="section-text">مسابقة واحدة تجمع أكثر من جو داخل نفس العرض.</p>
           <ul class="bullets">
-            <li>اختيار قسم من أقسام المسابقة.</li>
-            <li>ظهور السؤال أو التحدي داخل العرض.</li>
-            <li>إجابة الفرق وجمع النقاط.</li>
-            <li>الانتقال بين الأقسام حتى نهاية اللعبة.</li>
+            <li>جولات معرفة، ملاحظة، شعارات، أعلام، وتمثيل بدون كلام.</li>
+            <li>كل قسم يغيّر إيقاع اللعب ويكسر تكرار الأسئلة التقليدية.</li>
+            <li>الفرق تتنافس وتجمع النقاط إلى نهاية المسابقة.</li>
           </ul>
         </section>
 
-        <section class="section-card soft-blue" id="video" hidden style="display:none !important;">
-          <h2 class="section-heading">شرح اللعبة بالفيديو</h2>
-          <p class="section-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
-          <div class="video-box" role="img" aria-label="مكان فيديو شرح لعبة صندوق المسابقات">
-            <div>
-              <div class="play-circle" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+        <section class="visual-features-section" aria-label="مميزات لعبة صندوق المسابقات">
+          <div class="visual-features-list">
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">كل جولة لها طابع مختلف</h3>
+                <p class="visual-feature-desc">مرة سؤال ثقافي، مرة رياضي، مرة شعار، ومرة تحدي بدون كلام؛ التنوع يخلي اللاعبين ينتظرون نوع الجولة القادمة بدل ما يعرفون النمط من البداية.</p>
               </div>
-              <p class="video-title">فيديو الشرح قريبًا</p>
-              <p class="video-note">لن يتم تحميل أي فيديو الآن حتى تبقى الصفحة سريعة وخفيفة.</p>
-            </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة اختيار نوع السؤال في لعبة صندوق المسابقات">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="sandooq-feature-categories.webp" type="image/webp">
+                    <img src="sandooq-feature-categories.PNG" data-fallbacks="sandooq-feature-categories.PNG|sandooq-feature-categories.png|sandooq-feature-categories.jpeg|sandooq-feature-categories.jpg|sandooq-feature-categories.JPG|sandooq-feature-categories.JPEG" alt="شاشة اختيار نوع السؤال في لعبة صندوق المسابقات" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">السؤال واضح… والوقت يرفع الحماس</h3>
+                <p class="visual-feature-desc">السؤال يظهر أمام الجميع مع اختيارات مباشرة ومؤقت، فتبدأ لحظة النقاش السريع بين الفريق قبل انتهاء الوقت.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة سؤال ديني في لعبة صندوق المسابقات">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="sandooq-feature-question.webp" type="image/webp">
+                    <img src="sandooq-feature-question.PNG" data-fallbacks="sandooq-feature-question.PNG|sandooq-feature-question.png|sandooq-feature-question.jpeg|sandooq-feature-question.jpg|sandooq-feature-question.JPG|sandooq-feature-question.JPEG" alt="سؤال ديني مع اختيارات ومؤقت في لعبة صندوق المسابقات" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">عينك تسبق جوابك</h3>
+                <p class="visual-feature-desc">في تحدي خمن الشعار، ما يكفي تعرف العلامة؛ لازم تلاحظ الفرق بسرعة وتختار الشعار الصحيح قبل ما ينتهي الوقت.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة خمن الشعار الصحيح في لعبة صندوق المسابقات">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="sandooq-feature-logo.webp" type="image/webp">
+                    <img src="sandooq-feature-logo.PNG" data-fallbacks="sandooq-feature-logo.PNG|sandooq-feature-logo.png|sandooq-feature-logo.jpeg|sandooq-feature-logo.jpg|sandooq-feature-logo.JPG|sandooq-feature-logo.JPEG" alt="تحدي خمن الشعار الصحيح في لعبة صندوق المسابقات" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
           </div>
         </section>
 
-        <section class="section-card soft-mint">
-          <h2 class="section-heading">لماذا تختار صندوق المسابقات؟</h2>
-          <ul class="bullets">
-            <li>لعبة مسابقات جاهزة وسهلة التشغيل.</li>
-            <li>تجمع أكثر من نوع تحدي داخل لعبة واحدة.</li>
-            <li>مناسبة للتجمعات، والسهرات، والرحلات، والفعاليات.</li>
-            <li>أقسام متنوعة تمنع التكرار وتزيد متعة اللعب.</li>
-            <li>تجربة واضحة ومناسبة للعرض على شاشة أمام الجميع.</li>
-          </ul>
+        <section class="section-card buy-strip" aria-label="شراء لعبة صندوق المسابقات">
+          <h2 class="section-heading">جاهز تبدأ المسابقة؟</h2>
+          <p class="section-text">خذ مكان المقدم، افتح أول جولة، وخلي الشاشة تجمع الفرق على التحدي.</p>
+          <div class="hero-actions" data-game-id="sandooq">
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p69990351" data-game-id="sandooq" data-state="buy" data-buy-url="https://sandooq-m.com/-/p69990351" data-play-url="https://game2.sandooq-games.com/start.html?v=1774023618302" data-buy-label="شراء لعبة صندوق المسابقات" data-play-label="العب"><span class="cta-label">شراء لعبة صندوق المسابقات</span></a>
+          </div>
         </section>
 
-        <section class="section-card">
-          <h2 class="section-heading">طريقة التفعيل</h2>
+        <section class="section-card operation-card">
+          <h2 class="section-heading">طريقة التشغيل</h2>
+          <p class="operation-kicker">تعمل عبر البوربوينت</p>
+          <p class="section-text">افتح ملف اللعبة داخل PowerPoint، واضغط بدء العرض، ثم اختر نوع السؤال وابدأ المسابقة مباشرة.</p>
+        </section>
+
+        <section class="section-card activation-card">
+          <h2 class="section-heading">طريقة التفعيل بعد الشراء</h2>
+          <p class="section-text">بعد الشراء، فعّل اللعبة على حسابك خلال خطوات بسيطة.</p>
           <ul class="bullets">
-            <li>ادخل إلى <strong>sandooq-games.com</strong> ثم أنشئ حسابًا جديدًا أو سجّل الدخول.</li>
+            <li>ادخل إلى sandooq-games.com وأنشئ حسابًا جديدًا أو سجّل الدخول.</li>
             <li>افتح صفحة تفعيل الألعاب من الشريط السفلي.</li>
             <li>أدخل رقم الجوال المستخدم في عملية الشراء لإظهار اللعبة على حسابك.</li>
             <li>بعد التفعيل ادخل اللعبة وابدأ التحدي مع أصدقائك أو عائلتك.</li>
           </ul>
+          <div class="activation-actions">
+            <a class="btn btn-secondary" href="purchase-activation.html">الذهاب إلى تفعيل الألعاب</a>
+          </div>
         </section>
       </div>
     </main>
+  </div>
+
+
+  <div class="image-lightbox" id="imageLightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="تكبير صورة الميزة">
+    <button class="image-lightbox-close" type="button" id="imageLightboxClose" aria-label="إغلاق الصورة">×</button>
+    <img class="image-lightbox-img" id="imageLightboxImg" src="" alt="">
   </div>
 
   <nav class="bottom-nav" aria-label="التنقل السفلي">
@@ -873,26 +1088,29 @@
     }
 
     function setMainCtaState() {
-      const cta = document.querySelector('.js-game-cta[data-game-id="sandooq"]');
-      if (!cta) return;
+      const buttons = document.querySelectorAll('.js-game-cta[data-game-id="sandooq"]');
+      if (!buttons.length) return;
       const ownedGames = readOwnedGames();
       const isOwned = ownedGames.has(CURRENT_GAME_ID);
-      const buyLabel = cta.dataset.buyLabel || 'شراء اللعبة';
-      const playLabel = cta.dataset.playLabel || 'العب';
-      const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
-      const playUrl = cta.dataset.playUrl || '#';
 
-      if (isOwned) {
-        cta.dataset.state = 'play';
-        cta.classList.add('btn-play');
-        cta.setAttribute('href', playUrl);
-        cta.innerHTML = `${playIconMarkup()}<span class="cta-label">${playLabel}</span>`;
-      } else {
-        cta.dataset.state = 'buy';
-        cta.classList.remove('btn-play');
-        cta.setAttribute('href', buyUrl);
-        cta.innerHTML = `<span class="cta-label">${buyLabel}</span>`;
-      }
+      buttons.forEach(cta => {
+        const buyLabel = cta.dataset.buyLabel || 'شراء اللعبة';
+        const playLabel = cta.dataset.playLabel || 'العب';
+        const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
+        const playUrl = cta.dataset.playUrl || '#';
+
+        if (isOwned) {
+          cta.dataset.state = 'play';
+          cta.classList.add('btn-play');
+          cta.setAttribute('href', playUrl);
+          cta.innerHTML = `${playIconMarkup()}<span class="cta-label">${playLabel}</span>`;
+        } else {
+          cta.dataset.state = 'buy';
+          cta.classList.remove('btn-play');
+          cta.setAttribute('href', buyUrl);
+          cta.innerHTML = `<span class="cta-label">${buyLabel}</span>`;
+        }
+      });
     }
 
     refreshLoginChip();
@@ -904,6 +1122,68 @@
     window.addEventListener('storage', () => {
       refreshLoginChip();
       setMainCtaState();
+    });
+
+
+
+    document.querySelectorAll('.feature-image-frame img[data-fallbacks]').forEach(img => {
+      img.dataset.fallbackIndex = img.dataset.fallbackIndex || '0';
+      img.addEventListener('error', () => {
+        const fallbacks = String(img.dataset.fallbacks || '').split('|').filter(Boolean);
+        let index = Number(img.dataset.fallbackIndex || 0);
+        if (index >= fallbacks.length) return;
+        const picture = img.closest('picture');
+        if (picture) picture.querySelectorAll('source').forEach(source => source.remove());
+        img.dataset.fallbackIndex = String(index + 1);
+        img.src = fallbacks[index];
+      });
+    });
+
+    const imageLightbox = document.getElementById('imageLightbox');
+    const imageLightboxImg = document.getElementById('imageLightboxImg');
+    const imageLightboxClose = document.getElementById('imageLightboxClose');
+    let lastImageZoomButton = null;
+
+    function openImageLightbox(button) {
+      if (!imageLightbox || !imageLightboxImg || !button) return;
+      const img = button.querySelector('img');
+      if (!img) return;
+      lastImageZoomButton = button;
+      imageLightboxImg.src = img.currentSrc || img.src;
+      imageLightboxImg.alt = img.alt || '';
+      imageLightbox.hidden = false;
+      imageLightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      if (imageLightboxClose) imageLightboxClose.focus({ preventScroll:true });
+    }
+
+    function closeImageLightbox() {
+      if (!imageLightbox || !imageLightboxImg) return;
+      imageLightbox.hidden = true;
+      imageLightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      imageLightboxImg.src = '';
+      if (lastImageZoomButton) lastImageZoomButton.focus({ preventScroll:true });
+    }
+
+    document.querySelectorAll('.feature-image-zoom').forEach(button => {
+      button.addEventListener('click', () => openImageLightbox(button));
+    });
+
+    if (imageLightboxClose) {
+      imageLightboxClose.addEventListener('click', closeImageLightbox);
+    }
+
+    if (imageLightbox) {
+      imageLightbox.addEventListener('click', event => {
+        if (event.target === imageLightbox) closeImageLightbox();
+      });
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && imageLightbox && !imageLightbox.hidden) {
+        closeImageLightbox();
+      }
     });
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
@@ -937,6 +1217,6 @@
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
     });
   </script>
-  <!-- VERSION: sandooq.html — new-salla-buy-link-v1 -->
+  <!-- VERSION: sandooq.html — visual-features-cta-operation-v1 -->
 </body>
 </html>
