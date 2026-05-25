@@ -419,6 +419,185 @@
       box-shadow:0 0 0 3px rgba(255,107,26,.12);
     }
 
+
+
+    /* قسم المميزات المصورة */
+    .game-idea-card{
+      text-align:center;
+    }
+
+    .game-idea-card .bullets,
+    .activation-card .bullets{
+      text-align:right;
+      max-width:900px;
+      margin-inline:auto;
+    }
+
+    .visual-features-section{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-features-list{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-feature-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.4vw, 30px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      display:grid;
+      gap:clamp(12px, 1.8vw, 20px);
+      overflow:hidden;
+    }
+
+    .visual-feature-card:nth-child(1){background:#f4eaff;}
+    .visual-feature-card:nth-child(2){background:#eaf8ff;}
+    .visual-feature-card:nth-child(3){background:#fff8ed;}
+    .visual-feature-card:nth-child(4){background:#ecfffb;}
+
+    .visual-feature-copy{
+      text-align:center;
+      max-width:920px;
+      margin-inline:auto;
+    }
+
+    .visual-feature-title{
+      margin:0 0 8px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(22px, 2.4vw, 36px);
+      line-height:1.35;
+    }
+
+    .visual-feature-desc{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(15px, 1.3vw, 20px);
+      line-height:1.9;
+    }
+
+    .feature-image-zoom{
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+      padding:0;
+      border:0;
+      background:transparent;
+      display:block;
+      cursor:zoom-in;
+      border-radius:calc(var(--radius) + 2px);
+    }
+
+    .feature-image-zoom:focus-visible{
+      outline:4px solid var(--blue-soft);
+      outline-offset:5px;
+    }
+
+    .feature-image-frame{
+      width:100%;
+      aspect-ratio:16 / 9;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:calc(var(--radius) + 2px);
+      box-shadow:0 8px 0 rgba(0,0,0,.16);
+      overflow:hidden;
+      background:#eaf3f8;
+      transform:translateZ(0);
+      display:block;
+    }
+
+    .feature-image-frame picture,
+    .feature-image-frame img{
+      display:block;
+      width:100%;
+      height:100%;
+    }
+
+    .feature-image-frame img{
+      object-fit:cover;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    .feature-image-zoom:hover img{
+      transform:scale(1.01);
+      filter:saturate(1.04);
+    }
+
+    .buy-strip{
+      text-align:center;
+      background:linear-gradient(180deg, #fff8ed, #ffffff);
+    }
+
+    .buy-strip .section-text{
+      margin-inline:auto;
+      max-width:760px;
+    }
+
+    .buy-strip .hero-actions,
+    .activation-actions{
+      margin-top:clamp(14px, 2vw, 22px);
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .activation-card{
+      text-align:center;
+    }
+
+    .image-lightbox[hidden]{display:none !important;}
+
+    .image-lightbox{
+      position:fixed;
+      inset:0;
+      z-index:120;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:clamp(14px, 4vw, 52px);
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(4px);
+    }
+
+    body.lightbox-open{
+      overflow:hidden;
+    }
+
+    .image-lightbox-img{
+      display:block;
+      width:min(96vw, 1180px);
+      max-height:86dvh;
+      object-fit:contain;
+      border-radius:clamp(16px, 2vw, 26px);
+      border:clamp(3px, .35vw, 5px) solid #fff;
+      box-shadow:0 24px 60px rgba(0,0,0,.42);
+      background:#fff;
+    }
+
+    .image-lightbox-close{
+      position:absolute;
+      top:calc(env(safe-area-inset-top) + 14px);
+      left:clamp(14px, 4vw, 42px);
+      width:clamp(44px, 7vw, 64px);
+      height:clamp(44px, 7vw, 64px);
+      border-radius:50%;
+      border:3px solid #fff;
+      background:#ffffff;
+      color:#111827;
+      font-weight:950;
+      font-size:clamp(28px, 4vw, 42px);
+      line-height:1;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow:0 8px 0 rgba(0,0,0,.25);
+    }
+
     .bottom-nav{
       position:fixed;
       left:0;
@@ -600,79 +779,108 @@
 
     <main class="content-area">
       <div class="content-inner">
-        <section class="features-grid" aria-label="مميزات لعبة برا السالفة">
-          <article class="feature-card">
-            <h2 class="feature-title">أقسام متنوعة</h2>
-            <p class="feature-desc">تحتوي على أقسام كثيرة مختلفة وتعطي كل جولة فكرة جديدة وتخلي اللعب بدون ملل.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">مناسبة للجلسات والتجمعات</h2>
-            <p class="feature-desc">لعبة خفيفة وسريعة تضيف جو ضحك وتحدي بين العائلة والأصدقاء.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">جولات غير محدودة</h2>
-            <p class="feature-desc">العبوا أكثر من جولة وتتغير الأدوار، وكل مرة يكون الشك والحماس مختلف.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">تعمل من المتصفح</h2>
-            <p class="feature-desc">لا تحتاج تحميل، ولا ملف PDF، ولا برامج إضافية. افتح اللعبة وابدأ اللعب مباشرة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">تلميحات وتصويت</h2>
-            <p class="feature-desc">يعطي اللاعبون تلميحات ذكية، ثم يبدأ التصويت لاكتشاف مين اللي كان خارج السالفة.</p>
-          </article>
-        </section>
-
-        <section class="section-card soft-purple">
+        <section class="section-card soft-purple game-idea-card">
           <h2 class="section-heading">فكرة اللعبة</h2>
-          <p class="section-text">يعرف جميع اللاعبين السالفة، إلا لاعب واحد فقط يكون خارج الموضوع. كل لاعب يعطي تلميحًا، ويحاول اللاعب المختلف يساير الباقين بدون ما ينكشف، ثم يصوّت الجميع لمعرفة مين برا السالفة.</p>
           <ul class="bullets">
-            <li>تلميحات بين اللاعبين.</li>
-            <li>لاعب واحد يحاول يخدع المجموعة.</li>
-            <li>تصويت في نهاية الجولة لكشف اللاعب المختلف.</li>
+            <li>كل اللاعبين يعرفون السالفة، إلا لاعب واحد يكون برا السالفة.</li>
+            <li>كل لاعب يعطي تلميحًا، واللي برا السالفة يحاول يسايرهم بدون ما ينكشف.</li>
+            <li>في النهاية تصوّتون وتنكشف الحقيقة: مين كان يمثل عليكم؟</li>
           </ul>
         </section>
 
-        <section class="section-card soft-blue" id="video" hidden aria-hidden="true" style="display:none !important;">
-          <h2 class="section-heading">شرح اللعبة بالفيديو</h2>
-          <p class="section-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
-          <div class="video-box" role="img" aria-label="مكان فيديو شرح لعبة برا السالفة">
-            <div>
-              <div class="play-circle" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+        <section class="visual-features-section" aria-label="مميزات لعبة برا السالفة">
+          <div class="visual-features-list">
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">مرّر الجوال… واكتشف انت داخل او برا السالفة..؟</h3>
+                <p class="visual-feature-desc">كل لاعب يعرف دوره بسرية، وتبدأ لحظة الشك من أول تمريرة.</p>
               </div>
-              <p class="video-title">فيديو الشرح قريبًا</p>
-              <p class="video-note">لن يتم تحميل أي فيديو الآن حتى تبقى الصفحة سريعة وخفيفة.</p>
-            </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة معرفة الدور في لعبة برا السالفة">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="bra-alsalfah-feature-role.webp" type="image/webp">
+                    <img src="bra-alsalfah-feature-role.PNG" data-fallbacks="bra-alsalfah-feature-role.PNG|bra-alsalfah-feature-role.png|bra-alsalfah-feature-role.jpeg|bra-alsalfah-feature-role.jpg" alt="مرّر الجوال واكتشف انت داخل او برا السالفة" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">الشك يبدأ… وبعدين نكتشف اللاعب اللي برا السالفة</h3>
+                <p class="visual-feature-desc">بعد التلميحات يصوّت الجميع، وتنكشف اللحظة اللي الكل كان ينتظرها.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة التصويت وكشف اللاعب في لعبة برا السالفة">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="bra-alsalfah-feature-reveal.webp" type="image/webp">
+                    <img src="bra-alsalfah-feature-reveal.PNG" data-fallbacks="bra-alsalfah-feature-reveal.PNG|bra-alsalfah-feature-reveal.png|bra-alsalfah-feature-reveal.jpeg|bra-alsalfah-feature-reveal.jpg" alt="الشك يبدأ وبعدين نكتشف اللاعب اللي برا السالفة" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">إذا انكشفت… عندك فرصة أخيرة تختار السالفة الصحيحة</h3>
+                <p class="visual-feature-desc">حتى بعد ما تنكشف، تقدر تقلب الجولة إذا عرفت السالفة الصحيحة.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة اختيار السالفة الصحيحة في لعبة برا السالفة">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="bra-alsalfah-feature-final-guess.webp" type="image/webp">
+                    <img src="bra-alsalfah-feature-final-guess.PNG" data-fallbacks="bra-alsalfah-feature-final-guess.PNG|bra-alsalfah-feature-final-guess.png|bra-alsalfah-feature-final-guess.jpeg|bra-alsalfah-feature-final-guess.jpg" alt="إذا انكشفت عندك فرصة أخيرة تختار السالفة الصحيحة" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">أقسام متنوعة وجولات غير محدودة</h3>
+                <p class="visual-feature-desc">كل جولة سالفة جديدة، وكل مرة يتغير الشك والضحك بين اللاعبين.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة الأقسام والجولات في لعبة برا السالفة">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="bra-alsalfah-feature-categories.webp" type="image/webp">
+                    <img src="bra-alsalfah-feature-categories.PNG" data-fallbacks="bra-alsalfah-feature-categories.PNG|bra-alsalfah-feature-categories.png|bra-alsalfah-feature-categories.jpeg|bra-alsalfah-feature-categories.jpg" alt="أقسام متنوعة وجولات غير محدودة في لعبة برا السالفة" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
           </div>
         </section>
 
-        <section class="section-card soft-mint">
-          <h2 class="section-heading">لماذا تختار برا السالفة؟</h2>
-          <ul class="bullets">
-            <li>لعبة جماعية سهلة وسريعة.</li>
-            <li>مناسبة للعائلة والأصدقاء والرحلات.</li>
-            <li>تعمل من الجوال والتابلت والكمبيوتر.</li>
-            <li>بدون تحميل أو تجهيز طويل.</li>
-            <li>تعتمد على الضحك، الشك، والتصريف.</li>
-          </ul>
+        <section class="section-card buy-strip" aria-label="شراء لعبة برا السالفة">
+          <h2 class="section-heading">جاهز تبدأ الشك والضحك؟</h2>
+          <p class="section-text">لعبة برا السالفة جاهزة للعب مباشرة من المتصفح بدون تحميل.</p>
+          <div class="hero-actions" data-game-id="bra-alsalfah">
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p1305145592" data-game-id="bra-alsalfah" data-state="buy" data-buy-url="https://sandooq-m.com/-/p1305145592" data-play-url="https://bara.sandooq-games.com/single.html" data-buy-label="شراء لعبة برا السالفة" data-play-label="العب"><span class="cta-label">شراء لعبة برا السالفة</span></a>
+          </div>
         </section>
 
-        <section class="section-card">
-          <h2 class="section-heading">طريقة التفعيل</h2>
+        <section class="section-card activation-card">
+          <h2 class="section-heading">طريقة التفعيل بعد الشراء</h2>
+          <p class="section-text">بعد الشراء، فعّل اللعبة على حسابك خلال خطوات بسيطة.</p>
           <ul class="bullets">
             <li>ادخل إلى <strong>sandooq-games.com</strong> ثم أنشئ حسابًا جديدًا أو سجّل الدخول.</li>
             <li>افتح صفحة تفعيل الألعاب من الشريط السفلي.</li>
             <li>أدخل رقم الجوال المستخدم في عملية الشراء لإظهار اللعبة على حسابك.</li>
             <li>بعد التفعيل ادخل اللعبة وابدأ التحدي مع أصدقائك أو عائلتك.</li>
           </ul>
+          <div class="activation-actions">
+            <a class="btn btn-secondary" href="purchase-activation.html">الذهاب إلى تفعيل الألعاب</a>
+          </div>
         </section>
       </div>
     </main>
+  </div>
+
+
+  <div class="image-lightbox" id="imageLightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="تكبير صورة الميزة">
+    <button class="image-lightbox-close" type="button" id="imageLightboxClose" aria-label="إغلاق الصورة">×</button>
+    <img class="image-lightbox-img" id="imageLightboxImg" src="" alt="">
   </div>
 
   <nav class="bottom-nav" aria-label="التنقل السفلي">
@@ -884,27 +1092,30 @@
     }
 
     function setMainCtaState() {
-      const cta = document.querySelector('.js-game-cta[data-game-id="bra-alsalfah"]');
-      if (!cta) return;
+      const ctas = document.querySelectorAll('.js-game-cta[data-game-id="bra-alsalfah"]');
+      if (!ctas.length) return;
       const ownedGames = readOwnedGames();
       const isOwned = ownedGames.has(CURRENT_GAME_ID);
-      const buyLabel = cta.dataset.buyLabel || 'شراء اللعبة';
-      const playLabel = cta.dataset.playLabel || 'العب';
-      const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
-      const playUrl = cta.dataset.playUrl || '#';
 
-      if (isOwned) {
-        cta.dataset.state = 'play';
-        cta.classList.add('btn-play');
-        cta.dataset.basePlayUrl = playUrl;
-        cta.setAttribute('href', buildPlayUrlWithAccess(playUrl));
-        cta.innerHTML = `${playIconMarkup()}<span class="cta-label">${playLabel}</span>`;
-      } else {
-        cta.dataset.state = 'buy';
-        cta.classList.remove('btn-play');
-        cta.setAttribute('href', buyUrl);
-        cta.innerHTML = `<span class="cta-label">${buyLabel}</span>`;
-      }
+      ctas.forEach(cta => {
+        const buyLabel = cta.dataset.buyLabel || 'شراء اللعبة';
+        const playLabel = cta.dataset.playLabel || 'العب';
+        const buyUrl = cta.dataset.buyUrl || cta.getAttribute('href') || '#';
+        const playUrl = cta.dataset.playUrl || '#';
+
+        if (isOwned) {
+          cta.dataset.state = 'play';
+          cta.classList.add('btn-play');
+          cta.dataset.basePlayUrl = playUrl;
+          cta.setAttribute('href', buildPlayUrlWithAccess(playUrl));
+          cta.innerHTML = `${playIconMarkup()}<span class="cta-label">${playLabel}</span>`;
+        } else {
+          cta.dataset.state = 'buy';
+          cta.classList.remove('btn-play');
+          cta.setAttribute('href', buyUrl);
+          cta.innerHTML = `<span class="cta-label">${buyLabel}</span>`;
+        }
+      });
     }
 
     refreshLoginChip();
@@ -926,6 +1137,68 @@
       event.preventDefault();
       window.location.assign(buildPlayUrlWithAccess(basePlayUrl));
     }, { passive:false });
+
+
+
+    document.querySelectorAll('.feature-image-frame img[data-fallbacks]').forEach(img => {
+      img.dataset.fallbackIndex = img.dataset.fallbackIndex || '0';
+      img.addEventListener('error', () => {
+        const fallbacks = String(img.dataset.fallbacks || '').split('|').filter(Boolean);
+        let index = Number(img.dataset.fallbackIndex || 0);
+        if (index >= fallbacks.length) return;
+        const picture = img.closest('picture');
+        if (picture) picture.querySelectorAll('source').forEach(source => source.remove());
+        img.dataset.fallbackIndex = String(index + 1);
+        img.src = fallbacks[index];
+      });
+    });
+
+    const imageLightbox = document.getElementById('imageLightbox');
+    const imageLightboxImg = document.getElementById('imageLightboxImg');
+    const imageLightboxClose = document.getElementById('imageLightboxClose');
+    let lastImageZoomButton = null;
+
+    function openImageLightbox(button) {
+      if (!imageLightbox || !imageLightboxImg || !button) return;
+      const img = button.querySelector('img');
+      if (!img) return;
+      lastImageZoomButton = button;
+      imageLightboxImg.src = img.currentSrc || img.src;
+      imageLightboxImg.alt = img.alt || '';
+      imageLightbox.hidden = false;
+      imageLightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      if (imageLightboxClose) imageLightboxClose.focus({ preventScroll:true });
+    }
+
+    function closeImageLightbox() {
+      if (!imageLightbox || !imageLightboxImg) return;
+      imageLightbox.hidden = true;
+      imageLightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      imageLightboxImg.src = '';
+      if (lastImageZoomButton) lastImageZoomButton.focus({ preventScroll:true });
+    }
+
+    document.querySelectorAll('.feature-image-zoom').forEach(button => {
+      button.addEventListener('click', () => openImageLightbox(button));
+    });
+
+    if (imageLightboxClose) {
+      imageLightboxClose.addEventListener('click', closeImageLightbox);
+    }
+
+    if (imageLightbox) {
+      imageLightbox.addEventListener('click', event => {
+        if (event.target === imageLightbox) closeImageLightbox();
+      });
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && imageLightbox && !imageLightbox.hidden) {
+        closeImageLightbox();
+      }
+    });
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
@@ -958,6 +1231,6 @@
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
     });
   </script>
-  <!-- VERSION: bra-alsalfah.html — new-salla-buy-link-v1 -->
+  <!-- VERSION: bra-alsalfah.html — visual-features-v1 -->
 </body>
 </html>
