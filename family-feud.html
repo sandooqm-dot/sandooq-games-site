@@ -426,6 +426,184 @@
       box-shadow:0 0 0 3px rgba(255,107,26,.12);
     }
 
+
+
+    /* قسم المميزات المصورة */
+    .game-idea-card{
+      text-align:center;
+    }
+
+    .visual-features-section{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-features-list{
+      display:grid;
+      gap:clamp(16px, 2.4vw, 28px);
+    }
+
+    .visual-feature-card{
+      background:#fff;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(18px, 2.4vw, 30px);
+      box-shadow:0 7px 0 rgba(0,0,0,.13);
+      display:grid;
+      gap:clamp(12px, 1.8vw, 20px);
+      overflow:hidden;
+    }
+
+    .visual-feature-card:nth-child(1){background:#fff8ed;}
+    .visual-feature-card:nth-child(2){background:#f4eaff;}
+    .visual-feature-card:nth-child(3){background:#eaf8ff;}
+    .visual-feature-card:nth-child(4){background:#ecfffb;}
+
+    .visual-feature-copy{
+      text-align:center;
+      max-width:880px;
+      margin-inline:auto;
+    }
+
+    .visual-feature-title{
+      margin:0 0 8px;
+      color:var(--ink);
+      font-weight:950;
+      font-size:clamp(22px, 2.4vw, 36px);
+      line-height:1.35;
+    }
+
+    .visual-feature-desc{
+      margin:0;
+      color:var(--muted);
+      font-weight:780;
+      font-size:clamp(15px, 1.3vw, 20px);
+      line-height:1.9;
+    }
+
+    .feature-image-zoom{
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+      padding:0;
+      border:0;
+      background:transparent;
+      display:block;
+      cursor:zoom-in;
+      border-radius:calc(var(--radius) + 2px);
+    }
+
+    .feature-image-zoom:focus-visible{
+      outline:4px solid var(--blue-soft);
+      outline-offset:5px;
+    }
+
+    .feature-image-frame{
+      width:100%;
+      aspect-ratio:16 / 9;
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:calc(var(--radius) + 2px);
+      box-shadow:0 8px 0 rgba(0,0,0,.16);
+      overflow:hidden;
+      background:#eaf3f8;
+      transform:translateZ(0);
+      display:block;
+    }
+
+    .feature-image-frame picture,
+    .feature-image-frame img{
+      display:block;
+      width:100%;
+      height:100%;
+    }
+
+    .feature-image-frame img{
+      object-fit:cover;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    .feature-image-zoom:hover img{
+      transform:scale(1.01);
+      filter:saturate(1.04);
+    }
+
+    .buy-strip{
+      text-align:center;
+      background:linear-gradient(180deg, #fff8ed, #ffffff);
+    }
+
+    .buy-strip .section-text{
+      margin-inline:auto;
+      max-width:760px;
+    }
+
+    .buy-strip .hero-actions,
+    .activation-actions{
+      margin-top:clamp(14px, 2vw, 22px);
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .activation-card{
+      text-align:center;
+    }
+
+    .activation-card .bullets{
+      text-align:right;
+      max-width:900px;
+      margin-inline:auto;
+    }
+
+    .image-lightbox[hidden]{display:none !important;}
+
+    .image-lightbox{
+      position:fixed;
+      inset:0;
+      z-index:120;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:calc(env(safe-area-inset-top) + 18px) clamp(12px, 4vw, 42px) calc(env(safe-area-inset-bottom) + 18px);
+      background:rgba(0,0,0,.82);
+      backdrop-filter:blur(6px);
+    }
+
+    .image-lightbox-img{
+      display:block;
+      width:min(1120px, 100%);
+      max-height:84dvh;
+      object-fit:contain;
+      border:clamp(3px, .35vw, 5px) solid rgba(255,255,255,.94);
+      border-radius:clamp(16px, 2vw, 28px);
+      background:#fff;
+      box-shadow:0 24px 70px rgba(0,0,0,.45);
+    }
+
+    .image-lightbox-close{
+      position:fixed;
+      inset-block-start:calc(14px + env(safe-area-inset-top));
+      inset-inline-start:clamp(14px, 3vw, 28px);
+      width:clamp(44px, 5vw, 58px);
+      height:clamp(44px, 5vw, 58px);
+      border-radius:50%;
+      border:3px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      font-size:clamp(26px, 3vw, 38px);
+      font-weight:950;
+      line-height:1;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      box-shadow:0 5px 0 rgba(0,0,0,.20);
+    }
+
+    body.lightbox-open{
+      overflow:hidden;
+    }
+
     .bottom-nav{
       position:fixed;
       left:0;
@@ -607,95 +785,92 @@
 
     <main class="content-area">
       <div class="content-inner">
-        <section class="features-grid" aria-label="مميزات لعبة فاميلي فيود">
-          <article class="feature-card">
-            <h2 class="feature-title">جرس ذكي لكل لاعب</h2>
-            <p class="feature-desc">كل لاعب يشارك من جواله، وأسرع ضغطة على الجرس تحدد من يحصل على فرصة الإجابة أولًا.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">شاشة عرض مخصصة</h2>
-            <p class="feature-desc">اعرض اللعبة على التلفزيون أو البروجكتر لتظهر الأسئلة والإجابات والنقاط بشكل واضح للجميع.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">شاشة مقدم منفصلة</h2>
-            <p class="feature-desc">واجهة خاصة للمقدم تتيح كشف الإجابات، احتساب النقاط، وإدارة مجرى اللعب بسهولة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">أصوات تفاعلية تزيد الحماس</h2>
-            <p class="feature-desc">مؤثرات صوتية عند الجرس وظهور الإجابات والأخطاء، لتجعل التجربة أكثر متعة وتفاعلًا.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">تعمل مباشرة من المتصفح</h2>
-            <p class="feature-desc">لا تحتاج تحميل، ولا برامج إضافية، ولا ملف PDF. افتح اللعبة وابدأ التحدي مباشرة.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">تعمل على مختلف الأجهزة</h2>
-            <p class="feature-desc">تشتغل على الجوال، والآيباد، والكمبيوتر، لتكون جاهزة للعب في أي وقت ومن أي جهاز.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">مناسبة للتجمعات والفعاليات</h2>
-            <p class="feature-desc">مناسبة للعائلة، الأصدقاء، السهرات، الرحلات، والفعاليات التي تحتاج لعبة جماعية فيها حماس وتفاعل.</p>
-          </article>
-
-          <article class="feature-card">
-            <h2 class="feature-title">واجهة لعب منظمة وواضحة</h2>
-            <p class="feature-desc">تجربة مرتبة بين شاشة العرض وشاشة المقدم، حتى يكون اللعب سلسًا وواضحًا من بداية الجولة إلى نهايتها.</p>
-          </article>
-        </section>
-
-        <section class="section-card soft-purple">
+        <section class="section-card soft-purple game-idea-card">
           <h2 class="section-heading">فكرة اللعبة</h2>
-          <p class="section-text">يتنافس فريقان على معرفة الإجابات الأكثر شعبية على كل سؤال. يبدأ التحدي بالجرس، ثم يحاول الفريق كشف الإجابات وجمع أكبر عدد من النقاط للفوز بالجولة.</p>
           <ul class="bullets">
-            <li>فريقان يتنافسان على الإجابات الأشهر.</li>
-            <li>الجرس يحدد من يبدأ الإجابة.</li>
-            <li>كل إجابة صحيحة تضيف نقاطًا للفريق.</li>
-            <li>الفريق الأعلى نقاطًا يحسم الجولة.</li>
+            <li>يظهر سؤال على الشاشة وله إجابات مخفية بنقاط مختلفة.</li>
+            <li>أول لاعب يضغط الجرس يخطف فرصة الإجابة لفريقه.</li>
+            <li>كل إجابة صحيحة تنكشف، وكل خطأ يزيد التوتر حتى تُحسم الجولة.</li>
           </ul>
         </section>
 
-        <section class="section-card soft-blue" id="video" hidden aria-hidden="true" style="display:none !important;">
-          <h2 class="section-heading">شرح اللعبة بالفيديو</h2>
-          <p class="section-text">مكان مخصص لمقطع شرح اللعبة. سيتم إضافة فيديو يوتيوب هنا بعد تسجيل الشرح المختصر.</p>
-          <div class="video-box" role="img" aria-label="مكان فيديو شرح لعبة فاميلي فيود">
-            <div>
-              <div class="play-circle" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+        <section class="visual-features-section" aria-label="مميزات لعبة فاميلي فيود">
+          <div class="visual-features-list">
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">الإجابات مخفية… وكل كشفة تولّع الحماس</h3>
+                <p class="visual-feature-desc">اعرض السؤال والنقاط على الشاشة، وكل إجابة صحيحة أو خطأ يظهر قدام الفريقين ويزيد التحدي.</p>
               </div>
-              <p class="video-title">فيديو الشرح قريبًا</p>
-              <p class="video-note">لن يتم تحميل أي فيديو الآن حتى تبقى الصفحة سريعة وخفيفة.</p>
-            </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة شاشة عرض فاميلي فيود">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="family-feud-feature-display.webp" type="image/webp">
+                    <img src="family-feud-feature-display.PNG" data-fallbacks="family-feud-feature-display.PNG|family-feud-feature-display.png|family-feud-feature-display.jpeg|family-feud-feature-display.jpg|family-feud-feature-display.JPG|family-feud-feature-display.JPEG" alt="شاشة عرض فاميلي فيود بإجابات مخفية وأخطاء ونقاط" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">أول ضغطة تخطف فرصة الإجابة</h3>
+                <p class="visual-feature-desc">كل لاعب يضغط من جواله، والأسرع يظهر اسمه بصوت الجرس وتبدأ لحظة التحدي.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة جرس اللاعبين في فاميلي فيود">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="family-feud-feature-buzzer.webp" type="image/webp">
+                    <img src="family-feud-feature-buzzer.PNG" data-fallbacks="family-feud-feature-buzzer.PNG|family-feud-feature-buzzer.png|family-feud-feature-buzzer.jpeg|family-feud-feature-buzzer.jpg|family-feud-feature-buzzer.JPG|family-feud-feature-buzzer.JPEG" alt="جرس اللاعبين في لعبة فاميلي فيود" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
+
+            <article class="visual-feature-card">
+              <div class="visual-feature-copy">
+                <h3 class="visual-feature-title">أنت المقدم… واللعبة بيدك</h3>
+                <p class="visual-feature-desc">اكشف الإجابات، احسب النقاط، سجّل الأخطاء، وأدر الجولة من جهازك بدون لخبطة.</p>
+              </div>
+              <button class="feature-image-zoom" type="button" aria-label="تكبير صورة شاشة التحكم في فاميلي فيود">
+                <span class="feature-image-frame">
+                  <picture>
+                    <source srcset="family-feud-feature-control.webp" type="image/webp">
+                    <img src="family-feud-feature-control.PNG" data-fallbacks="family-feud-feature-control.PNG|family-feud-feature-control.png|family-feud-feature-control.jpeg|family-feud-feature-control.jpg|family-feud-feature-control.JPG|family-feud-feature-control.JPEG" alt="شاشة التحكم للمقدم في لعبة فاميلي فيود" width="1600" height="900" loading="lazy" decoding="async">
+                  </picture>
+                </span>
+              </button>
+            </article>
           </div>
         </section>
 
-        <section class="section-card soft-mint">
-          <h2 class="section-heading">لماذا تختار فاميلي فيود؟</h2>
-          <ul class="bullets">
-            <li>لعبة جماعية معروفة ومحبوبة وتناسب مختلف التجمعات.</li>
-            <li>تجربة تفاعلية بين فريقين تزيد الحماس في كل جولة.</li>
-            <li>جرس وشاشة عرض وشاشة مقدم بشكل منظم وواضح.</li>
-            <li>تعمل من المتصفح مباشرة بدون تحميل أو تعقيد.</li>
-            <li>أصوات ومؤثرات ترفع جو التحدي والمتعة.</li>
-          </ul>
+        <section class="section-card buy-strip" aria-label="شراء لعبة فاميلي فيود">
+          <h2 class="section-heading">جاهز تبدأ التحدي؟</h2>
+          <p class="section-text">لعبة فاميلي فيود جاهزة للعب من المتصفح مع شاشة عرض وجرس للاعبين.</p>
+          <div class="hero-actions" data-game-id="family-feud">
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p1084164247" data-game-id="family-feud" data-state="buy" data-buy-url="https://sandooq-m.com/-/p1084164247" data-play-url="https://family-feud.sandooq-games.com" data-buy-label="شراء لعبة فاميلي فيود" data-play-label="العب"><span class="cta-label">شراء لعبة فاميلي فيود</span></a>
+          </div>
         </section>
 
-        <section class="section-card">
-          <h2 class="section-heading">طريقة التفعيل</h2>
+        <section class="section-card activation-card">
+          <h2 class="section-heading">طريقة التفعيل بعد الشراء</h2>
+          <p class="section-text">بعد الشراء، فعّل اللعبة على حسابك خلال خطوات بسيطة.</p>
           <ul class="bullets">
-            <li>ادخل إلى sandooq-games.com ثم أنشئ حسابًا جديدًا أو سجّل الدخول.</li>
+            <li>ادخل إلى sandooq-games.com وأنشئ حسابًا جديدًا أو سجّل الدخول.</li>
             <li>افتح صفحة تفعيل الألعاب من الشريط السفلي.</li>
             <li>أدخل رقم الجوال المستخدم في عملية الشراء لإظهار اللعبة على حسابك.</li>
             <li>بعد التفعيل ادخل اللعبة وابدأ التحدي مع أصدقائك أو عائلتك.</li>
           </ul>
+          <div class="activation-actions">
+            <a class="btn btn-secondary" href="purchase-activation.html">الذهاب إلى تفعيل الألعاب</a>
+          </div>
         </section>
       </div>
     </main>
+  </div>
+
+  <div class="image-lightbox" id="imageLightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="تكبير صورة الميزة">
+    <button class="image-lightbox-close" type="button" id="imageLightboxClose" aria-label="إغلاق الصورة">×</button>
+    <img class="image-lightbox-img" id="imageLightboxImg" src="" alt="">
   </div>
 
   <nav class="bottom-nav" aria-label="التنقل السفلي">
@@ -982,26 +1157,28 @@
     }
 
     function refreshGameCtaState() {
-      const button = document.querySelector('.js-game-cta[data-game-id="family-feud"]');
-      if (!button) return;
+      const buttons = document.querySelectorAll('.js-game-cta[data-game-id="family-feud"]');
+      if (!buttons.length) return;
 
       const ownedGames = readOwnedGames();
       const isOwned = ownedGames.has(DETAIL_GAME_ID);
 
-      if (isOwned) {
-        button.classList.add('play-action');
-        button.dataset.state = 'play';
-        button.dataset.basePlayUrl = button.dataset.playUrl || DETAIL_GAME_PLAY_URL;
-        button.href = buildPlayUrlWithAccess(button.dataset.basePlayUrl);
-        setCtaLabel(button, button.dataset.playLabel || 'العب');
-        ensurePlayIcon(button);
-      } else {
-        button.classList.remove('play-action');
-        button.dataset.state = 'buy';
-        button.href = button.dataset.buyUrl || DETAIL_GAME_BUY_URL;
-        removePlayIcon(button);
-        setCtaLabel(button, button.dataset.buyLabel || 'شراء اللعبة');
-      }
+      buttons.forEach(button => {
+        if (isOwned) {
+          button.classList.add('play-action');
+          button.dataset.state = 'play';
+          button.dataset.basePlayUrl = button.dataset.playUrl || DETAIL_GAME_PLAY_URL;
+          button.href = buildPlayUrlWithAccess(button.dataset.basePlayUrl);
+          setCtaLabel(button, button.dataset.playLabel || 'العب');
+          ensurePlayIcon(button);
+        } else {
+          button.classList.remove('play-action');
+          button.dataset.state = 'buy';
+          button.href = button.dataset.buyUrl || DETAIL_GAME_BUY_URL;
+          removePlayIcon(button);
+          setCtaLabel(button, button.dataset.buyLabel || 'شراء اللعبة');
+        }
+      });
     }
 
     refreshGameCtaState();
@@ -1018,6 +1195,68 @@
       const basePlayUrl = button.dataset.basePlayUrl || button.dataset.playUrl || DETAIL_GAME_PLAY_URL;
       window.location.assign(buildPlayUrlWithAccess(basePlayUrl));
     }, { passive:false, capture:true });
+
+
+
+    document.querySelectorAll('.feature-image-frame img[data-fallbacks]').forEach(img => {
+      img.dataset.fallbackIndex = img.dataset.fallbackIndex || '0';
+      img.addEventListener('error', () => {
+        const fallbacks = String(img.dataset.fallbacks || '').split('|').filter(Boolean);
+        let index = Number(img.dataset.fallbackIndex || 0);
+        if (index >= fallbacks.length) return;
+        const picture = img.closest('picture');
+        if (picture) picture.querySelectorAll('source').forEach(source => source.remove());
+        img.dataset.fallbackIndex = String(index + 1);
+        img.src = fallbacks[index];
+      });
+    });
+
+    const imageLightbox = document.getElementById('imageLightbox');
+    const imageLightboxImg = document.getElementById('imageLightboxImg');
+    const imageLightboxClose = document.getElementById('imageLightboxClose');
+    let lastImageZoomButton = null;
+
+    function openImageLightbox(button) {
+      if (!imageLightbox || !imageLightboxImg || !button) return;
+      const img = button.querySelector('img');
+      if (!img) return;
+      lastImageZoomButton = button;
+      imageLightboxImg.src = img.currentSrc || img.src;
+      imageLightboxImg.alt = img.alt || '';
+      imageLightbox.hidden = false;
+      imageLightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      if (imageLightboxClose) imageLightboxClose.focus({ preventScroll:true });
+    }
+
+    function closeImageLightbox() {
+      if (!imageLightbox || !imageLightboxImg) return;
+      imageLightbox.hidden = true;
+      imageLightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      imageLightboxImg.src = '';
+      if (lastImageZoomButton) lastImageZoomButton.focus({ preventScroll:true });
+    }
+
+    document.querySelectorAll('.feature-image-zoom').forEach(button => {
+      button.addEventListener('click', () => openImageLightbox(button));
+    });
+
+    if (imageLightboxClose) {
+      imageLightboxClose.addEventListener('click', closeImageLightbox);
+    }
+
+    if (imageLightbox) {
+      imageLightbox.addEventListener('click', event => {
+        if (event.target === imageLightbox) closeImageLightbox();
+      });
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && imageLightbox && !imageLightbox.hidden) {
+        closeImageLightbox();
+      }
+    });
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
@@ -1050,6 +1289,6 @@
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
     });
   </script>
-  <!-- VERSION: family-feud.html — new-salla-buy-link-v1 -->
+  <!-- VERSION: family-feud.html — visual-features-v1 -->
 </body>
 </html>
