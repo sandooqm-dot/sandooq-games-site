@@ -16,6 +16,7 @@
   </script>
   <link rel="preload" as="image" href="logo.PNG" />
   <link rel="preload" as="image" href="horof-cover-card.webp" />
+  <link rel="preload" as="image" href="sandooq-challenges-bundle-cover-card.webp" />
   <link rel="preload" as="image" href="sandooq-almusabaqat-cover-card.webp" />
 
   <style>
@@ -350,7 +351,48 @@
       box-shadow:0 5px 0 rgba(0,0,0,.10);
     }
 
-    .game-row.bundle{background:#fff8ed;}
+    .game-row.bundle{
+      background:linear-gradient(180deg, #fff8ed 0%, #fffdf8 100%);
+      grid-template-columns:clamp(128px, 20vw, 260px) minmax(0, 1fr) auto;
+      min-height:clamp(124px, 14vw, 168px);
+      align-items:center;
+      gap:clamp(12px, 1.8vw, 20px);
+      padding:clamp(12px, 1.7vw, 18px);
+    }
+
+    .game-row.bundle .game-thumb{
+      aspect-ratio:2.45/1;
+      background:#071f3f;
+      border-radius:clamp(14px, 1.6vw, 22px);
+    }
+
+    .game-row.bundle .game-thumb img{
+      object-fit:contain;
+    }
+
+    .game-row.bundle .game-info{
+      gap:7px;
+    }
+
+    .game-row.bundle .game-name{
+      white-space:normal;
+      overflow:visible;
+      text-overflow:clip;
+      font-size:clamp(18px, 1.8vw, 27px);
+      line-height:1.32;
+    }
+
+    .game-row.bundle .game-meta{
+      font-size:clamp(13px, 1.12vw, 17px);
+      line-height:1.6;
+    }
+
+    .game-row.bundle .game-action{
+      min-width:clamp(92px, 10vw, 132px);
+      padding-inline:clamp(12px, 1.6vw, 22px);
+      background:linear-gradient(180deg, var(--orange) 0%, #e65310 100%);
+      border:3px solid var(--line);
+    }
 
     .game-thumb{
       width:100%;
@@ -479,6 +521,29 @@
 
     .activation-mode-toggle:active{transform:translateY(1px);box-shadow:0 6px 0 rgba(0,0,0,.20);}
     .activation-mode-toggle.is-code-mode{background:linear-gradient(180deg, #0b5f87 0%, #04384f 100%);}
+
+    .play-owned-games-btn{
+      display:none;
+      width:100%;
+      min-height:clamp(56px, 6vw, 72px);
+      border:clamp(3px, .35vw, 5px) solid var(--line);
+      border-radius:clamp(16px, 1.6vw, 24px);
+      background:linear-gradient(180deg, var(--green) 0%, #17875a 100%);
+      color:#fff;
+      padding:clamp(10px, 1.6vw, 18px) clamp(14px, 2vw, 24px);
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      box-shadow:0 7px 0 rgba(0,0,0,.20);
+      cursor:pointer;
+      margin-top:2px;
+      font-weight:950;
+      font-size:clamp(17px, 1.65vw, 25px);
+      line-height:1.35;
+    }
+
+    .play-owned-games-btn.is-visible{display:flex;}
+    .play-owned-games-btn:active{transform:translateY(1px);box-shadow:0 6px 0 rgba(0,0,0,.20);}
 
     .mode-toggle-title{
       color:#fff;
@@ -613,6 +678,45 @@
       .section-head{display:grid;}
       .section-badge{justify-self:start;}
       .game-row{grid-template-columns:56px 1fr auto;}
+      .game-row.bundle{
+        grid-template-columns:minmax(0, 1fr) auto;
+        grid-template-areas:
+          "thumb thumb"
+          "info action";
+        min-height:unset;
+        gap:12px 14px;
+        padding:14px;
+      }
+      .game-row.bundle .game-thumb{
+        grid-area:thumb;
+        width:100%;
+        aspect-ratio:2.75/1;
+      }
+      .game-row.bundle .game-info{
+        grid-area:info;
+        align-self:center;
+      }
+      .game-row.bundle .game-tag{
+        font-size:11px;
+        min-height:25px;
+        padding:4px 10px;
+      }
+      .game-row.bundle .game-name{
+        font-size:clamp(21px, 6.3vw, 28px);
+        line-height:1.25;
+      }
+      .game-row.bundle .game-meta{
+        font-size:clamp(13px, 4vw, 17px);
+        line-height:1.55;
+      }
+      .game-row.bundle .game-action{
+        grid-area:action;
+        align-self:center;
+        min-width:94px;
+        min-height:54px;
+        padding-inline:12px;
+        font-size:13px;
+      }
       .game-action{min-width:56px;padding-inline:8px;}
     }
 
@@ -756,6 +860,8 @@
               <div class="status-message" id="legacyCodeMessage" data-hook="legacy-code-message"></div>
               <div class="empty-state" id="emptyState" data-hook="empty-state">لم نجد مشتريات على هذا الرقم.</div>
             </div>
+
+            <a class="play-owned-games-btn" id="playOwnedGamesButton" href="index.html" data-hook="play-owned-games-button">تشغيل ألعابي</a>
           </form>
         </section>
 
@@ -773,13 +879,13 @@
               <p class="complete-state-text">كل الألعاب الحالية مرتبطة بهذا الرقم. إذا أضفنا ألعابًا جديدة للمتجر ستظهر لك هنا مباشرة</p>
             </div>
             <article class="game-row bundle" data-game-id="bundle">
-              <div class="game-thumb"><img src="sandooq-almusabaqat-cover-card.webp" alt="بكج ألعاب صندوق المسابقات" loading="lazy" decoding="async"></div>
+              <div class="game-thumb"><img src="sandooq-challenges-bundle-cover-card.webp" alt="بكج صندوق التحديات" loading="lazy" decoding="async"></div>
               <div class="game-info">
                 <span class="game-tag">البكج الكامل</span>
-                <h3 class="game-name">بكج ألعاب صندوق المسابقات</h3>
-                <p class="game-meta">يشمل مجموعة ألعاب مختارة لتجربة أطول.</p>
+                <h3 class="game-name">بكج صندوق التحديات</h3>
+                <p class="game-meta">يشمل 5 ألعاب مختلفة بسعر أوفر وتجربة أطول.</p>
               </div>
-              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com" target="_blank" rel="noopener">عرض البكج</a>
+              <a class="game-action" data-hook="game-button" href="https://sandooq-m.com/-/p979937020" target="_blank" rel="noopener">شراء البكج</a>
             </article>
 
             <article class="game-row" data-game-id="horof">
@@ -927,6 +1033,9 @@
 
         if (gameId === 'bundle') eventName = 'activation_bundle_click';
         else eventName = 'activation_game_buy_click';
+      } else if (link.id === 'playOwnedGamesButton') {
+        eventName = 'activation_play_owned_games_click';
+        params.nav_target = 'index';
       } else if (/index\.html/i.test(href)) {
         eventName = 'activation_back_click';
         params.nav_target = 'index';
@@ -1102,6 +1211,7 @@
     const emptyState = document.getElementById('emptyState');
     const completeState = document.getElementById('completeState');
     const loginStatusButton = document.getElementById('loginStatusButton');
+    const playOwnedGamesButton = document.getElementById('playOwnedGamesButton');
 
     let codeMode = false;
 
@@ -1403,6 +1513,7 @@
       if (legacyCodeMessage) { legacyCodeMessage.className = 'status-message'; legacyCodeMessage.textContent = ''; }
       if (emptyState) { emptyState.classList.remove('is-visible'); emptyState.textContent = messages.empty; }
       if (completeState) completeState.classList.remove('is-visible');
+      setPlayOwnedGamesVisible(false);
     }
 
     function showStatus(type, text) {
@@ -1421,6 +1532,12 @@
       if (!emptyState) return;
       emptyState.textContent = text || messages.empty;
       emptyState.classList.add('is-visible');
+    }
+
+    function setPlayOwnedGamesVisible(isVisible) {
+      if (!playOwnedGamesButton) return;
+      playOwnedGamesButton.classList.toggle('is-visible', !!isVisible);
+      playOwnedGamesButton.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
     }
 
     function showCompleteState(text) {
@@ -1473,6 +1590,7 @@
       const savedGames = readSavedLinkedGames();
       if (!savedGames.length) return;
       updateAvailableGames(savedGames);
+      setPlayOwnedGamesVisible(true);
     }
 
     async function api(path, options = {}) {
@@ -1578,12 +1696,14 @@
           games_count: games.length
         });
         showStatus('success', data.message || messages.found);
+        setPlayOwnedGamesVisible(true);
       } else {
         gaTrackLookupResult(source, 'empty', {
           owned_count: 0,
           games_count: 0
         });
         updateAvailableGames([]);
+        setPlayOwnedGamesVisible(false);
         showEmptyState(data.message || messages.empty);
       }
     }
@@ -1689,6 +1809,6 @@
       });
     }
   </script>
-  <!-- VERSION: purchase-activation.html — GA4 activation events v1 -->
+  <!-- VERSION: purchase-activation.html — activation UX bundle card and play owned games button v2 -->
 </body>
 </html>
