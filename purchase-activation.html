@@ -1447,11 +1447,14 @@
 
     const BUNDLE_PRODUCT_IDS = new Set([
       'bundle', 'full-bundle', 'bundle-full', 'sandooq-bundle', 'sandooq-full-bundle',
-      'sandooq-games-bundle', 'sandooq-package', 'all-games-bundle', 'package', 'pack', 'bkj', 'bakaj'
+      'sandooq-games-bundle', 'sandooq-package', 'all-games-bundle', 'package', 'pack', 'bkj', 'bakaj',
+      'sandooq-challenges-bundle', 'challenges-bundle', 'challenges-box', 'p979937020', '979937020'
     ]);
 
+    // البكج الحالي يشمل 5 ألعاب فقط.
+    // سباق الحروف التعليمية منتج مستقل، لذلك لا يدخل في شرط إخفاء البكج ولا يُخفى عند شراء البكج.
     const BUNDLE_INCLUDED_GAME_IDS = new Set([
-      'horof', 'horof-edu', 'bdon-kalam', 'bra-alsalfah', 'family-feud', 'sandooq'
+      'horof', 'bdon-kalam', 'bra-alsalfah', 'family-feud', 'sandooq'
     ]);
 
     const GAME_ID_ALIASES = {
@@ -1908,10 +1911,8 @@
       const hasLookupResult = games.length > 0;
       const rows = getStaticGameRows();
       const gamesList = document.getElementById('gamesList');
-      const allGameIds = rows
-        .map(row => String(row.dataset.gameId || '').trim())
-        .filter(id => id && id !== 'bundle');
-      const ownsAllListedGames = allGameIds.length > 0 && allGameIds.every(id => ownedIds.has(id));
+      const bundleGameIds = Array.from(BUNDLE_INCLUDED_GAME_IDS);
+      const ownsAllBundleGames = bundleGameIds.length > 0 && bundleGameIds.every(id => ownedIds.has(id));
       const hasOwnedBundle = ownedIds.has('bundle') || Array.from(ownedIds).some(id => BUNDLE_PRODUCT_IDS.has(String(id || '').toLowerCase()));
       let visibleRows = 0;
 
@@ -1923,7 +1924,7 @@
         const isBundleRow = id === 'bundle';
         const isOwnedDirectly = ownedIds.has(id);
         const isCoveredByBundle = hasOwnedBundle && BUNDLE_INCLUDED_GAME_IDS.has(id);
-        const hideBundleBecauseComplete = isBundleRow && (hasOwnedBundle || ownsAllListedGames);
+        const hideBundleBecauseComplete = isBundleRow && (hasOwnedBundle || ownsAllBundleGames);
         const shouldHide = hasLookupResult && (isOwnedDirectly || isCoveredByBundle || hideBundleBecauseComplete);
 
         if (shouldHide) {
