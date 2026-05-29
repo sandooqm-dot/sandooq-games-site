@@ -809,7 +809,253 @@
       -webkit-transform:translate3d(0,0,0) !important;
     }
 
-  </style>
+  
+
+    /* تحسين بطاقة بكج صندوق التحديات في صفحة التفعيل */
+    .game-row.bundle{
+      background:linear-gradient(180deg, #fff8ed 0%, #fffdf8 100%) !important;
+      grid-template-columns:clamp(112px, 18vw, 220px) minmax(0, 1fr) auto !important;
+      min-height:clamp(108px, 12vw, 146px) !important;
+      gap:clamp(10px, 1.5vw, 16px) !important;
+      padding:clamp(10px, 1.35vw, 14px) !important;
+    }
+
+    .game-row.bundle .game-thumb{
+      aspect-ratio:1672 / 941 !important;
+      background:transparent !important;
+      border:0 !important;
+      border-radius:clamp(12px, 1.5vw, 18px) !important;
+      box-shadow:none !important;
+      overflow:hidden !important;
+      align-self:center !important;
+    }
+
+    .game-row.bundle .game-thumb img{
+      width:100% !important;
+      height:100% !important;
+      object-fit:contain !important;
+      border-radius:inherit !important;
+      display:block !important;
+    }
+
+    .game-row.bundle .game-info{
+      gap:clamp(4px, .75vw, 7px) !important;
+      align-self:center !important;
+    }
+
+    .game-row.bundle .game-tag{
+      background:linear-gradient(180deg, var(--yellow-light) 0%, var(--yellow) 100%) !important;
+      color:#111827 !important;
+      border:2px solid rgba(21,21,21,.55) !important;
+      box-shadow:0 3px 0 rgba(0,0,0,.12) !important;
+      min-height:clamp(22px, 2.4vw, 30px) !important;
+      padding:4px clamp(9px, 1vw, 13px) !important;
+      font-size:clamp(10px, .9vw, 13px) !important;
+    }
+
+    .game-row.bundle .game-name{
+      font-size:clamp(17px, 1.55vw, 23px) !important;
+      line-height:1.28 !important;
+      white-space:normal !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+    }
+
+    .game-row.bundle .game-meta{
+      font-size:clamp(12px, 1vw, 15px) !important;
+      line-height:1.5 !important;
+      max-width:34ch !important;
+    }
+
+    .game-row.bundle .game-action{
+      min-width:clamp(84px, 8vw, 116px) !important;
+      min-height:clamp(42px, 4vw, 52px) !important;
+      padding-inline:clamp(10px, 1.2vw, 16px) !important;
+      font-size:clamp(11px, .95vw, 14px) !important;
+    }
+
+    @media (max-width:560px){
+      .game-row.bundle{
+        grid-template-columns:minmax(0, 1fr) auto !important;
+        grid-template-areas:
+          "thumb thumb"
+          "info action" !important;
+        gap:9px 12px !important;
+        padding:11px !important;
+      }
+
+      .game-row.bundle .game-thumb{
+        grid-area:thumb !important;
+        width:min(100%, 520px) !important;
+        justify-self:center !important;
+        aspect-ratio:1672 / 941 !important;
+        background:transparent !important;
+        border:0 !important;
+        box-shadow:none !important;
+        border-radius:15px !important;
+      }
+
+      .game-row.bundle .game-info{
+        grid-area:info !important;
+        gap:4px !important;
+      }
+
+      .game-row.bundle .game-tag{
+        min-height:22px !important;
+        padding:3px 9px !important;
+        font-size:10.5px !important;
+      }
+
+      .game-row.bundle .game-name{
+        font-size:clamp(18px, 5.1vw, 22px) !important;
+        line-height:1.22 !important;
+      }
+
+      .game-row.bundle .game-meta{
+        font-size:clamp(12px, 3.45vw, 14px) !important;
+        line-height:1.45 !important;
+      }
+
+      .game-row.bundle .game-action{
+        grid-area:action !important;
+        align-self:center !important;
+        min-width:88px !important;
+        min-height:48px !important;
+        padding-inline:10px !important;
+        font-size:12px !important;
+      }
+    }
+
+  
+
+    /* FINAL FIX: بطاقة بكج صندوق التحديات - إزالة الخلفية الداكنة وتقليل التشوه البصري */
+    .games-list > .game-row.bundle{
+      background:#fff8ed !important;
+      grid-template-columns:clamp(118px, 18vw, 210px) minmax(0, 1fr) auto !important;
+      align-items:center !important;
+      min-height:clamp(104px, 11vw, 140px) !important;
+      padding:clamp(10px, 1.3vw, 14px) !important;
+      gap:clamp(10px, 1.4vw, 16px) !important;
+      overflow:hidden !important;
+    }
+
+    .games-list > .game-row.bundle > .game-thumb{
+      width:100% !important;
+      aspect-ratio:1672 / 941 !important;
+      background:transparent !important;
+      border:0 !important;
+      box-shadow:none !important;
+      border-radius:clamp(12px, 1.4vw, 18px) !important;
+      overflow:hidden !important;
+      align-self:center !important;
+    }
+
+    .games-list > .game-row.bundle > .game-thumb img{
+      display:block !important;
+      width:100% !important;
+      height:100% !important;
+      object-fit:cover !important;
+      border-radius:inherit !important;
+      background:transparent !important;
+    }
+
+    .games-list > .game-row.bundle .game-tag{
+      background:linear-gradient(180deg, var(--yellow-light) 0%, var(--yellow) 100%) !important;
+      color:#111827 !important;
+      border:2px solid rgba(21,21,21,.5) !important;
+      box-shadow:0 3px 0 rgba(0,0,0,.12) !important;
+      min-height:clamp(22px, 2.2vw, 28px) !important;
+      padding:3px clamp(9px, 1vw, 13px) !important;
+      font-size:clamp(10px, .85vw, 12.5px) !important;
+      line-height:1.1 !important;
+      width:max-content !important;
+    }
+
+    .games-list > .game-row.bundle .game-name{
+      font-size:clamp(17px, 1.45vw, 22px) !important;
+      line-height:1.22 !important;
+      white-space:normal !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+      margin:0 !important;
+    }
+
+    .games-list > .game-row.bundle .game-meta{
+      font-size:clamp(12px, .95vw, 14.5px) !important;
+      line-height:1.45 !important;
+      margin:0 !important;
+      max-width:34ch !important;
+    }
+
+    .games-list > .game-row.bundle .game-action{
+      min-width:clamp(82px, 8vw, 112px) !important;
+      min-height:clamp(42px, 4vw, 50px) !important;
+      padding-inline:clamp(9px, 1.1vw, 14px) !important;
+      font-size:clamp(11px, .9vw, 13.5px) !important;
+      background:linear-gradient(180deg, var(--orange) 0%, #e65310 100%) !important;
+    }
+
+    @media (max-width:560px){
+      .games-list > .game-row.bundle{
+        display:grid !important;
+        grid-template-columns:1fr auto !important;
+        grid-template-areas:
+          "thumb thumb"
+          "info action" !important;
+        gap:8px 12px !important;
+        padding:10px !important;
+        min-height:0 !important;
+      }
+
+      .games-list > .game-row.bundle > .game-thumb{
+        grid-area:thumb !important;
+        width:100% !important;
+        max-width:100% !important;
+        aspect-ratio:1672 / 941 !important;
+        justify-self:center !important;
+        background:transparent !important;
+        border:0 !important;
+        box-shadow:none !important;
+        border-radius:15px !important;
+      }
+
+      .games-list > .game-row.bundle > .game-thumb img{
+        object-fit:cover !important;
+      }
+
+      .games-list > .game-row.bundle .game-info{
+        grid-area:info !important;
+        gap:3px !important;
+        align-self:center !important;
+      }
+
+      .games-list > .game-row.bundle .game-tag{
+        min-height:21px !important;
+        padding:3px 8px !important;
+        font-size:10px !important;
+      }
+
+      .games-list > .game-row.bundle .game-name{
+        font-size:clamp(18px, 4.9vw, 22px) !important;
+        line-height:1.16 !important;
+      }
+
+      .games-list > .game-row.bundle .game-meta{
+        font-size:clamp(12px, 3.35vw, 14px) !important;
+        line-height:1.38 !important;
+      }
+
+      .games-list > .game-row.bundle .game-action{
+        grid-area:action !important;
+        align-self:center !important;
+        min-width:86px !important;
+        min-height:46px !important;
+        padding-inline:9px !important;
+        font-size:12px !important;
+      }
+    }
+
+</style>
 </head>
 
 <body>
@@ -901,7 +1147,7 @@
             <article class="game-row bundle" data-game-id="bundle">
               <div class="game-thumb"><img src="sandooq-challenges-bundle-cover-card.webp" alt="بكج صندوق التحديات" loading="lazy" decoding="async"></div>
               <div class="game-info">
-                <span class="game-tag">البكج الكامل</span>
+                <span class="game-tag">البكج الأوفر</span>
                 <h3 class="game-name">بكج صندوق التحديات</h3>
                 <p class="game-meta">يشمل 5 ألعاب مختلفة بسعر أوفر وتجربة أطول.</p>
               </div>
