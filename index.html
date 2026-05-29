@@ -316,6 +316,10 @@
       overflow:hidden;
     }
 
+    #games{
+      scroll-margin-top:clamp(8px, 1.5vw, 18px);
+    }
+
     .games-area::before{
       content:"";
       position:absolute;
@@ -3066,7 +3070,36 @@ width:100% !important;
       window.setTimeout(doScroll, 220);
     }
 
+    function isGamesHashNavigation() {
+      return String(window.location.hash || '').replace('#', '').trim() === 'games';
+    }
+
+    function scrollToGamesSection(behavior = 'auto') {
+      const gamesSection = document.getElementById('games');
+      if (!gamesSection) return;
+
+      const doScroll = () => {
+        const rect = gamesSection.getBoundingClientRect();
+        const targetY = Math.max(0, window.pageYOffset + rect.top - 6);
+        window.scrollTo({ top: targetY, behavior });
+        if (typeof stabilizeBottomNav === 'function') stabilizeBottomNav();
+      };
+
+      window.setTimeout(doScroll, 80);
+      window.setTimeout(doScroll, 420);
+      window.setTimeout(doScroll, 820);
+    }
+
+    function handleGamesHashNavigation() {
+      if (!isGamesHashNavigation()) return;
+      scrollToGamesSection('auto');
+    }
+
     function focusReturnedGameCard() {
+      if (isGamesHashNavigation()) {
+        scrollToGamesSection('auto');
+        return;
+      }
       const focusId = getReturnFocusIdFromUrl() || readSavedReturnGameFocus();
       scrollToGameCard(focusId);
     }
@@ -3121,6 +3154,7 @@ width:100% !important;
     window.addEventListener('storage', refreshAccountUi);
     refreshAccountFromApi().then(refreshAccountUi);
     detectPrivateMode().then(() => refreshAccountUi()).catch(() => {});
+    handleGamesHashNavigation();
 
     const bottomNav = document.querySelector('.bottom-nav-inner');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
@@ -3279,9 +3313,12 @@ function scheduleBottomNavStabilize(delay = 0) {
       moveBottomNavIndicator(activeItem);
       window.setTimeout(() => moveBottomNavIndicator(activeItem), 120);
       scrollToReview(0, 'auto');
+      handleGamesHashNavigation();
       scheduleBottomNavStabilize();
       scheduleBottomNavStabilize(250);
     });
+
+    window.addEventListener('hashchange', handleGamesHashNavigation, { passive:true });
 
     window.addEventListener('resize', () => {
       moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active'));
