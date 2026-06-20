@@ -1,16 +1,16 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>مدونة صندوق المسابقات | ألعاب تفاعلية وتعليمية للجمعات والفعاليات</title>
-  <meta name="description" content="مدونة صندوق المسابقات تقدم أفكار ألعاب تفاعلية جاهزة للجمعات، رمضان، العيد، الفعاليات، والمدارس، مع نصائح للمعلمين لاستخدام الألعاب التعليمية في المراجعة والدرس." />
-  <meta name="keywords" content="ألعاب تفاعلية, العاب جماعية, لعبة رمضان, لعبة عيد, مسابقات عائلية, ألعاب تعليمية, ألعاب للمدرسة, لعبة مراجعة درس, مسابقات مدرسية, ألعاب للفعاليات, ألعاب جاهزة, صندوق المسابقات" />
-  <meta name="theme-color" content="#075c82" />
-  <link rel="preload" href="NotoIKEAArabic-Bold.ttf" as="font" type="font/ttf" crossorigin />
-  <link rel="preload" as="image" href="logo.PNG" />
+<!DOCTYPE html>
 
-  <style>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>مدونة صندوق المسابقات | أفكار ألعاب للجمعات والمناسبات والتعليم</title>
+<meta content="مدونة صندوق المسابقات تقدم أدلة عملية عن الألعاب الجماعية، رمضان والعيد، اليوم الوطني، يوم التأسيس، والألعاب التعليمية والتغذية الراجعة للمعلمين." name="description"/>
+<meta content="ألعاب جماعية, ألعاب رمضان والعيد, مسابقات اليوم الوطني, ألعاب يوم التأسيس, ألعاب تعليمية تفاعلية, تغذية راجعة, مراجعة الدروس, صندوق المسابقات" name="keywords"/>
+<meta content="#075c82" name="theme-color"/>
+<link as="font" crossorigin="" href="NotoIKEAArabic-Bold.ttf" rel="preload" type="font/ttf"/>
+<link as="image" href="logo.PNG" rel="preload"/>
+<style>
     @font-face{
       font-family:"NotoIKEAArabic";
       src:url("NotoIKEAArabic-Bold.ttf") format("truetype");
@@ -661,360 +661,438 @@
         scroll-behavior:auto !important;
       }
     }
-  </style>
+  
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:fit-content;
+      margin:0 auto 10px;
+      min-height:30px;
+      padding:5px 13px;
+      border-radius:999px;
+      background:rgba(247,182,56,.22);
+      border:1px solid rgba(247,182,56,.48);
+      color:#7a4a00;
+      font-size:clamp(12px,1vw,15px);
+      font-weight:950;
+    }
 
-  <script type="application/ld+json">
+    .eyebrow-light{
+      margin-bottom:0;
+      background:rgba(255,255,255,.14);
+      border-color:rgba(255,255,255,.26);
+      color:#fff;
+    }
+
+    .keyword-cloud a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:6px 13px;
+      border-radius:999px;
+      background:rgba(85,189,242,.18);
+      color:var(--blue-dark);
+      border:1px solid rgba(7,92,130,.16);
+      font-weight:900;
+      font-size:clamp(12px,1vw,15px);
+      white-space:nowrap;
+      transition:transform .16s ease,background .16s ease;
+    }
+
+    .keyword-cloud a:hover{
+      transform:translateY(-1px);
+      background:rgba(85,189,242,.29);
+    }
+
+    .category-block{
+      display:grid;
+      gap:clamp(14px,2.2vw,24px);
+      scroll-margin-top:24px;
+    }
+
+    .category-heading{
+      display:grid;
+      gap:8px;
+      align-items:end;
+      padding:clamp(16px,2.4vw,28px);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(7,92,130,.12);
+      box-shadow:0 8px 24px rgba(7,92,130,.06);
+    }
+
+    .category-heading h2{
+      margin:3px 0 0;
+      color:var(--ink);
+      font-size:clamp(25px,3.3vw,44px);
+      line-height:1.35;
+      font-weight:950;
+    }
+
+    .category-heading p{
+      margin:0;
+      color:var(--muted);
+      font-size:clamp(14px,1.15vw,18px);
+      line-height:1.85;
+      font-weight:780;
+    }
+
+    .category-kicker{
+      color:var(--orange);
+      font-size:clamp(12px,1vw,15px);
+      font-weight:950;
+    }
+
+    .post-card{
+      padding:0;
+      overflow:hidden;
+      gap:0;
+      align-content:start;
+    }
+
+    .post-card-featured{
+      box-shadow:0 7px 0 rgba(0,0,0,.13),0 18px 34px rgba(7,92,130,.12);
+    }
+
+    .post-cover{
+      position:relative;
+      min-height:clamp(150px,23vw,230px);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border-bottom:clamp(3px,.35vw,5px) solid var(--line);
+      isolation:isolate;
+    }
+
+    .post-cover::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      opacity:.22;
+      background-image:radial-gradient(circle,rgba(255,255,255,.9) 0 2px,transparent 2.4px);
+      background-size:24px 24px;
+    }
+
+    .post-cover::after{
+      content:"";
+      position:absolute;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      left:-60px;
+      bottom:-90px;
+      background:rgba(255,255,255,.14);
+      z-index:-1;
+    }
+
+    .post-cover svg{
+      width:min(74%,320px);
+      height:auto;
+      fill:none;
+      stroke:rgba(255,255,255,.96);
+      stroke-width:6;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      filter:drop-shadow(0 7px 0 rgba(0,0,0,.12));
+    }
+
+    .cover-social{background:linear-gradient(135deg,#075c82,#087ca8 58%,#55bdf2);}
+    .cover-seasonal{background:linear-gradient(135deg,#4c1d75,#8b3fa4 58%,#f7b638);}
+    .cover-national{background:linear-gradient(135deg,#075c45,#119164 58%,#f7b638);}
+    .cover-founding{background:linear-gradient(135deg,#5a321f,#9a5f35 58%,#d8ab70);}
+    .cover-education{background:linear-gradient(135deg,#064f73,#2b86b3 58%,#55bdf2);}
+    .cover-feedback{background:linear-gradient(135deg,#0d6a62,#22a58e 58%,#9ae6d5);}
+
+    .cover-label{
+      position:absolute;
+      right:14px;
+      bottom:12px;
+      min-height:32px;
+      display:inline-flex;
+      align-items:center;
+      padding:6px 12px;
+      border-radius:999px;
+      color:#111;
+      background:var(--yellow);
+      border:2px solid rgba(21,21,21,.5);
+      box-shadow:0 3px 0 rgba(0,0,0,.16);
+      font-size:clamp(12px,1vw,15px);
+      font-weight:950;
+    }
+
+    .post-body{
+      display:grid;
+      gap:10px;
+      padding:clamp(16px,2.3vw,28px);
+    }
+
+    .post-card h3 a{
+      color:inherit;
+    }
+
+    .post-card-featured h3 a:hover{
+      color:var(--orange);
+    }
+
+    .coming-badge{
+      color:#7a4a00;
+      background:rgba(247,182,56,.22);
+      border:1px solid rgba(247,182,56,.45);
+      border-radius:999px;
+      padding:4px 10px;
+      white-space:nowrap;
+    }
+
+    .post-link-muted{
+      color:#7a8492;
+      cursor:default;
+    }
+
+    .is-coming{
+      opacity:.94;
+    }
+
+    @media (min-width:820px){
+      .category-heading{
+        grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);
+      }
+    }
+</style>
+<script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"Blog",
     "name":"مدونة صندوق المسابقات",
-    "description":"مقالات وأفكار عن الألعاب التفاعلية والجماعية والتعليمية للمدارس والجمعات ورمضان والعيد والفعاليات.",
+    "description":"أدلة عملية عن الألعاب الجماعية والمناسبات السعودية والألعاب التعليمية والتغذية الراجعة.",
+    "url":"https://sandooq-games.com/blog.html",
     "inLanguage":"ar-SA",
-    "publisher":{"@type":"Organization","name":"صندوق المسابقات"}
+    "publisher":{"@type":"Organization","name":"صندوق المسابقات","url":"https://sandooq-games.com/"}
   }
   </script>
 </head>
-
 <body>
-  <div class="app">
-    <header class="blog-hero">
-      <div class="top-row">
-        <a class="chip home-chip" href="index.html">الرئيسية</a>
-        <a class="chip login-chip" href="account.html">الحساب</a>
-      </div>
-
-      <div class="hero-inner">
-        <div class="logo-wrap" aria-label="شعار صندوق المسابقات">
-          <img src="logo.PNG" alt="صندوق المسابقات" />
-        </div>
-        <h1 class="blog-title">مدونة صندوق المسابقات</h1>
-        <p class="blog-subtitle">أفكار ومقالات عن ألعاب تفاعلية جاهزة للجمعات، رمضان، العيد، المدارس، الدروس، المراجعة الصفية، والفعاليات العائلية والتعليمية.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="index.html#games">تصفح الألعاب الآن</a>
-          <a class="btn btn-secondary" href="purchase-activation.html">تفعيل ألعابك</a>
-        </div>
-      </div>
-    </header>
-
-    <main class="content-area">
-      <div class="content-inner">
-        <section class="intro-card" aria-label="مقدمة المدونة">
-          <h2>مقالات تساعدك تختار لعبة مناسبة لكل مناسبة</h2>
-          <p>هذه المدونة مخصصة لكل من يبحث عن لعبة عيد، لعبة رمضان، مسابقات عائلية، ألعاب تفاعلية للمدرسة، أو لعبة مراجعة درس جاهزة. هدفنا نعطيك أفكارًا عملية وسريعة تساعدك تحول الجلسة أو الحصة أو الفعالية إلى تجربة حماسية ممتعة.</p>
-          <div class="keyword-cloud" aria-label="كلمات مفتاحية">
-            <span>لعبة رمضان</span>
-            <span>لعبة عيد</span>
-            <span>ألعاب تفاعلية</span>
-            <span>مسابقات عائلية</span>
-            <span>ألعاب تعليمية</span>
-            <span>مدرسة ودرس</span>
-            <span>لعبة مراجعة</span>
-            <span>فعاليات وجمعات</span>
-            <span>تغذية راجعة</span>
-            <span>أسئلة جاهزة</span>
-          </div>
-        </section>
-
-        <h2 class="section-heading">أحدث المقالات</h2>
-
-        <section class="posts-grid" aria-label="قائمة المقالات">
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">رمضان</span><span>5 دقائق قراءة</span></div>
-            <h3>أفكار ألعاب رمضان تفاعلية للعائلة والأصدقاء</h3>
-            <p>رمضان فرصة رائعة للجمعات، ومع لعبة تفاعلية جاهزة تقدر تضيف جو تحدي وضحك بعد الإفطار أو في السهرات.</p>
-            <a class="post-link" href="#article-ramadan-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">العيد</span><span>5 دقائق قراءة</span></div>
-            <h3>أفضل ألعاب عيد جاهزة للتجمعات والفعاليات</h3>
-            <p>إذا كنت تبحث عن لعبة عيد ممتعة وسهلة التشغيل، فالألعاب الرقمية التفاعلية تختصر عليك التحضير وتزيد الحماس.</p>
-            <a class="post-link" href="#article-eid-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">تعليم</span><span>6 دقائق قراءة</span></div>
-            <h3>ألعاب تعليمية تفاعلية للمعلمين داخل الفصل</h3>
-            <p>الألعاب التعليمية تساعد المعلم على تحويل الدرس والمراجعة إلى نشاط صفّي ممتع وسهل التفاعل.</p>
-            <a class="post-link" href="#article-educational-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">مراجعة</span><span>4 دقائق قراءة</span></div>
-            <h3>كيف تستخدم لعبة مراجعة درس بطريقة حماسية؟</h3>
-            <p>بدل الأسئلة التقليدية، يمكن استخدام لعبة تفاعلية لعرض الأسئلة وجمع النقاط وتحفيز الطلاب على المشاركة.</p>
-            <a class="post-link" href="#article-lesson-review">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">جمعات</span><span>5 دقائق قراءة</span></div>
-            <h3>أفضل ألعاب جماعية عربية للجلسات والاستراحات</h3>
-            <p>الألعاب الجماعية العربية المناسبة للجلسات لازم تكون سهلة، واضحة، وتناسب مختلف الأعمار.</p>
-            <a class="post-link" href="#article-family-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">فعاليات</span><span>5 دقائق قراءة</span></div>
-            <h3>أفكار مسابقات للفعاليات والرحلات المدرسية</h3>
-            <p>الفعاليات تحتاج ألعابًا سريعة التجهيز، واضحة للجمهور، وتخلق منافسة جميلة بين الفرق.</p>
-            <a class="post-link" href="#article-events-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">بدون تحميل</span><span>4 دقائق قراءة</span></div>
-            <h3>ألعاب تفاعلية بدون تحميل تعمل من المتصفح</h3>
-            <p>اللعب من المتصفح يختصر الوقت ويقلل المشاكل، خصوصًا للمدارس والجمعات التي تحتاج تشغيلًا سريعًا.</p>
-            <a class="post-link" href="#article-browser-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">مدرسة</span><span>5 دقائق قراءة</span></div>
-            <h3>مسابقات مدرسية جاهزة للأنشطة الصفية</h3>
-            <p>سواء في حصة انتظار أو نشاط مدرسي أو مراجعة نهائية، المسابقات الجاهزة تساعد على تنظيم التفاعل بسهولة.</p>
-            <a class="post-link" href="#article-school-competitions">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">تعديل الأسئلة</span><span>6 دقائق قراءة</span></div>
-            <h3>ألعاب قابلة للتعديل وإضافة الأسئلة الخاصة</h3>
-            <p>ميزة إضافة الأسئلة تجعل اللعبة مناسبة لأي مادة أو مناسبة أو فعالية خاصة.</p>
-            <a class="post-link" href="#article-editable-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">أصدقاء</span><span>4 دقائق قراءة</span></div>
-            <h3>كيف تختار لعبة مناسبة لجمعات الأصدقاء؟</h3>
-            <p>اللعبة المناسبة للجلسة هي التي تبدأ بسرعة، قواعدها بسيطة، وتناسب عدد اللاعبين الموجود.</p>
-            <a class="post-link" href="#article-friends-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">تغذية راجعة</span><span>5 دقائق قراءة</span></div>
-            <h3>التغذية الراجعة داخل الدرس باستخدام الألعاب</h3>
-            <p>يمكن للمعلم قياس الفهم بطريقة ممتعة من خلال سؤال، إجابة، نقاط، ومنافسة بسيطة بين الطلاب.</p>
-            <a class="post-link" href="#article-feedback-games">اقرأ المقال ←</a>
-          </article>
-
-          <article class="post-card">
-            <div class="post-meta"><span class="tag">مناسبات</span><span>5 دقائق قراءة</span></div>
-            <h3>ألعاب لليوم الوطني والمناسبات الخاصة</h3>
-            <p>المناسبات تحتاج ألعابًا مرنة يمكن تعديل أسئلتها لتناسب الموضوع والهوية والرسائل المطلوبة.</p>
-            <a class="post-link" href="#article-occasion-games">اقرأ المقال ←</a>
-          </article>
-        </section>
-
-        <section class="mid-cta" aria-label="دعوة لتصفح الألعاب">
-          <h2>جاهز تبدأ لعبة تفاعلية؟</h2>
-          <p>تصفح ألعاب صندوق المسابقات واختر لعبة تناسب جمعاتك أو مدرستك أو فعاليتك. ألعاب جاهزة، سهلة التشغيل، وتفتح مباشرة من الموقع بعد التفعيل.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="index.html#games">شاهد الألعاب</a>
-            <a class="btn btn-secondary" href="purchase-activation.html">استرجاع مشترياتك</a>
-          </div>
-        </section>
-
-        <h2 class="section-heading">مقالات المدونة</h2>
-
-        <section class="article-stack" aria-label="مقالات كاملة مختصرة">
-          <article class="article-box" id="article-ramadan-games">
-            <h2>أفكار ألعاب رمضان تفاعلية للعائلة والأصدقاء</h2>
-            <p>تجمعات رمضان تحتاج لعبة خفيفة وسريعة تجمع الأهل والأصدقاء بدون تجهيز طويل. الألعاب التفاعلية مناسبة جدًا بعد الإفطار أو في السهرات لأنها تعطي جو منافسة وتحدي وتناسب الكبار والصغار.</p>
-            <p>بدل البحث عن أسئلة عشوائية أو تجهيز ملفات كثيرة، يمكنك استخدام لعبة جاهزة تعمل من المتصفح وتعرض الأسئلة أو التحديات بطريقة مرتبة وواضحة.</p>
-            <ul>
-              <li>اختيار لعبة جماعية سهلة الشرح.</li>
-              <li>تقسيم اللاعبين إلى فرق لزيادة الحماس.</li>
-              <li>استخدام أسئلة عامة أو رمضانية أو عائلية.</li>
-              <li>عرض اللعبة على شاشة أو تلفاز ليشارك الجميع.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">تصفح ألعاب رمضان</a></div>
-          </article>
-
-          <article class="article-box" id="article-eid-games">
-            <h2>أفضل ألعاب عيد جاهزة للتجمعات والفعاليات</h2>
-            <p>العيد يجمع العائلة والأصدقاء، وغالبًا نحتاج نشاطًا سريعًا يغيّر جو الجلسة. لعبة عيد جاهزة توفر عليك وقت التحضير وتمنح الضيوف تجربة ممتعة بدون تعقيد.</p>
-            <p>الألعاب الرقمية التفاعلية مناسبة للعيد لأنها تعمل من الجوال أو الكمبيوتر ويمكن عرضها للجميع. كما أنها تعطي شعورًا احترافيًا أكثر من الأسئلة الورقية أو الملفات التقليدية.</p>
-            <ul>
-              <li>مناسبة لجلسات العائلة والزيارات.</li>
-              <li>تعمل مباشرة بدون تحميل معقد.</li>
-              <li>تدعم التنافس بين الفرق واللاعبين.</li>
-              <li>تجعل العيد أكثر حماسًا وتفاعلًا.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">اختر لعبة للعيد</a></div>
-          </article>
-
-          <article class="article-box" id="article-educational-games">
-            <h2>ألعاب تعليمية تفاعلية للمعلمين داخل الفصل</h2>
-            <p>الألعاب التعليمية أصبحت وسيلة ممتازة لجعل الطالب يشارك بدل أن يكتفي بالاستماع. عندما تتحول الأسئلة إلى لعبة، يزيد التركيز وتتحسن المشاركة داخل الفصل.</p>
-            <p>يمكن للمعلم استخدام الألعاب التفاعلية في التمهيد، المراجعة، قياس الفهم، أو ختام الدرس. والأفضل أن تكون اللعبة قابلة لإضافة الأسئلة الخاصة حتى تناسب أي مادة.</p>
-            <ul>
-              <li>مناسبة للمراجعة قبل الاختبار.</li>
-              <li>تساعد في كسر الروتين داخل الحصة.</li>
-              <li>تنفع للمواد العلمية واللغوية والاجتماعية.</li>
-              <li>تدعم التفاعل الفردي أو العمل الجماعي.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب تعليمية جاهزة</a></div>
-          </article>
-
-          <article class="article-box" id="article-lesson-review">
-            <h2>كيف تستخدم لعبة مراجعة درس بطريقة حماسية؟</h2>
-            <p>مراجعة الدرس لا يجب أن تكون مجموعة أسئلة عادية. باستخدام لعبة تفاعلية يمكن تحويل المراجعة إلى سباق نقاط وتحدي بين الطلاب، وهذا يجعل الطالب ينتبه ويتحمس للإجابة.</p>
-            <p>ابدأ بتحديد أهداف المراجعة، ثم ضع الأسئلة المهمة، وبعدها قسّم الطلاب إلى فرق أو اجعل المشاركة فردية. المهم أن تكون القواعد واضحة والزمن مناسبًا للحصة.</p>
-            <ul>
-              <li>جهّز 10 إلى 20 سؤالًا حسب وقت الحصة.</li>
-              <li>اجعل الأسئلة قصيرة وواضحة.</li>
-              <li>استخدم النقاط لتشجيع المشاركة.</li>
-              <li>اختم بتغذية راجعة سريعة لأكثر الأخطاء تكرارًا.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">جرّب لعبة مراجعة</a></div>
-          </article>
-
-          <article class="article-box" id="article-family-games">
-            <h2>أفضل ألعاب جماعية عربية للجلسات والاستراحات</h2>
-            <p>اللعبة الجماعية المناسبة للجلسات يجب أن تكون سهلة الفهم، سريعة التشغيل، وتناسب عدد لاعبين مختلف. الألعاب العربية التفاعلية تضيف ميزة مهمة: اللغة والجو قريبان من العائلة والأصدقاء.</p>
-            <p>في الاستراحات أو الرحلات أو تجمعات نهاية الأسبوع، تحتاج لعبة تبدأ بسرعة ولا تتطلب تجهيزات كثيرة. هنا تظهر قيمة الألعاب الجاهزة التي تعمل من المتصفح.</p>
-            <ul>
-              <li>اختر لعبة تناسب عدد اللاعبين.</li>
-              <li>اجعل المقدم يشرح القواعد في دقيقة واحدة.</li>
-              <li>استخدم شاشة عرض إذا كان العدد كبيرًا.</li>
-              <li>نوّع بين ألعاب أسئلة وتحديات وتمثيل.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للجمعات</a></div>
-          </article>
-
-          <article class="article-box" id="article-events-games">
-            <h2>أفكار مسابقات للفعاليات والرحلات المدرسية</h2>
-            <p>الفعاليات تحتاج برنامجًا واضحًا وممتعًا. المسابقات التفاعلية تساعد المنظم على إدارة الوقت وجذب انتباه المشاركين، سواء كانت فعالية مدرسية أو رحلة أو اجتماع عائلي كبير.</p>
-            <p>الأفضل اختيار لعبة بنظام فرق ونقاط، لأنها تجعل الجمهور يتابع النتيجة ويتحمس مع كل جولة.</p>
-            <ul>
-              <li>قسّم المشاركين إلى فريقين أو أكثر.</li>
-              <li>استخدم أسئلة متنوعة بين السهلة والمتوسطة.</li>
-              <li>اعرض النتيجة بوضوح أمام الجميع.</li>
-              <li>اختم بجائزة رمزية للفريق الفائز.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للفعاليات</a></div>
-          </article>
-
-          <article class="article-box" id="article-browser-games">
-            <h2>ألعاب تفاعلية بدون تحميل تعمل من المتصفح</h2>
-            <p>ميزة اللعب من المتصفح مهمة جدًا؛ لأنها تقلل مشاكل التثبيت والتوافق. كل ما يحتاجه العميل هو رابط اللعبة وحساب مفعّل، ثم يبدأ اللعب من الجوال أو اللابتوب أو التابلت.</p>
-            <p>هذا النوع من الألعاب مناسب للمعلمين، العائلات، والفعاليات، لأن التشغيل السريع يجعل التجربة أسهل وأقل تعقيدًا.</p>
-            <ul>
-              <li>لا تحتاج تثبيت برنامج.</li>
-              <li>تعمل على أكثر من جهاز.</li>
-              <li>سهلة العرض على شاشة أو بروجكتر.</li>
-              <li>مناسبة للشراء والاستخدام السريع.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">تصفح ألعاب بدون تحميل</a></div>
-          </article>
-
-          <article class="article-box" id="article-school-competitions">
-            <h2>مسابقات مدرسية جاهزة للأنشطة الصفية</h2>
-            <p>المسابقات المدرسية الجاهزة توفر على المعلم والمنظم وقت التحضير، خصوصًا في حصص الانتظار، الأسابيع التمهيدية، الأنشطة اللاصفية، أو مراجعات نهاية الوحدة.</p>
-            <p>عندما تكون اللعبة واضحة وقابلة للتعديل، يمكن استخدامها في أكثر من مادة وأكثر من صف.</p>
-            <ul>
-              <li>تنفع للرياضيات والعلوم واللغة العربية والإنجليزية.</li>
-              <li>يمكن تعديل الأسئلة حسب الدرس.</li>
-              <li>تزيد مشاركة الطلاب داخل الفصل.</li>
-              <li>تعطي المعلم طريقة ممتعة للتقييم السريع.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب مدرسية</a></div>
-          </article>
-
-          <article class="article-box" id="article-editable-games">
-            <h2>ألعاب قابلة للتعديل وإضافة الأسئلة الخاصة</h2>
-            <p>أقوى ميزة في الألعاب التعليمية والتفاعلية هي إمكانية إضافة الأسئلة الخاصة. بهذه الطريقة تتحول اللعبة إلى قالب جاهز لأي مادة أو مناسبة أو فعالية.</p>
-            <p>يمكن للمعلم وضع أسئلة الدرس، ويمكن للأسرة وضع أسئلة عن أفراد العائلة، ويمكن للمنظم وضع أسئلة تناسب الفعالية.</p>
-            <ul>
-              <li>تخصيص الأسئلة حسب الهدف.</li>
-              <li>إعادة استخدام اللعبة أكثر من مرة.</li>
-              <li>مناسبة للمراجعة والتدريب والتحدي.</li>
-              <li>تساعد على صنع تجربة مختلفة في كل مرة.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب قابلة للتعديل</a></div>
-          </article>
-
-          <article class="article-box" id="article-friends-games">
-            <h2>كيف تختار لعبة مناسبة لجمعات الأصدقاء؟</h2>
-            <p>اختيار لعبة للجلسة يعتمد على عدد اللاعبين، نوع الجو المطلوب، ووقت اللعب. إذا كان الهدف ضحك وتفاعل، اختر لعبة تعتمد على التصرف والسرعة. وإذا كان الهدف تحدي، اختر لعبة أسئلة ونقاط.</p>
-            <p>الأهم أن تكون اللعبة بسيطة في البداية، ثم يزيد الحماس مع الوقت.</p>
-            <ul>
-              <li>للجلسات السريعة اختر لعبة قصيرة.</li>
-              <li>للعدد الكبير اختر لعبة فرق.</li>
-              <li>للضحك اختر ألعاب التخمين والتمثيل.</li>
-              <li>للتحدي اختر ألعاب الأسئلة والجرس.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للأصدقاء</a></div>
-          </article>
-
-          <article class="article-box" id="article-feedback-games">
-            <h2>التغذية الراجعة داخل الدرس باستخدام الألعاب</h2>
-            <p>التغذية الراجعة لا تعني فقط تصحيح الإجابات. يمكن أن تكون نشاطًا سريعًا يكشف للمعلم مستوى فهم الطلاب بطريقة ممتعة. الألعاب التفاعلية تجعل الخطأ جزءًا من التعلم وليس نهاية المشاركة.</p>
-            <p>بعد كل جولة، يستطيع المعلم التوقف قليلًا وشرح سبب الإجابة الصحيحة، ثم يكمل اللعبة.</p>
-            <ul>
-              <li>اعرف الأسئلة التي أخطأ فيها الطلاب.</li>
-              <li>اشرح الإجابة الصحيحة مباشرة.</li>
-              <li>أعد السؤال بصيغة أخرى إذا احتاج الطلاب.</li>
-              <li>استخدم النقاط للتحفيز لا للتخويف.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للتغذية الراجعة</a></div>
-          </article>
-
-          <article class="article-box" id="article-occasion-games">
-            <h2>ألعاب لليوم الوطني والمناسبات الخاصة</h2>
-            <p>المناسبات الخاصة مثل اليوم الوطني، حفلات المدرسة، أو فعاليات العائلة تحتاج محتوى مناسب للهوية والموضوع. الألعاب القابلة للتعديل تساعدك على تجهيز أسئلة ورسائل تناسب المناسبة.</p>
-            <p>يمكنك استخدام لعبة أسئلة، خريطة حروف، أو تحديات جماعية لإضافة طابع مميز على الفعالية.</p>
-            <ul>
-              <li>اكتب أسئلة مرتبطة بالمناسبة.</li>
-              <li>استخدم أسماء الفرق المناسبة للحدث.</li>
-              <li>اجعل مدة الجولة قصيرة للحفاظ على الحماس.</li>
-              <li>أضف جوائز بسيطة لزيادة المشاركة.</li>
-            </ul>
-            <div class="article-cta"><a class="btn btn-green" href="index.html#games">ألعاب للمناسبات</a></div>
-          </article>
-        </section>
-      </div>
-    </main>
-
-    <footer class="site-footer" aria-label="ذيل الصفحة">
-      <div class="footer-inner">
-        <h2>صندوق المسابقات</h2>
-        <p>متجر ألعاب رقمية تفاعلية يجمع مسابقات جماعية وألعابًا تعليمية جاهزة للجمعات، المدارس، رمضان، العيد، والفعاليات.</p>
-        <div class="footer-links">
-          <a class="footer-link" href="index.html#games">ألعابنا</a>
-          <a class="footer-link" href="purchase-activation.html">تفعيل الألعاب</a>
-          <a class="footer-link" href="support.html">الدعم</a>
-          <a class="footer-link" href="index.html">الرئيسية</a>
-        </div>
-      </div>
-      <div class="footer-legal">
-        <div class="footer-legal-inner">
+<div class="app">
+<header class="blog-hero">
+<div class="top-row">
+<a class="chip home-chip" href="index.html">الرئيسية</a>
+<a class="chip login-chip" href="account.html">الحساب</a>
+</div>
+<div class="hero-inner">
+<div aria-label="شعار صندوق المسابقات" class="logo-wrap">
+<img alt="صندوق المسابقات" src="logo.PNG"/>
+</div>
+<h1 class="blog-title">مدونة صندوق المسابقات</h1>
+<p class="blog-subtitle">أفكار وأدلة عملية تساعدك تختار نشاطًا يناسب جمعاتك، مناسباتك، فصلك الدراسي، وطريقة التفاعل التي تبحث عنها.</p>
+<div class="hero-actions">
+<a class="btn btn-primary" href="index.html">استكشف الألعاب والبكجات</a>
+<a class="btn btn-secondary" href="purchase-activation.html">تفعيل ألعابك</a>
+</div>
+</div>
+</header>
+<main class="content-area">
+<div class="content-inner">
+<section aria-label="مقدمة المدونة" class="intro-card">
+<span class="eyebrow">اختر حسب احتياجك</span>
+<h2>من فكرة تبحث عنها في Google إلى فعالية جاهزة تبدأها مع مجموعتك</h2>
+<p>قسمنا المدونة إلى ثلاثة مسارات واضحة: ألعاب للجمعات والمناسبات، محتوى للمناسبات السعودية، وأفكار تعليمية للمعلمين. كل مقال سيكون دليلًا مستقلًا يساعدك في الاختيار والتجهيز، ثم يفتح لك الطريق لاستكشاف جميع ألعاب وبكجات صندوق المسابقات.</p>
+<div aria-label="انتقل إلى أقسام المدونة" class="keyword-cloud">
+<a href="#social-articles">جمعات واستراحات</a>
+<a href="#social-articles">رمضان والعيد</a>
+<a href="#national-articles">اليوم الوطني</a>
+<a href="#national-articles">يوم التأسيس</a>
+<a href="#education-articles">ألعاب تعليمية</a>
+<a href="#education-articles">تغذية راجعة</a>
+<a href="#education-articles">مراجعة الدروس</a>
+</div>
+</section>
+<section aria-labelledby="social-title" class="category-block" id="social-articles">
+<div class="category-heading">
+<div>
+<span class="category-kicker">جمعات ومناسبات</span>
+<h2 id="social-title">ألعاب تغيّر جو الجلسة وتجمع الكل</h2>
+</div>
+<p>أفكار عملية للجمعات والاستراحات وليالي رمضان والعيد، مع طريقة اختيار اللعبة حسب عدد اللاعبين ونوع الحماس المطلوب.</p>
+</div>
+<div class="posts-grid">
+<article class="post-card post-card-featured">
+<a aria-label="اقرأ مقال أفضل ألعاب جماعية عربية للجمعات والاستراحات" class="post-cover cover-social" href="group-games-1.html">
+<svg aria-hidden="true" viewbox="0 0 320 180">
+<circle cx="88" cy="68" r="26"></circle><circle cx="160" cy="50" r="30"></circle><circle cx="232" cy="68" r="26"></circle>
+<path d="M45 142c4-35 25-52 43-52s39 17 43 52"></path>
+<path d="M102 148c5-48 31-72 58-72s53 24 58 72"></path>
+<path d="M189 142c4-35 25-52 43-52s39 17 43 52"></path>
+<path d="M137 128h46"></path>
+</svg>
+<span class="cover-label">جمعات واستراحات</span>
+</a>
+<div class="post-body">
+<div class="post-meta"><span class="tag">جمعات</span><span>8 دقائق قراءة</span></div>
+<h3><a href="group-games-1.html">أفضل ألعاب جماعية عربية للجمعات والاستراحات</a></h3>
+<p>دليل يساعدك تختار اللعبة المناسبة حسب عدد اللاعبين، جو الجلسة، ودرجة التنافس أو الضحك التي تبحث عنها.</p>
+<a class="post-link" href="group-games-1.html">اقرأ الدليل كاملًا <span aria-hidden="true">←</span></a>
+</div>
+</article>
+<article class="post-card is-coming">
+<div aria-hidden="true" class="post-cover cover-seasonal">
+<svg viewbox="0 0 320 180">
+<path d="M112 36a58 58 0 1 0 54 82 48 48 0 1 1-54-82Z"></path>
+<path d="m224 48 7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2Z"></path>
+<path d="M70 144h180"></path><path d="M92 124v20M130 112v32M168 122v22M206 105v39"></path>
+</svg>
+<span class="cover-label">رمضان والعيد</span>
+</div>
+<div class="post-body">
+<div class="post-meta"><span class="tag">موسمي</span><span class="coming-badge">قيد التجهيز</span></div>
+<h3>أفكار ألعاب رمضان والعيد للجمعات العائلية والأصدقاء</h3>
+<p>أفكار سهلة للسهرات والزيارات، مع طريقة تنظيم الفرق واختيار نشاط يناسب مختلف الأعمار.</p>
+<span class="post-link post-link-muted">سيتوفر في الخطوات القادمة</span>
+</div>
+</article>
+</div>
+</section>
+<section aria-labelledby="national-title" class="category-block" id="national-articles">
+<div class="category-heading">
+<div>
+<span class="category-kicker">مناسبات سعودية</span>
+<h2 id="national-title">محتوى تفاعلي للهوية والفعاليات الوطنية</h2>
+</div>
+<p>صفحات مستقلة لليوم الوطني ويوم التأسيس، مجهزة لاستقبال الألعاب والأسئلة الوطنية التي ستُضاف إلى الموقع.</p>
+</div>
+<div class="posts-grid">
+<article class="post-card is-coming">
+<div aria-hidden="true" class="post-cover cover-national">
+<svg viewbox="0 0 320 180">
+<path d="M76 40v108"></path><path d="M78 44h154l-27 31 27 31H78Z"></path>
+<path d="M106 70h89"></path><path d="M111 91h78"></path>
+<path d="M116 130c24-18 64-18 88 0"></path>
+</svg>
+<span class="cover-label">اليوم الوطني</span>
+</div>
+<div class="post-body">
+<div class="post-meta"><span class="tag">مناسبة وطنية</span><span class="coming-badge">قيد التجهيز</span></div>
+<h3>أفكار مسابقات وألعاب لليوم الوطني السعودي</h3>
+<p>مسابقات وأسئلة وأنشطة تفاعلية للمدارس والجهات والفعاليات العائلية، مع أفكار للتجهيز والعرض.</p>
+<span class="post-link post-link-muted">سيتوفر في الخطوات القادمة</span>
+</div>
+</article>
+<article class="post-card is-coming">
+<div aria-hidden="true" class="post-cover cover-founding">
+<svg viewbox="0 0 320 180">
+<path d="M68 142h184"></path><path d="M88 142V72h144v70"></path>
+<path d="M104 72V48h112v24"></path><path d="M126 48V30h68v18"></path>
+<path d="M112 92h24v24h-24zM148 92h24v50h-24zM184 92h24v24h-24z"></path>
+<path d="M76 142 54 116M244 142l22-26"></path>
+</svg>
+<span class="cover-label">يوم التأسيس</span>
+</div>
+<div class="post-body">
+<div class="post-meta"><span class="tag">تاريخ وهوية</span><span class="coming-badge">قيد التجهيز</span></div>
+<h3>أفكار مسابقات وألعاب يوم التأسيس السعودي</h3>
+<p>دليل للمدارس والفعاليات يتضمن أفكارًا عن تاريخ المملكة والهوية والتراث وطريقة تحويلها إلى منافسة ممتعة.</p>
+<span class="post-link post-link-muted">سيتوفر في الخطوات القادمة</span>
+</div>
+</article>
+</div>
+</section>
+<section aria-labelledby="education-title" class="category-block" id="education-articles">
+<div class="category-heading">
+<div>
+<span class="category-kicker">تعليم ومعلمون</span>
+<h2 id="education-title">ألعاب تساعد المعلم على زيادة التفاعل وقياس الفهم</h2>
+</div>
+<p>محتوى يخاطب احتياجات المعلم أثناء البحث: أنشطة صفية، مراجعة درس، تغذية راجعة، وتفاعل الطلاب عبر ألعاب قابلة للتخصيص.</p>
+</div>
+<div class="posts-grid">
+<article class="post-card is-coming">
+<div aria-hidden="true" class="post-cover cover-education">
+<svg viewbox="0 0 320 180">
+<rect height="104" rx="10" width="196" x="62" y="34"></rect>
+<path d="M86 62h98M86 84h68M86 106h110"></path>
+<circle cx="226" cy="74" r="18"></circle><path d="M202 123c4-24 16-36 24-36s20 12 24 36"></path>
+<path d="M142 138v18M178 138v18M116 156h88"></path>
+</svg>
+<span class="cover-label">ألعاب تعليمية</span>
+</div>
+<div class="post-body">
+<div class="post-meta"><span class="tag">للمعلمين</span><span class="coming-badge">قيد التجهيز</span></div>
+<h3>أفضل ألعاب تعليمية تفاعلية لزيادة مشاركة الطلاب</h3>
+<p>كيف يختار المعلم نشاطًا يناسب هدف الدرس ويستخدمه في التمهيد والمراجعة والتقويم بطريقة سهلة وواضحة.</p>
+<span class="post-link post-link-muted">سيتوفر في الخطوات القادمة</span>
+</div>
+</article>
+<article class="post-card is-coming">
+<div aria-hidden="true" class="post-cover cover-feedback">
+<svg viewbox="0 0 320 180">
+<path d="M70 62h126a26 26 0 0 1 26 26v22"></path>
+<path d="m207 97 15 15 15-15"></path>
+<path d="M250 128H124a26 26 0 0 1-26-26V80"></path>
+<path d="m113 93-15-15-15 15"></path>
+<circle cx="86" cy="46" r="12"></circle><circle cx="234" cy="144" r="12"></circle>
+</svg>
+<span class="cover-label">تغذية راجعة</span>
+</div>
+<div class="post-body">
+<div class="post-meta"><span class="tag">مراجعة وتقويم</span><span class="coming-badge">قيد التجهيز</span></div>
+<h3>ألعاب التغذية الراجعة ومراجعة الدروس بطريقة تفاعلية</h3>
+<p>أفكار لقياس الفهم وتصحيح الأخطاء وتحويل أسئلة المراجعة إلى نشاط يرفع مشاركة الطلاب داخل الحصة.</p>
+<span class="post-link post-link-muted">سيتوفر في الخطوات القادمة</span>
+</div>
+</article>
+</div>
+</section>
+<section aria-label="دعوة لاستكشاف الموقع" class="mid-cta">
+<span class="eyebrow eyebrow-light">كل الألعاب في مكان واحد</span>
+<h2>اكتشف ما يناسب جمعتك أو مناسبتك أو فصلك</h2>
+<p>تصفح الموقع كاملًا وشاهد الألعاب والبكجات المتاحة. اختر أكثر من تجربة تناسب احتياجاتك، وارجع للمدونة عندما تحتاج فكرة أو طريقة تشغيل مختلفة.</p>
+<div class="hero-actions">
+<a class="btn btn-primary" href="index.html">استكشف الألعاب والبكجات</a>
+<a class="btn btn-secondary" href="purchase-activation.html">تفعيل مشترياتك</a>
+</div>
+</section>
+</div>
+</main>
+<footer aria-label="ذيل الصفحة" class="site-footer">
+<div class="footer-inner">
+<h2>صندوق المسابقات</h2>
+<p>متجر ألعاب رقمية تفاعلية يجمع مسابقات جماعية وألعابًا تعليمية جاهزة للجمعات، المدارس، رمضان، العيد، والفعاليات.</p>
+<div class="footer-links">
+<a class="footer-link" href="index.html#games">ألعابنا</a>
+<a class="footer-link" href="purchase-activation.html">تفعيل الألعاب</a>
+<a class="footer-link" href="support.html">الدعم</a>
+<a class="footer-link" href="index.html">الرئيسية</a>
+</div>
+</div>
+<div class="footer-legal">
+<div class="footer-legal-inner">
           جميع الحقوق محفوظة © 2025 صندوق المسابقات | <a href="about.html">من نحن</a> | <a href="privacy.html">الخصوصية</a>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <nav class="bottom-nav" aria-label="التنقل السفلي">
-    <div class="bottom-nav-inner">
-      <a class="nav-item" href="index.html">
-        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
-        <span>الألعاب</span>
-      </a>
-      <a class="nav-item nav-featured" href="purchase-activation.html">
-        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
-        <span>تفعيل الألعاب</span>
-      </a>
-      <a class="nav-item" href="account.html">
-        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
-        <span>الحساب</span>
-      </a>
-      <a class="nav-item" href="support.html">
-        <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
-        <span>الدعم</span>
-      </a>
-    </div>
-  </nav>
-
-  <script>
+</div>
+</div>
+</footer>
+</div>
+<nav aria-label="التنقل السفلي" class="bottom-nav">
+<div class="bottom-nav-inner">
+<a class="nav-item" href="index.html">
+<span aria-hidden="true" class="nav-icon"><svg viewbox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4Z"></path><path d="M8 11h.01"></path><path d="M11 11h.01"></path><path d="M16 10v2"></path><path d="M15 11h2"></path><path d="M9 15l-2 3"></path><path d="M15 15l2 3"></path></svg></span>
+<span>الألعاب</span>
+</a>
+<a class="nav-item nav-featured" href="purchase-activation.html">
+<span aria-hidden="true" class="nav-icon"><svg viewbox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l8-8"></path><path d="M17 4l3 3"></path><path d="M15 6l3 3"></path></svg></span>
+<span>تفعيل الألعاب</span>
+</a>
+<a class="nav-item" href="account.html">
+<span aria-hidden="true" class="nav-icon"><svg viewbox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg></span>
+<span>الحساب</span>
+</a>
+<a class="nav-item" href="support.html">
+<span aria-hidden="true" class="nav-icon"><svg viewbox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2"></path><path d="M8 12v5H6a2 2 0 0 1-2-2v-3"></path><path d="M16 12v5h2a2 2 0 0 0 2-2v-3"></path><path d="M10 20h4"></path></svg></span>
+<span>الدعم</span>
+</a>
+</div>
+</nav>
+<script>
     const ACCOUNT_PHONE_KEY = 'sandooq_account_phone_v1';
     const ACCOUNT_NAME_KEY = 'sandooq_player_name_v1';
     const ACCOUNT_NAME_CONFIRMED_KEY = 'sandooq_player_name_confirmed_v1';
