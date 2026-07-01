@@ -2010,7 +2010,7 @@ width:100% !important;
     <section class="bundles-area" id="bundles" aria-label="قسم العروض والبكجات">
       <div class="bundles-inner">
         <div class="bundles-grid">
-          <article class="bundle-card bundle-game-card" data-bundle-id="edu-games">
+          <article class="bundle-card bundle-game-card" data-bundle-id="edu-games" data-game-id="education" data-play-url="https://education.sandooq-games.com">
             <div class="bundle-cover cover-photo">
               <img src="edu-games-cover-card.webp" alt="غلاف صندوق الألعاب التعليمية" width="1672" height="941" loading="eager" decoding="async" />
             </div>
@@ -2027,9 +2027,9 @@ width:100% !important;
                 <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span>
                 <span class="game-btn-text">عرض اللعبة</span>
               </a>
-              <a class="game-btn" href="edu-games.html#purchase">
+              <a class="game-btn" href="https://sandooq-m.com/-/p1673910296" target="_blank" rel="noopener" data-access-button="1" data-action="buy">
                 <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span>
-                <span class="game-btn-text">شراء اللعبة</span>
+                <span class="game-btn-text">شراء اللعبة - 79.99 ريال</span>
               </a>
             </div>
           </article>
@@ -2577,13 +2577,21 @@ width:100% !important;
     const LINKED_GAMES_DETAILS_KEY = 'sandooq_linked_games_details_v1';
     const LAST_SYNC_KEY = 'sandooq_last_sync_v1';
 
+    function normalizeGameId(value) {
+      const raw = String(value || '').trim();
+      const key = raw.toLowerCase();
+      if (['education', 'edu-games', 'edu_games', 'educational-games', 'p1673910296', '1673910296'].includes(key)) return 'education';
+      return raw;
+    }
+
     const GAME_PLAY_URLS = {
       'horof': 'https://horof.sandooq-games.com/app/',
       'horof-edu': 'https://horof.sandooq-games.com/app/',
       'bdon-kalam': 'https://bdon-kalam.sandooq-games.com',
       'bra-alsalfah': 'https://bara.sandooq-games.com/single.html',
       'family-feud': 'https://family-feud.sandooq-games.com',
-      'sandooq': 'https://game2.sandooq-games.com/start.html?v=1774023618302'
+      'sandooq': 'https://game2.sandooq-games.com/start.html?v=1774023618302',
+      'education': 'https://education.sandooq-games.com'
     };
 
     const GAME_DETAILS_URLS = {
@@ -2592,7 +2600,8 @@ width:100% !important;
       'bdon-kalam': 'bdon-kalam.html',
       'bra-alsalfah': 'bra-alsalfah.html',
       'family-feud': 'family-feud.html',
-      'sandooq': 'sandooq.html'
+      'sandooq': 'sandooq.html',
+      'education': 'edu-games.html'
     };
 
     const horofActivationKeys = [
@@ -2831,14 +2840,14 @@ width:100% !important;
       try {
         const raw = readLocalValue(LINKED_GAMES_KEY);
         const parsed = raw ? JSON.parse(raw) : [];
-        if (Array.isArray(parsed)) parsed.forEach(id => id && ids.add(String(id)));
-        else if (parsed && typeof parsed === 'object') Object.keys(parsed).forEach(id => parsed[id] && ids.add(String(id)));
+        if (Array.isArray(parsed)) parsed.forEach(id => { const normalized = normalizeGameId(id); if (normalized) ids.add(normalized); });
+        else if (parsed && typeof parsed === 'object') Object.keys(parsed).forEach(id => { const normalized = normalizeGameId(id); if (parsed[id] && normalized) ids.add(normalized); });
       } catch (e) {}
 
       try {
         const raw = readLocalValue('sandooq_owned_games_v1');
         const parsed = raw ? JSON.parse(raw) : [];
-        if (Array.isArray(parsed)) parsed.forEach(id => id && ids.add(String(id)));
+        if (Array.isArray(parsed)) parsed.forEach(id => { const normalized = normalizeGameId(id); if (normalized) ids.add(normalized); });
       } catch (e) {}
 
       if (hasHorofActivation()) ids.add('horof');
@@ -2856,7 +2865,7 @@ width:100% !important;
 
     function saveLinkedGames(games) {
       const safeGames = Array.isArray(games) ? games : [];
-      const ids = safeGames.map(game => String(game.id || game.slug || '')).filter(Boolean);
+      const ids = safeGames.map(game => normalizeGameId(game.id || game.slug || '')).filter(Boolean);
       try { localStorage.setItem(LINKED_GAMES_KEY, JSON.stringify(ids)); } catch (e) {}
       try { localStorage.setItem(LINKED_GAMES_DETAILS_KEY, JSON.stringify(safeGames)); } catch (e) {}
       try { localStorage.setItem('sandooq_owned_games_v1', JSON.stringify(ids)); } catch (e) {}
@@ -2866,7 +2875,7 @@ width:100% !important;
     function getGameDetailsMap() {
       const map = new Map();
       readLinkedGameDetails().forEach(game => {
-        const id = String(game.id || game.slug || '');
+        const id = normalizeGameId(game.id || game.slug || '');
         if (id) map.set(id, game);
       });
       return map;
@@ -3047,7 +3056,7 @@ width:100% !important;
       const ownedIds = readLinkedGameIds();
       const detailsMap = getGameDetailsMap();
 
-      document.querySelectorAll('.game-card[data-game-id]').forEach(card => {
+      document.querySelectorAll('.game-card[data-game-id], .bundle-game-card[data-game-id]').forEach(card => {
         const gameId = String(card.dataset.gameId || '');
         const status = card.querySelector('.game-status');
         const accessButton = findAccessButton(card);
@@ -3206,7 +3215,7 @@ width:100% !important;
 
     document.addEventListener('click', async event => {
       const playButton = event.target && event.target.closest
-        ? event.target.closest('.game-card .game-btn.play-action[data-direct-index-play="1"]')
+        ? event.target.closest('.game-card .game-btn.play-action[data-direct-index-play="1"], .bundle-game-card .game-btn.play-action[data-direct-index-play="1"]')
         : null;
 
       if (!playButton) return;
@@ -3425,6 +3434,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index.html — new-salla-buy-links-v1 -->
+  <!-- VERSION: index-59.html — education-purchase-access-price-v1 -->
 </body>
 </html>

@@ -89,7 +89,7 @@
     .page-game-top{direction:rtl;}
     .hero-copy{display:grid;gap:12px;text-align:center;justify-items:center;}
     .hero-copy-under{max-width:900px;gap:clamp(10px,1.6vw,16px);}
-    .page-title{margin:0;font-size:clamp(32px,4.6vw,58px);line-height:1.18;font-weight:950;text-shadow:0 4px 0 rgba(0,0,0,.14);}
+    .page-title{margin:0;max-width:100%;font-size:clamp(25px,7vw,58px);line-height:1.18;font-weight:950;letter-spacing:-.35px;white-space:nowrap;text-shadow:0 4px 0 rgba(0,0,0,.14);}
     .page-lead{margin:0;max-width:850px;color:rgba(255,255,255,.96);font-weight:850;font-size:clamp(16px,1.55vw,22px);line-height:1.9;text-shadow:0 2px 0 rgba(0,0,0,.10);}
     .hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:4px;}
     .btn{
@@ -184,7 +184,7 @@
     @media (max-width:430px){
       :root{--bottom-nav-height:88px;--page-pad:clamp(12px,4vw,18px);}
       .chip{min-height:30px;padding:6px 10px;font-size:12px;}
-      .page-title{font-size:clamp(34px,9vw,44px);}
+      .page-title{font-size:clamp(25px,7vw,34px);}
       .page-lead{font-size:15px;}
       .hero-card{border-width:4px;}
     }
@@ -208,11 +208,11 @@
         </div>
 
         <div class="hero-copy hero-copy-under">
-          <h1 class="page-title">صندوق الألعاب التعليمية</h1>
+          <h1 class="page-title">صندوق الالعاب التعليمية</h1>
           <p class="page-lead">جهّز ألعابًا تعليمية تناسب درسك بكل سهولة<br>٥ ألعاب قابلة للتخصيص بلا حدود وبدون اشتراك شهري</p>
 
           <div class="hero-actions" data-game-id="education">
-            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com" data-game-id="education" data-state="buy" data-buy-url="https://sandooq-m.com" data-play-url="https://education.sandooq-games.com" data-buy-label="شراء صندوق الألعاب التعليمية" data-play-label="العب">شراء صندوق الألعاب التعليمية</a>
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p1673910296" target="_blank" rel="noopener" data-game-id="education" data-state="buy" data-buy-url="https://sandooq-m.com/-/p1673910296" data-play-url="https://education.sandooq-games.com" data-buy-label="شراء صندوق الالعاب التعليمية - 79.99 ريال" data-play-label="العب">شراء صندوق الالعاب التعليمية - 79.99 ريال</a>
           </div>
         </div>
       </div>
@@ -339,7 +339,7 @@
           <h2 class="section-heading">جاهز تحوّل دروسك إلى ألعاب تفاعلية؟</h2>
           <p class="section-text">ابدأ بإنشاء ألعابك التعليمية من المتصفح، واحفظها وعدّلها واعرضها متى احتجتها.</p>
           <div class="hero-actions" data-game-id="education">
-            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com" data-game-id="education" data-state="buy" data-buy-url="https://sandooq-m.com" data-play-url="https://education.sandooq-games.com" data-buy-label="شراء صندوق الألعاب التعليمية" data-play-label="العب">شراء صندوق الألعاب التعليمية</a>
+            <a class="btn btn-primary js-game-cta" href="https://sandooq-m.com/-/p1673910296" target="_blank" rel="noopener" data-game-id="education" data-state="buy" data-buy-url="https://sandooq-m.com/-/p1673910296" data-play-url="https://education.sandooq-games.com" data-buy-label="شراء صندوق الالعاب التعليمية - 79.99 ريال" data-play-label="العب">شراء صندوق الالعاب التعليمية - 79.99 ريال</a>
           </div>
         </section>
 
@@ -407,7 +407,8 @@
     function readLocalValue(key){try{return localStorage.getItem(key)||'';}catch(e){return '';}}
     function refreshLoginChip(){const loginChip=document.getElementById('loginStatusButton')||document.querySelector('.login-chip');if(!loginChip)return;const phone=readLocalValue(ACCOUNT_PHONE_KEY).trim();const playerName=readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim()==='1'?readLocalValue(ACCOUNT_NAME_KEY).trim():'';if(phone&&playerName)loginChip.textContent=`مرحبًا ${playerName}`;else if(phone)loginChip.textContent='تم الدخول';else loginChip.textContent='تسجيل الدخول';}
     function addStoredGameIdsToSet(ids,key){try{const raw=localStorage.getItem(key);const parsed=raw?JSON.parse(raw):[];if(Array.isArray(parsed))parsed.forEach(id=>id&&ids.add(String(id)));else if(parsed&&typeof parsed==='object')Object.keys(parsed).forEach(id=>parsed[id]&&ids.add(String(id)));}catch(e){}}
-    function readOwnedGames(){const ids=new Set();addStoredGameIdsToSet(ids,OWNED_GAMES_KEY);addStoredGameIdsToSet(ids,LINKED_GAMES_KEY);return ids;}
+    function normalizeGameId(value){const raw=String(value||'').trim();const key=raw.toLowerCase();if(['education','edu-games','edu_games','educational-games','p1673910296','1673910296'].includes(key))return 'education';return raw;}
+    function readOwnedGames(){const sourceIds=new Set();addStoredGameIdsToSet(sourceIds,OWNED_GAMES_KEY);addStoredGameIdsToSet(sourceIds,LINKED_GAMES_KEY);const ids=new Set();sourceIds.forEach(id=>{const normalized=normalizeGameId(id);if(normalized)ids.add(normalized);});return ids;}
     function buildGamePlayUrl(playUrl){if(!playUrl||playUrl==='#')return playUrl;const token=readLocalValue(TOKEN_KEY).trim();try{const url=new URL(playUrl,window.location.href);if(token){url.searchParams.set('sg_token',token);url.searchParams.set('sg_temp','1');url.searchParams.set('sg_game',CURRENT_GAME_ID);}return url.toString();}catch(e){return playUrl;}}
     function playIconMarkup(){return '<span class="cta-play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></span>';}
     function setMainCtaState(){const ctas=document.querySelectorAll('.js-game-cta[data-game-id="education"]');if(!ctas.length)return;const isOwned=readOwnedGames().has(CURRENT_GAME_ID);ctas.forEach(cta=>{const buyLabel=cta.dataset.buyLabel||'شراء اللعبة';const playLabel=cta.dataset.playLabel||'العب';const buyUrl=cta.dataset.buyUrl||cta.getAttribute('href')||'#';const playUrl=cta.dataset.playUrl||'#';if(isOwned){cta.dataset.state='play';cta.dataset.basePlayUrl=playUrl;cta.setAttribute('href',buildGamePlayUrl(playUrl));cta.innerHTML=`${playIconMarkup()}<span>${playLabel}</span>`;}else{cta.dataset.state='buy';cta.setAttribute('href',buyUrl);cta.textContent=buyLabel;}});}
@@ -435,6 +436,6 @@
     window.addEventListener('load',()=>moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active')));
     window.addEventListener('resize',()=>moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active')));
   </script>
-  <!-- VERSION: edu-games-1.html — horof-layout-v1 -->
+  <!-- VERSION: edu-games-2.html — purchase-access-price-webhook-ready-v1 -->
 </body>
 </html>
