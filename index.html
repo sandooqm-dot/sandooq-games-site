@@ -1929,7 +1929,58 @@ width:100% !important;
       bottom:0 !important;
 }
 
-</style>
+
+
+    /* موضع شارات العروض بجانب عنوان البطاقة */
+    .bundle-card.bundle-game-card .bundle-title-row{
+      display:grid !important;
+      grid-template-columns:minmax(clamp(62px, 15cqw, 105px), auto) 1fr minmax(clamp(62px, 15cqw, 105px), auto) !important;
+      align-items:center !important;
+      justify-content:stretch !important;
+      column-gap:clamp(6px, 1.2cqw, 12px) !important;
+      min-height:clamp(36px, 8cqw, 56px) !important;
+    }
+
+    .bundle-card.bundle-game-card .bundle-title-row::before{
+      content:"";
+      grid-column:1;
+      grid-row:1;
+    }
+
+    .bundle-card.bundle-game-card .bundle-title-row .bundle-name{
+      grid-column:2 !important;
+      grid-row:1 !important;
+      justify-self:center !important;
+      text-align:center !important;
+    }
+
+    .bundle-card.bundle-game-card .bundle-title-row .bundle-badge{
+      position:static !important;
+      grid-column:3 !important;
+      grid-row:1 !important;
+      justify-self:end !important;
+      align-self:center !important;
+      transform:none !important;
+      margin:0 !important;
+      z-index:auto !important;
+      padding:clamp(5px, 1.25cqw, 8px) clamp(8px, 2cqw, 13px) !important;
+      font-size:clamp(8.5px, 2.15cqw, 12px) !important;
+      line-height:1 !important;
+      white-space:nowrap !important;
+    }
+
+    @media (max-width:430px){
+      .bundle-card.bundle-game-card .bundle-title-row{
+        grid-template-columns:minmax(66px, 18cqw, 88px) 1fr minmax(66px, 18cqw, 88px) !important;
+        column-gap:5px !important;
+      }
+
+      .bundle-card.bundle-game-card .bundle-title-row .bundle-name{
+        font-size:clamp(17px, 4.8vw, 21px) !important;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
@@ -1960,17 +2011,16 @@ width:100% !important;
       <div class="bundles-inner">
         <div class="bundles-grid">
           <article class="bundle-card bundle-game-card" data-bundle-id="edu-games">
-            <span class="bundle-badge">الأكثر طلباً</span>
-
             <div class="bundle-cover cover-photo">
               <img src="edu-games-cover-card.webp" alt="غلاف صندوق الألعاب التعليمية" width="1672" height="941" loading="eager" decoding="async" />
             </div>
 
             <div class="bundle-title-row">
               <h3 class="bundle-name">صندوق الألعاب التعليمية</h3>
+              <span class="bundle-badge">الأكثر طلباً</span>
             </div>
 
-            <p class="bundle-desc">5 ألعاب تعليمية تفاعلية قابلة للتخصيص<br>أنشئ أنشطتك بلا حدود واحفظها وشغّلها على مختلف أجهزتك</p>
+            <p class="bundle-desc">جهز ألعاباً تعليمية تناسب درسك بكل سهولة<br>5 العاب قابلة للتخصيص بلا حدود وبدون اشتراك شهري</p>
 
             <div class="card-actions bundle-actions">
               <a class="game-btn" href="edu-games.html">
@@ -1985,8 +2035,6 @@ width:100% !important;
           </article>
 
           <article class="bundle-card bundle-game-card" data-bundle-id="challenges-box">
-            <span class="bundle-badge">الأوفر</span>
-
             <div class="bundle-cover cover-photo">
               <picture>
                 <source type="image/webp" srcset="sandooq-challenges-bundle-cover-card.webp" />
@@ -1996,6 +2044,7 @@ width:100% !important;
 
             <div class="bundle-title-row">
               <h3 class="bundle-name">بكج صندوق التحديات</h3>
+              <span class="bundle-badge">الأوفر</span>
             </div>
 
             <p class="bundle-desc">صندوق واحد يجمع 5 ألعاب مختلفة<br>بتجارب أكثر تنوعًا وسعر أقل من شراء كل لعبة منفصلة</p>
