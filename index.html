@@ -11,6 +11,7 @@
   <link rel="preload" as="image" href="horof-cover-card.webp" />
   <link rel="preload" as="image" href="sandooq-almusabaqat-cover-card.webp" />
   <link rel="preload" as="image" href="horof-edu-cover-card.webp" />
+  <link rel="preload" as="image" href="edu-games-comprehensive-cover-card.webp" />
   <link rel="preload" as="image" href="edu-games-cover-card.webp" />
   <link rel="preload" as="image" href="sandooq-challenges-bundle-cover-card.webp" />
 
@@ -1980,6 +1981,143 @@ width:100% !important;
       }
     }
 
+    /* إبراز باقة صندوق الألعاب التعليمية الشامل داخل العروض */
+    .bundle-card.bundle-game-card.is-comprehensive{
+      border-color:#c89316 !important;
+      background:linear-gradient(180deg,#fffdf5 0%,#fff 42%) !important;
+      box-shadow:0 clamp(5px,.8vw,9px) 0 rgba(141,94,0,.28) !important;
+    }
+
+    .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row{
+      direction:ltr !important;
+      grid-template-columns:minmax(0,1fr) clamp(46px,10.5cqw,60px) !important;
+      column-gap:clamp(6px,1.25cqw,10px) !important;
+      min-height:clamp(52px,10.5cqw,66px) !important;
+      margin-top:clamp(12px,2.2cqw,17px) !important;
+    }
+
+    .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row::before{
+      display:none !important;
+    }
+
+    .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row .bundle-name{
+      direction:rtl !important;
+      grid-column:1 !important;
+      justify-self:center !important;
+      width:100% !important;
+      min-width:0 !important;
+      font-size:clamp(17px,3.55cqw,27px) !important;
+      line-height:1.3 !important;
+      letter-spacing:-.35px !important;
+      white-space:nowrap !important;
+      text-wrap:nowrap !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+    }
+
+    .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row .bundle-badge{
+      grid-column:2 !important;
+      justify-self:end !important;
+    }
+
+    .bundle-card.bundle-game-card[data-game-id="education"] .bundle-desc{
+      margin:clamp(8px,1.7cqw,12px) 0 clamp(12px,2.6cqw,17px) !important;
+      font-size:clamp(13px,2.85cqw,18px) !important;
+      line-height:1.72 !important;
+      white-space:nowrap !important;
+      text-wrap:nowrap !important;
+    }
+
+    .bundle-card.bundle-game-card.is-comprehensive .bundle-cover img{
+      object-position:center top;
+    }
+
+    .bundle-card.bundle-game-card .bundle-title-row .bundle-badge.comprehensive-game-count{
+      width:clamp(46px,10.5cqw,60px) !important;
+      min-width:clamp(46px,10.5cqw,60px) !important;
+      height:clamp(46px,10.5cqw,60px) !important;
+      padding:0 !important;
+      border-radius:50% !important;
+      border:clamp(3px,.65cqw,5px) solid #ffd746 !important;
+      box-sizing:border-box !important;
+      background:#cf2029 !important;
+      color:#fff !important;
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:center !important;
+      justify-content:center !important;
+      gap:0 !important;
+      line-height:1 !important;
+      box-shadow:0 3px 0 rgba(94,10,15,.34),0 0 0 1px rgba(101,59,0,.22) !important;
+    }
+
+    .comprehensive-game-count .game-count-number{
+      color:#ffd746;
+      font-size:clamp(19px,4.15cqw,27px);
+      font-weight:950;
+      line-height:.86;
+    }
+
+    .comprehensive-game-count .game-count-label{
+      margin-top:3px;
+      color:#fff;
+      font-size:clamp(7.5px,1.65cqw,10.5px);
+      font-weight:950;
+      line-height:1;
+    }
+
+    .bundle-card.bundle-game-card .bundle-title-row .bundle-badge.basic-game-count{
+      width:clamp(46px,10.5cqw,60px) !important;
+      min-width:clamp(46px,10.5cqw,60px) !important;
+      height:clamp(46px,10.5cqw,60px) !important;
+      padding:0 !important;
+      border-radius:50% !important;
+      border:clamp(3px,.65cqw,5px) solid #ffd746 !important;
+      box-sizing:border-box !important;
+      background:#087ca8 !important;
+      color:#fff !important;
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:center !important;
+      justify-content:center !important;
+      gap:0 !important;
+      line-height:1 !important;
+      box-shadow:0 3px 0 rgba(4,56,79,.34),0 0 0 1px rgba(101,59,0,.22) !important;
+    }
+
+    .basic-game-count .game-count-number{
+      color:#ffd746;
+      font-size:clamp(19px,4.15cqw,27px);
+      font-weight:950;
+      line-height:.86;
+    }
+
+    .basic-game-count .game-count-label{
+      margin-top:3px;
+      color:#fff;
+      font-size:clamp(7.5px,1.65cqw,10.5px);
+      font-weight:950;
+      line-height:1;
+    }
+
+    @media (max-width:430px){
+      .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row{
+        grid-template-columns:minmax(0,1fr) 46px !important;
+        column-gap:6px !important;
+        min-height:52px !important;
+      }
+
+      .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row .bundle-name{
+        font-size:clamp(17px,5.15vw,21px) !important;
+        letter-spacing:-.45px !important;
+      }
+
+      .bundle-card.bundle-game-card[data-game-id="education"] .bundle-desc{
+        font-size:clamp(13px,3.75vw,16px) !important;
+        line-height:1.7 !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -2010,17 +2148,47 @@ width:100% !important;
     <section class="bundles-area" id="bundles" aria-label="قسم العروض والبكجات">
       <div class="bundles-inner">
         <div class="bundles-grid">
-          <article class="bundle-card bundle-game-card" data-bundle-id="edu-games" data-game-id="education" data-play-url="https://education.sandooq-games.com">
+          <article class="bundle-card bundle-game-card is-comprehensive" data-bundle-id="edu-games-comprehensive" data-game-id="education" data-required-plan="comprehensive" data-play-url="https://education.sandooq-games.com" data-upgrade-url="https://sandooq-m.com/ترقية-صندوق-الالعاب-التعليمية-الى-الشامل/p2038898676">
             <div class="bundle-cover cover-photo">
-              <img src="edu-games-cover-card.webp" alt="غلاف صندوق الألعاب التعليمية" width="1672" height="941" loading="eager" decoding="async" />
+              <img src="edu-games-comprehensive-cover-card.webp" alt="غلاف صندوق الألعاب التعليمية الشامل الذي يضم عشر ألعاب" width="1536" height="970" loading="eager" decoding="async" />
             </div>
 
             <div class="bundle-title-row">
-              <h3 class="bundle-name">صندوق الألعاب التعليمية</h3>
-              <span class="bundle-badge">الأكثر طلباً</span>
+              <h3 class="bundle-name">صندوق الألعاب التعليمية الشامل</h3>
+              <span class="bundle-badge comprehensive-game-count" aria-label="10 ألعاب">
+                <span class="game-count-number">10</span>
+                <span class="game-count-label">ألعاب</span>
+              </span>
             </div>
 
-            <p class="bundle-desc">جهز ألعاباً تعليمية تناسب درسك بكل سهولة<br>5 العاب قابلة للتخصيص بلا حدود وبدون اشتراك شهري</p>
+            <p class="bundle-desc">10 ألعاب قابلة للتخصيص بلا حدود<br>شراء مرة واحدة وبدون اشتراك شهري</p>
+
+            <div class="card-actions bundle-actions">
+              <a class="game-btn" href="edu-games-comprehensive.html">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.7-6.2 9.2-6.2S21.2 12 21.2 12 17.5 18.2 12 18.2 2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="3.15" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.25" fill="#fff" stroke="none"></circle></svg></span>
+                <span class="game-btn-text">عرض اللعبة</span>
+              </a>
+              <a class="game-btn" href="https://sandooq-m.com/-/p2051543987" target="_blank" rel="noopener" data-access-button="1" data-action="buy">
+                <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span>
+                <span class="game-btn-text">شراء الشامل - 99.98 ريال</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="bundle-card bundle-game-card" data-bundle-id="edu-games" data-game-id="education" data-required-plan="basic" data-play-url="https://education.sandooq-games.com">
+            <div class="bundle-cover cover-photo">
+              <img src="edu-games-cover-card.webp" alt="غلاف صندوق الألعاب التعليمية الأساسي الذي يضم خمس ألعاب" width="1672" height="941" loading="eager" decoding="async" />
+            </div>
+
+            <div class="bundle-title-row">
+              <h3 class="bundle-name">صندوق الألعاب التعليمية الأساسي</h3>
+              <span class="bundle-badge basic-game-count" aria-label="5 ألعاب">
+                <span class="game-count-number">5</span>
+                <span class="game-count-label">ألعاب</span>
+              </span>
+            </div>
+
+            <p class="bundle-desc">5 ألعاب قابلة للتخصيص بلا حدود<br>شراء مرة واحدة وبدون اشتراك شهري</p>
 
             <div class="card-actions bundle-actions">
               <a class="game-btn" href="edu-games.html">
@@ -2029,7 +2197,7 @@ width:100% !important;
               </a>
               <a class="game-btn" href="https://sandooq-m.com/-/p1673910296" target="_blank" rel="noopener" data-access-button="1" data-action="buy">
                 <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span>
-                <span class="game-btn-text">شراء اللعبة - 79.99 ريال</span>
+                <span class="game-btn-text">شراء الأساسي - 79.99 ريال</span>
               </a>
             </div>
           </article>
@@ -2881,6 +3049,23 @@ width:100% !important;
       return map;
     }
 
+    function normalizeEducationPlan(value) {
+      const plan = String(value || '').trim().toLowerCase();
+      return ['comprehensive', 'الشامل', 'full', 'premium'].includes(plan)
+        ? 'comprehensive'
+        : 'basic';
+    }
+
+    function getEducationPlan(detailsMap) {
+      const education = detailsMap.get('education') || {};
+      return normalizeEducationPlan(
+        education.access_plan ||
+        education.accessPlan ||
+        education.package ||
+        education.plan
+      );
+    }
+
     async function api(path, options = {}) {
       const response = await fetch(API_BASE + path, {
         method: options.method || 'GET',
@@ -3055,13 +3240,35 @@ width:100% !important;
     function prepareGameCardsForAccessStates() {
       const ownedIds = readLinkedGameIds();
       const detailsMap = getGameDetailsMap();
+      const educationPlan = getEducationPlan(detailsMap);
 
       document.querySelectorAll('.game-card[data-game-id], .bundle-game-card[data-game-id]').forEach(card => {
         const gameId = String(card.dataset.gameId || '');
         const status = card.querySelector('.game-status');
         const accessButton = findAccessButton(card);
+        const requiredPlan = String(card.dataset.requiredPlan || '').trim().toLowerCase();
 
         if (accessButton) prepareAccessButton(accessButton);
+
+        if (gameId === 'education' && requiredPlan === 'comprehensive') {
+          const ownsEducation = ownedIds.has('education');
+
+          if (ownsEducation && educationPlan === 'comprehensive') {
+            card.classList.add('game-unlocked');
+            if (status) status.textContent = 'مفعّلة';
+            activateAccessButton(accessButton, card, gameId, detailsMap);
+          } else {
+            card.classList.remove('game-unlocked');
+            if (status) status.textContent = ownsEducation ? 'متاحة بالترقية' : 'مقفلة';
+            resetAccessButton(accessButton);
+
+            if (ownsEducation && accessButton) {
+              accessButton.setAttribute('href', card.dataset.upgradeUrl || accessButton.getAttribute('href') || '#');
+              setButtonLabel(accessButton, 'ترقية للشامل - 19.99 ريال');
+            }
+          }
+          return;
+        }
 
         if (ownedIds.has(gameId)) {
           card.classList.add('game-unlocked');
@@ -3434,6 +3641,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index-59.html — education-purchase-access-price-v1 -->
+  <!-- VERSION: index-education-packages-v4 — polished-title-two-lines-yellow-badges -->
 </body>
 </html>
