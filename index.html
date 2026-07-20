@@ -698,6 +698,41 @@
       white-space:nowrap;
     }
 
+    .game-btn-text.has-price{
+      display:inline-flex;
+      direction:rtl;
+      align-items:baseline;
+      justify-content:center;
+      gap:.24em;
+      max-width:100%;
+      transform:none;
+    }
+
+    .game-btn-text.has-price .price-prefix{color:#fff;}
+
+    .game-btn-text.has-price .price-token{
+      display:inline-flex;
+      direction:ltr;
+      align-items:baseline;
+      gap:0;
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;
+    }
+
+    .game-btn-text.has-price .price-major,
+    .game-btn-text.has-price .price-currency{
+      color:#ff334c;
+      font-weight:950;
+      text-shadow:0 1px 0 rgba(85,0,10,.24);
+    }
+
+    .game-btn-text.has-price .price-separator,
+    .game-btn-text.has-price .price-minor{
+      color:#fff;
+      font-size:.72em;
+      font-weight:950;
+    }
+
     .game-btn:hover{transform:translateY(-1px);filter:saturate(1.08);}
     .game-btn[hidden]{display:none !important;}
     .game-btn.play-action{background:var(--green);box-shadow:0 3px 0 rgba(247,182,56,.88);}
@@ -2006,7 +2041,7 @@ width:100% !important;
       justify-self:center !important;
       width:100% !important;
       min-width:0 !important;
-      font-size:clamp(17px,3.55cqw,27px) !important;
+      font-size:clamp(12px,5cqw,27px) !important;
       line-height:1.3 !important;
       letter-spacing:-.35px !important;
       white-space:nowrap !important;
@@ -2022,7 +2057,7 @@ width:100% !important;
 
     .bundle-card.bundle-game-card[data-game-id="education"] .bundle-desc{
       margin:clamp(8px,1.7cqw,12px) 0 clamp(12px,2.6cqw,17px) !important;
-      font-size:clamp(13px,2.85cqw,18px) !important;
+      font-size:clamp(11px,3.55cqw,18px) !important;
       line-height:1.72 !important;
       white-space:nowrap !important;
       text-wrap:nowrap !important;
@@ -2108,13 +2143,29 @@ width:100% !important;
       }
 
       .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row .bundle-name{
-        font-size:clamp(17px,5.15vw,21px) !important;
+        font-size:clamp(12px,5cqw,21px) !important;
         letter-spacing:-.45px !important;
+        white-space:normal !important;
+        text-wrap:balance !important;
+        overflow:visible !important;
       }
 
       .bundle-card.bundle-game-card[data-game-id="education"] .bundle-desc{
-        font-size:clamp(13px,3.75vw,16px) !important;
+        font-size:clamp(11px,3.55cqw,16px) !important;
         line-height:1.7 !important;
+        white-space:normal !important;
+        text-wrap:balance !important;
+      }
+    }
+
+    @container (max-width:330px){
+      .bundle-card.bundle-game-card[data-game-id="education"] .bundle-actions{
+        grid-template-columns:1fr !important;
+      }
+
+      .bundle-card.bundle-game-card[data-game-id="education"] .bundle-actions .game-btn{
+        min-height:34px !important;
+        font-size:clamp(10px,4cqw,13px) !important;
       }
     }
 
@@ -2177,11 +2228,11 @@ width:100% !important;
 
           <article class="bundle-card bundle-game-card" data-bundle-id="edu-games" data-game-id="education" data-required-plan="basic" data-play-url="https://education.sandooq-games.com">
             <div class="bundle-cover cover-photo">
-              <img src="edu-games-cover-card.webp" alt="غلاف صندوق الألعاب التعليمية الأساسي الذي يضم خمس ألعاب" width="1672" height="941" loading="eager" decoding="async" />
+              <img src="edu-games-cover-card.webp" alt="غلاف صندوق الألعاب التعليمية الذي يضم خمس ألعاب" width="1672" height="941" loading="eager" decoding="async" />
             </div>
 
             <div class="bundle-title-row">
-              <h3 class="bundle-name">صندوق الألعاب التعليمية الأساسي</h3>
+              <h3 class="bundle-name">صندوق الألعاب التعليمية</h3>
               <span class="bundle-badge basic-game-count" aria-label="5 ألعاب">
                 <span class="game-count-number">5</span>
                 <span class="game-count-label">ألعاب</span>
@@ -2197,7 +2248,7 @@ width:100% !important;
               </a>
               <a class="game-btn" href="https://sandooq-m.com/-/p1673910296" target="_blank" rel="noopener" data-access-button="1" data-action="buy">
                 <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2.2l2 10.2h9.9l2-7.2H7.1"></path><path d="M9.2 18.8h8.8"></path><circle cx="10" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle><circle cx="18" cy="20.5" r="1.45" fill="currentColor" stroke="none"></circle></svg></span>
-                <span class="game-btn-text">شراء الأساسي - 79.99 ريال</span>
+                <span class="game-btn-text">شراء - 79.99 ريال</span>
               </a>
             </div>
           </article>
@@ -3110,8 +3161,47 @@ width:100% !important;
     function setButtonLabel(link, text) {
       if (!link) return;
       const textNode = link.querySelector('.game-btn-text');
-      if (textNode) textNode.textContent = text;
-      else link.textContent = text;
+      if (!textNode) {
+        link.textContent = text;
+        return;
+      }
+
+      const cleanText = String(text || '').trim();
+      const priceMatch = cleanText.match(/^(.*?)(\d+)\.(\d{2})\s*(ريال)$/u);
+      textNode.replaceChildren();
+      textNode.classList.toggle('has-price', Boolean(priceMatch));
+
+      if (!priceMatch) {
+        textNode.textContent = cleanText;
+        return;
+      }
+
+      const prefix = document.createElement('span');
+      prefix.className = 'price-prefix';
+      prefix.textContent = priceMatch[1].trim();
+
+      const token = document.createElement('span');
+      token.className = 'price-token';
+      token.setAttribute('dir', 'ltr');
+
+      const major = document.createElement('span');
+      major.className = 'price-major';
+      major.textContent = priceMatch[2];
+
+      const separator = document.createElement('span');
+      separator.className = 'price-separator';
+      separator.textContent = '.';
+
+      const minor = document.createElement('span');
+      minor.className = 'price-minor';
+      minor.textContent = priceMatch[3];
+
+      const currency = document.createElement('span');
+      currency.className = 'price-currency';
+      currency.textContent = priceMatch[4];
+
+      token.append(major, separator, minor);
+      textNode.append(prefix, token, currency);
     }
 
     function setButtonIcon(link, html) {
@@ -3641,6 +3731,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index-education-packages-v4 — polished-title-two-lines-yellow-badges -->
+  <!-- VERSION: index-education-packages-v5 — responsive-zoom-styled-prices-no-basic-word -->
 </body>
 </html>
