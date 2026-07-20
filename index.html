@@ -698,41 +698,6 @@
       white-space:nowrap;
     }
 
-    .game-btn-text.has-price{
-      display:inline-flex;
-      direction:rtl;
-      align-items:baseline;
-      justify-content:center;
-      gap:.24em;
-      max-width:100%;
-      transform:none;
-    }
-
-    .game-btn-text.has-price .price-prefix{color:#fff;}
-
-    .game-btn-text.has-price .price-token{
-      display:inline-flex;
-      direction:ltr;
-      align-items:baseline;
-      gap:0;
-      font-variant-numeric:tabular-nums;
-      white-space:nowrap;
-    }
-
-    .game-btn-text.has-price .price-major,
-    .game-btn-text.has-price .price-currency{
-      color:#ff334c;
-      font-weight:950;
-      text-shadow:0 1px 0 rgba(85,0,10,.24);
-    }
-
-    .game-btn-text.has-price .price-separator,
-    .game-btn-text.has-price .price-minor{
-      color:#fff;
-      font-size:.72em;
-      font-weight:950;
-    }
-
     .game-btn:hover{transform:translateY(-1px);filter:saturate(1.08);}
     .game-btn[hidden]{display:none !important;}
     .game-btn.play-action{background:var(--green);box-shadow:0 3px 0 rgba(247,182,56,.88);}
@@ -2026,7 +1991,7 @@ width:100% !important;
     .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row{
       direction:ltr !important;
       grid-template-columns:minmax(0,1fr) clamp(46px,10.5cqw,60px) !important;
-      column-gap:clamp(6px,1.25cqw,10px) !important;
+      column-gap:12px !important;
       min-height:clamp(52px,10.5cqw,66px) !important;
       margin-top:clamp(12px,2.2cqw,17px) !important;
     }
@@ -2041,6 +2006,7 @@ width:100% !important;
       justify-self:center !important;
       width:100% !important;
       min-width:0 !important;
+      transform:translateX(clamp(22px,6cqw,34px)) !important;
       font-size:clamp(12px,5cqw,27px) !important;
       line-height:1.3 !important;
       letter-spacing:-.35px !important;
@@ -2138,13 +2104,14 @@ width:100% !important;
     @media (max-width:430px){
       .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row{
         grid-template-columns:minmax(0,1fr) 46px !important;
-        column-gap:6px !important;
+        column-gap:12px !important;
         min-height:52px !important;
       }
 
       .bundle-card.bundle-game-card[data-game-id="education"] .bundle-title-row .bundle-name{
         font-size:clamp(12px,5cqw,21px) !important;
         letter-spacing:-.45px !important;
+        transform:translateX(22px) !important;
         white-space:normal !important;
         text-wrap:balance !important;
         overflow:visible !important;
@@ -3161,47 +3128,8 @@ width:100% !important;
     function setButtonLabel(link, text) {
       if (!link) return;
       const textNode = link.querySelector('.game-btn-text');
-      if (!textNode) {
-        link.textContent = text;
-        return;
-      }
-
-      const cleanText = String(text || '').trim();
-      const priceMatch = cleanText.match(/^(.*?)(\d+)\.(\d{2})\s*(ريال)$/u);
-      textNode.replaceChildren();
-      textNode.classList.toggle('has-price', Boolean(priceMatch));
-
-      if (!priceMatch) {
-        textNode.textContent = cleanText;
-        return;
-      }
-
-      const prefix = document.createElement('span');
-      prefix.className = 'price-prefix';
-      prefix.textContent = priceMatch[1].trim();
-
-      const token = document.createElement('span');
-      token.className = 'price-token';
-      token.setAttribute('dir', 'ltr');
-
-      const major = document.createElement('span');
-      major.className = 'price-major';
-      major.textContent = priceMatch[2];
-
-      const separator = document.createElement('span');
-      separator.className = 'price-separator';
-      separator.textContent = '.';
-
-      const minor = document.createElement('span');
-      minor.className = 'price-minor';
-      minor.textContent = priceMatch[3];
-
-      const currency = document.createElement('span');
-      currency.className = 'price-currency';
-      currency.textContent = priceMatch[4];
-
-      token.append(major, separator, minor);
-      textNode.append(prefix, token, currency);
+      if (textNode) textNode.textContent = text;
+      else link.textContent = text;
     }
 
     function setButtonIcon(link, html) {
@@ -3731,6 +3659,6 @@ function scheduleBottomNavStabilize(delay = 0) {
     stabilizeBottomNav();
 
   </script>
-  <!-- VERSION: index-education-packages-v5 — responsive-zoom-styled-prices-no-basic-word -->
+  <!-- VERSION: index-education-packages-v9 — visibly-shifted-titles-right -->
 </body>
 </html>
