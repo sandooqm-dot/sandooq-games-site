@@ -340,12 +340,15 @@
     }
 
     .phone-helper{
+      display:none;
       margin:-4px 3px 0;
-      color:var(--muted);
-      font-weight:800;
+      color:#c81e1e;
+      font-weight:900;
       font-size:clamp(12px, 1vw, 15px);
       text-align:right;
     }
+
+    .phone-helper.is-error{display:block;}
 
     .phone-field:focus{background:#fff;border-color:var(--blue-dark);}
     .phone-field::placeholder{color:#9ca7b7;}
@@ -1248,7 +1251,7 @@
                 aria-label="رقم الجوال المستخدم في الشراء"
               />
             </div>
-            <p class="phone-helper" id="phoneHelper">اختر الدولة، ثم اكتب رقم الجوال المستخدم في الشراء.</p>
+            <p class="phone-helper" id="phoneHelper" role="alert" aria-live="polite" aria-atomic="true"></p>
 
             <input
               class="code-field legacy-code-field"
@@ -1646,6 +1649,7 @@
       found: 'تم العثور على ألعابك وربطها بحسابك.',
       empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء.',
       invalidPhone: 'اختر الدولة وأدخل رقم جوال صحيح.',
+      leadingZero: 'اكتب رقم الجوال بدون الصفر الأول (0).',
       invalidCode: 'الصق كود التفعيل أولًا.',
       loading: 'جاري التحقق...',
       network: 'تعذر الاتصال بالخدمة. حاول مرة أخرى.'
@@ -1844,16 +1848,37 @@
       return { iso2:'sa', dialCode:'966', name:'السعودية' };
     }
 
-    function updatePhoneHelper() {
-      if (!phoneHelper) return;
-      const country = getSelectedPhoneCountry();
-      const countryName = String(country.name || '').trim();
-      const dialCode = String(country.dialCode || '').replace(/\D/g, '');
-      if (countryName && dialCode) {
-        phoneHelper.textContent = `الدولة المختارة: ${countryName} (+${dialCode}) — اكتب رقم الجوال المستخدم في الشراء.`;
-      } else {
-        phoneHelper.textContent = 'اختر الدولة، ثم اكتب رقم الجوال المستخدم في الشراء.';
+    function hasLeadingLocalZero(value) {
+      const original = toEnglishPhoneDigits(value).trim();
+      const digits = original.replace(/\D/g, '');
+      if (!digits) return false;
+
+      if (original.startsWith('+')) {
+        const dialCode = String(getSelectedPhoneCountry().dialCode || '').replace(/\D/g, '');
+        const nationalDigits = dialCode && digits.startsWith(dialCode)
+          ? digits.slice(dialCode.length)
+          : digits;
+        return nationalDigits.startsWith('0');
       }
+
+      return digits.startsWith('0');
+    }
+
+    function updatePhoneHelper() {
+      const hasLeadingZero = hasLeadingLocalZero(phoneInput ? phoneInput.value : '');
+      if (phoneHelper) {
+        phoneHelper.textContent = hasLeadingZero ? messages.leadingZero : '';
+        phoneHelper.classList.toggle('is-error', hasLeadingZero);
+      }
+      if (phoneInput) phoneInput.setAttribute('aria-invalid', hasLeadingZero ? 'true' : 'false');
+      return hasLeadingZero;
+    }
+
+    function normalizeStoredSaudiPhone(value) {
+      const original = String(value || '').trim();
+      const digits = toEnglishPhoneDigits(original).replace(/\D/g, '');
+      if (/^05\d{8}$/.test(digits)) return '+966' + digits.slice(1);
+      return original;
     }
 
     function initializeInternationalPhoneInput() {
@@ -1937,15 +1962,20 @@
       if (!phoneInput) return;
       const storedPhone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
       if (!storedPhone) return;
+      const normalizedStoredPhone = normalizeStoredSaudiPhone(storedPhone);
+      if (normalizedStoredPhone !== storedPhone) {
+        writeStorageValue(ACCOUNT_PHONE_KEY, normalizedStoredPhone);
+      }
       await internationalPhoneReady;
       if (internationalPhoneInput && !internationalPhoneLoadFailed) {
         try {
-          internationalPhoneInput.setNumber(storedPhone);
+          internationalPhoneInput.setNumber(normalizedStoredPhone);
           updatePhoneHelper();
           return;
         } catch (error) {}
       }
-      phoneInput.value = storedPhone;
+      phoneInput.value = normalizedStoredPhone;
+      updatePhoneHelper();
     }
 
     function nowText() {
@@ -2333,6 +2363,7 @@
     if (codeInput) codeInput.addEventListener('input', () => { codeInput.value = codeInput.value.toUpperCase().replace(/\s+/g, ''); });
 
     initializeInternationalPhoneInput();
+    if (phoneInput) phoneInput.addEventListener('input', updatePhoneHelper);
     renderLoginStatusButton();
     restoreStoredPhone();
 
@@ -2342,6 +2373,13 @@
       form.addEventListener('submit', async event => {
         event.preventDefault();
         resetMessages();
+        if (updatePhoneHelper()) {
+          gaTrackLookupResult(codeMode ? 'legacy_link' : 'purchase_lookup', 'error', {
+            error_code: 'LEADING_ZERO'
+          });
+          if (phoneInput) phoneInput.focus();
+          return;
+        }
         const phoneData = await getInternationalPhoneData();
         const code = codeInput ? codeInput.value.trim() : '';
 
@@ -2387,6 +2425,6 @@
       });
     }
   </script>
-  <!-- VERSION: purchase-activation.html — international phone activation v4 -->
+  <!-- VERSION: purchase-activation.html — no leading local zero v5 -->
 </body>
 </html>
