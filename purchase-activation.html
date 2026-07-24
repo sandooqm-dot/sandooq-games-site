@@ -18,6 +18,7 @@
   <link rel="preload" as="image" href="horof-cover-card.webp" />
   <link rel="preload" as="image" href="sandooq-challenges-bundle-cover-card.webp" />
   <link rel="preload" as="image" href="sandooq-almusabaqat-cover-card.webp" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@29.1.2/dist/css/intlTelInput.css" />
 
   <style>
     :root{
@@ -253,6 +254,20 @@
       margin-top:clamp(14px, 2vw, 22px);
     }
 
+    .phone-input-shell{
+      width:100%;
+      direction:ltr;
+    }
+
+    .phone-input-shell .iti{
+      width:100%;
+      display:block;
+      direction:ltr;
+      --iti-border-color:#c6ced9;
+      --iti-hover-color:#e9f5fb;
+      --iti-dropdown-bg:#fff;
+    }
+
     .phone-field{
       width:100%;
       min-height:clamp(54px, 6vw, 66px);
@@ -269,8 +284,142 @@
       box-shadow:inset 0 2px 0 rgba(0,0,0,.08);
     }
 
+    .phone-input-shell .iti__selected-country{
+      min-width:clamp(102px, 12vw, 130px);
+      padding-inline:clamp(7px, 1vw, 12px);
+      border-radius:clamp(10px, 1vw, 15px) 0 0 clamp(10px, 1vw, 15px);
+      color:var(--ink);
+      font-weight:900;
+    }
+
+    .phone-input-shell .iti__selected-country-primary{
+      width:100%;
+      justify-content:center;
+      padding-inline:clamp(5px, .7vw, 9px);
+      gap:4px;
+    }
+
+    .phone-input-shell .iti__selected-dial-code{
+      margin:0;
+      direction:ltr;
+      unicode-bidi:isolate;
+      font-size:clamp(14px, 1.25vw, 18px);
+    }
+
+    .phone-input-shell .iti__country-selector{
+      direction:rtl;
+      text-align:right;
+      border:3px solid var(--line);
+      border-radius:14px;
+      color:var(--ink);
+      box-shadow:0 14px 36px rgba(4,56,79,.24);
+      overflow:hidden;
+      z-index:10020;
+    }
+
+    .phone-input-shell .iti__search-input{
+      min-height:48px;
+      direction:rtl;
+      text-align:right;
+      color:var(--ink);
+      font-weight:800;
+      font-size:16px;
+      outline:none;
+    }
+
+    .phone-input-shell .iti__country{
+      direction:rtl;
+      text-align:right;
+      min-height:44px;
+      font-weight:750;
+    }
+
+    .phone-input-shell .iti__dial-code{
+      direction:ltr;
+      unicode-bidi:isolate;
+    }
+
+    .phone-helper{
+      margin:-4px 3px 0;
+      color:var(--muted);
+      font-weight:800;
+      font-size:clamp(12px, 1vw, 15px);
+      text-align:right;
+    }
+
     .phone-field:focus{background:#fff;border-color:var(--blue-dark);}
     .phone-field::placeholder{color:#9ca7b7;}
+
+    body.iti--fullscreen-popup{
+      overflow:hidden;
+    }
+
+    body > .iti--fullscreen-popup{
+      z-index:10050;
+      direction:rtl;
+      padding:
+        max(18px, env(safe-area-inset-top))
+        max(14px, env(safe-area-inset-right))
+        max(18px, env(safe-area-inset-bottom))
+        max(14px, env(safe-area-inset-left));
+    }
+
+    body > .iti--detached-country-selector{
+      z-index:10050;
+      direction:rtl;
+    }
+
+    body > .iti--detached-country-selector:not(.iti--fullscreen-popup) .iti__country-selector{
+      border:3px solid var(--line);
+      border-radius:14px;
+      color:var(--ink);
+      box-shadow:0 14px 36px rgba(4,56,79,.24);
+      overflow:hidden;
+    }
+
+    body > .iti--detached-country-selector:not(.iti--fullscreen-popup) .iti__search-input{
+      min-height:48px;
+      direction:rtl;
+      text-align:right;
+      color:var(--ink);
+      font-weight:800;
+      font-size:16px;
+      outline:none;
+    }
+
+    body > .iti--detached-country-selector:not(.iti--fullscreen-popup) .iti__country{
+      direction:rtl;
+      text-align:right;
+      min-height:44px;
+      font-weight:750;
+    }
+
+    body > .iti--fullscreen-popup .iti__country-selector{
+      width:min(100%, 520px);
+      margin:auto;
+      border:3px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      color:var(--ink);
+      box-shadow:0 20px 60px rgba(0,0,0,.34);
+    }
+
+    body > .iti--fullscreen-popup .iti__search-input{
+      min-height:54px;
+      direction:rtl;
+      text-align:right;
+      color:var(--ink);
+      font-weight:800;
+      font-size:17px;
+      outline:none;
+    }
+
+    body > .iti--fullscreen-popup .iti__country{
+      direction:rtl;
+      text-align:right;
+      min-height:48px;
+      font-weight:750;
+    }
 
     .lookup-btn{
       min-height:clamp(54px, 6vw, 66px);
@@ -1086,17 +1235,20 @@
           </div>
 
           <form class="lookup-form" id="purchaseLookupForm" data-hook="purchase-lookup-form">
-            <input
-              class="phone-field"
-              id="phoneInput"
-              name="phone"
-              data-hook="phone-input"
-              type="tel"
-              inputmode="numeric"
-              autocomplete="tel"
-              placeholder="05xxxxxxxx"
-              aria-label="رقم الجوال المستخدم في الشراء"
-            />
+            <div class="phone-input-shell">
+              <input
+                class="phone-field"
+                id="phoneInput"
+                name="phone"
+                data-hook="phone-input"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="رقم الجوال"
+                aria-label="رقم الجوال المستخدم في الشراء"
+              />
+            </div>
+            <p class="phone-helper" id="phoneHelper">اختر الدولة، ثم اكتب رقم الجوال المستخدم في الشراء.</p>
 
             <input
               class="code-field legacy-code-field"
@@ -1243,6 +1395,7 @@
     </div>
   </nav>
 
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@29.1.2/dist/js/intlTelInputWithUtils.min.js"></script>
   <script>
 
     const GA_MEASUREMENT_ID = 'G-82VNBCY400';
@@ -1470,6 +1623,7 @@
 
     const form = document.getElementById('purchaseLookupForm');
     const phoneInput = document.getElementById('phoneInput');
+    const phoneHelper = document.getElementById('phoneHelper');
     const codeInput = document.getElementById('legacyCodeInput');
     const button = document.getElementById('lookupButton');
     const label = button ? button.querySelector('.button-label') : null;
@@ -1484,11 +1638,14 @@
     const playOwnedGamesBox = document.getElementById('playOwnedGamesBox');
 
     let codeMode = false;
+    let internationalPhoneInput = null;
+    let internationalPhoneReady = Promise.resolve();
+    let internationalPhoneLoadFailed = false;
 
     const messages = {
       found: 'تم العثور على ألعابك وربطها بحسابك.',
       empty: 'لم نجد ألعابًا مرتبطة بهذا الرقم. تأكد من كتابة نفس رقم الجوال المستخدم في الشراء.',
-      invalidPhone: 'أدخل رقم جوال صحيح يبدأ بـ 05.',
+      invalidPhone: 'اختر الدولة وأدخل رقم جوال صحيح.',
       invalidCode: 'الصق كود التفعيل أولًا.',
       loading: 'جاري التحقق...',
       network: 'تعذر الاتصال بالخدمة. حاول مرة أخرى.'
@@ -1652,8 +1809,143 @@
       else loginStatusButton.textContent = 'تسجيل الدخول';
     }
 
-    function isValidSaudiPhone(value) {
-      return /^05\d{8}$/.test(String(value || '').trim());
+    function toEnglishPhoneDigits(value) {
+      return String(value || '')
+        .replace(/[٠-٩]/g, digit => String(digit.charCodeAt(0) - 1632))
+        .replace(/[۰-۹]/g, digit => String(digit.charCodeAt(0) - 1776));
+    }
+
+    function normalizePhoneFallback(value, selectedCountry = {}) {
+      const original = toEnglishPhoneDigits(value).trim();
+      let digits = original.replace(/\D/g, '');
+      if (!digits) return '';
+
+      if (original.startsWith('+')) {
+        return /^\+[1-9]\d{7,14}$/.test('+' + digits) ? '+' + digits : '';
+      }
+
+      if (digits.startsWith('00')) {
+        digits = digits.slice(2);
+        return /^[1-9]\d{7,14}$/.test(digits) ? '+' + digits : '';
+      }
+
+      const dialCode = String(selectedCountry.dialCode || '966').replace(/\D/g, '');
+      if (!dialCode) return '';
+      if (digits.startsWith(dialCode)) digits = digits.slice(dialCode.length);
+      digits = digits.replace(/^0+/, '');
+      const e164 = '+' + dialCode + digits;
+      return /^\+[1-9]\d{7,14}$/.test(e164) ? e164 : '';
+    }
+
+    function getSelectedPhoneCountry() {
+      if (internationalPhoneInput && typeof internationalPhoneInput.getSelectedCountry === 'function') {
+        return internationalPhoneInput.getSelectedCountry() || {};
+      }
+      return { iso2:'sa', dialCode:'966', name:'السعودية' };
+    }
+
+    function updatePhoneHelper() {
+      if (!phoneHelper) return;
+      const country = getSelectedPhoneCountry();
+      const countryName = String(country.name || '').trim();
+      const dialCode = String(country.dialCode || '').replace(/\D/g, '');
+      if (countryName && dialCode) {
+        phoneHelper.textContent = `الدولة المختارة: ${countryName} (+${dialCode}) — اكتب رقم الجوال المستخدم في الشراء.`;
+      } else {
+        phoneHelper.textContent = 'اختر الدولة، ثم اكتب رقم الجوال المستخدم في الشراء.';
+      }
+    }
+
+    function initializeInternationalPhoneInput() {
+      if (!phoneInput || typeof window.intlTelInput !== 'function') {
+        internationalPhoneLoadFailed = true;
+        updatePhoneHelper();
+        return;
+      }
+
+      try {
+        internationalPhoneInput = window.intlTelInput(phoneInput, {
+          initialCountry: 'sa',
+          countryOrder: ['sa', 'kw', 'ae', 'qa', 'bh', 'om', 'eg', 'jo'],
+          countrySearch: true,
+          countrySelectorMode: 'AUTO',
+          dropdownParent: document.body,
+          countryNameLocale: 'ar',
+          showFlags: true,
+          separateDialCode: true,
+          formatAsYouType: true,
+          placeholderNumberType: 'MOBILE',
+          allowedNumberTypes: ['MOBILE', 'FIXED_LINE_OR_MOBILE'],
+          uiTranslations: {
+            selectedCountryAriaLabel: 'تغيير دولة رقم الجوال، المحدد حاليًا ${countryName} (${dialCode})',
+            noCountrySelected: 'اختر دولة رقم الجوال',
+            countryListAriaLabel: 'قائمة الدول',
+            searchPlaceholder: 'ابحث عن دولة أو مفتاح',
+            clearSearchAriaLabel: 'مسح البحث',
+            searchEmptyState: 'لا توجد نتائج',
+            searchSummaryAria(count) {
+              if (count === 0) return 'لا توجد نتائج';
+              if (count === 1) return 'نتيجة واحدة';
+              if (count === 2) return 'نتيجتان';
+              return `${count} نتائج`;
+            }
+          }
+        });
+
+        internationalPhoneReady = internationalPhoneInput.promise.catch(() => {
+          internationalPhoneLoadFailed = true;
+        });
+        phoneInput.addEventListener('countrychange', updatePhoneHelper);
+        updatePhoneHelper();
+      } catch (error) {
+        internationalPhoneInput = null;
+        internationalPhoneLoadFailed = true;
+        updatePhoneHelper();
+      }
+    }
+
+    async function getInternationalPhoneData() {
+      await internationalPhoneReady;
+      const selectedCountry = getSelectedPhoneCountry();
+      let phoneE164 = '';
+      let isValid = false;
+
+      if (internationalPhoneInput && !internationalPhoneLoadFailed) {
+        try {
+          isValid = internationalPhoneInput.isValidNumber() === true;
+          phoneE164 = isValid ? String(internationalPhoneInput.getNumber() || '').trim() : '';
+        } catch (error) {
+          internationalPhoneLoadFailed = true;
+        }
+      }
+
+      if (internationalPhoneLoadFailed || !internationalPhoneInput) {
+        phoneE164 = normalizePhoneFallback(phoneInput ? phoneInput.value : '', selectedCountry);
+        isValid = !!phoneE164;
+      }
+
+      const dialCode = String(selectedCountry.dialCode || '').replace(/\D/g, '');
+      return {
+        isValid: isValid && /^\+[1-9]\d{7,14}$/.test(phoneE164),
+        phoneE164,
+        countryCode: dialCode ? `+${dialCode}` : '',
+        countryIso2: String(selectedCountry.iso2 || '').toUpperCase()
+      };
+    }
+
+    async function restoreStoredPhone() {
+      if (!phoneInput) return;
+      const storedPhone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
+      if (!storedPhone) return;
+      await internationalPhoneReady;
+      if (internationalPhoneInput && !internationalPhoneLoadFailed) {
+        try {
+          internationalPhoneInput.setNumber(storedPhone);
+          updatePhoneHelper();
+          return;
+        } catch (error) {}
+      }
+      phoneInput.value = storedPhone;
     }
 
     function nowText() {
@@ -1882,12 +2174,14 @@
       return data;
     }
 
-    async function loginSilently(phone) {
+    async function loginSilently(phone, countryCode = '') {
       try {
         const data = await api('/api/auth/login', {
           method: 'POST',
           body: {
             phone,
+            phone_e164: phone,
+            countryCode,
             display_name: readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1' ? readLocalValue(ACCOUNT_NAME_KEY) : '',
             device_token: getDeviceToken(),
             is_temporary: false
@@ -1943,7 +2237,7 @@
       }
     }
 
-    async function applyLookupData(data, phone, source = 'purchase_lookup') {
+    async function applyLookupData(data, phone, source = 'purchase_lookup', countryCode = '') {
       const games = Array.isArray(data.games) ? data.games : [];
       const ownedCount = Number(data.owned_count ?? games.length ?? 0);
       const resolvedPhone = data.phone || phone;
@@ -1953,7 +2247,7 @@
       persistAuthTokenFromData(data);
 
       if (data.customer_exists || ownedCount > 0 || data.customer) {
-        await loginSilently(resolvedPhone);
+        await loginSilently(resolvedPhone, countryCode);
       }
 
       updateAvailableGames(games);
@@ -1977,26 +2271,43 @@
       }
     }
 
-    async function lookupPurchases(phone) {
-      const data = await api('/api/purchases/lookup', { method: 'POST', body: { phone } });
-      await applyLookupData(data, phone, 'purchase_lookup');
+    async function lookupPurchases(phoneData) {
+      const { phoneE164, countryCode, countryIso2 } = phoneData;
+      const data = await api('/api/purchases/lookup', {
+        method: 'POST',
+        body: {
+          phone: phoneE164,
+          phone_e164: phoneE164,
+          countryCode,
+          country_iso2: countryIso2
+        }
+      });
+      await applyLookupData(data, phoneE164, 'purchase_lookup', countryCode);
     }
 
-    async function linkLegacyCode(phone, code) {
+    async function linkLegacyCode(phoneData, code) {
+      const { phoneE164, countryCode, countryIso2 } = phoneData;
       const data = await api('/api/legacy/link', {
         method: 'POST',
-        body: { phone, code, display_name: readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1' ? readLocalValue(ACCOUNT_NAME_KEY) : '' }
+        body: {
+          phone: phoneE164,
+          phone_e164: phoneE164,
+          countryCode,
+          country_iso2: countryIso2,
+          code,
+          display_name: readLocalValue(ACCOUNT_NAME_CONFIRMED_KEY).trim() === '1' ? readLocalValue(ACCOUNT_NAME_KEY) : ''
+        }
       });
       await applyLookupData({
         ok: true,
-        phone,
+        phone: phoneE164,
         customer_exists: true,
         customer: data.customer,
         owned_count: Array.isArray(data.games) ? data.games.length : 0,
         games: data.games || [],
         token: extractAuthToken(data),
         message: data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.'
-      }, phone, 'legacy_link');
+      }, phoneE164, 'legacy_link', countryCode);
       showCodeStatus('success', data.message || 'تم ربط الكود بنجاح. ستظهر اللعبة الآن ضمن ألعابك.');
       if (codeInput) codeInput.value = '';
     }
@@ -2021,11 +2332,9 @@
     if (modeToggle) modeToggle.addEventListener('click', () => setCodeMode(!codeMode));
     if (codeInput) codeInput.addEventListener('input', () => { codeInput.value = codeInput.value.toUpperCase().replace(/\s+/g, ''); });
 
+    initializeInternationalPhoneInput();
     renderLoginStatusButton();
-    if (phoneInput) {
-      const storedPhone = readLocalValue(ACCOUNT_PHONE_KEY).trim();
-      if (storedPhone && !phoneInput.value) phoneInput.value = storedPhone;
-    }
+    restoreStoredPhone();
 
     applySavedLookupState();
 
@@ -2033,10 +2342,10 @@
       form.addEventListener('submit', async event => {
         event.preventDefault();
         resetMessages();
-        const phone = phoneInput ? phoneInput.value.trim() : '';
+        const phoneData = await getInternationalPhoneData();
         const code = codeInput ? codeInput.value.trim() : '';
 
-        if (!isValidSaudiPhone(phone)) {
+        if (!phoneData.isValid) {
           gaTrackLookupResult(codeMode ? 'legacy_link' : 'purchase_lookup', 'error', {
             error_code: 'INVALID_PHONE'
           });
@@ -2057,9 +2366,9 @@
               showCodeStatus('error', messages.invalidCode);
               return;
             }
-            await linkLegacyCode(phone, code);
+            await linkLegacyCode(phoneData, code);
           } else {
-            await lookupPurchases(phone);
+            await lookupPurchases(phoneData);
           }
         } catch (error) {
           const err = error.data && error.data.error ? error.data.error : '';
@@ -2078,6 +2387,6 @@
       });
     }
   </script>
-  <!-- VERSION: purchase-activation.html — activation UX owned games jump v3 -->
+  <!-- VERSION: purchase-activation.html — international phone activation v4 -->
 </body>
 </html>
