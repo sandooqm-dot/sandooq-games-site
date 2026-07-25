@@ -83,14 +83,14 @@
 
     .hero-inner{
       width:100%;max-width:var(--layout-max);margin:clamp(22px,4vw,56px) auto 0;
-      display:grid;grid-template-columns:1fr;gap:clamp(20px,4vw,48px);align-items:center;
+      min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center;
     }
-    .hero-clean{max-width:min(1000px,100%);margin-top:clamp(18px,3vw,38px);justify-items:center;gap:clamp(16px,2.4vw,26px);}
+    .hero-clean{width:100%;max-width:min(1000px,100%);margin:clamp(18px,3vw,38px) auto 0;justify-items:center;gap:clamp(16px,2.4vw,26px);}
     .page-game-top{direction:rtl;}
-    .hero-copy{display:grid;gap:12px;text-align:center;justify-items:center;}
-    .hero-copy-under{max-width:900px;gap:clamp(10px,1.6vw,16px);}
-    .page-title{margin:0;max-width:100%;font-size:clamp(25px,7vw,58px);line-height:1.18;font-weight:950;letter-spacing:-.35px;white-space:nowrap;text-shadow:0 4px 0 rgba(0,0,0,.14);}
-    .page-lead{margin:0;max-width:850px;color:rgba(255,255,255,.96);font-weight:850;font-size:clamp(16px,1.55vw,22px);line-height:1.9;text-shadow:0 2px 0 rgba(0,0,0,.10);}
+    .hero-copy{width:100%;min-width:0;display:grid;gap:12px;text-align:center;justify-items:center;}
+    .hero-copy-under{width:100%;max-width:900px;margin-inline:auto;gap:clamp(10px,1.6vw,16px);}
+    .page-title{width:100%;min-width:0;margin:0;max-width:100%;font-size:clamp(25px,7vw,58px);line-height:1.18;font-weight:950;letter-spacing:-.35px;white-space:normal;text-align:center;text-wrap:balance;text-shadow:0 4px 0 rgba(0,0,0,.14);}
+    .page-lead{width:100%;margin:0;max-width:850px;color:rgba(255,255,255,.96);font-weight:850;font-size:clamp(16px,1.55vw,22px);line-height:1.9;text-align:center;text-shadow:0 2px 0 rgba(0,0,0,.10);}
     .hero-package-badge{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:7px 17px;border:3px solid var(--line);border-radius:999px;background:#cf2029;color:#fff;font-weight:950;font-size:clamp(14px,1.2vw,18px);line-height:1;box-shadow:0 4px 0 rgba(0,0,0,.2);}
     .hero-package-badge strong{color:var(--yellow-light);font-size:1.35em;line-height:1;}
     .hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:4px;}
@@ -108,7 +108,7 @@
     .cta-play-icon svg{width:56%;height:56%;display:block;fill:currentColor;transform:translateX(-1px);}
 
     .hero-card{
-      width:min(940px,100%);margin-inline:auto;background:var(--cream);border:clamp(3px,.35vw,5px) solid var(--line);
+      width:min(940px,100%);min-width:0;max-width:100%;justify-self:center;margin-inline:auto;background:var(--cream);border:clamp(3px,.35vw,5px) solid var(--line);
       border-radius:var(--radius);padding:clamp(10px,1.4vw,16px);box-shadow:0 10px 0 rgba(0,0,0,.22),0 24px 44px rgba(0,0,0,.18);
     }
     .cover-frame{overflow:hidden;border-radius:calc(var(--radius) - 7px);border:3px solid var(--line);background:#eaf3f8;aspect-ratio:16/9;}
@@ -484,6 +484,6 @@
     window.addEventListener('load',()=>moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active')));
     window.addEventListener('resize',()=>moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active')));
   </script>
-  <!-- VERSION: edu-games-comprehensive.html — video-overview-compact-games-v3 -->
+  <!-- VERSION: edu-games-comprehensive.html — centered-mobile-hero-v4 -->
 </body>
 </html>
