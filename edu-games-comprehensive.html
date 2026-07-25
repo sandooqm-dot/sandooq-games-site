@@ -89,7 +89,7 @@
     .page-game-top{direction:rtl;}
     .hero-copy{width:100%;min-width:0;display:grid;gap:12px;text-align:center;justify-items:center;}
     .hero-copy-under{width:100%;max-width:900px;margin-inline:auto;gap:clamp(10px,1.6vw,16px);}
-    .page-title{width:100%;min-width:0;margin:0;max-width:100%;font-size:clamp(25px,7vw,58px);line-height:1.18;font-weight:950;letter-spacing:-.35px;white-space:normal;text-align:center;text-wrap:balance;text-shadow:0 4px 0 rgba(0,0,0,.14);}
+    .page-title{width:100%;min-width:0;margin:0;max-width:100%;font-size:clamp(18px,5.3vw,52px);line-height:1.18;font-weight:950;letter-spacing:-.35px;white-space:nowrap;text-align:center;text-wrap:nowrap;text-shadow:0 4px 0 rgba(0,0,0,.14);}
     .page-lead{width:100%;margin:0;max-width:850px;color:rgba(255,255,255,.96);font-weight:850;font-size:clamp(16px,1.55vw,22px);line-height:1.9;text-align:center;text-shadow:0 2px 0 rgba(0,0,0,.10);}
     .hero-package-badge{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:7px 17px;border:3px solid var(--line);border-radius:999px;background:#cf2029;color:#fff;font-weight:950;font-size:clamp(14px,1.2vw,18px);line-height:1;box-shadow:0 4px 0 rgba(0,0,0,.2);}
     .hero-package-badge strong{color:var(--yellow-light);font-size:1.35em;line-height:1;}
@@ -216,7 +216,7 @@
     @media (max-width:430px){
       :root{--bottom-nav-height:88px;--page-pad:clamp(12px,4vw,18px);}
       .chip{min-height:30px;padding:6px 10px;font-size:12px;}
-      .page-title{font-size:clamp(25px,7vw,34px);}
+      .page-title{font-size:clamp(18px,5.3vw,23px);}
       .page-lead{font-size:15px;}
       .hero-card{border-width:4px;}
     }
@@ -484,6 +484,6 @@
     window.addEventListener('load',()=>moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active')));
     window.addEventListener('resize',()=>moveBottomNavIndicator(document.querySelector('.bottom-nav .nav-item.active')));
   </script>
-  <!-- VERSION: edu-games-comprehensive.html — centered-mobile-hero-v4 -->
+  <!-- VERSION: edu-games-comprehensive.html — single-line-mobile-title-v5 -->
 </body>
 </html>
